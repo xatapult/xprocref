@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../sch/xprocref.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<xprocref xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../xsd/xprocref.xsd">
+
+  <!-- ======================================================================= -->
+
+  <versions>
+    <version id="v30" name="3.0">
+      <description>
+        The base XProc version 3.0
+      </description>
+    </version>
+    
+    <version id="v31" name="3.1" >
+      <description>
+        The XProc version 3.1 (NEW!)
+      </description>
+    </version>
+
+  </versions>
+
+  <!-- ======================================================================= -->
+
+  <categories>
+
+    <category id="c.test" name="Test">
+      <description>Just a test category</description>
+    </category>
+
+    <category id="c.test2" name="Test 2">
+      <description>Just another test category</description>
+    </category>
+
+  </categories>
+
+  <!-- ======================================================================= -->
+
+  <steps>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <step name="insert" id="step.insert" category-idrefs="c.test" version-idref="v31" short-description="Insert a piece of content in another">
+
+      <specification-link href="https://spec.xproc.org/master/head/steps/#c.insert"/>
+
+      <signature>
+        <input port="source" sequence="false" primary="true" content-types="xml html">
+          <description>The primary input port</description>
+        </input>
+        <input port="insertion" primary="false" sequence="true" content-types="xml html">
+          <description>The contents to insert</description>
+        </input>
+        <output port="result" primary="true" sequence="false" content-types="xml html">
+          <description>The primary output port</description>
+        </output>
+        <option name="match" as="xs:string" select="/*" subtype="XSLTSelectionPattern" required="false">
+          <description>Where to insert stuff</description>
+        </option>
+        <option name="position" values="first-child last-child before after" select="after" required="false" as="xs:string">
+          <description>relative position where to insert the stuff</description>
+        </option>
+      </signature>
+
+      <summary xml:space="default">
+        <para>The <code>p:insert</code> step inserts the <code>insertion</code> port's document into the <port>source</port> port's document relative
+          to the matching elements in the <code>source</code> port's document.</para>
+      </summary>
+
+      <description xml:space="default">
+        <para>The value of the <option>match</option> option <rfc2119>must</rfc2119> be an XSLTSelectionPattern. <error code="C0023">It is a
+              <glossterm>dynamic error</glossterm> if that pattern matches an attribute or a namespace node.</error> Multiple matches are allowed, in
+          which case multiple copies of the <port>insertion</port> documents will occur. If no elements match, then the document is unchanged.</para>
+        <para>The value of the <option>position</option> option <rfc2119>must</rfc2119> be an NMTOKEN in the following list: </para>
+        <itemizedlist>
+          <listitem>
+            <para>“<literal>first-child</literal>” - the insertion is made as the first child of the match;</para>
+          </listitem>
+          <listitem>
+            <para>“<literal>last-child</literal>” - the insertion is made as the last child of the match;</para>
+          </listitem>
+          <listitem>
+            <para>“<literal>before</literal>” - the insertion is made as the immediate preceding sibling of the match;</para>
+          </listitem>
+          <listitem>
+            <para>“<literal>after</literal>” - the insertion is made as the immediate following sibling of the match.</para>
+          </listitem>
+        </itemizedlist>
+        <para><error code="C0025">It is a <glossterm>dynamic error</glossterm> if the <glossterm>selection pattern</glossterm> matches anything other
+            than an element or a document node and the value of the <option>position</option> option is “<literal>first-child</literal>” or
+              “<literal>last-child</literal>”.</error>
+          <error code="C0024">It is a <glossterm>dynamic error</glossterm> if the <glossterm>selection pattern</glossterm> matches a document node and
+            the value of the <option>position</option> is “<literal>before</literal>” or “<literal>after</literal>”.</error></para>
+        <para>As the inserted elements are part of the output of the step they are not considered in determining matching elements. If an empty
+          sequence appears on the <port>insertion</port> port, the result will be the same as the source.</para>
+        <simplesect>
+          <title>Document properties</title>
+          <para feature="insert-preserves-all">All document properties on the <port>source</port> port are preserved. The document properties on the
+              <port>insertion</port> port are not preserved or present in the result document.</para>
+        </simplesect>
+      </description>
+
+    </step>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <step id="step.replace" name="replace" version-idref="v30" category-idrefs="c.test" short-description="Replaces matching nodes">
+      
+      <specification-link href="https://spec.xproc.org/master/head/steps/#c.replace"/>
+      
+      <signature>
+        <input port="source" primary="true" sequence="false" content-types="xml html">
+          <description>The primary source port</description>
+        </input>
+        <input port="replacement" primary="false" sequence="false" content-types="text xml html">
+          <description>The thing to replace with</description>
+        </input>
+        <output port="result" primary="true" sequence="false" content-types="text xml html">
+          <description>The final result</description>
+        </output>
+        <option name="match" as="xs:string" select="/*" subtype="XSLTSelectionPattern" required="false">
+          <description>Where to replace stuff</description>
+        </option>
+      </signature>
+
+      <summary>
+        <para>The <code>p:replace</code> step replaces matching nodes in
+          its primary input with the top-level node(s) of the
+          <code>replacement</code> port's document.</para>
+      </summary>
+
+      <description>
+        <para>The value of the <option>match</option> option
+          <rfc2119>must</rfc2119> be an XSLTSelectionPattern. <error code="C0023">It
+            is a <glossterm>dynamic error</glossterm> if that pattern matches
+            an attribute or a namespace nodes. </error> Multiple matches are allowed, in which case multiple
+          copies of the <port>replacement</port> document will occur.</para>
+        <para>Every node in the primary input matching the specified
+          pattern is replaced in the output by the top-level node(s)
+          of the <port>replacement</port> document. Only non-nested matches are
+          replaced. That is, once a node is replaced, its descendants cannot
+          be matched.</para>
+        <para>If the document node is matched and port <port>replacement</port> contains
+          a text document, the entire document is replaced by the text node. What appears on port 
+          <port>result</port> is a text document with the text node wrapped in a document node.</para>
+        <simplesect>
+          <title>Document properties</title>
+          <para feature="replace-preserves-partially">If the resulting document contains exactly one text node,
+            the <literal>content-type</literal> property is changed to <literal>text/plain</literal> and the 
+            <literal>serialization</literal> property is removed, while all other document properties are 
+            preserved. For other document types, all document properties are preserved.</para>
+        </simplesect>
+      </description>
+      
+    </step>
+
+  </steps>
+
+
+</xprocref>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xtlcon:container timestamp="2024-06-19T14:44:22.848234+02:00"
+                  xmlns:xtlcon="http://www.xtpxlib.nl/ns/container">
+   <xtlcon:document href-target="index.html">
+      <db:sect1 xmlns:db="http://docbook.org/ns/docbook">
+         <db:title>HOME PAGE TBD</db:title>
+         <db:para>Home page...</db:para>
+      </db:sect1>
+   </xtlcon:document>
+   <!-- == START VERSION 3.0 (v30) == -->
+   <xtlcon:document href-target="3.0/index.html">
+      <db:sect1 xmlns:db="http://docbook.org/ns/docbook">
+         <db:title>HOME PAGE VERSION 3.0 (v30)</db:title>
+         <para xmlns="http://docbook.org/ns/docbook"
+               xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc">The base XProc version 3.0</para>
+      </db:sect1>
+   </xtlcon:document>
+   <xtlcon:document href-target="3.0/categories.html">
+      <db:sect1 xmlns:db="http://docbook.org/ns/docbook">
+         <db:title>CATEGORIES VERSION 3.0 (v30)</db:title>
+         <db:para>TBD</db:para>
+      </db:sect1>
+   </xtlcon:document>
+   <xtlcon:document href-target="3.0/replace.html">
+      <db:sect1 xmlns:db="http://docbook.org/ns/docbook">
+         <db:title>STEP p:replace</db:title>
+         <db:para>TBD</db:para>
+         <db:sect2>
+            <db:title>SUMMARY</db:title>
+            <db:para>The <db:code>p:replace</db:code> step replaces matching nodes in
+          its primary input with the top-level node(s) of the
+          <db:code>replacement</db:code> port's document.</db:para>
+         </db:sect2>
+         <db:sect2>
+            <db:title>DESCRIPTION</db:title>
+            <db:para>The value of the <db:option>match</db:option> option
+          <db:rfc2119>must</db:rfc2119> be an XSLTSelectionPattern. <db:error code="C0023">It
+            is a <db:glossterm>dynamic error</db:glossterm> if that pattern matches
+            an attribute or a namespace nodes. </db:error> Multiple matches are allowed, in which case multiple
+          copies of the <db:port>replacement</db:port> document will occur.</db:para>
+            <db:para>Every node in the primary input matching the specified
+          pattern is replaced in the output by the top-level node(s)
+          of the <db:port>replacement</db:port> document. Only non-nested matches are
+          replaced. That is, once a node is replaced, its descendants cannot
+          be matched.</db:para>
+            <db:para>If the document node is matched and port <db:port>replacement</db:port> contains
+          a text document, the entire document is replaced by the text node. What appears on port 
+          <db:port>result</db:port> is a text document with the text node wrapped in a document node.</db:para>
+            <db:simplesect>
+               <db:title>Document properties</db:title>
+               <db:para feature="replace-preserves-partially">If the resulting document contains exactly one text node,
+            the <db:literal>content-type</db:literal> property is changed to <db:literal>text/plain</db:literal> and the 
+            <db:literal>serialization</db:literal> property is removed, while all other document properties are 
+            preserved. For other document types, all document properties are preserved.</db:para>
+            </db:simplesect>
+         </db:sect2>
+      </db:sect1>
+   </xtlcon:document>
+   <!-- == END VERSION 3.0 (v30) == -->
+   <!-- == START VERSION 3.1 (v31) == -->
+   <xtlcon:document href-target="3.1/index.html">
+      <db:sect1 xmlns:db="http://docbook.org/ns/docbook">
+         <db:title>HOME PAGE VERSION 3.1 (v31)</db:title>
+         <para xmlns="http://docbook.org/ns/docbook"
+               xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc">The XProc version 3.1 (NEW!)</para>
+      </db:sect1>
+   </xtlcon:document>
+   <xtlcon:document href-target="3.1/categories.html">
+      <db:sect1 xmlns:db="http://docbook.org/ns/docbook">
+         <db:title>CATEGORIES VERSION 3.1 (v31)</db:title>
+         <db:para>TBD</db:para>
+      </db:sect1>
+   </xtlcon:document>
+   <xtlcon:document href-target="3.1/insert.html">
+      <db:sect1 xmlns:db="http://docbook.org/ns/docbook">
+         <db:title>STEP p:insert</db:title>
+         <db:para>TBD</db:para>
+         <db:sect2>
+            <db:title>SUMMARY</db:title>
+            <db:para>The <db:code>p:insert</db:code> step inserts the <db:code>insertion</db:code> port's document into the <db:port>source</db:port> port's document relative
+          to the matching elements in the <db:code>source</db:code> port's document.</db:para>
+         </db:sect2>
+         <db:sect2>
+            <db:title>DESCRIPTION</db:title>
+            <db:para>The value of the <db:option>match</db:option> option <db:rfc2119>must</db:rfc2119> be an XSLTSelectionPattern. <db:error code="C0023">It is a
+              <db:glossterm>dynamic error</db:glossterm> if that pattern matches an attribute or a namespace node.</db:error> Multiple matches are allowed, in
+          which case multiple copies of the <db:port>insertion</db:port> documents will occur. If no elements match, then the document is unchanged.</db:para>
+            <db:para>The value of the <db:option>position</db:option> option <db:rfc2119>must</db:rfc2119> be an NMTOKEN in the following list: </db:para>
+            <db:itemizedlist>
+               <db:listitem>
+                  <db:para>“<db:literal>first-child</db:literal>” - the insertion is made as the first child of the match;</db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>“<db:literal>last-child</db:literal>” - the insertion is made as the last child of the match;</db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>“<db:literal>before</db:literal>” - the insertion is made as the immediate preceding sibling of the match;</db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>“<db:literal>after</db:literal>” - the insertion is made as the immediate following sibling of the match.</db:para>
+               </db:listitem>
+            </db:itemizedlist>
+            <db:para>
+               <db:error code="C0025">It is a <db:glossterm>dynamic error</db:glossterm> if the <db:glossterm>selection pattern</db:glossterm> matches anything other
+            than an element or a document node and the value of the <db:option>position</db:option> option is “<db:literal>first-child</db:literal>” or
+              “<db:literal>last-child</db:literal>”.</db:error>
+               <db:error code="C0024">It is a <db:glossterm>dynamic error</db:glossterm> if the <db:glossterm>selection pattern</db:glossterm> matches a document node and
+            the value of the <db:option>position</db:option> is “<db:literal>before</db:literal>” or “<db:literal>after</db:literal>”.</db:error>
+            </db:para>
+            <db:para>As the inserted elements are part of the output of the step they are not considered in determining matching elements. If an empty
+          sequence appears on the <db:port>insertion</db:port> port, the result will be the same as the source.</db:para>
+            <db:simplesect>
+               <db:title>Document properties</db:title>
+               <db:para feature="insert-preserves-all">All document properties on the <db:port>source</db:port> port are preserved. The document properties on the
+              <db:port>insertion</db:port> port are not preserved or present in the result document.</db:para>
+            </db:simplesect>
+         </db:sect2>
+      </db:sect1>
+   </xtlcon:document>
+   <!-- == END VERSION 3.1 (v31) == -->
+</xtlcon:container>
