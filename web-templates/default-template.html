@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <!-- ================================================================== -->
+  <!--
+    Default template for the XProcRef web pages.
+    
+    The following elements are replaced:
+    * <xpref:TITLE/>
+    * <xpref:PAGE_CONTENTS/>
+    
+    The following macros in attributes are replaced:
+    * $HOMEDIR$ with the path to the site's root, including a terminating /  
+  -->
+  <!-- ================================================================== -->
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="$HOMEDIR$css/bootstrap.min.css" rel="stylesheet" />
+    <script defer="defer" src="$HOMEDIR$js/bootstrap.bundle.min.js"><!-- --></script>
+    <title><xpref:TITLE xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref"/></title>
+    <link rel="shortcut icon" href="$HOMEDIR$images/favicon.ico" />
+  </head>
+
+  <body>
+    <!-- Navigation bar: -->
+    <nav class="navbar navbar-expand-sm bg-secondary navbar-dark ">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="$HOMEDIR$index.html">
+          <img src="$HOMEDIR$images/logo.png" class="img-fluid" width="14%" />
+        </a>
+      </div>
+      <!-- Menu: -->
+      <xpref:MENU xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref"/>
+    </nav>
+    <!-- Page: -->
+    <div class="container pt-5">
+      <!-- This element will be replaced with the actual page contents: -->
+      <xpref:PAGE-CONTENTS xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref"/>
+    </div>
+    <p>&#160;</p>
+  </body>
+</html>

@@ -2,7 +2,8 @@
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:map="http://www.w3.org/2005/xpath-functions/map"
   xmlns:array="http://www.w3.org/2005/xpath-functions/array" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:local="#local.y4s_1jd_5bc"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref" xmlns:xtlc="http://www.xtpxlib.nl/ns/common"
-  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" version="3.0" exclude-inline-prefixes="#all" name="process-xprocref" type="xpref:process-xprocref">
+  xmlns:db="http://docbook.org/ns/docbook" xmlns:xtlcon="http://www.xtpxlib.nl/ns/container" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" version="3.0"
+  exclude-inline-prefixes="#all" name="process-xprocref" type="xpref:process-xprocref">
 
   <p:documentation>
     TBD 
@@ -15,6 +16,11 @@
   <p:import href="../../xtpxlib-common/xpl3mod/validate/validate.xpl"/>
   <p:import href="../../xtpxlib-common/xpl3mod/expand-macro-definitions/expand-macro-definitions.xpl"/>
   <p:import href="../../xtpxlib-common/xpl3mod/create-clear-directory/create-clear-directory.xpl"/>
+
+  <p:import href="../../xtpxlib-xdoc/xpl3/xdoc-to-xhtml.xpl"/>
+  <p:import href="../../xtpxlib-xdoc/xpl3/docbook-to-xhtml.xpl"/>
+
+  <p:import href="../../xtpxlib-container/xpl3mod/container-to-disk/container-to-disk.xpl"/>
 
   <p:import href="../../xtpxlib-xdoc/xpl3mod/xtpxlib-xdoc.mod/xtpxlib-xdoc.mod.xpl"/>
 
@@ -39,6 +45,10 @@
   <p:option name="href-web-resources" as="xs:string" required="false" select="resolve-uri('../web-resources', static-base-uri())">
     <p:documentation>Directory with web-resources (like CSS, JavaScript, etc.). All sub-directories underneath this directory are 
       copied verbatim to the build location.</p:documentation>
+  </p:option>
+
+  <p:option name="href-web-template" as="xs:string" required="false" select="resolve-uri('../web-templates/default-template.html', static-base-uri())">
+    <p:documentation>URI of the web template used to build the pages.</p:documentation>
   </p:option>
 
   <!-- ======================================================================= -->
@@ -106,26 +116,54 @@
   </xtlc:validate>
 
   <!-- Copy the web resources: -->
-  <local:copy-web-resources p:message="  * Copying web resources">
+ <!-- <local:copy-web-resources p:message="  * Copying web resources">
     <p:with-option name="href-web-resources" select="$href-web-resources"/>
     <p:with-option name="href-build-location" select="$href-build-location"/>
-  </local:copy-web-resources>
+  </local:copy-web-resources>-->
 
   <!-- Take care that all steps are there for all versions: -->
   <!-- TBD -->
-
+  
+  
+  <!-- Create an index document: -->
+  <p:xslt>
+    <p:with-input port="stylesheet" href="xsl-process-xprocref/create-xprocref-index.xsl"/>
+  </p:xslt>
+  
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Create container: -->
 
-  <!-- Create a container (all text still in DocBook/Markdown): -->
-  <p:xslt>
-    <p:with-input port="stylesheet" href="xsl-process-xcourse/create-xprocref-container.xsl"/>
-    <!--<p:with-option name="parameters" select="map{ }"/>-->
+  <!--<!-\- Create a container (all text still in DocBook/Markdown): -\->
+  <p:xslt message="  * Creating pages">
+    <p:with-input port="stylesheet" href="xsl-process-xprocref/create-xprocref-container.xsl"/>
+    <!-\-<p:with-option name="parameters" select="map{ }"/>-\->
   </p:xslt>
 
-  <!-- Process the Markdown (into DocBook): -->
+  <!-\- Process the Markdown (into DocBook): -\->
   <xdoc:markdown-to-docbook/>
 
-
+  <!-\- Process the resulting DocBook/xdoc into XHTML: -\->
+  <p:viewport match="xtlcon:document[exists(db:article)]" message="  * Converting pages to HTML">
+    <p:variable name="href-target" as="xs:string" select="xs:string(/*/@href-target)"/>
+    <p:viewport match="db:article[1]">
+      <xdoc:xdoc-to-xhtml add-numbering="false" add-identifiers="false"/>
+      <p:xslt>
+        <p:with-input port="stylesheet" href="xsl-process-xprocref/xhtml-to-page.xsl"/>
+        <p:with-option name="parameters" select="map{'href-template': $href-web-template, 'href-target': $href-target}"/>
+      </p:xslt>
+      <p:xslt>
+        <p:with-input port="stylesheet" href="xsl-process-xprocref/convert-menu.xsl"/>
+      </p:xslt>
+    </p:viewport>
+  </p:viewport>
+  
+  <!-\- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\->
+  <!-\- Finishing: -\->
+  
+  <!-\- Write the container to disk: -\->
+  <xtlcon:container-to-disk remove-target="false" p:message="  * Writing to target">
+    <p:with-option name="href-target-path" select="$href-build-location"/>
+  </xtlcon:container-to-disk>-->
+  
 </p:declare-step>
