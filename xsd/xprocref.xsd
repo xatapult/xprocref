@@ -80,6 +80,11 @@
                       <xs:documentation>The short name for this category, for example "XML manipulation".</xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
+                  <xs:attribute default="false" name="primary" type="xs:boolean">
+                    <xs:annotation>
+                      <xs:documentation>Whether this is a primary catergroy (a category as used by the specification).</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

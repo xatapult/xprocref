@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xprocref-index xmlns="http://www.xtpxlib.nl/ns/xprocref"
+                timestamp="2024-06-20T15:18:17.7130942+02:00">
+   <category id="ZZZZZ" name="Test ZZZ PRIMARY" primary="true"/>
+   <category id="c.test" name="Test" primary="false"/>
+   <category id="c.test2" name="Test 2" primary="false"/>
+   <step id="step.insert.v30"
+         name="insert"
+         short-description="Insert a piece of content in another"/>
+   <step id="step.insert.v31"
+         name="insert"
+         short-description="Insert a piece of content in another"/>
+   <step id="step.replace.v30"
+         name="replace"
+         short-description="Replaces matching nodes"/>
+   <version id="v31" name="3.1">
+      <stepref id="step.insert.v31">
+         <categoryref id="c.test"/>
+         <other-versionref id="v30"/>
+      </stepref>
+      <categoryref id="c.test">
+         <stepref id="step.insert.v31"/>
+      </categoryref>
+   </version>
+   <version id="v30" name="3.0">
+      <stepref id="step.insert.v30">
+         <categoryref id="c.test"/>
+         <categoryref id="c.test2"/>
+         <other-versionref id="v31"/>
+      </stepref>
+      <stepref id="step.replace.v30">
+         <categoryref id="c.test"/>
+      </stepref>
+      <categoryref id="c.test">
+         <stepref id="step.insert.v30"/>
+         <stepref id="step.replace.v30"/>
+      </categoryref>
+      <categoryref id="c.test2">
+         <stepref id="step.insert.v30"/>
+      </categoryref>
+   </version>
+</xprocref-index>
