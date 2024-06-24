@@ -1,175 +1,814 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xprocref xml:base="file:/C:/Data/Erik/work/xatapult/xprocref/test/xprocref-test-1.xml"
-          xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <!-- ======================================================================= -->
-   <versions>
-      <version id="v30"
-               name="3.0">
-         <description>
-        The base XProc version 3.0
-      </description>
-      </version>
-      <version id="v31"
-               name="3.1">
-         <description>
-        The XProc version 3.1 (NEW!)
-      </description>
-      </version>
-   </versions>
-   <!-- ======================================================================= -->
-   <categories>
-      <category id="c.test"
-                name="Test">
-         <description>Just a test category</description>
-      </category>
-      <category id="c.test2"
-                name="Test 2">
-         <description>Just another test category</description>
-      </category>
-   </categories>
-   <!-- ======================================================================= -->
-   <steps>
-      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-      <step name="insert"
-            id="step.insert"
-            category-idrefs="c.test"
-            version-idref="v31"
-            short-description="Insert a piece of content in another">
-         <specification-link href="https://spec.xproc.org/master/head/steps/#c.insert"/>
-         <signature>
-            <input port="source"
-                   sequence="false"
-                   primary="true"
-                   content-types="xml html">
-               <description>The primary input port</description>
-            </input>
-            <input port="insertion"
-                   primary="false"
-                   sequence="true"
-                   content-types="xml html">
-               <description>The contents to insert</description>
-            </input>
-            <output port="result"
-                    primary="true"
-                    sequence="false"
-                    content-types="xml html">
-               <description>The primary output port</description>
-            </output>
-            <option name="match"
-                    as="xs:string"
-                    select="/*"
-                    subtype="XSLTSelectionPattern"
-                    required="false">
-               <description>Where to insert stuff</description>
-            </option>
-            <option name="position"
-                    values="first-child last-child before after"
-                    select="after"
-                    required="false"
-                    as="xs:string">
-               <description>relative position where to insert the stuff</description>
-            </option>
-         </signature>
-         <summary xml:space="default">
-            <para>The <code>p:insert</code> step inserts the <code>insertion</code> port's document into the <port>source</port> port's document relative
-          to the matching elements in the <code>source</code> port's document.</para>
-         </summary>
-         <description xml:space="default">
-            <para>The value of the <option>match</option> option <rfc2119>must</rfc2119> be an XSLTSelectionPattern. <error code="C0023">It is a
-              <glossterm>dynamic error</glossterm> if that pattern matches an attribute or a namespace node.</error> Multiple matches are allowed, in
-          which case multiple copies of the <port>insertion</port> documents will occur. If no elements match, then the document is unchanged.</para>
-            <para>The value of the <option>position</option> option <rfc2119>must</rfc2119> be an NMTOKEN in the following list: </para>
-            <itemizedlist>
-               <listitem>
-                  <para>“<literal>first-child</literal>” - the insertion is made as the first child of the match;</para>
-               </listitem>
-               <listitem>
-                  <para>“<literal>last-child</literal>” - the insertion is made as the last child of the match;</para>
-               </listitem>
-               <listitem>
-                  <para>“<literal>before</literal>” - the insertion is made as the immediate preceding sibling of the match;</para>
-               </listitem>
-               <listitem>
-                  <para>“<literal>after</literal>” - the insertion is made as the immediate following sibling of the match.</para>
-               </listitem>
-            </itemizedlist>
-            <para>
-               <error code="C0025">It is a <glossterm>dynamic error</glossterm> if the <glossterm>selection pattern</glossterm> matches anything other
-            than an element or a document node and the value of the <option>position</option> option is “<literal>first-child</literal>” or
-              “<literal>last-child</literal>”.</error>
-               <error code="C0024">It is a <glossterm>dynamic error</glossterm> if the <glossterm>selection pattern</glossterm> matches a document node and
-            the value of the <option>position</option> is “<literal>before</literal>” or “<literal>after</literal>”.</error>
-            </para>
-            <para>As the inserted elements are part of the output of the step they are not considered in determining matching elements. If an empty
-          sequence appears on the <port>insertion</port> port, the result will be the same as the source.</para>
-            <simplesect>
-               <title>Document properties</title>
-               <para feature="insert-preserves-all">All document properties on the <port>source</port> port are preserved. The document properties on the
-              <port>insertion</port> port are not preserved or present in the result document.</para>
-            </simplesect>
-         </description>
-      </step>
-      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-      <step id="step.replace"
-            name="replace"
-            version-idref="v30"
-            category-idrefs="c.test"
-            short-description="Replaces matching nodes">
-         <specification-link href="https://spec.xproc.org/master/head/steps/#c.replace"/>
-         <signature>
-            <input port="source"
-                   primary="true"
-                   sequence="false"
-                   content-types="xml html">
-               <description>The primary source port</description>
-            </input>
-            <input port="replacement"
-                   primary="false"
-                   sequence="false"
-                   content-types="text xml html">
-               <description>The thing to replace with</description>
-            </input>
-            <output port="result"
-                    primary="true"
-                    sequence="false"
-                    content-types="text xml html">
-               <description>The final result</description>
-            </output>
-            <option name="match"
-                    as="xs:string"
-                    select="/*"
-                    subtype="XSLTSelectionPattern"
-                    required="false">
-               <description>Where to replace stuff</description>
-            </option>
-         </signature>
-         <summary>
-            <para>The <code>p:replace</code> step replaces matching nodes in
+<xtlcon:document-container timestamp="2024-06-24T14:03:40.0370149+02:00"
+                           _href-target-path="file:///C:/Data/Erik/work/xatapult/xprocref/build"
+                           xmlns:xtlcon="http://www.xtpxlib.nl/ns/container">
+   <xtlcon:document href-target="index.html"
+                    content-type="text/html"
+                    _document-index="1"
+                    _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/index.html">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+         <head>
+            <meta http-equiv="Content-Type"
+                  content="text/html; charset=utf-8"/>
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1"/>
+            <link href="css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <script defer="defer"
+                    src="js/bootstrap.bundle.min.js"/>
+            <title>HOME PAGE TBD</title>
+            <link rel="shortcut icon"
+                  href="images/favicon.ico"/>
+         </head>
+         <body>
+            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark ">
+               <div class="container-fluid">
+                  <a class="navbar-brand"
+                     href="index.html">
+                     <img src="images/logo.png"
+                          class="img-fluid"
+                          width="14%"/>
+                  </a>
+               </div>
+               <div class="container-fluid">
+                  <ul class="nav justify-content-end nav-pills text-light">
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="index.html">home</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">versions</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="versions.html">overview</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="3.1/index.html">3.1</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="3.0/index.html">3.0</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="about.html">about</a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+            <div class="container pt-5">
+               <h1 class="title">HOME PAGE TBD</h1>
+               <p class="para">TBD</p>
+            </div>
+            <p> </p>
+         </body>
+      </html>
+   </xtlcon:document>
+   <xtlcon:document href-target="versions.html"
+                    content-type="text/html"
+                    _document-index="2"
+                    _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/versions.html">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+         <head>
+            <meta http-equiv="Content-Type"
+                  content="text/html; charset=utf-8"/>
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1"/>
+            <link href="css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <script defer="defer"
+                    src="js/bootstrap.bundle.min.js"/>
+            <title>VERSIONS PAGE TBD</title>
+            <link rel="shortcut icon"
+                  href="images/favicon.ico"/>
+         </head>
+         <body>
+            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark ">
+               <div class="container-fluid">
+                  <a class="navbar-brand"
+                     href="index.html">
+                     <img src="images/logo.png"
+                          class="img-fluid"
+                          width="14%"/>
+                  </a>
+               </div>
+               <div class="container-fluid">
+                  <ul class="nav justify-content-end nav-pills text-light">
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="index.html">home</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">versions</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="versions.html">overview</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="3.1/index.html">3.1</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="3.0/index.html">3.0</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="about.html">about</a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+            <div class="container pt-5">
+               <h1 class="title">VERSIONS PAGE TBD</h1>
+               <ul class="itemizedlist versions-list">
+                  <li>
+                     <p class="para">
+                        <a href="3.1/index.html">
+                           <span class="link">Version 3.1</span>
+                        </a>
+                     </p>
+                     <p class="para">The XProc version 3.1 (NEW!)</p>
+                  </li>
+                  <li>
+                     <p class="para">
+                        <a href="3.0/index.html">
+                           <span class="link">Version 3.0</span>
+                        </a>
+                     </p>
+                     <p class="para">The base XProc version 3.0</p>
+                  </li>
+               </ul>
+            </div>
+            <p> </p>
+         </body>
+      </html>
+   </xtlcon:document>
+   <xtlcon:document href-target="about.html"
+                    content-type="text/html"
+                    _document-index="3"
+                    _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/about.html">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+         <head>
+            <meta http-equiv="Content-Type"
+                  content="text/html; charset=utf-8"/>
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1"/>
+            <link href="css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <script defer="defer"
+                    src="js/bootstrap.bundle.min.js"/>
+            <title>ABOUT PAGE TBD</title>
+            <link rel="shortcut icon"
+                  href="images/favicon.ico"/>
+         </head>
+         <body>
+            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark ">
+               <div class="container-fluid">
+                  <a class="navbar-brand"
+                     href="index.html">
+                     <img src="images/logo.png"
+                          class="img-fluid"
+                          width="14%"/>
+                  </a>
+               </div>
+               <div class="container-fluid">
+                  <ul class="nav justify-content-end nav-pills text-light">
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="index.html">home</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">versions</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="versions.html">overview</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="3.1/index.html">3.1</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="3.0/index.html">3.0</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="about.html">about</a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+            <div class="container pt-5">
+               <h1 class="title">ABOUT PAGE TBD</h1>
+               <p class="para">TBD</p>
+            </div>
+            <p> </p>
+         </body>
+      </html>
+   </xtlcon:document>
+   <!-- == START VERSION 3.1 (v31) == -->
+   <xtlcon:document href-target="3.1/index.html"
+                    content-type="text/html"
+                    _document-index="4"
+                    _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/index.html">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+         <head>
+            <meta http-equiv="Content-Type"
+                  content="text/html; charset=utf-8"/>
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1"/>
+            <link href="../css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <script defer="defer"
+                    src="../js/bootstrap.bundle.min.js"/>
+            <title>HOME PAGE VERSION 3.1</title>
+            <link rel="shortcut icon"
+                  href="../images/favicon.ico"/>
+         </head>
+         <body>
+            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark ">
+               <div class="container-fluid">
+                  <a class="navbar-brand"
+                     href="../index.html">
+                     <img src="../images/logo.png"
+                          class="img-fluid"
+                          width="14%"/>
+                  </a>
+               </div>
+               <div class="container-fluid">
+                  <ul class="nav justify-content-end nav-pills text-light">
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="../index.html">home</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">versions</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">overview</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../3.1/index.html">3.1</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../3.0/index.html">3.0</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="../about.html">about</a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+            <div class="container pt-5">
+               <h1 class="title">HOME PAGE VERSION 3.1</h1>
+               <p class="para">The XProc version 3.1 (NEW!)</p>
+               <ul class="itemizedlist step-list">
+                  <li>
+                     <p class="para">
+                        <a href="3.1.insert.html">
+                           <span class="link">insert</span>
+                        </a> - Insert a piece of content in another</p>
+                  </li>
+                  <li>
+                     <p class="para">
+                        <a href="3.1.replace.html">
+                           <span class="link">replace</span>
+                        </a> - Replaces matching nodes</p>
+                  </li>
+               </ul>
+            </div>
+            <p> </p>
+         </body>
+      </html>
+   </xtlcon:document>
+   <xtlcon:document href-target="3.1/categories.html"
+                    content-type="text/html"
+                    _document-index="5"
+                    _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/categories.html">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+         <head>
+            <meta http-equiv="Content-Type"
+                  content="text/html; charset=utf-8"/>
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1"/>
+            <link href="../css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <script defer="defer"
+                    src="../js/bootstrap.bundle.min.js"/>
+            <title>CATEGORIES VERSION 3.1</title>
+            <link rel="shortcut icon"
+                  href="../images/favicon.ico"/>
+         </head>
+         <body>
+            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark ">
+               <div class="container-fluid">
+                  <a class="navbar-brand"
+                     href="../index.html">
+                     <img src="../images/logo.png"
+                          class="img-fluid"
+                          width="14%"/>
+                  </a>
+               </div>
+               <div class="container-fluid">
+                  <ul class="nav justify-content-end nav-pills text-light">
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="../index.html">home</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">versions</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">overview</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../3.1/index.html">3.1</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../3.0/index.html">3.0</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="../about.html">about</a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+            <div class="container pt-5">
+               <h1 class="title">CATEGORIES VERSION 3.1</h1>
+               <p class="para">TBD</p>
+            </div>
+            <p> </p>
+         </body>
+      </html>
+   </xtlcon:document>
+   <xtlcon:document href-target="3.1/3.1.insert.html"
+                    content-type="text/html"
+                    _document-index="6"
+                    _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/3.1.insert.html">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+         <head>
+            <meta http-equiv="Content-Type"
+                  content="text/html; charset=utf-8"/>
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1"/>
+            <link href="../css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <script defer="defer"
+                    src="../js/bootstrap.bundle.min.js"/>
+            <title>STEP p:insert</title>
+            <link rel="shortcut icon"
+                  href="../images/favicon.ico"/>
+         </head>
+         <body>
+            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark ">
+               <div class="container-fluid">
+                  <a class="navbar-brand"
+                     href="../index.html">
+                     <img src="../images/logo.png"
+                          class="img-fluid"
+                          width="14%"/>
+                  </a>
+               </div>
+               <div class="container-fluid">
+                  <ul class="nav justify-content-end nav-pills text-light">
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="../index.html">home</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">versions</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">overview</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../3.1/index.html">3.1</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../3.0/index.html">3.0</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="../about.html">about</a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+            <div class="container pt-5">
+               <h1 class="title">STEP p:insert</h1>
+               <p class="para">TBD</p>
+               <div class="sect1">
+                  <h1 class="sect1">SIGNATURE</h1>
+                  <p class="para">TBD</p>
+               </div>
+               <div class="sect1">
+                  <h1 class="sect1">SUMMARY</h1>
+                  <p class="para">The <code class="code">p:insert</code> step inserts the <code class="code">insertion</code> port's document into the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> port's document relative
+          to the matching elements in the <code class="code">source</code> port's document.</p>
+               </div>
+               <div class="sect1">
+                  <h1 class="sect1">DESCRIPTION</h1>
+                  <p class="para">The value of the <span class="error">[*** Unrecognized element: &lt;db:option&gt; (phase: inline)]</span> option <span class="error">[*** Unrecognized element: &lt;db:rfc2119&gt; (phase: inline)]</span> be an XSLTSelectionPattern. <span class="error">[*** Unrecognized element: &lt;db:error code="C0023"&gt; (phase: inline)]</span> Multiple matches are allowed, in
+          which case multiple copies of the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> documents will occur. If no elements match, then the document is unchanged.</p>
+                  <p class="para">The value of the <span class="error">[*** Unrecognized element: &lt;db:option&gt; (phase: inline)]</span> option <span class="error">[*** Unrecognized element: &lt;db:rfc2119&gt; (phase: inline)]</span> be an NMTOKEN in the following list: </p>
+                  <ul class="itemizedlist">
+                     <li>
+                        <p class="para">“<code class="literal">first-child</code>” - the insertion is made as the first child of the match;</p>
+                     </li>
+                     <li>
+                        <p class="para">“<code class="literal">last-child</code>” - the insertion is made as the last child of the match;</p>
+                     </li>
+                     <li>
+                        <p class="para">“<code class="literal">before</code>” - the insertion is made as the immediate preceding sibling of the match;</p>
+                     </li>
+                     <li>
+                        <p class="para">“<code class="literal">after</code>” - the insertion is made as the immediate following sibling of the match.</p>
+                     </li>
+                  </ul>
+                  <p class="para">
+                     <span class="error">[*** Unrecognized element: &lt;db:error code="C0025"&gt; (phase: inline)]</span>
+                     <span class="error">[*** Unrecognized element: &lt;db:error code="C0024"&gt; (phase: inline)]</span>
+                  </p>
+                  <p class="para">As the inserted elements are part of the output of the step they are not considered in determining matching elements. If an empty
+          sequence appears on the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> port, the result will be the same as the source.</p>
+                  <p class="error">[*** Unrecognized element: &lt;db:simplesect&gt; (phase: main)]</p>
+               </div>
+            </div>
+            <p> </p>
+         </body>
+      </html>
+   </xtlcon:document>
+   <xtlcon:document href-target="3.1/3.1.replace.html"
+                    content-type="text/html"
+                    _document-index="7"
+                    _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/3.1.replace.html">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+         <head>
+            <meta http-equiv="Content-Type"
+                  content="text/html; charset=utf-8"/>
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1"/>
+            <link href="../css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <script defer="defer"
+                    src="../js/bootstrap.bundle.min.js"/>
+            <title>STEP p:replace</title>
+            <link rel="shortcut icon"
+                  href="../images/favicon.ico"/>
+         </head>
+         <body>
+            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark ">
+               <div class="container-fluid">
+                  <a class="navbar-brand"
+                     href="../index.html">
+                     <img src="../images/logo.png"
+                          class="img-fluid"
+                          width="14%"/>
+                  </a>
+               </div>
+               <div class="container-fluid">
+                  <ul class="nav justify-content-end nav-pills text-light">
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="../index.html">home</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">versions</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">overview</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../3.1/index.html">3.1</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../3.0/index.html">3.0</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="../about.html">about</a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+            <div class="container pt-5">
+               <h1 class="title">STEP p:replace</h1>
+               <p class="para">TBD</p>
+               <div class="sect1">
+                  <h1 class="sect1">SIGNATURE</h1>
+                  <p class="para">TBD</p>
+               </div>
+               <div class="sect1">
+                  <h1 class="sect1">SUMMARY</h1>
+                  <p class="para">The <code class="code">p:replace</code> step replaces matching nodes in
           its primary input with the top-level node(s) of the
-          <code>replacement</code> port's document.</para>
-         </summary>
-         <description>
-            <para>The value of the <option>match</option> option
-          <rfc2119>must</rfc2119> be an XSLTSelectionPattern. <error code="C0023">It
-            is a <glossterm>dynamic error</glossterm> if that pattern matches
-            an attribute or a namespace nodes. </error> Multiple matches are allowed, in which case multiple
-          copies of the <port>replacement</port> document will occur.</para>
-            <para>Every node in the primary input matching the specified
+          <code class="code">replacement</code> port's document.</p>
+               </div>
+               <div class="sect1">
+                  <h1 class="sect1">DESCRIPTION</h1>
+                  <p class="para">The value of the <span class="error">[*** Unrecognized element: &lt;db:option&gt; (phase: inline)]</span> option
+          <span class="error">[*** Unrecognized element: &lt;db:rfc2119&gt; (phase: inline)]</span> be an XSLTSelectionPattern. <span class="error">[*** Unrecognized element: &lt;db:error code="C0023"&gt; (phase: inline)]</span> Multiple matches are allowed, in which case multiple
+          copies of the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> document will occur.</p>
+                  <p class="para">Every node in the primary input matching the specified
           pattern is replaced in the output by the top-level node(s)
-          of the <port>replacement</port> document. Only non-nested matches are
+          of the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> document. Only non-nested matches are
           replaced. That is, once a node is replaced, its descendants cannot
-          be matched.</para>
-            <para>If the document node is matched and port <port>replacement</port> contains
+          be matched.</p>
+                  <p class="para">If the document node is matched and port <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> contains
           a text document, the entire document is replaced by the text node. What appears on port 
-          <port>result</port> is a text document with the text node wrapped in a document node.</para>
-            <simplesect>
-               <title>Document properties</title>
-               <para feature="replace-preserves-partially">If the resulting document contains exactly one text node,
-            the <literal>content-type</literal> property is changed to <literal>text/plain</literal> and the 
-            <literal>serialization</literal> property is removed, while all other document properties are 
-            preserved. For other document types, all document properties are preserved.</para>
-            </simplesect>
-         </description>
-      </step>
-   </steps>
-</xprocref>
+          <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> is a text document with the text node wrapped in a document node.</p>
+                  <p class="error">[*** Unrecognized element: &lt;db:simplesect&gt; (phase: main)]</p>
+               </div>
+            </div>
+            <p> </p>
+         </body>
+      </html>
+   </xtlcon:document>
+   <!-- == END VERSION 3.1 (v31) == -->
+   <!-- == START VERSION 3.0 (v30) == -->
+   <xtlcon:document href-target="3.0/index.html"
+                    content-type="text/html"
+                    _document-index="8"
+                    _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.0/index.html">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+         <head>
+            <meta http-equiv="Content-Type"
+                  content="text/html; charset=utf-8"/>
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1"/>
+            <link href="../css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <script defer="defer"
+                    src="../js/bootstrap.bundle.min.js"/>
+            <title>HOME PAGE VERSION 3.0</title>
+            <link rel="shortcut icon"
+                  href="../images/favicon.ico"/>
+         </head>
+         <body>
+            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark ">
+               <div class="container-fluid">
+                  <a class="navbar-brand"
+                     href="../index.html">
+                     <img src="../images/logo.png"
+                          class="img-fluid"
+                          width="14%"/>
+                  </a>
+               </div>
+               <div class="container-fluid">
+                  <ul class="nav justify-content-end nav-pills text-light">
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="../index.html">home</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">versions</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">overview</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../3.1/index.html">3.1</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../3.0/index.html">3.0</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="../about.html">about</a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+            <div class="container pt-5">
+               <h1 class="title">HOME PAGE VERSION 3.0</h1>
+               <p class="para">The base XProc version 3.0</p>
+               <ul class="itemizedlist step-list">
+                  <li>
+                     <p class="para">
+                        <a href="3.0.replace.html">
+                           <span class="link">replace</span>
+                        </a> - Replaces matching nodes</p>
+                  </li>
+               </ul>
+            </div>
+            <p> </p>
+         </body>
+      </html>
+   </xtlcon:document>
+   <xtlcon:document href-target="3.0/categories.html"
+                    content-type="text/html"
+                    _document-index="9"
+                    _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.0/categories.html">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+         <head>
+            <meta http-equiv="Content-Type"
+                  content="text/html; charset=utf-8"/>
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1"/>
+            <link href="../css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <script defer="defer"
+                    src="../js/bootstrap.bundle.min.js"/>
+            <title>CATEGORIES VERSION 3.0</title>
+            <link rel="shortcut icon"
+                  href="../images/favicon.ico"/>
+         </head>
+         <body>
+            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark ">
+               <div class="container-fluid">
+                  <a class="navbar-brand"
+                     href="../index.html">
+                     <img src="../images/logo.png"
+                          class="img-fluid"
+                          width="14%"/>
+                  </a>
+               </div>
+               <div class="container-fluid">
+                  <ul class="nav justify-content-end nav-pills text-light">
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="../index.html">home</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">versions</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">overview</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../3.1/index.html">3.1</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../3.0/index.html">3.0</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="../about.html">about</a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+            <div class="container pt-5">
+               <h1 class="title">CATEGORIES VERSION 3.0</h1>
+               <p class="para">TBD</p>
+            </div>
+            <p> </p>
+         </body>
+      </html>
+   </xtlcon:document>
+   <xtlcon:document href-target="3.0/3.0.replace.html"
+                    content-type="text/html"
+                    _document-index="10"
+                    _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.0/3.0.replace.html">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+         <head>
+            <meta http-equiv="Content-Type"
+                  content="text/html; charset=utf-8"/>
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1"/>
+            <link href="../css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <script defer="defer"
+                    src="../js/bootstrap.bundle.min.js"/>
+            <title>STEP p:replace</title>
+            <link rel="shortcut icon"
+                  href="../images/favicon.ico"/>
+         </head>
+         <body>
+            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark ">
+               <div class="container-fluid">
+                  <a class="navbar-brand"
+                     href="../index.html">
+                     <img src="../images/logo.png"
+                          class="img-fluid"
+                          width="14%"/>
+                  </a>
+               </div>
+               <div class="container-fluid">
+                  <ul class="nav justify-content-end nav-pills text-light">
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="../index.html">home</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">versions</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">overview</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../3.1/index.html">3.1</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../3.0/index.html">3.0</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="../about.html">about</a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+            <div class="container pt-5">
+               <h1 class="title">STEP p:replace</h1>
+               <p class="para">TBD</p>
+               <div class="sect1">
+                  <h1 class="sect1">SIGNATURE</h1>
+                  <p class="para">TBD</p>
+               </div>
+               <div class="sect1">
+                  <h1 class="sect1">SUMMARY</h1>
+                  <p class="para">The <code class="code">p:replace</code> step replaces matching nodes in
+          its primary input with the top-level node(s) of the
+          <code class="code">replacement</code> port's document.</p>
+               </div>
+               <div class="sect1">
+                  <h1 class="sect1">DESCRIPTION</h1>
+                  <p class="para">The value of the <span class="error">[*** Unrecognized element: &lt;db:option&gt; (phase: inline)]</span> option
+          <span class="error">[*** Unrecognized element: &lt;db:rfc2119&gt; (phase: inline)]</span> be an XSLTSelectionPattern. <span class="error">[*** Unrecognized element: &lt;db:error code="C0023"&gt; (phase: inline)]</span> Multiple matches are allowed, in which case multiple
+          copies of the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> document will occur.</p>
+                  <p class="para">Every node in the primary input matching the specified
+          pattern is replaced in the output by the top-level node(s)
+          of the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> document. Only non-nested matches are
+          replaced. That is, once a node is replaced, its descendants cannot
+          be matched.</p>
+                  <p class="para">If the document node is matched and port <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> contains
+          a text document, the entire document is replaced by the text node. What appears on port 
+          <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> is a text document with the text node wrapped in a document node.</p>
+                  <p class="error">[*** Unrecognized element: &lt;db:simplesect&gt; (phase: main)]</p>
+               </div>
+            </div>
+            <p> </p>
+         </body>
+      </html>
+   </xtlcon:document>
+   <!-- == END VERSION 3.0 (v30) == -->
+</xtlcon:document-container>

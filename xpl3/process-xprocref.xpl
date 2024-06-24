@@ -36,6 +36,12 @@
   </p:output>
 
   <!-- ======================================================================= -->
+  <!-- DEBUG SETTINGS -->
+
+  <p:option static="true" name="write-intermediate-results" as="xs:boolean" required="false" select="true()"/>
+  <p:option static="true" name="href-intermediate-results" as="xs:string" required="false" select="resolve-uri('../tmp', static-base-uri())"/>
+
+  <!-- ======================================================================= -->
   <!-- OPTIONS: -->
 
   <p:option name="href-build-location" as="xs:string" required="false" select="resolve-uri('../build', static-base-uri())">
@@ -114,36 +120,47 @@
     <p:with-option name="href-schema" select="$href-xprocref-schema"/>
     <p:with-option name="href-schematron" select="$href-xprocref-schematron"/>
   </xtlc:validate>
+  
+  <p:xslt>
+    <p:with-input port="stylesheet" href="xsl-process-xprocref/prepare-xprocref-specification.xsl"/>
+  </p:xslt>
+  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-prepared.xml"/>
+  <p:identity name="prepared-xprocref-specification"/>
+
+  <!-- Clean the result directory: -->
+  <xtlc:create-clear-directory clear="true">
+    <p:with-option name="href-dir" select="$href-build-location"/>
+  </xtlc:create-clear-directory>
 
   <!-- Copy the web resources: -->
- <!-- <local:copy-web-resources p:message="  * Copying web resources">
+  <local:copy-web-resources p:message="  * Copying web resources">
     <p:with-option name="href-web-resources" select="$href-web-resources"/>
     <p:with-option name="href-build-location" select="$href-build-location"/>
-  </local:copy-web-resources>-->
+  </local:copy-web-resources>
 
-  <!-- Take care that all steps are there for all versions: -->
-  <!-- TBD -->
-  
-  
   <!-- Create an index document: -->
   <p:xslt>
+    <p:with-input pipe="@prepared-xprocref-specification"/>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/create-xprocref-index.xsl"/>
   </p:xslt>
-  
+  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-index.xml"/>
+  <p:variable name="xprocref-index" as="document-node()" select="."/>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Create container: -->
-
-  <!--<!-\- Create a container (all text still in DocBook/Markdown): -\->
+ 
+  <!-- Create a container (all text still in DocBook/Markdown): -->
   <p:xslt message="  * Creating pages">
+    <p:with-input pipe="@prepared-xprocref-specification"/>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/create-xprocref-container.xsl"/>
-    <!-\-<p:with-option name="parameters" select="map{ }"/>-\->
+    <p:with-option name="parameters" select="map{'xprocref-index': $xprocref-index}"/>
   </p:xslt>
+  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-raw-container.xml"/>
 
-  <!-\- Process the Markdown (into DocBook): -\->
+  <!-- Process the Markdown (into DocBook): -->
   <xdoc:markdown-to-docbook/>
 
-  <!-\- Process the resulting DocBook/xdoc into XHTML: -\->
+  <!-- Process the resulting DocBook/xdoc into XHTML: -->
   <p:viewport match="xtlcon:document[exists(db:article)]" message="  * Converting pages to HTML">
     <p:variable name="href-target" as="xs:string" select="xs:string(/*/@href-target)"/>
     <p:viewport match="db:article[1]">
@@ -157,13 +174,14 @@
       </p:xslt>
     </p:viewport>
   </p:viewport>
+  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-final-container.xml"/>
   
-  <!-\- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\->
-  <!-\- Finishing: -\->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- Finishing: -->
   
-  <!-\- Write the container to disk: -\->
+  <!-- Write the container to disk: -->
   <xtlcon:container-to-disk remove-target="false" p:message="  * Writing to target">
     <p:with-option name="href-target-path" select="$href-build-location"/>
-  </xtlcon:container-to-disk>-->
-  
+  </xtlcon:container-to-disk>
+
 </p:declare-step>

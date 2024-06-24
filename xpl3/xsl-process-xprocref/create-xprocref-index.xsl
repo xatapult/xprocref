@@ -34,16 +34,16 @@
       <xsl:attribute name="timestamp" select="current-dateTime()" use-when="$add-comments"/>
 
       <!-- Base info for all categories: -->
-      <xsl:comment use-when="$add-comments"> == ALL CATEGORIES: == </xsl:comment>
+      <!--<xsl:comment use-when="$add-comments"> == ALL CATEGORIES: == </xsl:comment>
       <xsl:apply-templates select="$category-elements">
         <xsl:sort select="local:sort-key-category(.)"/>
-      </xsl:apply-templates>
+      </xsl:apply-templates>-->
 
       <!-- Base info for the steps: -->
-      <xsl:comment use-when="$add-comments"> == ALL STEPS: == </xsl:comment>
+      <!--<xsl:comment use-when="$add-comments"> == ALL STEPS: == </xsl:comment>
       <xsl:apply-templates select="$step-elements">
         <xsl:sort select="local:sort-key-step(.)"/>
-      </xsl:apply-templates>
+      </xsl:apply-templates>-->
 
       <!-- Further organization per version: -->
       <xsl:comment use-when="$add-comments"> == ALL VERSIONS: == </xsl:comment>
@@ -59,20 +59,20 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="xpref:step">
+ <!-- <xsl:template match="xpref:step">
     <xsl:copy>
       <xsl:apply-templates select="(@id, @name, @short-description)"/>
     </xsl:copy>
-  </xsl:template>
+  </xsl:template>-->
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="xpref:category">
+  <!--<xsl:template match="xpref:category">
     <xsl:copy>
       <xsl:apply-templates select="(@* except @primary)"/>
       <xsl:attribute name="primary" select="xtlc:str2bln(@primary, false())"/>
     </xsl:copy>
-  </xsl:template>
+  </xsl:template>-->
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -82,8 +82,7 @@
     <xsl:variable name="steps-for-version" as="element(xpref:step)*" select="$step-elements[@version-idref eq $version-id]"/>
 
     <xsl:comment use-when="$add-comments"> == Version {$version-id} == </xsl:comment>
-    <xsl:copy>
-      <xsl:apply-templates select="@*"/>
+    <versionref id="{$version-id}">
 
       <!-- Steps for this version: -->
       <xsl:for-each select="$steps-for-version">
@@ -134,7 +133,7 @@
           </xsl:for-each>
         </categoryref>
       </xsl:for-each>
-    </xsl:copy>
+    </versionref>
 
   </xsl:template>
 

@@ -13,7 +13,7 @@
         <xs:group minOccurs="0" ref="xpref:g-macrodefs"/>
         <xs:element name="versions">
           <xs:annotation>
-            <xs:documentation>Available XProc versions.</xs:documentation>
+            <xs:documentation>Available XProc versions. Processed in document order.</xs:documentation>
           </xs:annotation>
           <xs:complexType>
             <xs:sequence>
@@ -102,10 +102,10 @@
           <xs:annotation>
             <xs:documentation>All steps.</xs:documentation>
           </xs:annotation>
-          <xs:key name="key-step-identifiers">
+          <xs:unique name="key-step-identifiers">
             <xs:selector xpath=".//xpref:step"/>
             <xs:field xpath="@id"/>
-          </xs:key>
+          </xs:unique>
           <xs:key name="key-step-name-version">
             <xs:annotation>
               <xs:documentation>The combination step-name/version must be unique.</xs:documentation>
@@ -207,7 +207,7 @@
           </xs:annotation>
         </xs:group>
       </xs:sequence>
-      <xs:attributeGroup ref="xpref:ag-id-mandatory"/>
+      <xs:attributeGroup ref="xpref:ag-id-optional"/>
       <xs:attribute name="name" type="xs:NCName" use="required">
         <xs:annotation>
           <xs:documentation>The name of the step (without namespace prefix).</xs:documentation>
@@ -245,6 +245,9 @@
   </xs:element>
   <xs:attributeGroup name="ag-id-mandatory">
     <xs:attribute name="id" type="xpref:identifier" use="required"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="ag-id-optional">
+    <xs:attribute name="id" type="xpref:identifier"/>
   </xs:attributeGroup>
   <xs:attributeGroup name="ag-port-attributes">
     <xs:attribute name="port" type="xpref:t-codename" use="required">

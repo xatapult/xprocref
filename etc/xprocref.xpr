@@ -10,7 +10,7 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../../../../../../Users/erik/Desktop/basedoc-xprocref.xml</String>
+                                    <String>../xpl3/xsl-process-xprocref/create-xprocref-index.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -30,7 +30,7 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../xpl3/xsl-process-xprocref/create-xprocref-index.xsl</String>
+                                    <String>../../../../../../Users/erik/Desktop/basedoc-xprocref.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -79,7 +79,7 @@
                                     <String>file:/C:/Data/Erik/work/xatapult/xprocref/xpl3/xsl-process-xprocref/create-xprocref-index.xsl</String>
                                 </field>
                                 <field name="inputXMLURL">
-                                    <String>file:/C:/Users/erik/Desktop/basedoc-xprocref.xml</String>
+                                    <String>file:/C:/Data/Erik/work/xatapult/xprocref/test/basedoc-xprocref.xml</String>
                                 </field>
                                 <field name="defaultScenario">
                                     <Boolean>false</Boolean>

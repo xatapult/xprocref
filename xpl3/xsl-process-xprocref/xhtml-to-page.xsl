@@ -81,8 +81,9 @@
     <menu xmlns="http://www.xtpxlib.nl/ns/xprocref">
       <menu-entry caption="home" href="{xtlc:href-concat(($homedir-path, $xpref:name-index-page))}"/>
       <menu-entry caption="versions" href="{xtlc:href-concat(($homedir-path, $xpref:name-versions-page))}">
-        <submenu-entry caption="3.0" href="{xtlc:href-concat(($homedir-path, '3.0', $xpref:name-index-page))}"/>
+        <submenu-entry caption="overview" href="{xtlc:href-concat(($homedir-path, $xpref:name-versions-page))}"/>
         <submenu-entry caption="3.1" href="{xtlc:href-concat(($homedir-path, '3.1', $xpref:name-index-page))}"/>
+        <submenu-entry caption="3.0" href="{xtlc:href-concat(($homedir-path, '3.0', $xpref:name-index-page))}"/>
       </menu-entry>
       <menu-entry caption="about" href="{xtlc:href-concat(($homedir-path, $xpref:name-about-page))}"/>
     </menu>

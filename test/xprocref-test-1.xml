@@ -6,18 +6,19 @@
   <!-- ======================================================================= -->
 
   <versions>
+    <!-- Most current first.  -->
+    
+    <version id="v31" name="3.1">
+      <description>
+        The XProc version 3.1 (NEW!)
+      </description>
+    </version>
+    
     <version id="v30" name="3.0">
       <description>
         The base XProc version 3.0
       </description>
     </version>
-    
-    <version id="v31" name="3.1" >
-      <description>
-        The XProc version 3.1 (NEW!)
-      </description>
-    </version>
-
   </versions>
 
   <!-- ======================================================================= -->
@@ -40,7 +41,7 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <step name="insert" id="step.insert" category-idrefs="c.test" version-idref="v31" short-description="Insert a piece of content in another">
+    <step name="insert" category-idrefs="c.test" version-idref="v31" short-description="Insert a piece of content in another">
 
       <specification-link href="https://spec.xproc.org/master/head/steps/#c.insert"/>
 
@@ -104,10 +105,10 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <step id="step.replace" name="replace" version-idref="v30" category-idrefs="c.test" short-description="Replaces matching nodes">
-      
+    <step name="replace" version-idref="v31" category-idrefs="c.test" short-description="Replaces matching nodes">
+
       <specification-link href="https://spec.xproc.org/master/head/steps/#c.replace"/>
-      
+
       <signature>
         <input port="source" primary="true" sequence="false" content-types="xml html">
           <description>The primary source port</description>
@@ -151,7 +152,60 @@
             preserved. For other document types, all document properties are preserved.</para>
         </simplesect>
       </description>
-      
+
+    </step>
+
+    <!-- ======================================================================= -->
+    <!-- v30 -->
+
+    <step id="step.replace" name="replace" version-idref="v30" category-idrefs="c.test" short-description="Replaces matching nodes">
+
+      <specification-link href="https://spec.xproc.org/master/head/steps/#c.replace"/>
+
+      <signature>
+        <input port="source" primary="true" sequence="false" content-types="xml html">
+          <description>The primary source port</description>
+        </input>
+        <input port="replacement" primary="false" sequence="false" content-types="text xml html">
+          <description>The thing to replace with</description>
+        </input>
+        <output port="result" primary="true" sequence="false" content-types="text xml html">
+          <description>The final result</description>
+        </output>
+        <option name="match" as="xs:string" select="/*" subtype="XSLTSelectionPattern" required="false">
+          <description>Where to replace stuff</description>
+        </option>
+      </signature>
+
+      <summary>
+        <para>The <code>p:replace</code> step replaces matching nodes in
+          its primary input with the top-level node(s) of the
+          <code>replacement</code> port's document.</para>
+      </summary>
+
+      <description>
+        <para>The value of the <option>match</option> option
+          <rfc2119>must</rfc2119> be an XSLTSelectionPattern. <error code="C0023">It
+            is a <glossterm>dynamic error</glossterm> if that pattern matches
+            an attribute or a namespace nodes. </error> Multiple matches are allowed, in which case multiple
+          copies of the <port>replacement</port> document will occur.</para>
+        <para>Every node in the primary input matching the specified
+          pattern is replaced in the output by the top-level node(s)
+          of the <port>replacement</port> document. Only non-nested matches are
+          replaced. That is, once a node is replaced, its descendants cannot
+          be matched.</para>
+        <para>If the document node is matched and port <port>replacement</port> contains
+          a text document, the entire document is replaced by the text node. What appears on port 
+          <port>result</port> is a text document with the text node wrapped in a document node.</para>
+        <simplesect>
+          <title>Document properties</title>
+          <para feature="replace-preserves-partially">If the resulting document contains exactly one text node,
+            the <literal>content-type</literal> property is changed to <literal>text/plain</literal> and the 
+            <literal>serialization</literal> property is removed, while all other document properties are 
+            preserved. For other document types, all document properties are preserved.</para>
+        </simplesect>
+      </description>
+
     </step>
 
   </steps>
