@@ -164,10 +164,10 @@
   <p:viewport match="xtlcon:document[exists(db:article)]" message="  * Converting pages to HTML">
     <p:variable name="href-target" as="xs:string" select="xs:string(/*/@href-target)"/>
     <p:viewport match="db:article[1]">
-      <xdoc:xdoc-to-xhtml add-numbering="false" add-identifiers="false"/>
+      <xdoc:xdoc-to-xhtml add-numbering="false" add-identifiers="false" create-header="false"/>
       <p:xslt>
         <p:with-input port="stylesheet" href="xsl-process-xprocref/xhtml-to-page.xsl"/>
-        <p:with-option name="parameters" select="map{'href-template': $href-web-template, 'href-target': $href-target}"/>
+        <p:with-option name="parameters" select="map{'href-template': $href-web-template, 'href-target': $href-target, 'xprocref-index': $xprocref-index}"/>
       </p:xslt>
       <p:xslt>
         <p:with-input port="stylesheet" href="xsl-process-xprocref/convert-menu.xsl"/>

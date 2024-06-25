@@ -5,15 +5,23 @@
 
   <!-- ======================================================================= -->
 
+  <namespaces>
+    <namespace prefix="p" uri="http://www.w3.org/ns/xproc">
+      <description>The main XProc namespace, used for all of its elements, steps and some of its attributes.</description>
+    </namespace>
+  </namespaces>
+
+  <!-- ======================================================================= -->
+
   <versions>
     <!-- Most current first.  -->
-    
+
     <version id="v31" name="3.1">
       <description>
         The XProc version 3.1 (NEW!)
       </description>
     </version>
-    
+
     <version id="v30" name="3.0">
       <description>
         The base XProc version 3.0
@@ -32,6 +40,10 @@
     <category id="c.test2" name="Test 2">
       <description>Just another test category</description>
     </category>
+    
+    <category id="c.test3" name="Test 3">
+      <description>Just another test category</description>
+    </category>
 
   </categories>
 
@@ -41,7 +53,7 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <step name="insert" category-idrefs="c.test" version-idref="v31" short-description="Insert a piece of content in another">
+    <step name="insert" category-idrefs="c.test c.test2 c.test3" version-idref="v31" short-description="Insert a piece of content in another">
 
       <specification-link href="https://spec.xproc.org/master/head/steps/#c.insert"/>
 

@@ -1,29 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-model href="http://docbook.org/xml/5.2/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
-<?xml-model href="http://docbook.org/xml/5.2/sch/docbook.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-<article xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.2">
-  <info>
-    <title/>
-    <author>
-      <orgname/>
-      <address><city/>
-        <street/>
-        <postcode/>
-        <country/></address>
-      <email/>
-    </author>
-  </info>
-  <sect1>
-    <title/>
-    <para/>
-    <itemizedlist>
-      <listitem>
-        <para><link xlink:href="aef"></link></para>
-  </listitem>
-      <listitem>
-        <para></para>
-      </listitem>
-    </itemizedlist>
-    
-  </sect1>
-</article>
+<db:article version="5.0" xmlns:db="http://docbook.org/ns/docbook">
+  <db:info>
+    <db:title><db:link xlink:href="Test.html" xmlns:xlink="http://www.w3.org/1999/xlink">PREV<db:inlinemediaobject><db:imageobject><db:imagedata
+      fileref="../images/previous.png"/></db:imageobject></db:inlinemediaobject></db:link> Category: Test 2</db:title>
+  </db:info>
+  <db:itemizedlist role="step-list">
+    <db:listitem>
+      <db:para><db:link xlink:href="p.insert.html" xmlns:xlink="http://www.w3.org/1999/xlink">p:insert</db:link> - Insert a piece of content in
+        another</db:para>
+    </db:listitem>
+  </db:itemizedlist>
+</db:article>

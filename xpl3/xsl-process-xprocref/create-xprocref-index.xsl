@@ -82,7 +82,8 @@
     <xsl:variable name="steps-for-version" as="element(xpref:step)*" select="$step-elements[@version-idref eq $version-id]"/>
 
     <xsl:comment use-when="$add-comments"> == Version {$version-id} == </xsl:comment>
-    <versionref id="{$version-id}">
+    <!-- Remark: We add the name of the version because otherwise we couldn't access it in the processing of xhtml-to-page.xsl.  -->
+    <versionref id="{$version-id}" name="{@name}">
 
       <!-- Steps for this version: -->
       <xsl:for-each select="$steps-for-version">

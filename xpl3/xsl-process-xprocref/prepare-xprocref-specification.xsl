@@ -16,9 +16,15 @@
 
   <!-- ================================================================== -->
 
-  <xsl:template match="xpref:step[empty(@id)]">
+  <xsl:template match="xpref:step">
+    <!-- Make sure some optional attributes are filled in. -->
     <xsl:copy>
-      <xsl:attribute name="id" select="string-join(('step', @version-idref, @name, generate-id(.)), '.')"/>
+      <xsl:if test="empty(@id)">
+        <xsl:attribute name="id" select="string-join(('step', @version-idref, @name, generate-id(.)), '.')"/>
+      </xsl:if>
+      <xsl:if test="empty(@namespace-prefix)">
+        <xsl:attribute name="namespace-prefix" select="'p'"/>
+      </xsl:if>
       <xsl:apply-templates select="@* | node()"/>
     </xsl:copy>
   </xsl:template>

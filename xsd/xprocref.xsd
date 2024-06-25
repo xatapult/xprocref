@@ -11,6 +11,30 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group minOccurs="0" ref="xpref:g-macrodefs"/>
+        <xs:element name="namespaces">
+          <xs:annotation>
+            <xs:documentation>Definition of the namespace (prefixes) used. You must *always* define the p namespace prefix!</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="namespace">
+                <xs:complexType>
+                  <xs:group ref="xpref:g-description">
+                    <xs:annotation>
+                      <xs:documentation>The description of this namespace.</xs:documentation>
+                    </xs:annotation>
+                  </xs:group>
+                  <xs:attribute name="prefix" type="xs:NCName" use="required"/>
+                  <xs:attribute name="uri" type="xs:anyURI" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+          <xs:key name="key-namespace-prefix">
+            <xs:selector xpath="./xpref:namespace"/>
+            <xs:field xpath="@prefix"/>
+          </xs:key>
+        </xs:element>
         <xs:element name="versions">
           <xs:annotation>
             <xs:documentation>Available XProc versions. Processed in document order.</xs:documentation>
@@ -223,11 +247,12 @@
           <xs:documentation>A list of categories this step is part of. </xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="short-description" type="xpref:t-non-empty-string">
+      <xs:attribute name="short-description" type="xpref:t-non-empty-string" use="required">
         <xs:annotation>
           <xs:documentation>A (very) short description (a few words) for this step.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute default="p" name="namespace-prefix" type="xpref:t-non-empty-string"/>
       <xs:attribute ref="xml:base"/>
     </xs:complexType>
   </xs:element>

@@ -39,4 +39,14 @@
     </rule>
   </pattern>
   
+  <!-- ======================================================================= -->
+  <!-- Check the namespace prefix: -->
+  
+  <pattern>
+    <rule context="xpref:step">
+      <let name="namespace-prefix" value="xs:string((@namespace-prefix, 'p')[1])"/>
+      <assert test="exists(/*/xpref:namespaces/xpref:namespace[@prefix eq $namespace-prefix])">The step's namespace prefix "<value-of select="$namespace-prefix"/>" is undefined.</assert>
+    </rule>
+  </pattern>
+  
 </schema>

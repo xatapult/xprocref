@@ -18,9 +18,6 @@
   <xsl:mode name="mode-process-template" on-no-match="shallow-copy"/>
   <xsl:mode name="mode-process-page-contents" on-no-match="shallow-copy"/>
 
-  <xsl:include href="../../../xtpxlib-common/xslmod/general.mod.xsl"/>
-  <xsl:include href="../../../xtpxlib-common/xslmod/href.mod.xsl"/>
-  
   <xsl:include href="../xslmod/xprocref.mod.xsl"/>
   
   <!-- ================================================================== -->
@@ -28,13 +25,15 @@
 
   <xsl:param name="href-template" as="xs:string" required="true"/>
   <xsl:param name="href-target" as="xs:string" required="true"/>
+  
+  <xsl:param name="xprocref-index" as="document-node()" required="true"/>
 
   <!-- ======================================================================= -->
   <!-- GLOBAL DECLARATIONS: -->
   
   <xsl:variable name="page-contents" as="element()" select="/*"/>
 
-  <xsl:variable name="title-elm" as="element(xhtml:h1)" select="(//xhtml:h1[@class eq 'title'])[1]"/>
+  <xsl:variable name="title-elm" as="element(xhtml:h1)" select="(//xhtml:h1)[1]"/>
 
   <xsl:variable name="distance-to-homedir" as="xs:integer" select="(tokenize($href-target, '/')[.] => count()) - 1"/>
   <xsl:variable name="homedir-path" as="xs:string" select="(for $p in (1 to $distance-to-homedir) return '../') => string-join()"/>
@@ -70,7 +69,6 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="xpref:PAGE-CONTENTS" mode="mode-process-template">
-    <xsl:copy-of select="$title-elm"/>
     <xsl:apply-templates select="$page-contents" mode="mode-process-page-contents"/>
   </xsl:template>
   
@@ -79,13 +77,19 @@
   <xsl:template match="xpref:MENU" mode="mode-process-template">
     <!-- TBD, just something for now: -->
     <menu xmlns="http://www.xtpxlib.nl/ns/xprocref">
-      <menu-entry caption="home" href="{xtlc:href-concat(($homedir-path, $xpref:name-index-page))}"/>
-      <menu-entry caption="versions" href="{xtlc:href-concat(($homedir-path, $xpref:name-versions-page))}">
-        <submenu-entry caption="overview" href="{xtlc:href-concat(($homedir-path, $xpref:name-versions-page))}"/>
-        <submenu-entry caption="3.1" href="{xtlc:href-concat(($homedir-path, '3.1', $xpref:name-index-page))}"/>
-        <submenu-entry caption="3.0" href="{xtlc:href-concat(($homedir-path, '3.0', $xpref:name-index-page))}"/>
+      <menu-entry caption="home" href="{xpref:href-combine($homedir-path, (), $xpref:name-home-page)}"/>
+      <menu-entry caption="versions" href="{xpref:href-combine($homedir-path, (), $xpref:name-versions-overview-page)}">
+        <submenu-entry caption="overview" href="{xpref:href-combine($homedir-path, (), $xpref:name-versions-overview-page)}"/>
+        <xsl:for-each select="$xprocref-index/*/xpref:versionref">
+          <xsl:variable name="version-name" as="xs:string" select="xs:string(@name)"/>
+          <submenu-entry caption="{$version-name}{if (position() eq 1) then ' (latest)' else ()}" href="{xpref:href-combine($homedir-path, $version-name, $xpref:name-version-home-page)}"/>
+        </xsl:for-each>
       </menu-entry>
-      <menu-entry caption="about" href="{xtlc:href-concat(($homedir-path, $xpref:name-about-page))}"/>
+      <xsl:if test="$distance-to-homedir > 0">
+        <!-- We're on a version related page. Add the categories overview as menu entry: -->
+        <menu-entry caption="categories" href="{xpref:href-combine((), $xpref:name-categories-overview-page)}"/>
+      </xsl:if>
+      <menu-entry caption="about" href="{xpref:href-combine($homedir-path, (), $xpref:name-about-page)}"/>
     </menu>
     
   </xsl:template>
