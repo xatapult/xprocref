@@ -230,6 +230,16 @@
             <xs:documentation>The description of this step.</xs:documentation>
           </xs:annotation>
         </xs:group>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="example">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="xpref:ct-text">
+                <xs:attribute name="title" type="xpref:t-non-empty-string" use="required"/>
+                <xs:attributeGroup ref="xpref:ag-id-optional"/>
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
       </xs:sequence>
       <xs:attributeGroup ref="xpref:ag-id-optional"/>
       <xs:attribute name="name" type="xs:NCName" use="required">

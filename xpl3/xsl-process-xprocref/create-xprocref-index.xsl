@@ -110,7 +110,9 @@
           <xsl:comment use-when="$add-comments"> == Other versions for step {$step-name} in version {$version-id} == </xsl:comment>
           <xsl:for-each select="$other-versions">
             <xsl:sort select="local:sort-key-version(.)"/>
-            <other-versionref id="{@id}"/>
+            <xsl:variable name="version-id" as="xs:string" select="@id"/>
+            <xsl:variable name="step-id" as="xs:string" select="xs:string($same-named-steps-in-other-versions[@version-idref eq $version-id][1]/@id)"/>
+            <other-versionref id="{$version-id}" step-id="{$step-id}"/>
           </xsl:for-each>
 
         </stepref>

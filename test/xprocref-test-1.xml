@@ -40,7 +40,7 @@
     <category id="c.test2" name="Test 2">
       <description>Just another test category</description>
     </category>
-    
+
     <category id="c.test3" name="Test 3">
       <description>Just another test category</description>
     </category>
@@ -156,15 +156,23 @@
         <para>If the document node is matched and port <port>replacement</port> contains
           a text document, the entire document is replaced by the text node. What appears on port 
           <port>result</port> is a text document with the text node wrapped in a document node.</para>
-        <simplesect>
-          <title>Document properties</title>
           <para feature="replace-preserves-partially">If the resulting document contains exactly one text node,
             the <literal>content-type</literal> property is changed to <literal>text/plain</literal> and the 
             <literal>serialization</literal> property is removed, while all other document properties are 
             preserved. For other document types, all document properties are preserved.</para>
-        </simplesect>
       </description>
 
+      <example title="First example">
+        <para>bla bla bla</para>
+        <para>bla bla bla</para>
+        <para>bla bla bla</para>
+      </example>
+
+      <example title="Second example">
+        <para>bla bla bla</para>
+        <para>bla bla bla</para>
+        <para>bla bla bla</para>
+      </example>
     </step>
 
     <!-- ======================================================================= -->

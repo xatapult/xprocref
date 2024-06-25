@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xtlcon:document-container timestamp="2024-06-25T12:07:54.7579137+02:00"
+<xtlcon:document-container timestamp="2024-06-25T17:03:39.1810711+02:00"
                            _href-target-path="file:///C:/Data/Erik/work/xatapult/xprocref/build"
                            xmlns:xtlcon="http://www.xtpxlib.nl/ns/container">
    <!-- == MAIN PAGES: == -->
@@ -17,7 +17,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="js/bootstrap.bundle.min.js"/>
-            <title>HOME PAGE TBD</title>
+            <title>XProcRef home</title>
             <link rel="shortcut icon"
                   href="images/favicon.ico"/>
          </head>
@@ -28,7 +28,7 @@
                      href="index.html">
                      <img src="images/logo.png"
                           class="img-fluid"
-                          width="14%"/>
+                          width="18%"/>
                   </a>
                </div>
                <div class="container-fluid">
@@ -65,7 +65,7 @@
             </nav>
             <div class="container pt-5">
                <div class="sect1">
-                  <h1 class="sect1">HOME PAGE TBD</h1>
+                  <h1 class="sect1">XProcRef home</h1>
                   <p class="para">TBD</p>
                </div>
             </div>
@@ -87,7 +87,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="js/bootstrap.bundle.min.js"/>
-            <title>VERSIONS PAGE TBD</title>
+            <title>XProc versions</title>
             <link rel="shortcut icon"
                   href="images/favicon.ico"/>
          </head>
@@ -98,7 +98,7 @@
                      href="index.html">
                      <img src="images/logo.png"
                           class="img-fluid"
-                          width="14%"/>
+                          width="18%"/>
                   </a>
                </div>
                <div class="container-fluid">
@@ -135,7 +135,7 @@
             </nav>
             <div class="container pt-5">
                <div class="sect1">
-                  <h1 class="sect1">VERSIONS PAGE TBD</h1>
+                  <h1 class="sect1">XProc versions</h1>
                   <ul class="itemizedlist versions-list">
                      <li>
                         <p class="para">
@@ -174,7 +174,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="js/bootstrap.bundle.min.js"/>
-            <title>ABOUT PAGE TBD</title>
+            <title>About XProcRef</title>
             <link rel="shortcut icon"
                   href="images/favicon.ico"/>
          </head>
@@ -185,7 +185,7 @@
                      href="index.html">
                      <img src="images/logo.png"
                           class="img-fluid"
-                          width="14%"/>
+                          width="18%"/>
                   </a>
                </div>
                <div class="container-fluid">
@@ -222,7 +222,7 @@
             </nav>
             <div class="container pt-5">
                <div class="sect1">
-                  <h1 class="sect1">ABOUT PAGE TBD</h1>
+                  <h1 class="sect1">About XProcRef</h1>
                   <p class="para">TBD</p>
                </div>
             </div>
@@ -256,7 +256,7 @@
                      href="../index.html">
                      <img src="../images/logo.png"
                           class="img-fluid"
-                          width="14%"/>
+                          width="18%"/>
                   </a>
                </div>
                <div class="container-fluid">
@@ -370,7 +370,7 @@
                      href="../index.html">
                      <img src="../images/logo.png"
                           class="img-fluid"
-                          width="14%"/>
+                          width="18%"/>
                   </a>
                </div>
                <div class="container-fluid">
@@ -469,7 +469,7 @@
                      href="../index.html">
                      <img src="../images/logo.png"
                           class="img-fluid"
-                          width="14%"/>
+                          width="18%"/>
                   </a>
                </div>
                <div class="container-fluid">
@@ -587,7 +587,7 @@
                      href="../index.html">
                      <img src="../images/logo.png"
                           class="img-fluid"
-                          width="14%"/>
+                          width="18%"/>
                   </a>
                </div>
                <div class="container-fluid">
@@ -684,7 +684,7 @@
                      href="../index.html">
                      <img src="../images/logo.png"
                           class="img-fluid"
-                          width="14%"/>
+                          width="18%"/>
                   </a>
                </div>
                <div class="container-fluid">
@@ -774,7 +774,7 @@
                      href="../index.html">
                      <img src="../images/logo.png"
                           class="img-fluid"
-                          width="14%"/>
+                          width="18%"/>
                   </a>
                </div>
                <div class="container-fluid">
@@ -824,17 +824,207 @@
                      </a>
                   </h1>
                   <p class="para">Insert a piece of content in another</p>
-                  <div class="sect2">
-                     <h2 class="sect2">SIGNATURE</h2>
-                     <p class="para">TBD</p>
+                  <div class="programlisting step-signature">
+                     <pre class="programlisting step-signature">&lt;p:declare-step type="p:insert"&gt;
+  &lt;input port="source" primary="true" content-types="xml html" sequence="false"/&gt;
+  &lt;output port="result" primary="true" content-types="xml html" sequence="false"/&gt;
+  &lt;input port="insertion" primary="false" content-types="xml html" sequence="true"/&gt;
+  &lt;option name="match" as="xs:string" required="false" select="/*"/&gt;
+  &lt;option name="position" as="xs:string" required="false" select="after" values="first-child last-child before after"/&gt;
+&lt;/p:declare-step&gt;</pre>
                   </div>
-                  <div class="sect2">
-                     <h2 class="sect2">SUMMARY</h2>
-                     <p class="para">The <code class="code">p:insert</code> step inserts the <code class="code">insertion</code> port's document into the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> port's document relative
+                  <p class="para">The <code class="code">p:insert</code> step inserts the <code class="code">insertion</code> port's document into the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> port's document relative
           to the matching elements in the <code class="code">source</code> port's document.</p>
+                  <p class="para table-header">Ports:</p>
+                  <div class="table nonumber ports-table">
+                     <table class="table nonumber ports-table">
+                        <thead>
+                           <tr>
+                              <th>
+                                 <p class="para">Type</p>
+                              </th>
+                              <th>
+                                 <p class="para">Port name</p>
+                              </th>
+                              <th>
+                                 <p class="para">Primary</p>
+                              </th>
+                              <th>
+                                 <p class="para">Content types</p>
+                              </th>
+                              <th>
+                                 <p class="para">Sequence</p>
+                              </th>
+                              <th>
+                                 <p class="para">Description</p>
+                              </th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>
+                                 <p class="para">Input</p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">source</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">true</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">xml html</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">false</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">The primary input port</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <p class="para">Output</p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">result</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">true</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">xml html</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">false</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">The primary output port</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <p class="para">Input</p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">insertion</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">false</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">xml html</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">true</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">The contents to insert</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <p class="para table-header">Options:</p>
+                  <div class="table nonumber options-table">
+                     <table class="table nonumber options-table">
+                        <thead>
+                           <tr>
+                              <th>
+                                 <p class="para">Name</p>
+                              </th>
+                              <th>
+                                 <p class="para">As</p>
+                              </th>
+                              <th>
+                                 <p class="para">Required</p>
+                              </th>
+                              <th>
+                                 <p class="para">Select</p>
+                              </th>
+                              <th>
+                                 <p class="para">Description</p>
+                              </th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">match</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">xs:string</code> (<code class="code">XSLTSelectionPattern</code>)</p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">false</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">/*</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">Where to insert stuff</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">position</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">xs:string</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">false</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">after</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">relative position where to insert the stuff</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
                   </div>
                   <div class="sect2">
-                     <h2 class="sect2">DESCRIPTION</h2>
+                     <h2 class="sect2">Description</h2>
                      <p class="para">The value of the <span class="error">[*** Unrecognized element: &lt;db:option&gt; (phase: inline)]</span> option <span class="error">[*** Unrecognized element: &lt;db:rfc2119&gt; (phase: inline)]</span> be an XSLTSelectionPattern. <span class="error">[*** Unrecognized element: &lt;db:error code="C0023"&gt; (phase: inline)]</span> Multiple matches are allowed, in
           which case multiple copies of the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> documents will occur. If no elements match, then the document is unchanged.</p>
                      <p class="para">The value of the <span class="error">[*** Unrecognized element: &lt;db:option&gt; (phase: inline)]</span> option <span class="error">[*** Unrecognized element: &lt;db:rfc2119&gt; (phase: inline)]</span> be an NMTOKEN in the following list: </p>
@@ -859,6 +1049,40 @@
                      <p class="para">As the inserted elements are part of the output of the step they are not considered in determining matching elements. If an empty
           sequence appears on the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> port, the result will be the same as the source.</p>
                      <p class="error">[*** Unrecognized element: &lt;db:simplesect&gt; (phase: main)]</p>
+                  </div>
+                  <div class="sect2">
+                     <h2 class="sect2">Reference information</h2>
+                     <p class="para">This description of the <code class="code step">p:insert</code> step is for XProc version: <a href="index.html">
+                           <span class="link">3.1</span>
+                        </a>.</p>
+                     <p class="para">The formal specification for the <code class="code step">p:insert</code> step can be found <a href="https://spec.xproc.org/master/head/steps/#c.insert"
+                           target="_blank">
+                           <span class="link newpage">here</span>
+                        </a>.</p>
+                     <p class="para">The <code class="code step">p:insert</code> step is part of categories:</p>
+                     <ul class="itemizedlist">
+                        <li>
+                           <p class="para">
+                              <a href="Test.html">
+                                 <span class="link">Test</span>
+                              </a>
+                           </p>
+                        </li>
+                        <li>
+                           <p class="para">
+                              <a href="Test_2.html">
+                                 <span class="link">Test 2</span>
+                              </a>
+                           </p>
+                        </li>
+                        <li>
+                           <p class="para">
+                              <a href="Test_3.html">
+                                 <span class="link">Test 3</span>
+                              </a>
+                           </p>
+                        </li>
+                     </ul>
                   </div>
                </div>
             </div>
@@ -891,7 +1115,7 @@
                      href="../index.html">
                      <img src="../images/logo.png"
                           class="img-fluid"
-                          width="14%"/>
+                          width="18%"/>
                   </a>
                </div>
                <div class="container-fluid">
@@ -941,18 +1165,182 @@
                         </span>
                      </a> Step: p:replace</h1>
                   <p class="para">Replaces matching nodes</p>
-                  <div class="sect2">
-                     <h2 class="sect2">SIGNATURE</h2>
-                     <p class="para">TBD</p>
+                  <div class="programlisting step-signature">
+                     <pre class="programlisting step-signature">&lt;p:declare-step type="p:replace"&gt;
+  &lt;input port="source" primary="true" content-types="xml html" sequence="false"/&gt;
+  &lt;output port="result" primary="true" content-types="text xml html" sequence="false"/&gt;
+  &lt;input port="replacement" primary="false" content-types="text xml html" sequence="false"/&gt;
+  &lt;option name="match" as="xs:string" required="false" select="/*"/&gt;
+&lt;/p:declare-step&gt;</pre>
                   </div>
-                  <div class="sect2">
-                     <h2 class="sect2">SUMMARY</h2>
-                     <p class="para">The <code class="code">p:replace</code> step replaces matching nodes in
+                  <p class="para">The <code class="code">p:replace</code> step replaces matching nodes in
           its primary input with the top-level node(s) of the
           <code class="code">replacement</code> port's document.</p>
+                  <p class="para table-header">Ports:</p>
+                  <div class="table nonumber ports-table">
+                     <table class="table nonumber ports-table">
+                        <thead>
+                           <tr>
+                              <th>
+                                 <p class="para">Type</p>
+                              </th>
+                              <th>
+                                 <p class="para">Port name</p>
+                              </th>
+                              <th>
+                                 <p class="para">Primary</p>
+                              </th>
+                              <th>
+                                 <p class="para">Content types</p>
+                              </th>
+                              <th>
+                                 <p class="para">Sequence</p>
+                              </th>
+                              <th>
+                                 <p class="para">Description</p>
+                              </th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>
+                                 <p class="para">Input</p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">source</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">true</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">xml html</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">false</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">The primary source port</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <p class="para">Output</p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">result</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">true</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">text xml html</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">false</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">The final result</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <p class="para">Input</p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">replacement</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">false</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">text xml html</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">false</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">The thing to replace with</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <p class="para table-header">Options:</p>
+                  <div class="table nonumber options-table">
+                     <table class="table nonumber options-table">
+                        <thead>
+                           <tr>
+                              <th>
+                                 <p class="para">Name</p>
+                              </th>
+                              <th>
+                                 <p class="para">As</p>
+                              </th>
+                              <th>
+                                 <p class="para">Required</p>
+                              </th>
+                              <th>
+                                 <p class="para">Select</p>
+                              </th>
+                              <th>
+                                 <p class="para">Description</p>
+                              </th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">match</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">xs:string</code> (<code class="code">XSLTSelectionPattern</code>)</p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">false</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">/*</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">Where to replace stuff</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
                   </div>
                   <div class="sect2">
-                     <h2 class="sect2">DESCRIPTION</h2>
+                     <h2 class="sect2">Description</h2>
                      <p class="para">The value of the <span class="error">[*** Unrecognized element: &lt;db:option&gt; (phase: inline)]</span> option
           <span class="error">[*** Unrecognized element: &lt;db:rfc2119&gt; (phase: inline)]</span> be an XSLTSelectionPattern. <span class="error">[*** Unrecognized element: &lt;db:error code="C0023"&gt; (phase: inline)]</span> Multiple matches are allowed, in which case multiple
           copies of the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> document will occur.</p>
@@ -964,7 +1352,38 @@
                      <p class="para">If the document node is matched and port <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> contains
           a text document, the entire document is replaced by the text node. What appears on port 
           <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> is a text document with the text node wrapped in a document node.</p>
-                     <p class="error">[*** Unrecognized element: &lt;db:simplesect&gt; (phase: main)]</p>
+                     <p class="para">If the resulting document contains exactly one text node,
+            the <code class="literal">content-type</code> property is changed to <code class="literal">text/plain</code> and the 
+            <code class="literal">serialization</code> property is removed, while all other document properties are 
+            preserved. For other document types, all document properties are preserved.</p>
+                  </div>
+                  <div class="sect2">
+                     <h2 class="sect2">Example: First example</h2>
+                     <p class="para">bla bla bla</p>
+                     <p class="para">bla bla bla</p>
+                     <p class="para">bla bla bla</p>
+                  </div>
+                  <div class="sect2">
+                     <h2 class="sect2">Example: Second example</h2>
+                     <p class="para">bla bla bla</p>
+                     <p class="para">bla bla bla</p>
+                     <p class="para">bla bla bla</p>
+                  </div>
+                  <div class="sect2">
+                     <h2 class="sect2">Reference information</h2>
+                     <p class="para">This description of the <code class="code step">p:replace</code> step is for XProc version: <a href="index.html">
+                           <span class="link">3.1</span>
+                        </a>.</p>
+                     <p class="para">The formal specification for the <code class="code step">p:replace</code> step can be found <a href="https://spec.xproc.org/master/head/steps/#c.replace"
+                           target="_blank">
+                           <span class="link newpage">here</span>
+                        </a>.</p>
+                     <p class="para">The <code class="code step">p:replace</code> step is part of category: <a href="Test.html">
+                           <span class="link">Test</span>
+                        </a>.</p>
+                     <p class="para">The <code class="code step">p:replace</code> step is also present in version: <a href="../3.0/p.replace.html">
+                           <span class="link">3.0</span>
+                        </a>.</p>
                   </div>
                </div>
             </div>
@@ -998,7 +1417,7 @@
                      href="../index.html">
                      <img src="../images/logo.png"
                           class="img-fluid"
-                          width="14%"/>
+                          width="18%"/>
                   </a>
                </div>
                <div class="container-fluid">
@@ -1084,7 +1503,7 @@
                      href="../index.html">
                      <img src="../images/logo.png"
                           class="img-fluid"
-                          width="14%"/>
+                          width="18%"/>
                   </a>
                </div>
                <div class="container-fluid">
@@ -1167,7 +1586,7 @@
                      href="../index.html">
                      <img src="../images/logo.png"
                           class="img-fluid"
-                          width="14%"/>
+                          width="18%"/>
                   </a>
                </div>
                <div class="container-fluid">
@@ -1250,7 +1669,7 @@
                      href="../index.html">
                      <img src="../images/logo.png"
                           class="img-fluid"
-                          width="14%"/>
+                          width="18%"/>
                   </a>
                </div>
                <div class="container-fluid">
@@ -1293,18 +1712,182 @@
                <div class="sect1">
                   <h1 class="sect1">Step: p:replace</h1>
                   <p class="para">Replaces matching nodes</p>
-                  <div class="sect2">
-                     <h2 class="sect2">SIGNATURE</h2>
-                     <p class="para">TBD</p>
+                  <div class="programlisting step-signature">
+                     <pre class="programlisting step-signature">&lt;p:declare-step type="p:replace"&gt;
+  &lt;input port="source" primary="true" content-types="xml html" sequence="false"/&gt;
+  &lt;output port="result" primary="true" content-types="text xml html" sequence="false"/&gt;
+  &lt;input port="replacement" primary="false" content-types="text xml html" sequence="false"/&gt;
+  &lt;option name="match" as="xs:string" required="false" select="/*"/&gt;
+&lt;/p:declare-step&gt;</pre>
                   </div>
-                  <div class="sect2">
-                     <h2 class="sect2">SUMMARY</h2>
-                     <p class="para">The <code class="code">p:replace</code> step replaces matching nodes in
+                  <p class="para">The <code class="code">p:replace</code> step replaces matching nodes in
           its primary input with the top-level node(s) of the
           <code class="code">replacement</code> port's document.</p>
+                  <p class="para table-header">Ports:</p>
+                  <div class="table nonumber ports-table">
+                     <table class="table nonumber ports-table">
+                        <thead>
+                           <tr>
+                              <th>
+                                 <p class="para">Type</p>
+                              </th>
+                              <th>
+                                 <p class="para">Port name</p>
+                              </th>
+                              <th>
+                                 <p class="para">Primary</p>
+                              </th>
+                              <th>
+                                 <p class="para">Content types</p>
+                              </th>
+                              <th>
+                                 <p class="para">Sequence</p>
+                              </th>
+                              <th>
+                                 <p class="para">Description</p>
+                              </th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>
+                                 <p class="para">Input</p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">source</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">true</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">xml html</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">false</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">The primary source port</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <p class="para">Output</p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">result</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">true</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">text xml html</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">false</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">The final result</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <p class="para">Input</p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">replacement</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">false</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">text xml html</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">false</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">The thing to replace with</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <p class="para table-header">Options:</p>
+                  <div class="table nonumber options-table">
+                     <table class="table nonumber options-table">
+                        <thead>
+                           <tr>
+                              <th>
+                                 <p class="para">Name</p>
+                              </th>
+                              <th>
+                                 <p class="para">As</p>
+                              </th>
+                              <th>
+                                 <p class="para">Required</p>
+                              </th>
+                              <th>
+                                 <p class="para">Select</p>
+                              </th>
+                              <th>
+                                 <p class="para">Description</p>
+                              </th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">match</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">xs:string</code> (<code class="code">XSLTSelectionPattern</code>)</p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">false</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">
+                                    <code class="code">/*</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">Where to replace stuff</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
                   </div>
                   <div class="sect2">
-                     <h2 class="sect2">DESCRIPTION</h2>
+                     <h2 class="sect2">Description</h2>
                      <p class="para">The value of the <span class="error">[*** Unrecognized element: &lt;db:option&gt; (phase: inline)]</span> option
           <span class="error">[*** Unrecognized element: &lt;db:rfc2119&gt; (phase: inline)]</span> be an XSLTSelectionPattern. <span class="error">[*** Unrecognized element: &lt;db:error code="C0023"&gt; (phase: inline)]</span> Multiple matches are allowed, in which case multiple
           copies of the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> document will occur.</p>
@@ -1317,6 +1900,22 @@
           a text document, the entire document is replaced by the text node. What appears on port 
           <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> is a text document with the text node wrapped in a document node.</p>
                      <p class="error">[*** Unrecognized element: &lt;db:simplesect&gt; (phase: main)]</p>
+                  </div>
+                  <div class="sect2">
+                     <h2 class="sect2">Reference information</h2>
+                     <p class="para">This description of the <code class="code step">p:replace</code> step is for XProc version: <a href="index.html">
+                           <span class="link">3.0</span>
+                        </a>.</p>
+                     <p class="para">The formal specification for the <code class="code step">p:replace</code> step can be found <a href="https://spec.xproc.org/master/head/steps/#c.replace"
+                           target="_blank">
+                           <span class="link newpage">here</span>
+                        </a>.</p>
+                     <p class="para">The <code class="code step">p:replace</code> step is part of category: <a href="Test.html">
+                           <span class="link">Test</span>
+                        </a>.</p>
+                     <p class="para">The <code class="code step">p:replace</code> step is also present in version: <a href="../3.1/p.replace.html">
+                           <span class="link">3.1</span>
+                        </a>.</p>
                   </div>
                </div>
             </div>
