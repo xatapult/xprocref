@@ -78,7 +78,7 @@
     <!-- TBD, just something for now: -->
     <menu xmlns="http://www.xtpxlib.nl/ns/xprocref">
       <menu-entry caption="home" href="{xpref:href-combine($homedir-path, (), $xpref:name-home-page)}"/>
-      <menu-entry caption="versions" href="{xpref:href-combine($homedir-path, (), $xpref:name-versions-overview-page)}">
+      <menu-entry caption="versions" href="">
         <submenu-entry caption="overview" href="{xpref:href-combine($homedir-path, (), $xpref:name-versions-overview-page)}"/>
         <xsl:for-each select="$xprocref-index/*/xpref:versionref">
           <xsl:variable name="version-name" as="xs:string" select="xs:string(@name)"/>
@@ -89,6 +89,10 @@
         <!-- We're on a version related page. Add the categories overview as menu entry: -->
         <menu-entry caption="categories" href="{xpref:href-combine((), $xpref:name-categories-overview-page)}"/>
       </xsl:if>
+      <menu-entry caption="info">
+        <submenu-entry caption="error codes" href="{xpref:href-combine($homedir-path, (), $xpref:name-error-codes-overview-page)}"/>
+        <submenu-entry caption="namespaces" href="{xpref:href-combine($homedir-path, (), $xpref:name-namespaces-overview-page)}"/>
+      </menu-entry>
       <menu-entry caption="about" href="{xpref:href-combine($homedir-path, (), $xpref:name-about-page)}"/>
     </menu>
     

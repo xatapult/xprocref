@@ -28,7 +28,22 @@
       </description>
     </version>
   </versions>
-
+  
+  <!-- ======================================================================= -->
+  
+  <errors>
+    <error code="X111">
+      <description>
+        <para>Just some error code...</para>
+      </description>
+    </error>
+    <error code="X112">
+      <description>
+        <para>Just some other error code...</para>
+      </description>
+    </error>
+  </errors>
+  
   <!-- ======================================================================= -->
 
   <categories>
@@ -42,7 +57,7 @@
     </category>
 
     <category id="c.test3" name="Test 3">
-      <description>Just another test category</description>
+      <description>Just another test category </description>
     </category>
 
   </categories>
@@ -81,38 +96,18 @@
       </summary>
 
       <description xml:space="default">
-        <para>The value of the <option>match</option> option <rfc2119>must</rfc2119> be an XSLTSelectionPattern. <error code="C0023">It is a
-              <glossterm>dynamic error</glossterm> if that pattern matches an attribute or a namespace node.</error> Multiple matches are allowed, in
-          which case multiple copies of the <port>insertion</port> documents will occur. If no elements match, then the document is unchanged.</para>
-        <para>The value of the <option>position</option> option <rfc2119>must</rfc2119> be an NMTOKEN in the following list: </para>
-        <itemizedlist>
-          <listitem>
-            <para>“<literal>first-child</literal>” - the insertion is made as the first child of the match;</para>
-          </listitem>
-          <listitem>
-            <para>“<literal>last-child</literal>” - the insertion is made as the last child of the match;</para>
-          </listitem>
-          <listitem>
-            <para>“<literal>before</literal>” - the insertion is made as the immediate preceding sibling of the match;</para>
-          </listitem>
-          <listitem>
-            <para>“<literal>after</literal>” - the insertion is made as the immediate following sibling of the match.</para>
-          </listitem>
-        </itemizedlist>
-        <para><error code="C0025">It is a <glossterm>dynamic error</glossterm> if the <glossterm>selection pattern</glossterm> matches anything other
-            than an element or a document node and the value of the <option>position</option> option is “<literal>first-child</literal>” or
-              “<literal>last-child</literal>”.</error>
-          <error code="C0024">It is a <glossterm>dynamic error</glossterm> if the <glossterm>selection pattern</glossterm> matches a document node and
-            the value of the <option>position</option> is “<literal>before</literal>” or “<literal>after</literal>”.</error></para>
-        <para>As the inserted elements are part of the output of the step they are not considered in determining matching elements. If an empty
-          sequence appears on the <port>insertion</port> port, the result will be the same as the source.</para>
-        <simplesect>
-          <title>Document properties</title>
-          <para feature="insert-preserves-all">All document properties on the <port>source</port> port are preserved. The document properties on the
-              <port>insertion</port> port are not preserved or present in the result document.</para>
-        </simplesect>
+       <para> this raises <step-error-ref code="X111"/> or <step-error-ref code="X112"/></para>
       </description>
-
+      
+      <step-errors>
+        <step-error code="X111">
+          <description>
+            <para>Some alternative description for this error</para>
+          </description>
+        </step-error>
+        <step-error code="X112"></step-error>
+      </step-errors>
+      
     </step>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

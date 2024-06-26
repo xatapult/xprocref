@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bibliorefs xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!-- Add some descriptions for bibliorefs. Can contain markup. -->
+  <biblioref linkend="bib.uuid">
+    <link xlink:href="https://www.itu.int/ITU-T/studygroups/com17/oid.html" role="newpage">UUID</link>
+  </biblioref>
+  <biblioref linkend="iso19757-2">
+    <link xlink:href="https://www.iso.org/standard/52348.html" role="newpage">RELAX NG</link>
+  </biblioref>
+  <biblioref linkend="iso19757-3">
+    <link xlink:href="https://schematron.com/" role="newpage">Schematron</link>
+  </biblioref>
+  <biblioref linkend="iso19757-4">
+    <link xlink:href="https://en.wikipedia.org/wiki/Namespace-based_Validation_Dispatching_Language" role="newpage">NVDL</link>
+  </biblioref>
+  <biblioref linkend="xmlschema-1">
+    <link xlink:href="https://www.w3.org/TR/xmlschema-1/" role="newpage">XML Schema</link>
+  </biblioref>
+  <biblioref linkend="xinclude">
+    <link xlink:href="https://www.w3.org/TR/xinclude/" role="newpage">XInclude</link>
+  </biblioref>
+  <biblioref linkend="xsl11">
+    <link xlink:href="https://www.w3.org/TR/xsl/" role="newpage">XSL-FO</link>
+  </biblioref>
+  <!--<biblioref linkend="xslt10">
+    <link xlink:href="" role="newpage">XSLT v1.0</link>
+  </biblioref>
+  <biblioref linkend="xslt20">
+    <link xlink:href="" role="newpage">XSLT v2.0</link>
+  </biblioref>-->
+  <!--<biblioref linkend="xquery10">
+    <link xlink:href="" role="newpage">XQuery</link>
+  </biblioref>-->
+  <biblioref linkend="rfc1521">
+    <link xlink:href="https://www.rfc-editor.org/info/rfc1521" role="newpage">RFC 1521</link>
+  </biblioref>
+  <!--<biblioref linkend="unicodetr17">
+    <link xlink:href="" role="newpage">Unicode Technical Report #17: Character Encoding Model</link>
+  </biblioref>-->
+  <!--<biblioref linkend="xpath-functions">
+    <link xlink:href="" role="newpage">XPath Functions</link>
+  </biblioref>-->
+  <biblioref linkend="bib.crc">CRC32</biblioref>
+  <biblioref linkend="rfc1321">
+    <link xlink:href="https://www.rfc-editor.org/info/rfc1321" role="newpage">MD5</link>
+  </biblioref>
+  <biblioref linkend="bib.sha">
+    <link xlink:href="https://csrc.nist.gov/pubs/fips/180-1/final" role="newpage">SHA1</link>
+  </biblioref>
+  <biblioref linkend="xproc30">
+    <link xlink:href="https://xproc.org/" role="newpage">XProc 3.0</link>
+  </biblioref>
+  <biblioref linkend="rfc2617">
+    <link xlink:href="https://www.rfc-editor.org/info/rfc2617" role="newpage">RFC 2617</link>
+  </biblioref>
+  <!--<biblioref linkend="rfc2616">
+    <link xlink:href="" role="newpage">RFC 2616</link>
+  </biblioref>-->
+  <biblioref linkend="rfc3986">
+    <link xlink:href="https://www.rfc-editor.org/info/rfc3986" role="newpage">RFC 3986</link>
+  </biblioref>
+  <!--<biblioref linkend="tidy">
+    <link xlink:href="" role="newpage">tidy</link>
+  </biblioref>-->
+  <!--<biblioref linkend="tagsoup">
+    <link xlink:href="" role="newpage">tagsoup</link>
+  </biblioref>-->
+  <!--<biblioref linkend="relaxng-compact-syntax">
+    <link xlink:href="" role="newpage">RelaxNG Compact Syntax</link>
+  </biblioref>-->
+  <!--<biblioref linkend="relaxng-dtd-compat">
+    <link xlink:href="" role="newpage">RelaxNG DTD Compatibility</link>
+  </biblioref>-->
+  <!--<biblioref linkend="media-types">
+    <link xlink:href="" role="newpage">the IANA Media Types</link>
+  </biblioref>-->
+  <biblioref linkend="zip">
+    <link xlink:href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT" role="newpage">ZIP</link>
+  </biblioref>
+  <biblioref linkend="gzip">
+    <link xlink:href="https://datatracker.ietf.org/doc/html/rfc1952" role="newpage">GZIP</link>
+  </biblioref>
+  <biblioref linkend="xpath31-functions">
+    <link xlink:href="https://www.w3.org/TR/xpath-functions-31/" role="newpage">the XPath 3.1 functions</link>
+  </biblioref>
+  <biblioref linkend="xpath31">
+    <link xlink:href="https://www.w3.org/TR/xpath-31/" role="newpage">XPath 3.1</link>
+  </biblioref>
+  <!--<biblioref linkend="schematron-skeleton">
+    <link xlink:href="" role="newpage">Schematron Skeleton</link>
+  </biblioref>-->
+  <!--<biblioref linkend="rfc2046">
+    <link xlink:href="" role="newpage">MIME type</link>
+  </biblioref>-->
+  <!--<biblioref linkend="id-draft-klyne">
+    <link xlink:href="https://tools.ietf.org/html/draft-klyne-message-rfc822-xml-03" role="newpage">XML format for mail</link>
+  </biblioref>-->
+  <!--<biblioref linkend="commonmark">
+    <link xlink:href="https://spec.commonmark.org/">CommonMark</link>
+  </biblioref>-->
+  <!--<biblioref linkend="CSS">
+    <link xlink:href="https://www.w3.org/TR/css-2018/">CSS</link>
+  </biblioref>-->
+</bibliorefs>

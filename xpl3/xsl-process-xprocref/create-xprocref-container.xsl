@@ -69,6 +69,12 @@
   <xsl:variable name="key-prev" as="xs:integer" select="1"/>
   <xsl:variable name="key-next" as="xs:integer" select="2"/>
 
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- For the signature conversion: -->
+
+  <xsl:variable name="indent" as="xs:string" select="'  '"/>
+  <xsl:variable name="lf" as="xs:string" select="'&#10;'"/>
+
   <!-- ================================================================== -->
 
   <xsl:template match="/">
@@ -104,6 +110,68 @@
                 </db:para>
                 <xsl:call-template name="process-text">
                   <xsl:with-param name="surrounding-elm" select="$version-elm/xpref:description"/>
+                </xsl:call-template>
+              </db:listitem>
+            </xsl:for-each>
+          </db:itemizedlist>
+        </xsl:with-param>
+      </xsl:call-template>
+
+      <!-- Error codes page: -->
+      <xsl:call-template name="create-docbook-article">
+        <xsl:with-param name="href-target" select="local:href-result-file($xpref:name-error-codes-overview-page)"/>
+        <xsl:with-param name="title" select="'Error codes'"/>
+        <xsl:with-param name="content">
+          <db:table role="nonumber error-codes-table">
+            <db:title/>
+            <db:tgroup cols="2">
+              <db:thead>
+                <db:row>
+                  <db:entry>
+                    <db:para>Error code</db:para>
+                  </db:entry>
+                  <db:entry>
+                    <db:para>Description</db:para>
+                  </db:entry>
+                </db:row>
+              </db:thead>
+              <db:tbody>
+                <xsl:for-each select="$specification/*/xpref:errors/xpref:error">
+                  <xsl:sort select="xs:string(@code)"/>
+                  <xsl:variable name="code" as="xs:string" select="xs:string(@code)"/>
+                  <db:row>
+                    <db:entry>
+                      <db:para>
+                        <xsl:attribute name="xml:id" select="xpref:error-code-anchor($code)"/>
+                        <db:code>
+                          <xsl:value-of select="$code"/>
+                        </db:code>
+                      </db:para>
+                    </db:entry>
+                    <db:entry>
+                      <xsl:call-template name="process-text">
+                        <xsl:with-param name="surrounding-elm" select="xpref:description"/>
+                      </xsl:call-template>
+                    </db:entry>
+                  </db:row>
+                </xsl:for-each>
+              </db:tbody>
+            </db:tgroup>
+          </db:table>
+        </xsl:with-param>
+      </xsl:call-template>
+
+      <!-- Namespaces page: -->
+      <xsl:call-template name="create-docbook-article">
+        <xsl:with-param name="href-target" select="local:href-result-file($xpref:name-namespaces-overview-page)"/>
+        <xsl:with-param name="title" select="'Namespaces used'"/>
+        <xsl:with-param name="content">
+          <db:itemizedlist>
+            <xsl:for-each select="$specification/*/xpref:namespaces/xpref:namespace">
+              <db:listitem>
+                <db:para><db:code>{@uri}</db:code> (recommended prefix: <db:code>{@prefix}</db:code>)</db:para>
+                <xsl:call-template name="process-text">
+                  <xsl:with-param name="surrounding-elm" select="xpref:description"/>
                 </xsl:call-template>
               </db:listitem>
             </xsl:for-each>
@@ -209,7 +277,8 @@
 
   </xsl:template>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
+  <!-- PROCESS A STEP: -->
 
   <xsl:template match="xpref:stepref">
     <xsl:param name="version-id" as="xs:string" required="true" tunnel="true"/>
@@ -259,6 +328,65 @@
             </xsl:call-template>
           </db:sect2>
         </xsl:for-each>
+
+        <!-- Errors: -->
+        <xsl:variable name="step-errors" as="element(xpref:step-error)*" select="$step-elm/xpref:step-errors/xpref:step-error"/>
+        <xsl:if test="exists($step-errors)">
+          <xsl:variable name="href-error-codes-page" as="xs:string" select="xpref:href-combine('..', (), $xpref:name-error-codes-overview-page)"/>
+          <db:sect2>
+            <db:title>Errors raised</db:title>
+            <db:table role="nonumber error-codes-table">
+              <db:title/>
+              <db:tgroup cols="2">
+                <db:thead>
+                  <db:row>
+                    <db:entry>
+                      <db:para>Error code</db:para>
+                    </db:entry>
+                    <db:entry>
+                      <db:para>Description</db:para>
+                    </db:entry>
+                  </db:row>
+                </db:thead>
+                <db:tbody>
+                  <xsl:for-each select="$step-errors">
+                    <xsl:sort select="xs:string(@code)"/>
+                    <xsl:variable name="code" as="xs:string" select="xs:string(@code)"/>
+                    <db:row>
+                      <db:entry>
+                        <db:para>
+                          <xsl:attribute name="xml:id" select="xpref:error-code-anchor($code)"/>
+                          <db:link xlink:href="{$href-error-codes-page}#{xpref:error-code-anchor($code)}">
+                            <db:code>
+                              <xsl:value-of select="$code"/>
+                            </db:code>
+                          </db:link>
+                        </db:para>
+                      </db:entry>
+                      <db:entry>
+                        <xsl:choose>
+                          <xsl:when test="exists(xpref:description)">
+                            <xsl:call-template name="process-text">
+                              <xsl:with-param name="surrounding-elm" select="xpref:description"/>
+                            </xsl:call-template>
+                          </xsl:when>
+                          <xsl:otherwise>
+                            <!-- Get the description from the general error codes list: -->
+                            <xsl:call-template name="process-text">
+                              <xsl:with-param name="surrounding-elm"
+                                select="$specification/*/xpref:errors/xpref:error[@code eq $code]/xpref:description"/>
+                            </xsl:call-template>
+                          </xsl:otherwise>
+                        </xsl:choose>
+                      </db:entry>
+                    </db:row>
+                  </xsl:for-each>
+                </db:tbody>
+              </db:tgroup>
+            </db:table>
+          </db:sect2>
+        </xsl:if>
+
 
         <!-- Reference information: -->
         <db:sect2>
@@ -329,13 +457,15 @@
       <!-- Primary ports: -->
       <xsl:for-each select="($signature-elm/(xpref:input | xpref:output))[xs:boolean(@primary)]">
         <xsl:sort select="local-name(.)"/>
-        <xsl:sequence select="local:declare-step-sub-element-to-string(., (@port, @primary))"/>
+        <xsl:variable name="add-empty" as="xs:boolean" select="exists(self::xpref:input) and xtlc:str2bln(@empty, false())"/>
+        <xsl:sequence select="local:declare-step-sub-element-to-string(., (@port, @primary), (), $add-empty)"/>
       </xsl:for-each>
       <!-- Non-primary ports: -->
       <xsl:for-each select="($signature-elm/(xpref:input | xpref:output))[not(xs:boolean(@primary))]">
         <xsl:sort select="local-name(.)"/>
         <xsl:sort select="xs:string(@port)"/>
-        <xsl:sequence select="local:declare-step-sub-element-to-string(., (@port, @primary))"/>
+        <xsl:variable name="add-empty" as="xs:boolean" select="exists(self::xpref:input) and xtlc:str2bln(@empty, false())"/>
+        <xsl:sequence select="local:declare-step-sub-element-to-string(., (@port, @primary), (), $add-empty)"/>
       </xsl:for-each>
       <!-- Options: -->
       <xsl:for-each select="$signature-elm/xpref:option">
@@ -346,7 +476,7 @@
     </xsl:variable>
 
     <db:programlisting role="step-signature">
-      <xsl:value-of select="string-join($lines, '&#10;')"/>
+      <xsl:value-of select="string-join($lines, $lf)"/>
     </db:programlisting>
   </xsl:template>
 
@@ -358,9 +488,10 @@
       <!-- Attributes in order of appearance. All other attributes are alphabetically sorted after these.-->
     </xsl:param>
     <xsl:param name="ignore-attributes" as="attribute()*"/>
+    <xsl:param name="add-empty" as="xs:boolean"/>
 
     <xsl:variable name="parts" as="xs:string+">
-      <xsl:sequence select="'  &lt;' || local-name($elm)"/>
+      <xsl:sequence select="$indent || '&lt;' || local-name($elm)"/>
       <xsl:for-each select="$attributes">
         <xsl:sequence select="' ' || xtlc:att2str(.)"/>
       </xsl:for-each>
@@ -368,9 +499,27 @@
         <xsl:sort select="local-name(.)"/>
         <xsl:sequence select="' ' || xtlc:att2str(.)"/>
       </xsl:for-each>
-      <xsl:sequence select="'/&gt;'"/>
+      <xsl:choose>
+        <xsl:when test="$add-empty">
+          <xsl:sequence select="'&gt;' || $lf"/>
+          <xsl:sequence select="$indent || $indent || '&lt;p:empty/&gt;' || $lf"/>
+          <xsl:sequence select="$indent || '&lt;' || local-name($elm) || '/&gt;'"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:sequence select="'/&gt;'"/>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:variable>
     <xsl:sequence select="string-join($parts)"/>
+  </xsl:function>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:function name="local:declare-step-sub-element-to-string" as="xs:string">
+    <xsl:param name="elm" as="element()"/>
+    <xsl:param name="attributes" as="attribute()*"/>
+    <xsl:param name="ignore-attributes" as="attribute()*"/>
+    <xsl:sequence select="local:declare-step-sub-element-to-string($elm, $attributes, $ignore-attributes, false())"/>
   </xsl:function>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -616,7 +765,7 @@
     <xsl:variable name="step-anchor-prefix" as="xs:string" select="'steps_'"/>
 
     <!-- Create a map with the referenced steps sorted on first character, in a map(first-character, sequence of step-ids) -->
-    <xsl:variable name="grouped-referenced-steps" as="map(xs:string, xs:string)">
+    <xsl:variable name="grouped-referenced-steps" as="map(xs:string, xs:string+)">
       <xsl:map>
         <xsl:for-each-group select="$steprefs" group-by="local:first-step-name-character(xs:string(@id))">
           <xsl:map-entry key="current-grouping-key()" select="for $stepref in current-group() return xs:string($stepref/@id)"/>
@@ -828,5 +977,6 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
+
 
 </xsl:stylesheet>

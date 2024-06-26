@@ -28,6 +28,8 @@
   <!-- Pages within a specific version (will be in a subdirectory for this version): -->
   <xsl:variable name="xpref:name-version-home-page" as="xs:string" select="$xpref:name-home-page"/>
   <xsl:variable name="xpref:name-categories-overview-page" as="xs:string" select="'categories.' || $xpref:page-extension"/>
+  <xsl:variable name="xpref:name-error-codes-overview-page" as="xs:string" select="'error-codes.' || $xpref:page-extension"/>
+  <xsl:variable name="xpref:name-namespaces-overview-page" as="xs:string" select="'namespaces.' || $xpref:page-extension"/>
 
   <!-- ======================================================================= -->
   <!-- FILE NAME SUPPORT: -->
@@ -49,5 +51,12 @@
 
     <xsl:sequence select="xpref:href-combine((), $version-name, $filename)"/>
   </xsl:function>
-
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <xsl:function name="xpref:error-code-anchor" as="xs:string">
+    <xsl:param name="code" as="xs:string"/>
+    <xsl:sequence select="'error-' || $code"/>
+  </xsl:function>
+  
 </xsl:stylesheet>

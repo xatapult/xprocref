@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xtlcon:document-container timestamp="2024-06-25T17:03:39.1810711+02:00"
+<xtlcon:document-container timestamp="2024-06-26T14:28:57.302157+02:00"
                            _href-target-path="file:///C:/Data/Erik/work/xatapult/xprocref/build"
                            xmlns:xtlcon="http://www.xtpxlib.nl/ns/container">
    <!-- == MAIN PAGES: == -->
@@ -53,6 +53,21 @@
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="3.0/index.html">3.0</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="namespaces.html">namespaces</a>
                            </li>
                         </ul>
                      </li>
@@ -126,6 +141,21 @@
                            </li>
                         </ul>
                      </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="namespaces.html">namespaces</a>
+                           </li>
+                        </ul>
+                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
                            href="about.html">about</a>
@@ -160,9 +190,228 @@
          </body>
       </html>
    </xtlcon:document>
-   <xtlcon:document href-target="about.html"
+   <xtlcon:document href-target="error-codes.html"
                     content-type="text/html"
                     _document-index="3"
+                    _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/error-codes.html">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+         <head>
+            <meta http-equiv="Content-Type"
+                  content="text/html; charset=utf-8"/>
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1"/>
+            <link href="css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <script defer="defer"
+                    src="js/bootstrap.bundle.min.js"/>
+            <title>Error codes</title>
+            <link rel="shortcut icon"
+                  href="images/favicon.ico"/>
+         </head>
+         <body>
+            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark ">
+               <div class="container-fluid">
+                  <a class="navbar-brand"
+                     href="index.html">
+                     <img src="images/logo.png"
+                          class="img-fluid"
+                          width="18%"/>
+                  </a>
+               </div>
+               <div class="container-fluid">
+                  <ul class="nav justify-content-end nav-pills text-light">
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="index.html">home</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">versions</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="versions.html">overview</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="3.1/index.html">3.1 (latest)</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="3.0/index.html">3.0</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="namespaces.html">namespaces</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="about.html">about</a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+            <div class="container pt-5">
+               <div class="sect1">
+                  <h1 class="sect1">Error codes</h1>
+                  <div class="table nonumber error-codes-table">
+                     <table class="table nonumber error-codes-table">
+                        <thead>
+                           <tr>
+                              <th>
+                                 <p class="para">Error code</p>
+                              </th>
+                              <th>
+                                 <p class="para">Description</p>
+                              </th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>
+                                 <p class="para"
+                                    id="error-X111">
+                                    <a name="error-X111">
+                                       <!---->
+                                    </a>
+                                    <code class="code">X111</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">Just some error code...</p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <p class="para"
+                                    id="error-X112">
+                                    <a name="error-X112">
+                                       <!---->
+                                    </a>
+                                    <code class="code">X112</code>
+                                 </p>
+                              </td>
+                              <td>
+                                 <p class="para">Just some other error code...</p>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+            <p> </p>
+         </body>
+      </html>
+   </xtlcon:document>
+   <xtlcon:document href-target="namespaces.html"
+                    content-type="text/html"
+                    _document-index="4"
+                    _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/namespaces.html">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+         <head>
+            <meta http-equiv="Content-Type"
+                  content="text/html; charset=utf-8"/>
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1"/>
+            <link href="css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <script defer="defer"
+                    src="js/bootstrap.bundle.min.js"/>
+            <title>Namespaces used</title>
+            <link rel="shortcut icon"
+                  href="images/favicon.ico"/>
+         </head>
+         <body>
+            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark ">
+               <div class="container-fluid">
+                  <a class="navbar-brand"
+                     href="index.html">
+                     <img src="images/logo.png"
+                          class="img-fluid"
+                          width="18%"/>
+                  </a>
+               </div>
+               <div class="container-fluid">
+                  <ul class="nav justify-content-end nav-pills text-light">
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="index.html">home</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">versions</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="versions.html">overview</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="3.1/index.html">3.1 (latest)</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="3.0/index.html">3.0</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="namespaces.html">namespaces</a>
+                           </li>
+                        </ul>
+                     </li>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="about.html">about</a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+            <div class="container pt-5">
+               <div class="sect1">
+                  <h1 class="sect1">Namespaces used</h1>
+                  <ul class="itemizedlist">
+                     <li>
+                        <p class="para">
+                           <code class="code">http://www.w3.org/ns/xproc</code> (recommended prefix: <code class="code">p</code>)</p>
+                        <p class="para">The main XProc namespace, used for all of its elements, steps and some of its attributes.</p>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <p> </p>
+         </body>
+      </html>
+   </xtlcon:document>
+   <xtlcon:document href-target="about.html"
+                    content-type="text/html"
+                    _document-index="5"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/about.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -213,6 +462,21 @@
                            </li>
                         </ul>
                      </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="namespaces.html">namespaces</a>
+                           </li>
+                        </ul>
+                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
                            href="about.html">about</a>
@@ -233,7 +497,7 @@
    <!-- == PAGES VERSION 3.1 == -->
    <xtlcon:document href-target="3.1/index.html"
                     content-type="text/html"
-                    _document-index="4"
+                    _document-index="6"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/index.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -287,6 +551,21 @@
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
                            href="categories.html">categories</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../namespaces.html">namespaces</a>
+                           </li>
+                        </ul>
                      </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
@@ -347,7 +626,7 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.1/categories.html"
                     content-type="text/html"
-                    _document-index="5"
+                    _document-index="7"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/categories.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -402,6 +681,21 @@
                         <a class="nav-link text-light"
                            href="categories.html">categories</a>
                      </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../namespaces.html">namespaces</a>
+                           </li>
+                        </ul>
+                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
                            href="../about.html">about</a>
@@ -446,7 +740,7 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.1/Test.html"
                     content-type="text/html"
-                    _document-index="6"
+                    _document-index="8"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/Test.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -500,6 +794,21 @@
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
                            href="categories.html">categories</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../namespaces.html">namespaces</a>
+                           </li>
+                        </ul>
                      </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
@@ -564,7 +873,7 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.1/Test_2.html"
                     content-type="text/html"
-                    _document-index="7"
+                    _document-index="9"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/Test_2.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -619,6 +928,21 @@
                         <a class="nav-link text-light"
                            href="categories.html">categories</a>
                      </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../namespaces.html">namespaces</a>
+                           </li>
+                        </ul>
+                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
                            href="../about.html">about</a>
@@ -661,7 +985,7 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.1/Test_3.html"
                     content-type="text/html"
-                    _document-index="8"
+                    _document-index="10"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/Test_3.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -716,6 +1040,21 @@
                         <a class="nav-link text-light"
                            href="categories.html">categories</a>
                      </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../namespaces.html">namespaces</a>
+                           </li>
+                        </ul>
+                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
                            href="../about.html">about</a>
@@ -751,7 +1090,7 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.1/p.insert.html"
                     content-type="text/html"
-                    _document-index="9"
+                    _document-index="11"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/p.insert.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -806,6 +1145,21 @@
                         <a class="nav-link text-light"
                            href="categories.html">categories</a>
                      </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../namespaces.html">namespaces</a>
+                           </li>
+                        </ul>
+                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
                            href="../about.html">about</a>
@@ -833,7 +1187,7 @@
   &lt;option name="position" as="xs:string" required="false" select="after" values="first-child last-child before after"/&gt;
 &lt;/p:declare-step&gt;</pre>
                   </div>
-                  <p class="para">The <code class="code">p:insert</code> step inserts the <code class="code">insertion</code> port's document into the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> port's document relative
+                  <p class="para">The <code class="code">p:insert</code> step inserts the <code class="code">insertion</code> port's document into the <code class="code port">source</code> port's document relative
           to the matching elements in the <code class="code">source</code> port's document.</p>
                   <p class="para table-header">Ports:</p>
                   <div class="table nonumber ports-table">
@@ -1025,30 +1379,71 @@
                   </div>
                   <div class="sect2">
                      <h2 class="sect2">Description</h2>
-                     <p class="para">The value of the <span class="error">[*** Unrecognized element: &lt;db:option&gt; (phase: inline)]</span> option <span class="error">[*** Unrecognized element: &lt;db:rfc2119&gt; (phase: inline)]</span> be an XSLTSelectionPattern. <span class="error">[*** Unrecognized element: &lt;db:error code="C0023"&gt; (phase: inline)]</span> Multiple matches are allowed, in
-          which case multiple copies of the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> documents will occur. If no elements match, then the document is unchanged.</p>
-                     <p class="para">The value of the <span class="error">[*** Unrecognized element: &lt;db:option&gt; (phase: inline)]</span> option <span class="error">[*** Unrecognized element: &lt;db:rfc2119&gt; (phase: inline)]</span> be an NMTOKEN in the following list: </p>
-                     <ul class="itemizedlist">
-                        <li>
-                           <p class="para">“<code class="literal">first-child</code>” - the insertion is made as the first child of the match;</p>
-                        </li>
-                        <li>
-                           <p class="para">“<code class="literal">last-child</code>” - the insertion is made as the last child of the match;</p>
-                        </li>
-                        <li>
-                           <p class="para">“<code class="literal">before</code>” - the insertion is made as the immediate preceding sibling of the match;</p>
-                        </li>
-                        <li>
-                           <p class="para">“<code class="literal">after</code>” - the insertion is made as the immediate following sibling of the match.</p>
-                        </li>
-                     </ul>
-                     <p class="para">
-                        <span class="error">[*** Unrecognized element: &lt;db:error code="C0025"&gt; (phase: inline)]</span>
-                        <span class="error">[*** Unrecognized element: &lt;db:error code="C0024"&gt; (phase: inline)]</span>
+                     <p class="para"> this raises <code class="code">
+                           <a href="#error-X111">
+                              <span class="link">X111</span>
+                           </a>
+                        </code> or <code class="code">
+                           <a href="#error-X112">
+                              <span class="link">X112</span>
+                           </a>
+                        </code>
                      </p>
-                     <p class="para">As the inserted elements are part of the output of the step they are not considered in determining matching elements. If an empty
-          sequence appears on the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> port, the result will be the same as the source.</p>
-                     <p class="error">[*** Unrecognized element: &lt;db:simplesect&gt; (phase: main)]</p>
+                  </div>
+                  <div class="sect2">
+                     <h2 class="sect2">Errors raised</h2>
+                     <div class="table nonumber error-codes-table">
+                        <table class="table nonumber error-codes-table">
+                           <thead>
+                              <tr>
+                                 <th>
+                                    <p class="para">Error code</p>
+                                 </th>
+                                 <th>
+                                    <p class="para">Description</p>
+                                 </th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td>
+                                    <p class="para"
+                                       id="error-X111">
+                                       <a name="error-X111">
+                                          <!---->
+                                       </a>
+                                       <a href="../error-codes.html#error-X111">
+                                          <span class="link">
+                                             <code class="code">X111</code>
+                                          </span>
+                                       </a>
+                                    </p>
+                                 </td>
+                                 <td>
+                                    <p class="para">Some alternative description for this error</p>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <p class="para"
+                                       id="error-X112">
+                                       <a name="error-X112">
+                                          <!---->
+                                       </a>
+                                       <a href="../error-codes.html#error-X112">
+                                          <span class="link">
+                                             <code class="code">X112</code>
+                                          </span>
+                                       </a>
+                                    </p>
+                                 </td>
+                                 <td>
+                                    <p class="para">Just some other error code...</p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
                   </div>
                   <div class="sect2">
                      <h2 class="sect2">Reference information</h2>
@@ -1092,7 +1487,7 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.1/p.replace.html"
                     content-type="text/html"
-                    _document-index="10"
+                    _document-index="12"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/p.replace.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -1146,6 +1541,21 @@
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
                            href="categories.html">categories</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../namespaces.html">namespaces</a>
+                           </li>
+                        </ul>
                      </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
@@ -1341,17 +1751,17 @@
                   </div>
                   <div class="sect2">
                      <h2 class="sect2">Description</h2>
-                     <p class="para">The value of the <span class="error">[*** Unrecognized element: &lt;db:option&gt; (phase: inline)]</span> option
+                     <p class="para">The value of the <code class="code option">match</code> option
           <span class="error">[*** Unrecognized element: &lt;db:rfc2119&gt; (phase: inline)]</span> be an XSLTSelectionPattern. <span class="error">[*** Unrecognized element: &lt;db:error code="C0023"&gt; (phase: inline)]</span> Multiple matches are allowed, in which case multiple
-          copies of the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> document will occur.</p>
+          copies of the <code class="code port">replacement</code> document will occur.</p>
                      <p class="para">Every node in the primary input matching the specified
           pattern is replaced in the output by the top-level node(s)
-          of the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> document. Only non-nested matches are
+          of the <code class="code port">replacement</code> document. Only non-nested matches are
           replaced. That is, once a node is replaced, its descendants cannot
           be matched.</p>
-                     <p class="para">If the document node is matched and port <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> contains
+                     <p class="para">If the document node is matched and port <code class="code port">replacement</code> contains
           a text document, the entire document is replaced by the text node. What appears on port 
-          <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> is a text document with the text node wrapped in a document node.</p>
+          <code class="code port">result</code> is a text document with the text node wrapped in a document node.</p>
                      <p class="para">If the resulting document contains exactly one text node,
             the <code class="literal">content-type</code> property is changed to <code class="literal">text/plain</code> and the 
             <code class="literal">serialization</code> property is removed, while all other document properties are 
@@ -1394,7 +1804,7 @@
    <!-- == PAGES VERSION 3.0 == -->
    <xtlcon:document href-target="3.0/index.html"
                     content-type="text/html"
-                    _document-index="11"
+                    _document-index="13"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.0/index.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -1449,6 +1859,21 @@
                         <a class="nav-link text-light"
                            href="categories.html">categories</a>
                      </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../namespaces.html">namespaces</a>
+                           </li>
+                        </ul>
+                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
                            href="../about.html">about</a>
@@ -1480,7 +1905,7 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.0/categories.html"
                     content-type="text/html"
-                    _document-index="12"
+                    _document-index="14"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.0/categories.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -1535,6 +1960,21 @@
                         <a class="nav-link text-light"
                            href="categories.html">categories</a>
                      </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../namespaces.html">namespaces</a>
+                           </li>
+                        </ul>
+                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
                            href="../about.html">about</a>
@@ -1563,7 +2003,7 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.0/Test.html"
                     content-type="text/html"
-                    _document-index="13"
+                    _document-index="15"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.0/Test.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -1618,6 +2058,21 @@
                         <a class="nav-link text-light"
                            href="categories.html">categories</a>
                      </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../namespaces.html">namespaces</a>
+                           </li>
+                        </ul>
+                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
                            href="../about.html">about</a>
@@ -1646,7 +2101,7 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.0/p.replace.html"
                     content-type="text/html"
-                    _document-index="14"
+                    _document-index="16"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.0/p.replace.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -1700,6 +2155,21 @@
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
                            href="categories.html">categories</a>
+                     </li>
+                     <li class="nav-item dropdown lead">
+                        <a class="nav-link dropdown-toggle text-light"
+                           data-bs-toggle="dropdown"
+                           href="#">info</a>
+                        <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../error-codes.html">error codes</a>
+                           </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../namespaces.html">namespaces</a>
+                           </li>
+                        </ul>
                      </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
@@ -1888,17 +2358,17 @@
                   </div>
                   <div class="sect2">
                      <h2 class="sect2">Description</h2>
-                     <p class="para">The value of the <span class="error">[*** Unrecognized element: &lt;db:option&gt; (phase: inline)]</span> option
+                     <p class="para">The value of the <code class="code option">match</code> option
           <span class="error">[*** Unrecognized element: &lt;db:rfc2119&gt; (phase: inline)]</span> be an XSLTSelectionPattern. <span class="error">[*** Unrecognized element: &lt;db:error code="C0023"&gt; (phase: inline)]</span> Multiple matches are allowed, in which case multiple
-          copies of the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> document will occur.</p>
+          copies of the <code class="code port">replacement</code> document will occur.</p>
                      <p class="para">Every node in the primary input matching the specified
           pattern is replaced in the output by the top-level node(s)
-          of the <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> document. Only non-nested matches are
+          of the <code class="code port">replacement</code> document. Only non-nested matches are
           replaced. That is, once a node is replaced, its descendants cannot
           be matched.</p>
-                     <p class="para">If the document node is matched and port <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> contains
+                     <p class="para">If the document node is matched and port <code class="code port">replacement</code> contains
           a text document, the entire document is replaced by the text node. What appears on port 
-          <span class="error">[*** Unrecognized element: &lt;db:port&gt; (phase: inline)]</span> is a text document with the text node wrapped in a document node.</p>
+          <code class="code port">result</code> is a text document with the text node wrapped in a document node.</p>
                      <p class="error">[*** Unrecognized element: &lt;db:simplesect&gt; (phase: main)]</p>
                   </div>
                   <div class="sect2">

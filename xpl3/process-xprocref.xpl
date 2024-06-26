@@ -120,10 +120,12 @@
     <p:with-option name="href-schema" select="$href-xprocref-schema"/>
     <p:with-option name="href-schematron" select="$href-xprocref-schematron"/>
   </xtlc:validate>
-  
+
+  <!-- Prepare some attributes and unwrap the step-groups: -->
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/prepare-xprocref-specification.xsl"/>
   </p:xslt>
+  <p:unwrap match="xpref:step-group"/>
   <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-prepared.xml"/>
   <p:identity name="prepared-xprocref-specification"/>
 
@@ -148,12 +150,15 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Create container: -->
- 
+
   <!-- Create a container (all text still in DocBook/Markdown): -->
   <p:xslt message="  * Creating pages">
     <p:with-input pipe="@prepared-xprocref-specification"/>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/create-xprocref-container.xsl"/>
     <p:with-option name="parameters" select="map{'xprocref-index': $xprocref-index}"/>
+  </p:xslt>
+  <p:xslt>
+    <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-texts.xsl"/>
   </p:xslt>
   <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-raw-container.xml"/>
 
@@ -167,7 +172,8 @@
       <xdoc:xdoc-to-xhtml add-numbering="false" add-identifiers="false" create-header="false"/>
       <p:xslt>
         <p:with-input port="stylesheet" href="xsl-process-xprocref/xhtml-to-page.xsl"/>
-        <p:with-option name="parameters" select="map{'href-template': $href-web-template, 'href-target': $href-target, 'xprocref-index': $xprocref-index}"/>
+        <p:with-option name="parameters"
+          select="map{'href-template': $href-web-template, 'href-target': $href-target, 'xprocref-index': $xprocref-index}"/>
       </p:xslt>
       <p:xslt>
         <p:with-input port="stylesheet" href="xsl-process-xprocref/convert-menu.xsl"/>
@@ -175,10 +181,10 @@
     </p:viewport>
   </p:viewport>
   <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-final-container.xml"/>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Finishing: -->
-  
+
   <!-- Write the container to disk: -->
   <xtlcon:container-to-disk remove-target="false" p:message="  * Writing to target">
     <p:with-option name="href-target-path" select="$href-build-location"/>

@@ -11,117 +11,35 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group minOccurs="0" ref="xpref:g-macrodefs"/>
-        <xs:element name="namespaces">
+        <xs:choice>
           <xs:annotation>
-            <xs:documentation>Definition of the namespace (prefixes) used. You must *always* define the p namespace prefix!</xs:documentation>
+            <xs:documentation>Namespaces</xs:documentation>
           </xs:annotation>
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element maxOccurs="unbounded" name="namespace">
-                <xs:complexType>
-                  <xs:group ref="xpref:g-description">
-                    <xs:annotation>
-                      <xs:documentation>The description of this namespace.</xs:documentation>
-                    </xs:annotation>
-                  </xs:group>
-                  <xs:attribute name="prefix" type="xs:NCName" use="required"/>
-                  <xs:attribute name="uri" type="xs:anyURI" use="required"/>
-                </xs:complexType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-          <xs:key name="key-namespace-prefix">
-            <xs:selector xpath="./xpref:namespace"/>
-            <xs:field xpath="@prefix"/>
-          </xs:key>
-        </xs:element>
-        <xs:element name="versions">
+          <xs:element ref="xpref:namespaces"/>
+          <xs:element ref="xi:include"/>
+        </xs:choice>
+        <xs:choice>
           <xs:annotation>
-            <xs:documentation>Available XProc versions. Processed in document order.</xs:documentation>
+            <xs:documentation>Versions</xs:documentation>
           </xs:annotation>
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="version" maxOccurs="unbounded">
-                <xs:annotation>
-                  <xs:documentation>A single version.</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:group ref="xpref:g-description">
-                      <xs:annotation>
-                        <xs:documentation>A short description of the version.</xs:documentation>
-                      </xs:annotation>
-                    </xs:group>
-                  </xs:sequence>
-                  <xs:attributeGroup ref="xpref:ag-id-mandatory">
-                    <xs:annotation>
-                      <xs:documentation>The identifier for this version.</xs:documentation>
-                    </xs:annotation>
-                  </xs:attributeGroup>
-                  <xs:attribute name="name" type="xpref:t-non-empty-string" use="required">
-                    <xs:annotation>
-                      <xs:documentation>The name for this version, for example "3.0".</xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                </xs:complexType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-          <xs:key name="key-version-identifiers">
-            <xs:selector xpath="*"/>
-            <xs:field xpath="@id"/>
-          </xs:key>
-          <xs:unique name="unique-version-names">
-            <xs:selector xpath="*"/>
-            <xs:field xpath="@name"/>
-          </xs:unique>
-        </xs:element>
-        <xs:element name="categories">
+          <xs:element ref="xpref:versions"/>
+          <xs:element ref="xi:include"/>
+        </xs:choice>
+        <xs:choice>
           <xs:annotation>
-            <xs:documentation>Any catgeories for the steps.</xs:documentation>
+            <xs:documentation>Errors</xs:documentation>
           </xs:annotation>
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="category" maxOccurs="unbounded">
-                <xs:annotation>
-                  <xs:documentation>A single category.</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:group ref="xpref:g-description">
-                      <xs:annotation>
-                        <xs:documentation>A short description of the category.</xs:documentation>
-                      </xs:annotation>
-                    </xs:group>
-                  </xs:sequence>
-                  <xs:attributeGroup ref="xpref:ag-id-mandatory">
-                    <xs:annotation>
-                      <xs:documentation>The identifier for this category.</xs:documentation>
-                    </xs:annotation>
-                  </xs:attributeGroup>
-                  <xs:attribute name="name" type="xpref:t-non-empty-string" use="required">
-                    <xs:annotation>
-                      <xs:documentation>The short name for this category, for example "XML manipulation".</xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                  <xs:attribute default="false" name="primary" type="xs:boolean">
-                    <xs:annotation>
-                      <xs:documentation>Whether this is a primary catergroy (a category as used by the specification).</xs:documentation>
-                    </xs:annotation>
-                  </xs:attribute>
-                </xs:complexType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-          <xs:key name="key-category-identifiers">
-            <xs:selector xpath="*"/>
-            <xs:field xpath="@id"/>
-          </xs:key>
-          <xs:unique name="unique-category-names">
-            <xs:selector xpath="*"/>
-            <xs:field xpath="@name"/>
-          </xs:unique>
-        </xs:element>
+          <xs:element ref="xpref:errors"/>
+          <xs:element ref="xi:include"/>
+        </xs:choice>
+        <xs:choice>
+          <xs:annotation>
+            <xs:documentation>Categories
+</xs:documentation>
+          </xs:annotation>
+          <xs:element ref="xpref:categories"/>
+          <xs:element ref="xi:include"/>
+        </xs:choice>
         <xs:element name="steps" type="xpref:ct-step-group">
           <xs:annotation>
             <xs:documentation>All steps.</xs:documentation>
@@ -143,6 +61,144 @@
       <xs:attribute ref="xml:base"/>
     </xs:complexType>
   </xs:element>
+  <xs:element name="namespaces">
+    <xs:annotation>
+      <xs:documentation>Definition of the namespace (prefixes) used. You must *always* define the p namespace prefix!</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="namespace">
+          <xs:complexType>
+            <xs:group ref="xpref:g-description">
+              <xs:annotation>
+                <xs:documentation>The description of this namespace.</xs:documentation>
+              </xs:annotation>
+            </xs:group>
+            <xs:attribute name="prefix" type="xs:NCName" use="required"/>
+            <xs:attribute name="uri" type="xs:anyURI" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+    <xs:key name="key-namespace-prefix">
+      <xs:selector xpath="./xpref:namespace"/>
+      <xs:field xpath="@prefix"/>
+    </xs:key>
+  </xs:element>
+  <xs:element name="versions">
+    <xs:annotation>
+      <xs:documentation>Available XProc versions. Processed in document order.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="version" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>A single version.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:group ref="xpref:g-description">
+                <xs:annotation>
+                  <xs:documentation>A short description of the version.</xs:documentation>
+                </xs:annotation>
+              </xs:group>
+            </xs:sequence>
+            <xs:attributeGroup ref="xpref:ag-id-mandatory">
+              <xs:annotation>
+                <xs:documentation>The identifier for this version.</xs:documentation>
+              </xs:annotation>
+            </xs:attributeGroup>
+            <xs:attribute name="name" type="xpref:t-non-empty-string" use="required">
+              <xs:annotation>
+                <xs:documentation>The name for this version, for example "3.0".</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute ref="xml:base"/>
+    </xs:complexType>
+    <xs:key name="key-version-identifiers">
+      <xs:selector xpath="*"/>
+      <xs:field xpath="@id"/>
+    </xs:key>
+    <xs:unique name="unique-version-names">
+      <xs:selector xpath="*"/>
+      <xs:field xpath="@name"/>
+    </xs:unique>
+  </xs:element>
+  <xs:element name="errors">
+    <xs:annotation>
+      <xs:documentation>All errorrs raised by the steps.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="error">
+          <xs:complexType>
+            <xs:group ref="xpref:g-description">
+              <xs:annotation>
+                <xs:documentation>The description of the error.</xs:documentation>
+              </xs:annotation>
+            </xs:group>
+            <xs:attribute name="code" type="xpref:t-error-code" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute ref="xml:base"/>
+    </xs:complexType>
+    <xs:key name="key-error-code">
+      <xs:selector xpath="./xpref:error"/>
+      <xs:field xpath="@code"/>
+    </xs:key>
+  </xs:element>
+  <xs:element name="categories">
+    <xs:annotation>
+      <xs:documentation>Any catgeories for the steps.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="category" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>A single category.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:group ref="xpref:g-description">
+                <xs:annotation>
+                  <xs:documentation>A short description of the category.</xs:documentation>
+                </xs:annotation>
+              </xs:group>
+            </xs:sequence>
+            <xs:attributeGroup ref="xpref:ag-id-mandatory">
+              <xs:annotation>
+                <xs:documentation>The identifier for this category.</xs:documentation>
+              </xs:annotation>
+            </xs:attributeGroup>
+            <xs:attribute name="name" type="xpref:t-non-empty-string" use="required">
+              <xs:annotation>
+                <xs:documentation>The short name for this category, for example "XML manipulation".</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute default="false" name="primary" type="xs:boolean">
+              <xs:annotation>
+                <xs:documentation>Whether this is a primary catergroy (a category as used by the specification).</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute ref="xml:base"/>
+    </xs:complexType>
+    <xs:key name="key-category-identifiers">
+      <xs:selector xpath="*"/>
+      <xs:field xpath="@id"/>
+    </xs:key>
+    <xs:unique name="unique-category-names">
+      <xs:selector xpath="*"/>
+      <xs:field xpath="@name"/>
+    </xs:unique>
+  </xs:element>
+
   <xs:element name="step">
     <xs:annotation>
       <xs:documentation>A single step description.</xs:documentation>
@@ -170,6 +226,11 @@
                     <xs:group ref="xpref:g-description"/>
                   </xs:sequence>
                   <xs:attributeGroup ref="xpref:ag-port-attributes"/>
+                  <xs:attribute default="false" name="empty" type="xs:boolean">
+                    <xs:annotation>
+                      <xs:documentation>Whether this input port is empty by default.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
                 </xs:complexType>
               </xs:element>
               <xs:element maxOccurs="unbounded" minOccurs="0" name="output">
@@ -239,6 +300,26 @@
               </xs:extension>
             </xs:complexContent>
           </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="step-errors">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="step-error">
+                <xs:complexType>
+                  <xs:group minOccurs="0" ref="xpref:g-description">
+                    <xs:annotation>
+                      <xs:documentation>A description of the error (when it differs from the general one).</xs:documentation>
+                    </xs:annotation>
+                  </xs:group>
+                  <xs:attribute name="code" type="xpref:t-error-code" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+          <xs:key name="key-step-error-codes">
+            <xs:selector xpath="./step-error"/>
+            <xs:field xpath="@code"/>
+          </xs:key>
         </xs:element>
       </xs:sequence>
       <xs:attributeGroup ref="xpref:ag-id-optional"/>
@@ -368,5 +449,11 @@
         </xs:restriction>
       </xs:simpleType>
     </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t-error-code">
+    <xs:annotation>
+      <xs:documentation>An error code</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:NCName"/>
   </xs:simpleType>
 </xs:schema>
