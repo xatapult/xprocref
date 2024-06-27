@@ -344,6 +344,7 @@
         </xs:annotation>
       </xs:attribute>
       <xs:attribute default="p" name="namespace-prefix" type="xpref:t-non-empty-string"/>
+      <xs:attribute default="false" name="required" type="xs:boolean"/>
       <xs:attribute ref="xml:base"/>
     </xs:complexType>
   </xs:element>

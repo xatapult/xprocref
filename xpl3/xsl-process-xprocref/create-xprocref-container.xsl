@@ -64,6 +64,12 @@
   </xsl:variable>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- Latest version info. We need this decide where to put stuff and where top point links to. -->
+
+  <xsl:variable name="latest-version-versionref-elm" as="element(xpref:versionref)" select="($xprocref-index/*/xpref:versionref)[1]"/>
+  <xsl:variable name="last-version-id" as="xs:string" select="xs:string($latest-version-versionref-elm/@id)"/>
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Keys for the map returned by local:get-prev-next(): -->
 
   <xsl:variable name="key-prev" as="xs:integer" select="1"/>
@@ -86,12 +92,10 @@
       <xsl:comment> == MAIN PAGES: == </xsl:comment>
 
       <!-- Home page: -->
-      <xsl:call-template name="create-docbook-article">
+      <xsl:call-template name="create-all-steps-for-version-page">
+        <xsl:with-param name="versionref-elm" select="$latest-version-versionref-elm"/>
         <xsl:with-param name="href-target" select="local:href-result-file($xpref:name-home-page)"/>
-        <xsl:with-param name="title" select="'XProcRef home'"/>
-        <xsl:with-param name="content">
-          <db:para>TBD</db:para>
-        </xsl:with-param>
+        <xsl:with-param name="is-home-page" select="true()"/>
       </xsl:call-template>
 
       <!-- Versions overview page: -->
@@ -179,13 +183,13 @@
         </xsl:with-param>
       </xsl:call-template>
 
-      <!-- About main page -->
+      <!-- About page -->
+      <xsl:variable name="href-about-page-content" as="xs:string" select="resolve-uri('../../data/about-page.xml', static-base-uri())"/>
+      <xsl:variable name="about-page-content" as="element()*" select="doc($href-about-page-content)/*/db:*"/>
       <xsl:call-template name="create-docbook-article">
         <xsl:with-param name="href-target" select="$xpref:name-about-page"/>
         <xsl:with-param name="title" select="'About XProcRef'"/>
-        <xsl:with-param name="content">
-          <db:para>TBD</db:para>
-        </xsl:with-param>
+        <xsl:with-param name="content" select="$about-page-content"/>
       </xsl:call-template>
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -208,27 +212,18 @@
 
     <xsl:comment> == PAGES VERSION {$version-name} == </xsl:comment>
 
-    <!-- Home page for version: -->
-    <xsl:call-template name="create-docbook-article">
-      <xsl:with-param name="href-target" select="local:href-result-file($version-id, $xpref:name-version-home-page)"/>
-      <xsl:with-param name="title" select="'All steps for XProc version ' || $version-name"/>
-      <xsl:with-param name="content">
-        <xsl:call-template name="process-text">
-          <xsl:with-param name="surrounding-elm" select="$version-elm/xpref:description"/>
-        </xsl:call-template>
-        <db:para>You can also view these steps <db:link xlink:href="{$xpref:name-categories-overview-page}">by category</db:link>.</db:para>
-        <!-- List all the steps for this version: -->
-        <xsl:call-template name="create-stepref-links">
-          <xsl:with-param name="steprefs" select="$versionref-elm/xpref:stepref"/>
-        </xsl:call-template>
-      </xsl:with-param>
-    </xsl:call-template>
+    <!-- Home page for version. Do not produce this for the latest version. We use the home page for this. -->
+    <xsl:if test="$version-id ne $last-version-id">
+      <xsl:call-template name="create-all-steps-for-version-page">
+        <xsl:with-param name="versionref-elm" select="$versionref-elm"/>
+        <xsl:with-param name="href-target" select="local:href-result-file($version-id, $xpref:name-version-home-page)"/>
+      </xsl:call-template>
+    </xsl:if>
 
     <!-- Categories overview page for version: -->
-    <!-- TBD -->
     <xsl:call-template name="create-docbook-article">
       <xsl:with-param name="href-target" select="local:href-result-file($version-id, $xpref:name-categories-overview-page)"/>
-      <xsl:with-param name="title" select="'CATEGORIES VERSION ' || $version-name"/>
+      <xsl:with-param name="title" select="'Categories' || (if ($version-id ne $last-version-id) then ' (' || $version-name || ')' else ())"/>
       <xsl:with-param name="content">
         <db:itemizedlist role="category-list">
           <xsl:for-each select="$versionref-elm/xpref:categoryref">
@@ -247,6 +242,7 @@
           </xsl:for-each>
         </db:itemizedlist>
       </xsl:with-param>
+      <xsl:with-param name="version-id" select="$version-id"/>
     </xsl:call-template>
 
     <!-- Page per category for this version: -->
@@ -267,6 +263,10 @@
             <xsl:with-param name="steprefs" select="$categoryref-elm/xpref:stepref"/>
           </xsl:call-template>
         </xsl:with-param>
+        <xsl:with-param name="type" select="$xpref:type-category"/>
+        <xsl:with-param name="version-id" select="$version-id"/>
+        <xsl:with-param name="ref" select="$category-id"/>
+        <xsl:with-param name="name" select="$category-name"/>
       </xsl:call-template>
     </xsl:for-each>
 
@@ -276,6 +276,37 @@
     </xsl:apply-templates>
 
   </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template name="create-all-steps-for-version-page">
+    <xsl:param name="versionref-elm" as="element(xpref:versionref)" required="true"/>
+    <xsl:param name="href-target" as="xs:string" required="true"/>
+    <xsl:param name="is-home-page" as="xs:boolean" required="false" select="false()"/>
+
+    <xsl:variable name="version-id" as="xs:string" select="xs:string($versionref-elm/@id)"/>
+    <xsl:variable name="version-elm" as="element(xpref:version)" select="$version-id-to-elm($version-id)"/>
+    <xsl:variable name="version-name" as="xs:string" select="xs:string($version-elm/@name)"/>
+    <xsl:variable name="version-id-for-links" as="xs:string?" select="if ($is-home-page) then $version-id else ()"/>
+
+    <xsl:call-template name="create-docbook-article">
+      <xsl:with-param name="href-target" select="$href-target"/>
+      <xsl:with-param name="title" select="'Steps' || (if ($version-id ne $last-version-id) then ' (' || $version-name || ')' else ())"/>
+      <xsl:with-param name="content">
+        <db:para>All steps for XProc version {$version-name}. You can also view these steps <db:link
+            xlink:href="{local:href-result-file($version-id-for-links, $xpref:name-categories-overview-page)}">by category</db:link>.</db:para>
+        <db:para/>
+        <!-- List all the steps for this version: -->
+        <xsl:call-template name="create-stepref-links">
+          <xsl:with-param name="steprefs" select="$versionref-elm/xpref:stepref"/>
+          <xsl:with-param name="version-id-for-links" select="$version-id-for-links"/>
+        </xsl:call-template>
+      </xsl:with-param>
+      <xsl:with-param name="version-id" select="$version-id"/>
+    </xsl:call-template>
+
+  </xsl:template>
+
 
   <!-- ======================================================================= -->
   <!-- PROCESS A STEP: -->
@@ -287,11 +318,13 @@
     <xsl:variable name="step-id" as="xs:string" select="xs:string($stepref-elm/@id)"/>
     <xsl:variable name="step-elm" as="element(xpref:step)" select="$step-id-to-elm($step-id)"/>
     <xsl:variable name="step-full-name" as="xs:string" select="local:step-full-name($step-id)"/>
+    <xsl:variable name="version-name" as="xs:string" select="xs:string($version-id-to-elm($version-id)/@name)"/>
 
     <xsl:call-template name="create-docbook-article">
       <xsl:with-param name="href-target" select="local:href-result-file($version-id, local:step-page-name($step-id))"/>
       <xsl:with-param name="prev-next" select="local:get-prev-next($stepref-elm)"/>
-      <xsl:with-param name="title" select="'Step: ' || $step-full-name"/>
+      <xsl:with-param name="title"
+        select="'Step: ' || $step-full-name || (if ($version-id ne $last-version-id) then ' (' || $version-name || ')' else ())"/>
       <xsl:with-param name="content">
         <!-- The short description to start with: -->
         <db:para>{$step-elm/@short-description}</db:para>
@@ -392,21 +425,35 @@
         <db:sect2>
           <db:title>Reference information</db:title>
 
-          <db:para>This description of the <db:code role="step">{$step-full-name}</db:code> step is for XProc version: <db:link
-              xlink:href="{xpref:href-combine((), $xpref:name-version-home-page)}">{$version-id-to-elm($version-id)/@name}</db:link>.</db:para>
+          <xsl:variable name="step-is-required" as="xs:boolean" select="xtlc:str2bln($step-elm/@required, false())"/>
+          <xsl:variable name="required-text" as="xs:string">
+            <xsl:choose>
+              <xsl:when test="$step-is-required">
+                <xsl:sequence select="'This is a required step (an XProc ' || $version-name || ' processor must support this).'"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:sequence select="'This is a non-required step (an XProc ' || $version-name || ' processor does not have to support this).'"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
 
-          <db:para>The formal specification for the <db:code role="step">{$step-full-name}</db:code> step can be found <db:link
+          <xsl:variable name="version-link" as="xs:string"
+            select="if ($version-id eq $last-version-id) then xpref:href-combine('..', (), $xpref:name-home-page) else xpref:href-combine((), $xpref:name-version-home-page)"/>
+          <db:para>This description of the <db:code role="step">{$step-full-name}</db:code> step is for XProc version: <db:link
+              xlink:href="{$version-link}">{$version-name}</db:link>. {$required-text}</db:para>
+
+          <db:para>The formal specification for the <db:step>{$step-full-name}</db:step> step can be found <db:link
               xlink:href="{$step-elm/xpref:specification-link/@href}" role="newpage">here</db:link>.</db:para>
 
           <xsl:variable name="category-refs" as="element(xpref:categoryref)*" select="$stepref-elm/xpref:categoryref"/>
           <xsl:choose>
             <xsl:when test="count($category-refs) eq 1">
               <xsl:variable name="category-id" as="xs:string" select="xs:string($category-refs[1]/@id)"/>
-              <db:para>The <db:code role="step">{$step-full-name}</db:code> step is part of category: <db:link
+              <db:para>The <db:step>{$step-full-name}</db:step> step is part of category: <db:link
                   xlink:href="{local:category-page-name($category-id)}">{$category-id-to-elm($category-id)/@name}</db:link>.</db:para>
             </xsl:when>
             <xsl:when test="count($category-refs) gt 1">
-              <db:para>The <db:code role="step">{$step-full-name}</db:code> step is part of categories:</db:para>
+              <db:para>The <db:step>{$step-full-name}</db:step> step is part of categories:</db:para>
               <db:itemizedlist>
                 <xsl:for-each select="$category-refs">
                   <xsl:variable name="category-id" as="xs:string" select="xs:string(@id)"/>
@@ -423,8 +470,8 @@
 
           <xsl:variable name="other-versionrefs" as="element(xpref:other-versionref)*" select="$stepref-elm/xpref:other-versionref"/>
           <xsl:if test="exists($other-versionrefs)">
-            <db:para>The <db:code role="step">{$step-full-name}</db:code> step is also present in version{if (count($other-versionrefs) eq 1) then ()
-              else 's'}: <xsl:for-each select="$other-versionrefs">
+            <db:para>The <db:step>{$step-full-name}</db:step> step is also present in version{if (count($other-versionrefs) eq 1) then () else 's'}:
+                <xsl:for-each select="$other-versionrefs">
                 <xsl:variable name="other-version-id" as="xs:string" select="xs:string(@id)"/>
                 <xsl:variable name="other-version-elm" as="element(xpref:version)" select="$version-id-to-elm($other-version-id)"/>
                 <xsl:variable name="other-version-name" as="xs:string" select="xs:string($other-version-elm/@name)"/>
@@ -441,6 +488,10 @@
         </db:sect2>
 
       </xsl:with-param>
+      <xsl:with-param name="type" select="$xpref:type-step"/>
+      <xsl:with-param name="version-id" select="$version-id"/>
+      <xsl:with-param name="ref" select="$step-full-name"/>
+      <xsl:with-param name="name" select="$step-full-name"/>
     </xsl:call-template>
 
   </xsl:template>
@@ -712,6 +763,14 @@
     <xsl:param name="title" as="xs:string" required="true"/>
     <xsl:param name="prev-next" as="map(xs:integer, xs:string)" required="false" select="map{}"/>
     <xsl:param name="content" as="node()*" required="true"/>
+    <xsl:param name="type" as="xs:string?" required="false" select="()"/>
+    <xsl:param name="version-id" as="xs:string?" required="false" select="()"/>
+    <xsl:param name="ref" as="xs:string?" required="false" select="()">
+      <!-- This is the string/name to find it back. For instance, the step name of the category id. -->
+    </xsl:param>
+    <xsl:param name="name" as="xs:string?" required="false" select="()">
+      <!-- The name to use when this document is linked to. -->
+    </xsl:param>
 
     <xsl:variable name="prev-marker" as="node()*">
       <xsl:if test="map:contains($prev-next, $key-prev)">
@@ -740,6 +799,19 @@
 
     <!-- Remark: We set the content type to text/html, although it isn't yet XHTML. But it will very soon be... -->
     <xtlcon:document href-target="{$href-target}" content-type="text/html">
+      <xsl:if test="exists($type)">
+        <xsl:attribute name="type" select="$type"/>
+      </xsl:if>
+      <xsl:if test="exists($version-id)">
+        <xsl:attribute name="version-id" select="$version-id"/>
+      </xsl:if>
+      <xsl:if test="exists($ref)">
+        <xsl:attribute name="ref" select="$ref"/>
+      </xsl:if>
+      <xsl:if test="exists($name)">
+        <xsl:attribute name="name" select="$name"/>
+      </xsl:if>
+
       <db:article version="5.0">
         <db:info>
           <db:title/>
@@ -761,6 +833,7 @@
 
   <xsl:template name="create-stepref-links">
     <xsl:param name="steprefs" as="element(xpref:stepref)*" required="true"/>
+    <xsl:param name="version-id-for-links" as="xs:string?" required="false" select="()"/>
 
     <xsl:variable name="step-anchor-prefix" as="xs:string" select="'steps_'"/>
 
@@ -800,6 +873,7 @@
             <db:title role="step-list-start-character">{$current-character}</db:title>
             <xsl:call-template name="create-steps-list">
               <xsl:with-param name="step-ids" select="$grouped-referenced-steps($current-character)"/>
+              <xsl:with-param name="version-id-for-links" select="$version-id-for-links"/>
             </xsl:call-template>
           </db:sect2>
         </xsl:for-each>
@@ -807,6 +881,7 @@
       <xsl:otherwise>
         <xsl:call-template name="create-steps-list">
           <xsl:with-param name="step-ids" select="for $stepref in $steprefs return xs:string($stepref/@id)"/>
+          <xsl:with-param name="version-id-for-links" select="$version-id-for-links"/>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
@@ -817,6 +892,7 @@
 
   <xsl:template name="create-steps-list">
     <xsl:param name="step-ids" as="xs:string*" required="true"/>
+    <xsl:param name="version-id-for-links" as="xs:string?" required="false" select="()"/>
 
     <db:itemizedlist role="step-list">
       <xsl:for-each select="$step-ids">
@@ -824,8 +900,8 @@
         <xsl:variable name="step-elm" as="element(xpref:step)" select="$step-id-to-elm($step-id)"/>
         <xsl:variable name="step-short-description" as="xs:string" select="normalize-space($step-elm/@short-description)"/>
         <db:listitem>
-          <db:para><db:link xlink:href="{local:step-page-name($step-id)}">{local:step-full-name($step-id)}</db:link> -
-            {$step-short-description}</db:para>
+          <db:para><db:link xlink:href="{local:href-result-file($version-id-for-links, local:step-page-name($step-id))}"
+              >{local:step-full-name($step-id)}</db:link> - {$step-short-description}</db:para>
         </db:listitem>
       </xsl:for-each>
     </db:itemizedlist>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xtlcon:document-container timestamp="2024-06-26T14:28:57.302157+02:00"
+<xtlcon:document-container timestamp="2024-06-27T11:37:32.6952444+02:00"
                            _href-target-path="file:///C:/Data/Erik/work/xatapult/xprocref/build"
                            xmlns:xtlcon="http://www.xtpxlib.nl/ns/container">
    <!-- == MAIN PAGES: == -->
    <xtlcon:document href-target="index.html"
                     content-type="text/html"
+                    version-id="v31"
                     _document-index="1"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/index.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
@@ -15,9 +16,11 @@
                   content="width=device-width, initial-scale=1"/>
             <link href="css/bootstrap.min.css"
                   rel="stylesheet"/>
+            <link href="css/xprocref.css"
+                  rel="stylesheet"/>
             <script defer="defer"
                     src="js/bootstrap.bundle.min.js"/>
-            <title>XProcRef home</title>
+            <title>Steps</title>
             <link rel="shortcut icon"
                   href="images/favicon.ico"/>
          </head>
@@ -37,30 +40,19 @@
                         <a class="nav-link text-light"
                            href="index.html">home</a>
                      </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="3.1/categories.html">categories</a>
                      </li>
                      <li class="nav-item dropdown lead">
                         <a class="nav-link dropdown-toggle text-light"
                            data-bs-toggle="dropdown"
                            href="#">info</a>
                         <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="versions.html">versions</a>
+                           </li>
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="error-codes.html">error codes</a>
@@ -80,8 +72,46 @@
             </nav>
             <div class="container pt-5">
                <div class="sect1">
-                  <h1 class="sect1">XProcRef home</h1>
-                  <p class="para">TBD</p>
+                  <h1 class="sect1">Steps</h1>
+                  <p class="para">All steps for XProc version 3.1. You can also view these steps <a href="3.1/categories.html">
+                        <span class="link">by category</span>
+                     </a>.</p>
+                  <p class="para"/>
+                  <p class="para step-start-character-list">
+                     <a href="#steps_I"
+                        class="xref">I</a>  <a href="#steps_R"
+                        class="xref">R</a>
+                  </p>
+                  <div class="sect2"
+                       id="steps_I">
+                     <a name="steps_I">
+                        <!---->
+                     </a>
+                     <h2 class="sect2">I</h2>
+                     <ul class="itemizedlist step-list">
+                        <li>
+                           <p class="para">
+                              <a href="3.1/p.insert.html">
+                                 <span class="link">p:insert</span>
+                              </a> - Insert a piece of content in another</p>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="sect2"
+                       id="steps_R">
+                     <a name="steps_R">
+                        <!---->
+                     </a>
+                     <h2 class="sect2">R</h2>
+                     <ul class="itemizedlist step-list">
+                        <li>
+                           <p class="para">
+                              <a href="3.1/p.replace.html">
+                                 <span class="link">p:replace</span>
+                              </a> - Replaces matching nodes</p>
+                        </li>
+                     </ul>
+                  </div>
                </div>
             </div>
             <p> </p>
@@ -99,6 +129,8 @@
             <meta name="viewport"
                   content="width=device-width, initial-scale=1"/>
             <link href="css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <link href="css/xprocref.css"
                   rel="stylesheet"/>
             <script defer="defer"
                     src="js/bootstrap.bundle.min.js"/>
@@ -122,30 +154,19 @@
                         <a class="nav-link text-light"
                            href="index.html">home</a>
                      </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="3.1/categories.html">categories</a>
                      </li>
                      <li class="nav-item dropdown lead">
                         <a class="nav-link dropdown-toggle text-light"
                            data-bs-toggle="dropdown"
                            href="#">info</a>
                         <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="versions.html">versions</a>
+                           </li>
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="error-codes.html">error codes</a>
@@ -202,6 +223,8 @@
                   content="width=device-width, initial-scale=1"/>
             <link href="css/bootstrap.min.css"
                   rel="stylesheet"/>
+            <link href="css/xprocref.css"
+                  rel="stylesheet"/>
             <script defer="defer"
                     src="js/bootstrap.bundle.min.js"/>
             <title>Error codes</title>
@@ -224,30 +247,19 @@
                         <a class="nav-link text-light"
                            href="index.html">home</a>
                      </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="3.1/categories.html">categories</a>
                      </li>
                      <li class="nav-item dropdown lead">
                         <a class="nav-link dropdown-toggle text-light"
                            data-bs-toggle="dropdown"
                            href="#">info</a>
                         <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="versions.html">versions</a>
+                           </li>
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="error-codes.html">error codes</a>
@@ -330,6 +342,8 @@
                   content="width=device-width, initial-scale=1"/>
             <link href="css/bootstrap.min.css"
                   rel="stylesheet"/>
+            <link href="css/xprocref.css"
+                  rel="stylesheet"/>
             <script defer="defer"
                     src="js/bootstrap.bundle.min.js"/>
             <title>Namespaces used</title>
@@ -352,30 +366,19 @@
                         <a class="nav-link text-light"
                            href="index.html">home</a>
                      </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="3.1/categories.html">categories</a>
                      </li>
                      <li class="nav-item dropdown lead">
                         <a class="nav-link dropdown-toggle text-light"
                            data-bs-toggle="dropdown"
                            href="#">info</a>
                         <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="versions.html">versions</a>
+                           </li>
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="error-codes.html">error codes</a>
@@ -421,6 +424,8 @@
                   content="width=device-width, initial-scale=1"/>
             <link href="css/bootstrap.min.css"
                   rel="stylesheet"/>
+            <link href="css/xprocref.css"
+                  rel="stylesheet"/>
             <script defer="defer"
                     src="js/bootstrap.bundle.min.js"/>
             <title>About XProcRef</title>
@@ -443,30 +448,19 @@
                         <a class="nav-link text-light"
                            href="index.html">home</a>
                      </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
+                     <li class="nav-item lead">
+                        <a class="nav-link text-light"
+                           href="3.1/categories.html">categories</a>
                      </li>
                      <li class="nav-item dropdown lead">
                         <a class="nav-link dropdown-toggle text-light"
                            data-bs-toggle="dropdown"
                            href="#">info</a>
                         <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="versions.html">versions</a>
+                           </li>
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="error-codes.html">error codes</a>
@@ -487,7 +481,37 @@
             <div class="container pt-5">
                <div class="sect1">
                   <h1 class="sect1">About XProcRef</h1>
-                  <p class="para">TBD</p>
+                  <p class="para break-after">The XprocRef site contains reference information about the steps in the <a href="https://xproc.org/"
+                        target="_blank">
+                        <span class="link newpage">XProc programming language</span>
+                     </a>, targeted at language users/programmers.</p>
+                  <p class="break"> </p>
+                  <p class="para break-after">There is an underlying reason for this. In 2020 I published a book called “XProc 3.0 - Programmer Reference” (for sale <a href="https://xmlpress.net/publications/xproc-3-0/"
+                        target="_blank">
+                        <span class="link newpage">here</span>
+                     </a>):</p>
+                  <p class="break"> </p>
+                  <p class="para">
+                     <a href="https://xmlpress.net/publications/xproc-3-0/"
+                        target="_blank">
+                        <span class="link newpage">  <img src="images/bookcover.png"
+                                class="inlinemediaobject"
+                                width="15%"/>
+                        </span>
+                     </a>
+                  </p>
+                  <p class="break"> </p>
+                  <p class="para break-before">Appendices A and B in the book describe the step library. However, due to time constraints, the step descriptions were copied from the formal XProc
+    specification. This leaves much to be desired for users of the language: the specification is aimed at XProc processor <span class="emphasis italic">implementers</span>, not at
+    language <span class="emphasis italic">users</span>. To correct this, this site contains reference information about the XProc steps, written from a more user-oriented perspective. With the increasing popularity of XProc, I hope this fills a need.</p>
+                  <p class="break"> </p>
+                  <p class="para break-before">Erik Siegel</p>
+                  <p class="para">
+                     <a href="https://www.xatapult.com/"
+                        target="_blank">
+                        <span class="link newpage">Xatapult Content Engineering</span>
+                     </a>
+                  </p>
                </div>
             </div>
             <p> </p>
@@ -495,138 +519,10 @@
       </html>
    </xtlcon:document>
    <!-- == PAGES VERSION 3.1 == -->
-   <xtlcon:document href-target="3.1/index.html"
-                    content-type="text/html"
-                    _document-index="6"
-                    _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/index.html">
-      <html xmlns="http://www.w3.org/1999/xhtml">
-         <head>
-            <meta http-equiv="Content-Type"
-                  content="text/html; charset=utf-8"/>
-            <meta name="viewport"
-                  content="width=device-width, initial-scale=1"/>
-            <link href="../css/bootstrap.min.css"
-                  rel="stylesheet"/>
-            <script defer="defer"
-                    src="../js/bootstrap.bundle.min.js"/>
-            <title>All steps for XProc version 3.1</title>
-            <link rel="shortcut icon"
-                  href="../images/favicon.ico"/>
-         </head>
-         <body>
-            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark ">
-               <div class="container-fluid">
-                  <a class="navbar-brand"
-                     href="../index.html">
-                     <img src="../images/logo.png"
-                          class="img-fluid"
-                          width="18%"/>
-                  </a>
-               </div>
-               <div class="container-fluid">
-                  <ul class="nav justify-content-end nav-pills text-light">
-                     <li class="nav-item lead">
-                        <a class="nav-link text-light"
-                           href="../index.html">home</a>
-                     </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
-                     </li>
-                     <li class="nav-item lead">
-                        <a class="nav-link text-light"
-                           href="categories.html">categories</a>
-                     </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">info</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../error-codes.html">error codes</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../namespaces.html">namespaces</a>
-                           </li>
-                        </ul>
-                     </li>
-                     <li class="nav-item lead">
-                        <a class="nav-link text-light"
-                           href="../about.html">about</a>
-                     </li>
-                  </ul>
-               </div>
-            </nav>
-            <div class="container pt-5">
-               <div class="sect1">
-                  <h1 class="sect1">All steps for XProc version 3.1</h1>
-                  <p class="para">The XProc version 3.1 (NEW!)</p>
-                  <p class="para">You can also view these steps <a href="categories.html">
-                        <span class="link">by category</span>
-                     </a>.</p>
-                  <p class="para step-start-character-list">
-                     <a href="#steps_I"
-                        class="xref">I</a>  <a href="#steps_R"
-                        class="xref">R</a>
-                  </p>
-                  <div class="sect2"
-                       id="steps_I">
-                     <a name="steps_I">
-                        <!---->
-                     </a>
-                     <h2 class="sect2">I</h2>
-                     <ul class="itemizedlist step-list">
-                        <li>
-                           <p class="para">
-                              <a href="p.insert.html">
-                                 <span class="link">p:insert</span>
-                              </a> -
-            Insert a piece of content in another</p>
-                        </li>
-                     </ul>
-                  </div>
-                  <div class="sect2"
-                       id="steps_R">
-                     <a name="steps_R">
-                        <!---->
-                     </a>
-                     <h2 class="sect2">R</h2>
-                     <ul class="itemizedlist step-list">
-                        <li>
-                           <p class="para">
-                              <a href="p.replace.html">
-                                 <span class="link">p:replace</span>
-                              </a> -
-            Replaces matching nodes</p>
-                        </li>
-                     </ul>
-                  </div>
-               </div>
-            </div>
-            <p> </p>
-         </body>
-      </html>
-   </xtlcon:document>
    <xtlcon:document href-target="3.1/categories.html"
                     content-type="text/html"
-                    _document-index="7"
+                    version-id="v31"
+                    _document-index="6"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/categories.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -636,9 +532,11 @@
                   content="width=device-width, initial-scale=1"/>
             <link href="../css/bootstrap.min.css"
                   rel="stylesheet"/>
+            <link href="../css/xprocref.css"
+                  rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
-            <title>CATEGORIES VERSION 3.1</title>
+            <title>Categories</title>
             <link rel="shortcut icon"
                   href="../images/favicon.ico"/>
          </head>
@@ -658,34 +556,19 @@
                         <a class="nav-link text-light"
                            href="../index.html">home</a>
                      </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
-                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
-                           href="categories.html">categories</a>
+                           href="../3.1/categories.html">categories</a>
                      </li>
                      <li class="nav-item dropdown lead">
                         <a class="nav-link dropdown-toggle text-light"
                            data-bs-toggle="dropdown"
                            href="#">info</a>
                         <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">versions</a>
+                           </li>
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="../error-codes.html">error codes</a>
@@ -705,7 +588,7 @@
             </nav>
             <div class="container pt-5">
                <div class="sect1">
-                  <h1 class="sect1">CATEGORIES VERSION 3.1</h1>
+                  <h1 class="sect1">Categories</h1>
                   <ul class="itemizedlist category-list">
                      <li>
                         <p class="para">
@@ -740,7 +623,11 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.1/Test.html"
                     content-type="text/html"
-                    _document-index="8"
+                    type="category"
+                    version-id="v31"
+                    ref="c.test"
+                    name="Test"
+                    _document-index="7"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/Test.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -749,6 +636,8 @@
             <meta name="viewport"
                   content="width=device-width, initial-scale=1"/>
             <link href="../css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <link href="../css/xprocref.css"
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
@@ -772,34 +661,19 @@
                         <a class="nav-link text-light"
                            href="../index.html">home</a>
                      </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
-                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
-                           href="categories.html">categories</a>
+                           href="../3.1/categories.html">categories</a>
                      </li>
                      <li class="nav-item dropdown lead">
                         <a class="nav-link dropdown-toggle text-light"
                            data-bs-toggle="dropdown"
                            href="#">info</a>
                         <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">versions</a>
+                           </li>
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="../error-codes.html">error codes</a>
@@ -844,8 +718,7 @@
                            <p class="para">
                               <a href="p.insert.html">
                                  <span class="link">p:insert</span>
-                              </a> -
-            Insert a piece of content in another</p>
+                              </a> - Insert a piece of content in another</p>
                         </li>
                      </ul>
                   </div>
@@ -860,8 +733,7 @@
                            <p class="para">
                               <a href="p.replace.html">
                                  <span class="link">p:replace</span>
-                              </a> -
-            Replaces matching nodes</p>
+                              </a> - Replaces matching nodes</p>
                         </li>
                      </ul>
                   </div>
@@ -873,7 +745,11 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.1/Test_2.html"
                     content-type="text/html"
-                    _document-index="9"
+                    type="category"
+                    version-id="v31"
+                    ref="c.test2"
+                    name="Test 2"
+                    _document-index="8"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/Test_2.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -882,6 +758,8 @@
             <meta name="viewport"
                   content="width=device-width, initial-scale=1"/>
             <link href="../css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <link href="../css/xprocref.css"
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
@@ -905,34 +783,19 @@
                         <a class="nav-link text-light"
                            href="../index.html">home</a>
                      </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
-                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
-                           href="categories.html">categories</a>
+                           href="../3.1/categories.html">categories</a>
                      </li>
                      <li class="nav-item dropdown lead">
                         <a class="nav-link dropdown-toggle text-light"
                            data-bs-toggle="dropdown"
                            href="#">info</a>
                         <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">versions</a>
+                           </li>
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="../error-codes.html">error codes</a>
@@ -973,8 +836,7 @@
                         <p class="para">
                            <a href="p.insert.html">
                               <span class="link">p:insert</span>
-                           </a> -
-            Insert a piece of content in another</p>
+                           </a> - Insert a piece of content in another</p>
                      </li>
                   </ul>
                </div>
@@ -985,7 +847,11 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.1/Test_3.html"
                     content-type="text/html"
-                    _document-index="10"
+                    type="category"
+                    version-id="v31"
+                    ref="c.test3"
+                    name="Test 3"
+                    _document-index="9"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/Test_3.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -994,6 +860,8 @@
             <meta name="viewport"
                   content="width=device-width, initial-scale=1"/>
             <link href="../css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <link href="../css/xprocref.css"
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
@@ -1017,34 +885,19 @@
                         <a class="nav-link text-light"
                            href="../index.html">home</a>
                      </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
-                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
-                           href="categories.html">categories</a>
+                           href="../3.1/categories.html">categories</a>
                      </li>
                      <li class="nav-item dropdown lead">
                         <a class="nav-link dropdown-toggle text-light"
                            data-bs-toggle="dropdown"
                            href="#">info</a>
                         <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">versions</a>
+                           </li>
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="../error-codes.html">error codes</a>
@@ -1078,8 +931,7 @@
                         <p class="para">
                            <a href="p.insert.html">
                               <span class="link">p:insert</span>
-                           </a> -
-            Insert a piece of content in another</p>
+                           </a> - Insert a piece of content in another</p>
                      </li>
                   </ul>
                </div>
@@ -1090,7 +942,11 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.1/p.insert.html"
                     content-type="text/html"
-                    _document-index="11"
+                    type="step"
+                    version-id="v31"
+                    ref="p:insert"
+                    name="p:insert"
+                    _document-index="10"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/p.insert.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -1099,6 +955,8 @@
             <meta name="viewport"
                   content="width=device-width, initial-scale=1"/>
             <link href="../css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <link href="../css/xprocref.css"
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
@@ -1122,34 +980,19 @@
                         <a class="nav-link text-light"
                            href="../index.html">home</a>
                      </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
-                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
-                           href="categories.html">categories</a>
+                           href="../3.1/categories.html">categories</a>
                      </li>
                      <li class="nav-item dropdown lead">
                         <a class="nav-link dropdown-toggle text-light"
                            data-bs-toggle="dropdown"
                            href="#">info</a>
                         <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">versions</a>
+                           </li>
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="../error-codes.html">error codes</a>
@@ -1184,11 +1027,11 @@
   &lt;output port="result" primary="true" content-types="xml html" sequence="false"/&gt;
   &lt;input port="insertion" primary="false" content-types="xml html" sequence="true"/&gt;
   &lt;option name="match" as="xs:string" required="false" select="/*"/&gt;
-  &lt;option name="position" as="xs:string" required="false" select="after" values="first-child last-child before after"/&gt;
+  &lt;option name="position" as="xs:string" required="true" values="first-child last-child before after"/&gt;
 &lt;/p:declare-step&gt;</pre>
                   </div>
-                  <p class="para">The <code class="code">p:insert</code> step inserts the <code class="code">insertion</code> port's document into the <code class="code port">source</code> port's document relative
-          to the matching elements in the <code class="code">source</code> port's document.</p>
+                  <p class="para">The <code class="code step">p:insert</code> step inserts the <code class="code port">insertion</code> port's document into the <code class="code port">source</code> port's document relative
+          to the matching elements in the <code class="code port">source</code> port's document.</p>
                   <p class="para table-header">Ports:</p>
                   <div class="table nonumber ports-table">
                      <table class="table nonumber ports-table">
@@ -1362,12 +1205,12 @@
                               </td>
                               <td>
                                  <p class="para">
-                                    <code class="code">false</code>
+                                    <code class="code">true</code>
                                  </p>
                               </td>
                               <td>
                                  <p class="para">
-                                    <code class="code">after</code>
+                                    <code class="code"> </code>
                                  </p>
                               </td>
                               <td>
@@ -1389,6 +1232,25 @@
                            </a>
                         </code>
                      </p>
+                     <p class="para">Reference to step <code class="code step">p:replace</code> in this version: <code class="code step">
+                           <a href="p.replace.html">
+                              <span class="link">p:replace</span>
+                           </a>
+                        </code>…</p>
+                     <p class="para">Reference to step <code class="code step">p:replace</code> in version 3.0: <code class="code step">
+                           <a href="../3.0/p.replace.html">
+                              <span class="link">p:replace</span>
+                           </a>
+                        </code>…</p>
+                     <p class="para">Reference to category named Test 3: <a href="Test_3.html">
+                           <span class="link">Test 3</span>
+                        </a>…</p>
+                     <p class="para">Reference to category named Test in version 3.0: <a href="../3.0/Test.html">
+                           <span class="link">Test</span>
+                        </a>…</p>
+                     <p class="para">Some markup: <span class="emphasis italic">emphasized</span> or <span class="emphasis bold">bold</span> or <span class="emphasis underline">underline</span>…</p>
+                     <p class="bridgehead">Bridgehead</p>
+                     <p class="para">Some more text</p>
                   </div>
                   <div class="sect2">
                      <h2 class="sect2">Errors raised</h2>
@@ -1447,9 +1309,9 @@
                   </div>
                   <div class="sect2">
                      <h2 class="sect2">Reference information</h2>
-                     <p class="para">This description of the <code class="code step">p:insert</code> step is for XProc version: <a href="index.html">
+                     <p class="para">This description of the <code class="code step">p:insert</code> step is for XProc version: <a href="../index.html">
                            <span class="link">3.1</span>
-                        </a>.</p>
+                        </a>. This is a required step (an XProc 3.1 processor must support this).</p>
                      <p class="para">The formal specification for the <code class="code step">p:insert</code> step can be found <a href="https://spec.xproc.org/master/head/steps/#c.insert"
                            target="_blank">
                            <span class="link newpage">here</span>
@@ -1487,7 +1349,11 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.1/p.replace.html"
                     content-type="text/html"
-                    _document-index="12"
+                    type="step"
+                    version-id="v31"
+                    ref="p:replace"
+                    name="p:replace"
+                    _document-index="11"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.1/p.replace.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -1496,6 +1362,8 @@
             <meta name="viewport"
                   content="width=device-width, initial-scale=1"/>
             <link href="../css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <link href="../css/xprocref.css"
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
@@ -1519,34 +1387,19 @@
                         <a class="nav-link text-light"
                            href="../index.html">home</a>
                      </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
-                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
-                           href="categories.html">categories</a>
+                           href="../3.1/categories.html">categories</a>
                      </li>
                      <li class="nav-item dropdown lead">
                         <a class="nav-link dropdown-toggle text-light"
                            data-bs-toggle="dropdown"
                            href="#">info</a>
                         <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">versions</a>
+                           </li>
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="../error-codes.html">error codes</a>
@@ -1781,9 +1634,9 @@
                   </div>
                   <div class="sect2">
                      <h2 class="sect2">Reference information</h2>
-                     <p class="para">This description of the <code class="code step">p:replace</code> step is for XProc version: <a href="index.html">
+                     <p class="para">This description of the <code class="code step">p:replace</code> step is for XProc version: <a href="../index.html">
                            <span class="link">3.1</span>
-                        </a>.</p>
+                        </a>. This is a non-required step (an XProc 3.1 processor does not have to support this).</p>
                      <p class="para">The formal specification for the <code class="code step">p:replace</code> step can be found <a href="https://spec.xproc.org/master/head/steps/#c.replace"
                            target="_blank">
                            <span class="link newpage">here</span>
@@ -1791,7 +1644,8 @@
                      <p class="para">The <code class="code step">p:replace</code> step is part of category: <a href="Test.html">
                            <span class="link">Test</span>
                         </a>.</p>
-                     <p class="para">The <code class="code step">p:replace</code> step is also present in version: <a href="../3.0/p.replace.html">
+                     <p class="para">The <code class="code step">p:replace</code> step is also present in version:
+                <a href="../3.0/p.replace.html">
                            <span class="link">3.0</span>
                         </a>.</p>
                   </div>
@@ -1804,7 +1658,8 @@
    <!-- == PAGES VERSION 3.0 == -->
    <xtlcon:document href-target="3.0/index.html"
                     content-type="text/html"
-                    _document-index="13"
+                    version-id="v30"
+                    _document-index="12"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.0/index.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -1814,9 +1669,11 @@
                   content="width=device-width, initial-scale=1"/>
             <link href="../css/bootstrap.min.css"
                   rel="stylesheet"/>
+            <link href="../css/xprocref.css"
+                  rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
-            <title>All steps for XProc version 3.0</title>
+            <title>Steps (3.0)</title>
             <link rel="shortcut icon"
                   href="../images/favicon.ico"/>
          </head>
@@ -1836,34 +1693,19 @@
                         <a class="nav-link text-light"
                            href="../index.html">home</a>
                      </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
-                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
-                           href="categories.html">categories</a>
+                           href="../3.1/categories.html">categories</a>
                      </li>
                      <li class="nav-item dropdown lead">
                         <a class="nav-link dropdown-toggle text-light"
                            data-bs-toggle="dropdown"
                            href="#">info</a>
                         <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">versions</a>
+                           </li>
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="../error-codes.html">error codes</a>
@@ -1883,18 +1725,17 @@
             </nav>
             <div class="container pt-5">
                <div class="sect1">
-                  <h1 class="sect1">All steps for XProc version 3.0</h1>
-                  <p class="para">The base XProc version 3.0</p>
-                  <p class="para">You can also view these steps <a href="categories.html">
+                  <h1 class="sect1">Steps (3.0)</h1>
+                  <p class="para">All steps for XProc version 3.0. You can also view these steps <a href="categories.html">
                         <span class="link">by category</span>
                      </a>.</p>
+                  <p class="para"/>
                   <ul class="itemizedlist step-list">
                      <li>
                         <p class="para">
                            <a href="p.replace.html">
                               <span class="link">p:replace</span>
-                           </a> -
-            Replaces matching nodes</p>
+                           </a> - Replaces matching nodes</p>
                      </li>
                   </ul>
                </div>
@@ -1905,7 +1746,8 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.0/categories.html"
                     content-type="text/html"
-                    _document-index="14"
+                    version-id="v30"
+                    _document-index="13"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.0/categories.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -1915,9 +1757,11 @@
                   content="width=device-width, initial-scale=1"/>
             <link href="../css/bootstrap.min.css"
                   rel="stylesheet"/>
+            <link href="../css/xprocref.css"
+                  rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
-            <title>CATEGORIES VERSION 3.0</title>
+            <title>Categories (3.0)</title>
             <link rel="shortcut icon"
                   href="../images/favicon.ico"/>
          </head>
@@ -1937,34 +1781,19 @@
                         <a class="nav-link text-light"
                            href="../index.html">home</a>
                      </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
-                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
-                           href="categories.html">categories</a>
+                           href="../3.1/categories.html">categories</a>
                      </li>
                      <li class="nav-item dropdown lead">
                         <a class="nav-link dropdown-toggle text-light"
                            data-bs-toggle="dropdown"
                            href="#">info</a>
                         <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">versions</a>
+                           </li>
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="../error-codes.html">error codes</a>
@@ -1984,7 +1813,7 @@
             </nav>
             <div class="container pt-5">
                <div class="sect1">
-                  <h1 class="sect1">CATEGORIES VERSION 3.0</h1>
+                  <h1 class="sect1">Categories (3.0)</h1>
                   <ul class="itemizedlist category-list">
                      <li>
                         <p class="para">
@@ -2003,7 +1832,11 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.0/Test.html"
                     content-type="text/html"
-                    _document-index="15"
+                    type="category"
+                    version-id="v30"
+                    ref="c.test"
+                    name="Test"
+                    _document-index="14"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.0/Test.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -2012,6 +1845,8 @@
             <meta name="viewport"
                   content="width=device-width, initial-scale=1"/>
             <link href="../css/bootstrap.min.css"
+                  rel="stylesheet"/>
+            <link href="../css/xprocref.css"
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
@@ -2035,34 +1870,19 @@
                         <a class="nav-link text-light"
                            href="../index.html">home</a>
                      </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
-                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
-                           href="categories.html">categories</a>
+                           href="../3.1/categories.html">categories</a>
                      </li>
                      <li class="nav-item dropdown lead">
                         <a class="nav-link dropdown-toggle text-light"
                            data-bs-toggle="dropdown"
                            href="#">info</a>
                         <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">versions</a>
+                           </li>
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="../error-codes.html">error codes</a>
@@ -2089,8 +1909,7 @@
                         <p class="para">
                            <a href="p.replace.html">
                               <span class="link">p:replace</span>
-                           </a> -
-            Replaces matching nodes</p>
+                           </a> - Replaces matching nodes</p>
                      </li>
                   </ul>
                </div>
@@ -2101,7 +1920,11 @@
    </xtlcon:document>
    <xtlcon:document href-target="3.0/p.replace.html"
                     content-type="text/html"
-                    _document-index="16"
+                    type="step"
+                    version-id="v30"
+                    ref="p:replace"
+                    name="p:replace"
+                    _document-index="15"
                     _href-target="file:///C:/Data/Erik/work/xatapult/xprocref/build/3.0/p.replace.html">
       <html xmlns="http://www.w3.org/1999/xhtml">
          <head>
@@ -2111,9 +1934,11 @@
                   content="width=device-width, initial-scale=1"/>
             <link href="../css/bootstrap.min.css"
                   rel="stylesheet"/>
+            <link href="../css/xprocref.css"
+                  rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
-            <title>Step: p:replace</title>
+            <title>Step: p:replace (3.0)</title>
             <link rel="shortcut icon"
                   href="../images/favicon.ico"/>
          </head>
@@ -2133,34 +1958,19 @@
                         <a class="nav-link text-light"
                            href="../index.html">home</a>
                      </li>
-                     <li class="nav-item dropdown lead">
-                        <a class="nav-link dropdown-toggle text-light"
-                           data-bs-toggle="dropdown"
-                           href="#">versions</a>
-                        <ul class="dropdown-menu">
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../versions.html">overview</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.1/index.html">3.1 (latest)</a>
-                           </li>
-                           <li class="lead">
-                              <a class="dropdown-item"
-                                 href="../3.0/index.html">3.0</a>
-                           </li>
-                        </ul>
-                     </li>
                      <li class="nav-item lead">
                         <a class="nav-link text-light"
-                           href="categories.html">categories</a>
+                           href="../3.1/categories.html">categories</a>
                      </li>
                      <li class="nav-item dropdown lead">
                         <a class="nav-link dropdown-toggle text-light"
                            data-bs-toggle="dropdown"
                            href="#">info</a>
                         <ul class="dropdown-menu">
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="../versions.html">versions</a>
+                           </li>
                            <li class="lead">
                               <a class="dropdown-item"
                                  href="../error-codes.html">error codes</a>
@@ -2180,7 +1990,7 @@
             </nav>
             <div class="container pt-5">
                <div class="sect1">
-                  <h1 class="sect1">Step: p:replace</h1>
+                  <h1 class="sect1">Step: p:replace (3.0)</h1>
                   <p class="para">Replaces matching nodes</p>
                   <div class="programlisting step-signature">
                      <pre class="programlisting step-signature">&lt;p:declare-step type="p:replace"&gt;
@@ -2375,7 +2185,7 @@
                      <h2 class="sect2">Reference information</h2>
                      <p class="para">This description of the <code class="code step">p:replace</code> step is for XProc version: <a href="index.html">
                            <span class="link">3.0</span>
-                        </a>.</p>
+                        </a>. This is a non-required step (an XProc 3.0 processor does not have to support this).</p>
                      <p class="para">The formal specification for the <code class="code step">p:replace</code> step can be found <a href="https://spec.xproc.org/master/head/steps/#c.replace"
                            target="_blank">
                            <span class="link newpage">here</span>
@@ -2383,7 +2193,8 @@
                      <p class="para">The <code class="code step">p:replace</code> step is part of category: <a href="Test.html">
                            <span class="link">Test</span>
                         </a>.</p>
-                     <p class="para">The <code class="code step">p:replace</code> step is also present in version: <a href="../3.1/p.replace.html">
+                     <p class="para">The <code class="code step">p:replace</code> step is also present in version:
+                <a href="../3.1/p.replace.html">
                            <span class="link">3.1</span>
                         </a>.</p>
                   </div>

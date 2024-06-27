@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<about-page xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!-- ================================================================== -->
+  <!--
+    Contents of the about page (in DocBook).
+  -->
+  <!-- ================================================================== -->
+  
+  <para role="break-after">The XprocRef site contains reference information about the steps in the <link xlink:href="https://xproc.org/" role="newpage">XProc programming language</link>, targeted at language users/programmers.</para>
+
+  <para role="break-after">There is an underlying reason for this. In 2020 I published a book called &#x201c;XProc 3.0 - Programmer Reference&#x201d; (for sale <link xlink:href="https://xmlpress.net/publications/xproc-3-0/" role="newpage">here</link>):</para>
+
+  <para><link xlink:href="https://xmlpress.net/publications/xproc-3-0/" role="newpage">&#160;&#160;<inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="images/bookcover.png" width="15%"/>
+        </imageobject>
+      </inlinemediaobject></link></para>
+
+  <para role="break-before">Appendices A and B in the book describe the step library. However, due to time constraints, the step descriptions were copied from the formal XProc
+    specification. This leaves much to be desired for users of the language: the specification is aimed at XProc processor <emphasis>implementers</emphasis>, not at
+    language <emphasis>users</emphasis>. To correct this, this site contains reference information about the XProc steps, written from a more user-oriented perspective. With the increasing popularity of XProc, I hope this fills a need.</para>
+  
+  <para role="break-before">Erik&#160;Siegel</para>
+  <para><link xlink:href="https://www.xatapult.com/" role="newpage">Xatapult&#160;Content&#160;Engineering</link></para>
+  
+</about-page>

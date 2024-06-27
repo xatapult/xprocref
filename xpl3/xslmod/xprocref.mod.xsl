@@ -30,6 +30,10 @@
   <xsl:variable name="xpref:name-categories-overview-page" as="xs:string" select="'categories.' || $xpref:page-extension"/>
   <xsl:variable name="xpref:name-error-codes-overview-page" as="xs:string" select="'error-codes.' || $xpref:page-extension"/>
   <xsl:variable name="xpref:name-namespaces-overview-page" as="xs:string" select="'namespaces.' || $xpref:page-extension"/>
+  
+  <!-- Types set on the container document elements, so we can find things back when dereferencing references: -->
+  <xsl:variable name="xpref:type-step" as="xs:string" select="'step'"/>
+  <xsl:variable name="xpref:type-category" as="xs:string" select="'category'"/>
 
   <!-- ======================================================================= -->
   <!-- FILE NAME SUPPORT: -->

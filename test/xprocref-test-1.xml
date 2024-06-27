@@ -68,7 +68,7 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <step name="insert" category-idrefs="c.test c.test2 c.test3" version-idref="v31" short-description="Insert a piece of content in another">
+    <step name="insert" category-idrefs="c.test c.test2 c.test3" version-idref="v31" short-description="Insert a piece of content in another" required="true">
 
       <specification-link href="https://spec.xproc.org/master/head/steps/#c.insert"/>
 
@@ -85,18 +85,25 @@
         <option name="match" as="xs:string" select="/*" subtype="XSLTSelectionPattern" required="false">
           <description>Where to insert stuff</description>
         </option>
-        <option name="position" values="first-child last-child before after" select="after" required="false" as="xs:string">
+        <option name="position" values="first-child last-child before after"  required="true" as="xs:string">
           <description>relative position where to insert the stuff</description>
         </option>
       </signature>
 
       <summary xml:space="default">
-        <para>The <code>p:insert</code> step inserts the <code>insertion</code> port's document into the <port>source</port> port's document relative
-          to the matching elements in the <code>source</code> port's document.</para>
+        <para>The <step>p:insert</step> step inserts the <port>insertion</port> port's document into the <port>source</port> port's document relative
+          to the matching elements in the <port>source</port> port's document.</para>
       </summary>
 
       <description xml:space="default">
        <para> this raises <step-error-ref code="X111"/> or <step-error-ref code="X112"/></para>
+        <para>Reference to step <step>p:replace</step> in this version: <step-ref name="p:replace"/>…</para>
+        <para>Reference to step <step>p:replace</step> in version 3.0: <step-ref version-id="v30" name="p:replace"/>…</para>
+        <para>Reference to category named Test 3: <category-ref idref="c.test3"/>…</para>
+        <para>Reference to category named Test in version 3.0: <category-ref version-id="v30" idref="c.test"/>…</para>
+        <para>Some markup: <emphasis>emphasized</emphasis> or <emphasis role="bold">bold</emphasis> or <emphasis role="underline">underline</emphasis>…</para>
+        <bridgehead>Bridgehead</bridgehead>
+        <para>Some more text</para>
       </description>
       
       <step-errors>
