@@ -26,6 +26,8 @@
 
   <xsl:param name="xprocref-index" as="document-node()" required="true"/>
 
+  <xsl:param name="production-version" as="xs:boolean" required="true"/>
+
   <!-- ================================================================== -->
   <!-- GLOBAL DECLARATIONS: -->
 
@@ -68,7 +70,7 @@
 
   <xsl:variable name="latest-version-versionref-elm" as="element(xpref:versionref)" select="($xprocref-index/*/xpref:versionref)[1]"/>
   <xsl:variable name="last-version-id" as="xs:string" select="xs:string($latest-version-versionref-elm/@id)"/>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Keys for the map returned by local:get-prev-next(): -->
 
@@ -189,7 +191,12 @@
       <xsl:call-template name="create-docbook-article">
         <xsl:with-param name="href-target" select="$xpref:name-about-page"/>
         <xsl:with-param name="title" select="'About XProcRef'"/>
-        <xsl:with-param name="content" select="$about-page-content"/>
+        <xsl:with-param name="content">
+          <xsl:sequence select="$about-page-content"/>
+          <db:para>&#160;</db:para>
+          <db:para role="site-remark">Site published {if ($production-version) then () else ' [TEST VERSION]'}: {xs:string(current-dateTime()) =>
+            substring(1, 16) => replace('T', ' ')}</db:para>
+        </xsl:with-param>
       </xsl:call-template>
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -323,26 +330,24 @@
     <xsl:call-template name="create-docbook-article">
       <xsl:with-param name="href-target" select="local:href-result-file($version-id, local:step-page-name($step-id))"/>
       <xsl:with-param name="prev-next" select="local:get-prev-next($stepref-elm)"/>
-      <xsl:with-param name="title"
-        select="'Step: ' || $step-full-name || (if ($version-id ne $last-version-id) then ' (' || $version-name || ')' else ())"/>
+      <xsl:with-param name="title" select="$step-full-name || (if ($version-id ne $last-version-id) then ' (' || $version-name || ')' else ())"/>
       <xsl:with-param name="content">
         <!-- The short description to start with: -->
         <db:para>{$step-elm/@short-description}</db:para>
-        <!-- The signature: -->
-        <xsl:call-template name="create-step-signature">
-          <xsl:with-param name="step-id" select="$step-id"/>
-        </xsl:call-template>
-
-        <!-- Then the summary: -->
-        <xsl:call-template name="process-text">
-          <xsl:with-param name="surrounding-elm" select="$step-elm/xpref:summary"/>
-        </xsl:call-template>
-        <!-- Port and option tables: -->
-
-        <!-- The port/option tables: -->
-        <xsl:call-template name="create-step-tables">
-          <xsl:with-param name="signature-elm" select="$step-elm/xpref:signature"/>
-        </xsl:call-template>
+        
+        <!-- Summary: -->
+        <db:sect2>
+          <db:title>Summary</db:title>
+          <xsl:call-template name="create-step-signature">
+            <xsl:with-param name="step-id" select="$step-id"/>
+          </xsl:call-template>
+          <xsl:call-template name="process-text">
+            <xsl:with-param name="surrounding-elm" select="$step-elm/xpref:summary"/>
+          </xsl:call-template>
+          <xsl:call-template name="create-step-tables">
+            <xsl:with-param name="signature-elm" select="$step-elm/xpref:signature"/>
+          </xsl:call-template>
+        </db:sect2>
 
         <!-- The description: -->
         <db:sect2>
@@ -353,14 +358,37 @@
         </db:sect2>
 
         <!-- Any examples: -->
-        <xsl:for-each select="$step-elm/xpref:example">
+        <xsl:variable name="examples" as="element(xpref:example)*" select="$step-elm/xpref:example"/>
+        <xsl:if test="exists($examples)">
           <db:sect2>
-            <db:title>Example: {@title}</db:title>
-            <xsl:call-template name="process-text">
-              <xsl:with-param name="surrounding-elm" select="."/>
-            </xsl:call-template>
+            <db:title>Examples</db:title>
+            <xsl:for-each select="$examples">
+              <db:sect3>
+                <db:title>{@title}</db:title>
+                <xsl:call-template name="process-text">
+                  <xsl:with-param name="surrounding-elm" select="."/>
+                </xsl:call-template>
+              </db:sect3>
+            </xsl:for-each>
           </db:sect2>
-        </xsl:for-each>
+        </xsl:if>
+
+        <!-- Details: -->
+        <xsl:variable name="details" as="element(xpref:detail)*" select="$step-elm/xpref:detail"/>
+        <xsl:if test="exists($details)">
+          <db:sect2>
+            <db:title>Additional details</db:title>
+            <db:itemizedlist>
+              <xsl:for-each select="$details">
+                <db:listitem>
+                  <xsl:call-template name="process-text">
+                    <xsl:with-param name="surrounding-elm" select="."/>
+                  </xsl:call-template>
+                </db:listitem>
+              </xsl:for-each>
+            </db:itemizedlist>
+          </db:sect2>
+        </xsl:if>
 
         <!-- Errors: -->
         <xsl:variable name="step-errors" as="element(xpref:step-error)*" select="$step-elm/xpref:step-errors/xpref:step-error"/>
@@ -820,6 +848,9 @@
           <db:title>
             <xsl:copy-of select="$prev-marker" copy-namespaces="false"/>
             <xsl:value-of select="$title"/>
+            <xsl:if test="not($production-version)">
+              <xsl:text> [TEST]</xsl:text>
+            </xsl:if>
             <xsl:copy-of select="$next-marker" copy-namespaces="false"/>
           </db:title>
           <xsl:copy-of select="$content"/>

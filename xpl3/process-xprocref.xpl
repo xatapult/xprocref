@@ -57,6 +57,10 @@
     <p:documentation>URI of the web template used to build the pages.</p:documentation>
   </p:option>
 
+  <p:option name="production-version" as="xs:boolean" required="false" select="false()">
+    <p:documentation>Whether to create a production version (for a production version, all steps with @publish="false" will not appear in the output).</p:documentation>
+  </p:option>
+
   <!-- ======================================================================= -->
   <!-- SUBSTEPS: -->
 
@@ -127,7 +131,21 @@
   </p:xslt>
   <p:unwrap match="xpref:step-group"/>
   <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-prepared.xml"/>
-  <p:identity name="prepared-xprocref-specification"/>
+
+  <!-- Remove the unpublished steps when creating a production version: -->
+  <p:variable name="step-count-1" as="xs:integer" select="count(/*/xpref:steps/xpref:step)"/>
+  <p:if test="$production-version">
+    <p:delete match="xpref:step[not(xs:boolean((@publish, false())[1]))]"/>
+  </p:if>
+  <p:variable name="step-count-2" as="xs:integer" select="count(/*/xpref:steps/xpref:step)"/>
+  <p:if test="$step-count-2 lt 1">
+    <p:error code="xpref:error">
+      <p:with-input>
+        <p:inline content-type="text/plain">No steps to publish (production-version={$production-version})</p:inline>
+      </p:with-input>
+    </p:error>
+  </p:if>
+  <p:identity name="prepared-xprocref-specification" message="  * Step count: {$step-count-2}/{$step-count-1}"/>
 
   <!-- Clean the result directory: -->
   <xtlc:create-clear-directory clear="true">
@@ -155,15 +173,21 @@
   <p:xslt message="  * Creating pages">
     <p:with-input pipe="@prepared-xprocref-specification"/>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/create-xprocref-container.xsl"/>
-    <p:with-option name="parameters" select="map{'xprocref-index': $xprocref-index}"/>
+    <p:with-option name="parameters" select="map{'xprocref-index': $xprocref-index, 'production-version': $production-version}"/>
   </p:xslt>
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-texts.xsl"/>
   </p:xslt>
-  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-raw-container.xml"/>
 
   <!-- Process the Markdown (into DocBook): -->
   <xdoc:markdown-to-docbook/>
+  
+  <!-- Add a ToC to the steps: -->
+  <p:xslt>
+    <p:with-input port="stylesheet" href="xsl-process-xprocref/add-toc-to-steps.xsl"/>
+  </p:xslt>
+  
+  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-raw-container.xml"/>
 
   <!-- Process the resulting DocBook/xdoc into XHTML: -->
   <p:viewport match="xtlcon:document[exists(db:article)]" message="  * Converting pages to HTML">

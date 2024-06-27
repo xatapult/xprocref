@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<categories xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  
+  <!-- ======================================================================= -->
+  <!-- PRIMARY CATEGORIES: -->
+  <!-- Primary categories are used for the classification the specification makes also. -->
+  
+  <category id="standard-steps" name="Standard steps" primary="true">
+    <description>
+      <para>Bogus category for testing group Standard steps…</para>
+    </description>
+  </category>
+  
+  <!-- ======================================================================= -->
+  <!-- SECONDARY CATEGORIES: -->
+  
+</categories>

@@ -44,6 +44,26 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
+  <xsl:template match="db:sect2[empty(@xml:id)]">
+    <!-- These are used for ToCs and must have an identifier. -->
+    <xsl:copy>
+      <xsl:attribute name="xml:id" select="'sect2-' || generate-id(.)"/>
+      <xsl:apply-templates select="@* | node()"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="db:section[exists(db:title)]">
+    <!-- Change into bridgehead: -->
+    <bridgehead role="section">
+      <xsl:apply-templates select="db:title/node()"/>
+    </bridgehead>
+    <xsl:apply-templates select="* except db:title"/>
+  </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
   <xsl:template match="db:step-ref | db:category-ref">
 
     <xsl:try>
@@ -69,7 +89,7 @@
             <xsl:sequence select="$link-elm"/>
           </code>
         </xsl:when>
-        <xsl:otherwise> 
+        <xsl:otherwise>
           <xsl:sequence select="$link-elm"/>
         </xsl:otherwise>
       </xsl:choose>

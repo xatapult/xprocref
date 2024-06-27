@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="split-sequence"
+      version-idref="v30"
+      category-idrefs="standard-steps"
+      short-description="[EDIT] split-sequence short description"
+      required="true"
+      publish="false"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.xtpxlib.nl/ns/xprocref">
+   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.split-sequence"/>
+   <signature>
+      <input port="source"
+             content-types="any"
+             sequence="true"
+             primary="true">
+         <description>
+            <para>[EDIT] input source</para>
+         </description>
+      </input>
+      <output port="matched"
+              sequence="true"
+              primary="true"
+              content-types="any">
+         <description>
+            <para>[EDIT] output matched</para>
+         </description>
+      </output>
+      <output port="not-matched"
+              sequence="true"
+              content-types="any"
+              primary="true">
+         <description>
+            <para>[EDIT] output not-matched</para>
+         </description>
+      </output>
+      <option name="initial-only"
+              as="xs:boolean"
+              select="false()"
+              required="false">
+         <description>
+            <para>[EDIT] option initial-only</para>
+         </description>
+      </option>
+      <option name="test"
+              required="true"
+              as="xs:string"
+              subtype="XPathExpression">
+         <description>
+            <para>[EDIT] option test</para>
+         </description>
+      </option>
+   </signature>
+   <summary>
+      <para>[EDIT]</para>
+      <para>The <tag>p:split-sequence</tag> step accepts a sequence of documents and divides it into two sequences.</para>
+   </summary>
+   <description>
+      <para>[EDIT]</para>
+      <para>The value of the <option>test</option> option must be an XPathExpression.</para>
+      <para>The XPath expression in the <option>test</option> option is applied to each document in the input sequence. If the effective boolean value of the expression is true, the document is copied to the <port>matched</port> port; otherwise it is copied to the <port>not-matched</port> port.</para>
+      <para>If the <option>initial-only</option> option is true, then when the first document that does not satisfy the test expression is encountered, it <emphasis>and all the documents that follow it</emphasis> are written to the <port>not-matched</port> port. In other words, it only writes the initial series of matched documents (which may be empty) to the <port>matched</port> port. All other documents are written to the <port>not-matched</port> port, irrespective of whether or not they match.</para>
+      <para>The XPath context for the <option>test</option> option changes over time. For each document that appears on the <code>source</code> port, the expression is evaluated with that document as the context document. The context position (<code>position()</code>) is the position of that document within the sequence and the context size (<code>last()</code>) is the total number of documents in the sequence. <emphasis role="bold">[ERROR <step-error-ref code="C0150"/>]</emphasis>
+      </para>
+      <note xml:id="note-stream">
+         <para>In principle, this component cannot stream because it must buffer all of the input sequence in order to find the context size. In practice, if the test expression does not use the <function>last()</function> function, the implementation can stream and ignore the context size.</para>
+      </note>
+      <para>If the implementation supports passing PSVI annotations between steps, the <tag>p:split-sequence</tag> step must preserve any annotations that appear in the input.</para>
+      <bridgehead>Document properties</bridgehead>
+      <para feature="split-sequence-preserves-all">All document properties are preserved.</para>
+   </description>
+   <step-errors>
+      <step-error code="C0150">
+         <description>
+            <para>It is a dynamic error if evaluating the XPath expression in option <option>test</option> on a context document results in an error.</para>
+         </description>
+      </step-error>
+   </step-errors>
+</step>

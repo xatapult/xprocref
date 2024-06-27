@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="filter"
+      version-idref="v30"
+      category-idrefs="standard-steps"
+      short-description="[EDIT] filter short description"
+      required="true"
+      publish="false"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.xtpxlib.nl/ns/xprocref">
+   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.filter"/>
+   <signature>
+      <input port="source"
+             content-types="xml html"
+             primary="true"
+             sequence="true">
+         <description>
+            <para>[EDIT] input source</para>
+         </description>
+      </input>
+      <output port="result"
+              sequence="true"
+              content-types="text xml html"
+              primary="true">
+         <description>
+            <para>[EDIT] output result</para>
+         </description>
+      </output>
+      <option name="select"
+              required="true"
+              as="xs:string"
+              subtype="XPathExpression">
+         <description>
+            <para>[EDIT] option select</para>
+         </description>
+      </option>
+   </signature>
+   <summary>
+      <para>[EDIT]</para>
+      <para>The <code>p:filter</code> step selects portions of the source document based on a (possibly dynamically constructed) XPath select expression.</para>
+   </summary>
+   <description>
+      <para>[EDIT]</para>
+      <para>This step behaves just like an <tag>p:input</tag> with a <tag class="attribute">select</tag> expression except that the select expression is computed dynamically.</para>
+      <bridgehead>Document properties</bridgehead>
+      <para feature="filter-preserves-none">No document properties are preserved. The <property>base-uri</property> property of each document will reflect the base URI of the selected node(s). </para>
+   </description>
+</step>

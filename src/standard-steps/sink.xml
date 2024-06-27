@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="sink"
+      version-idref="v30"
+      category-idrefs="standard-steps"
+      short-description="[EDIT] sink short description"
+      required="true"
+      publish="false"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.xtpxlib.nl/ns/xprocref">
+   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.sink"/>
+   <signature>
+      <input port="source"
+             content-types="any"
+             sequence="true"
+             primary="true">
+         <description>
+            <para>[EDIT] input source</para>
+         </description>
+      </input>
+   </signature>
+   <summary>
+      <para>[EDIT]</para>
+      <para>The <tag>p:sink</tag> step accepts a sequence of documents and discards them. It has no output.</para>
+   </summary>
+   <description>
+      <para>[EDIT]</para>
+      <bridgehead>Document properties</bridgehead>
+      <para feature="sing-preserves-na">Not applicable.</para>
+   </description>
+</step>

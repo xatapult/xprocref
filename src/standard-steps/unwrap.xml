@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="unwrap"
+      version-idref="v30"
+      category-idrefs="standard-steps"
+      short-description="[EDIT] unwrap short description"
+      required="true"
+      publish="false"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.xtpxlib.nl/ns/xprocref">
+   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.unwrap"/>
+   <signature>
+      <input port="source"
+             content-types="xml html"
+             primary="true"
+             sequence="true">
+         <description>
+            <para>[EDIT] input source</para>
+         </description>
+      </input>
+      <output port="result"
+              content-types="text xml html"
+              primary="true"
+              sequence="true">
+         <description>
+            <para>[EDIT] output result</para>
+         </description>
+      </output>
+      <option name="match"
+              as="xs:string"
+              select="'/*'"
+              subtype="XSLTSelectionPattern"
+              required="false">
+         <description>
+            <para>[EDIT] option match</para>
+         </description>
+      </option>
+   </signature>
+   <summary>
+      <para>[EDIT]</para>
+      <para>The <tag>p:unwrap</tag> step replaces matched elements with their children.</para>
+   </summary>
+   <description>
+      <para>[EDIT]</para>
+      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="C0023"/>]</emphasis>
+      </para>
+      <para>Every element in the <port>source</port> document that matches the specified <option>match</option> pattern is replaced by its children, effectively “unwrapping” the children from their parent. Non-element nodes and unmatched elements are passed through unchanged.</para>
+      <note xml:id="note-match-doc">
+         <para>The matching applies to the entire document, not just the “top-most” matches. A pattern of the form <literal>h:div</literal> will replace <emphasis>all</emphasis>
+            <tag>h:div</tag> elements, not just the top-most ones.</para>
+      </note>
+      <para>This step produces a single document. Special cases:</para>
+      <itemizedlist>
+         <listitem>
+            <para>If the document element is unwrapped, the result might not be well-formed XML.</para>
+            <para>For instance unwrapping the root element of <code>&lt;!-- COMMENT --&gt;&lt;root-element/&gt;</code> will result in a document node with a single comment node child, which is not well-formed.</para>
+         </listitem>
+         <listitem>
+            <para>If a document consisting of only an empty root element is unwrapped, the result will be a document node without children. The result document’s content type will not change.</para>
+         </listitem>
+         <listitem>
+            <para>If a document consisting of a root element containing only text is unwrapped, the result will be a document node with a single text node child. The result document’s content type will become “<literal>text/plain</literal>”.</para>
+         </listitem>
+      </itemizedlist>
+      <para>As specified in the core language specification: if the content type changes, the <code>serialization</code> document property, if present, will be removed.</para>
+      <bridgehead>Document properties</bridgehead>
+      <para feature="unwrap-preserves-partially">If the resulting document contains exactly one text node, the <literal>content-type</literal> property is changed to <literal>text/plain</literal> and the <literal>serialization</literal> property is removed, while all other document properties are preserved. In all other cases, all document properties are preserved.</para>
+   </description>
+   <step-errors>
+      <step-error code="C0023">
+         <description>
+            <para>It is a dynamic error if that pattern matches anything other than the document node or element nodes.</para>
+         </description>
+      </step-error>
+   </step-errors>
+</step>

@@ -6,7 +6,8 @@ h1 {
 }
 
 h2 {
-  margin-top: 1rem;
+  border-top: 1px solid black;
+  margin-top: 2rem;
   font-size: 1.5rem;
 }
 
@@ -34,8 +35,20 @@ p.table-header {
   font-weight: bold;
 }
 
+p.site-remark {
+  border-top: 1px solid black;
+  font-size: 80%;
+}
+
+p.tocentry {
+  margin: 0;
+  font-size: 90%;
+}
+
 /* Code and code-blocks: */
 pre {
+  margin-top: 1rem ! important;
+  margin-bottom: 1rem ! important;
   background: lightgrey;
   font-family: Consolas, monospace;
   font-weight: bold;
@@ -66,7 +79,7 @@ table {
 }
 
 th {
-  background-color: black !important;
+  background-color: grey !important;
   color: white;
   padding: 0.1rem !important;
   font-weight: normal;

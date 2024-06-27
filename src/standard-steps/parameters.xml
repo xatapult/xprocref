@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="parameters"
+      version-idref="v30"
+      category-idrefs="standard-steps"
+      short-description="[EDIT] parameters short description"
+      required="true"
+      publish="false"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.xtpxlib.nl/ns/xprocref">
+   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.parameters"/>
+   <signature>
+      <output port="result"
+              content-types="application/xml"
+              primary="true"
+              sequence="true">
+         <description>
+            <para>[EDIT] output result</para>
+         </description>
+      </output>
+      <option name="parameters"
+              as="map(xs:QName,item()*)?"
+              required="false">
+         <description>
+            <para>[EDIT] option parameters</para>
+         </description>
+      </option>
+   </signature>
+   <summary>
+      <para>[EDIT]</para>
+      <para>The <code>p:parameters</code> step exposes a set of parameters as a <tag>c:param-set</tag> document.</para>
+   </summary>
+   <description>
+      <para>[EDIT]</para>
+      <para>Each parameter in the <option>parameters</option> map is converted into a <tag>c:param</tag> element. The resulting <tag>c:param</tag> elements are wrapped in a <tag>c:param-set</tag> and the parameter set document is written to the <port>result</port> port. The order in which <tag>c:param</tag> elements occur in the <tag>c:param-set</tag> is implementation-dependent.</para>
+      <para>For consistency and user convenience, <emphasis>in the output of <tag>p:parameters</tag>
+         </emphasis>, if any of the parameters have names that are in a namespace, the <tag class="attribute">namespace</tag> attribute on the <tag>c:param</tag> element must be used. Each <tag class="attribute">name</tag> must be an NCName.</para>
+      <para>The base URI of the output document is the URI of the pipeline document that contains the step.</para>
+      <sect2 xml:id="cv.param">
+         <title>The c:param element</title>
+         <para>A <tag>c:param</tag> is a standard XML representation of a parameter. </para>
+         <para>
+            <emphasis role="bold">[RNG Pattern VocabParam]</emphasis>
+         </para>
+         <para>The attributes that can occur on <tag>c:param</tag> are:</para>
+         <variablelist>
+            <varlistentry>
+               <term>
+                  <tag class="attribute">name</tag>
+               </term>
+               <listitem>
+                  <para>The <tag class="attribute">name</tag> attribute of the <tag>c:param</tag> must have the lexical form of a QName. (In the output of some steps, such as <tag>p:parameters</tag>, the name will always be an <type>xs:NCName</type>, but that is not a general requirement for user-constructed <tag>c:param</tag> elements ) </para>
+                  <para>If the <tag class="attribute">namespace</tag> attribute is not specified, and the <tag class="attribute">name</tag> contains a colon, then the expanded name of the parameter is constructed using the <tag class="attribute">name</tag> value and the namespace declarations in-scope on the <tag>c:param</tag> element. <emphasis role="bold">[ERROR <step-error-ref code="C0087"/>]</emphasis>
+                  </para>
+                  <para>If the <tag class="attribute">namespace</tag> attribute is not specified, and the <tag class="attribute">name</tag> does not contain a colon, then the expanded name of the parameter is in no namespace.</para>
+               </listitem>
+            </varlistentry>
+            <varlistentry>
+               <term>
+                  <tag class="attribute">namespace</tag>
+               </term>
+               <listitem>
+                  <para>The namespace URI of the parameter name.</para>
+                  <para>If the <tag class="attribute">namespace</tag> attribute is specified, then the expanded name of the parameter is constructed from the specified namespace and the <tag class="attribute">name</tag> value. <emphasis role="bold">[ERROR <step-error-ref code="C0083"/>]</emphasis>
+                  </para>
+               </listitem>
+            </varlistentry>
+            <varlistentry>
+               <term>
+                  <tag class="attribute">value</tag>
+               </term>
+               <listitem>
+                  <para>If the parameter value is an atomic type, a lexical representation of its value appears in the <tag class="attribute">value</tag> attribute. <emphasis role="bold">[ERROR <step-error-ref code="C0087"/>]</emphasis>
+                  </para>
+               </listitem>
+            </varlistentry>
+            <varlistentry>
+               <term>
+                  <tag class="attribute">as</tag>
+               </term>
+               <listitem>
+                  <para>The <tag class="attribute">as</tag> attribute specifies the <link xlink:href="https://www.w3.org/TR/xpath-31/"
+                           role="newpage"
+                           xmlns:xlink="http://www.w3.org/1999/xlink">XPath 3.1</link>
+                     <link xlink:href="https://www.w3.org/TR/xpath-31/#dt-sequence-type"
+                           xmlns:xlink="http://www.w3.org/1999/xlink">sequence type</link> of the parameter value. <emphasis role="bold">[ERROR <step-error-ref code="C0089"/>]</emphasis> The sequence type <literal>item()*</literal> is assumed if no explicit type is provided. <emphasis role="bold">[ERROR <step-error-ref code="D0036"/>]</emphasis>
+                  </para>
+               </listitem>
+            </varlistentry>
+            <varlistentry>
+               <term>Other attributes</term>
+               <listitem>
+                  <para>Any namespace-qualified attribute names that appear on the <tag>c:param</tag> element are ignored. <emphasis role="bold">[ERROR <step-error-ref code="C0085"/>]</emphasis>
+                  </para>
+               </listitem>
+            </varlistentry>
+         </variablelist>
+         <para>If the <tag>c:param</tag> element is not empty, then its content, interpreted as a sequence of XML nodes, is the value of the parameter.</para>
+      </sect2>
+      <sect2 xml:id="cv.param-set">
+         <title>The c:param-set element</title>
+         <para>A <tag>c:param-set</tag> represents a set of parameters on a parameter input.</para>
+         <para>
+            <emphasis role="bold">[RNG Pattern VocabParamSet]</emphasis>
+         </para>
+         <para>The <tag>c:param-set</tag> contains zero or more <tag>c:param</tag> elements. <emphasis role="bold">[ERROR <step-error-ref code="C0084"/>]</emphasis>
+         </para>
+         <para>Any namespace-qualified attribute names that appear on the <tag>c:param-set</tag> element are ignored. <emphasis role="bold">[ERROR <step-error-ref code="C0086"/>]</emphasis>
+         </para>
+      </sect2>
+      <bridgehead>Document properties</bridgehead>
+      <para feature="parameters-preserves-none">No document properties are preserved.</para>
+   </description>
+   <step-errors>
+      <step-error code="C0087">
+         <description>
+            <para>It is a dynamic error if the <tag class="attribute">namespace</tag> attribute is not specified, the <tag class="attribute">name</tag> contains a colon, and the specified prefix is not in the in-scope namespace bindings.</para>
+         </description>
+      </step-error>
+      <step-error code="C0083">
+         <description>
+            <para>It is a dynamic error if the <tag class="attribute">namespace</tag> attribute is specified, the <tag class="attribute">name</tag> contains a colon, and the specified namespace is not the same as the in-scope namespace binding for the specified prefix.</para>
+         </description>
+      </step-error>
+      <step-error code="C0089">
+         <description>
+            <para>It is a dynamic error if the sequence type is not syntactically valid.</para>
+         </description>
+      </step-error>
+      <step-error code="D0036">
+         <description>
+            <para>It is a dynamic error if the supplied value of a variable or option cannot be converted to the required type.</para>
+         </description>
+      </step-error>
+      <step-error code="C0085">
+         <description>
+            <para>It is a dynamic error for any unqualified attribute names other than “<literal>name</literal>”, “<literal>namespace</literal>”, “<literal>as</literal>”, or “<literal>value</literal>” to appear on a <tag>c:param</tag> element.</para>
+         </description>
+      </step-error>
+      <step-error code="C0084">
+         <description>
+            <para>It is a dynamic error if the parameter list contains any elements other than <tag>c:param</tag>.</para>
+         </description>
+      </step-error>
+      <step-error code="C0086">
+         <description>
+            <para>It is a dynamic error for any unqualified attribute names to appear on a <tag>c:param-set</tag> element.</para>
+         </description>
+      </step-error>
+   </step-errors>
+</step>

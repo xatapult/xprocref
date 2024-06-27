@@ -43,6 +43,8 @@
 
   <p:option name="version-idref" as="xs:string" required="false" select="'v30'"/>
 
+  <p:option name="steps-required" as="xs:boolean" required="false" select="false()"/>
+
   <!-- ================================================================== -->
   <!-- MAIN: -->
 
@@ -52,13 +54,14 @@
   <!-- Do the conversion things: -->
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl/convert-steps-1.xsl"/>
-    <p:with-option name="parameters" select="map{'version-idref': $version-idref, 'href-xprocref-schema': $href-xprocref-schema }"/>
+    <p:with-option name="parameters"
+      select="map{'version-idref': $version-idref, 'href-xprocref-schema': $href-xprocref-schema, 'step-required': $steps-required}"/>
   </p:xslt>
 
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl/fixup-signature.xsl"/>
   </p:xslt>
-  
+
   <p:unwrap match="xpref:rfc2119"/>
   <p:unwrap match="xpref:glossterm"/>
   <p:unwrap match="xpref:impl"/>
@@ -74,7 +77,12 @@
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl/add-additional-documents.xsl"/>
   </p:xslt>
-
+  
+  <!-- Fix weird text nodes: -->
+  <p:xslt>
+    <p:with-input port="stylesheet" href="xsl/fix-text-nodes.xsl"/>
+  </p:xslt>
+  
   <!-- Write the result: -->
   <xtlcon:container-to-disk p:message="* Writing result to {$href-target}"/>
 

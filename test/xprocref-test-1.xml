@@ -104,7 +104,20 @@
         <para>Some markup: <emphasis>emphasized</emphasis> or <emphasis role="bold">bold</emphasis> or <emphasis role="underline">underline</emphasis>…</para>
         <bridgehead>Bridgehead</bridgehead>
         <para>Some more text</para>
+        
+        <section>
+          <title>BLAH</title>
+          <para>BLOEB</para>
+        </section>
+        
       </description>
+
+      <detail>All are preserved</detail>
+      <detail>All are preserved again</detail>
+
+      <example title="Simple example">Bla bla bla</example>
+      <example title="Simple example 2">Bla bla bla</example>
+      
       
       <step-errors>
         <step-error code="X111">
@@ -231,6 +244,5 @@
     </step>
 
   </steps>
-
 
 </xprocref>

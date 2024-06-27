@@ -20,7 +20,7 @@
     specification. This leaves much to be desired for users of the language: the specification is aimed at XProc processor <emphasis>implementers</emphasis>, not at
     language <emphasis>users</emphasis>. To correct this, this site contains reference information about the XProc steps, written from a more user-oriented perspective. With the increasing popularity of XProc, I hope this fills a need.</para>
   
-  <para role="break-before">Erik&#160;Siegel</para>
+  <para role="break-before">Erik&#160;Siegel (<link xlink:href="mailto:erik@xatapult.nl">erik@xatapult.nl</link>)</para>
   <para><link xlink:href="https://www.xatapult.com/" role="newpage">Xatapult&#160;Content&#160;Engineering</link></para>
   
 </about-page>

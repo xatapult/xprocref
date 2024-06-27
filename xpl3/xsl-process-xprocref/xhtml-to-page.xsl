@@ -80,7 +80,6 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="xpref:MENU" mode="mode-process-template">
-    <!-- TBD, just something for now: -->
     <menu xmlns="http://www.xtpxlib.nl/ns/xprocref">
       <menu-entry caption="home" href="{xpref:href-combine($homedir-path, (), $xpref:name-home-page)}"/>
       <menu-entry caption="categories" href="{xpref:href-combine($homedir-path, $last-version-name, $xpref:name-categories-overview-page)}"/>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../sch/xprocref.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<xprocref xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../xsd/xprocref.xsd">
+
+  <!-- ======================================================================= -->
+  <!-- MACRODEFS (mainly used for defining the specification base links): -->
+
+  <macrodefs>
+    <macrodef name="BASELINK-STANDARD-STEPS" value="https://spec.xproc.org/master/head/steps/"/>
+  </macrodefs>
+
+  <!-- ======================================================================= -->
+  <!-- NAMESPACES: -->
+
+  <namespaces>
+    <namespace prefix="p" uri="http://www.w3.org/ns/xproc">
+      <description>The main XProc namespace, used for all of its elements, steps and some of its attributes.</description>
+    </namespace>
+    <!-- TBD c: err etc. -->
+  </namespaces>
+
+  <!-- ======================================================================= -->
+  <!-- VERSIONS: -->
+
+  <versions>
+    <version id="v30" name="3.0">
+      <description>
+        <para>XProc version 3.0</para>
+      </description>
+    </version>
+  </versions>
+
+  <!-- ======================================================================= -->
+  <!-- ERRORS: -->
+
+  <xi:include href="step-errors.xml"/>
+
+  <!-- ======================================================================= -->
+  <!-- CATEGORIES: -->
+
+  <xi:include href="step-categories.xml"/>
+
+  <!-- ======================================================================= -->
+  <!-- STEPS: -->
+
+  <steps>
+
+    <xi:include href="standard-steps/standard-steps.stepgroup.xml"/>
+
+  </steps>
+
+</xprocref>

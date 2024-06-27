@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="delete"
+      version-idref="v30"
+      category-idrefs="standard-steps"
+      short-description="[EDIT] delete short description"
+      required="true"
+      publish="false"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.xtpxlib.nl/ns/xprocref">
+   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.delete"/>
+   <signature>
+      <input port="source"
+             content-types="xml html"
+             primary="true"
+             sequence="true">
+         <description>
+            <para>[EDIT] input source</para>
+         </description>
+      </input>
+      <output port="result"
+              content-types="text xml html"
+              primary="true"
+              sequence="true">
+         <description>
+            <para>[EDIT] output result</para>
+         </description>
+      </output>
+      <option name="match"
+              required="true"
+              as="xs:string"
+              subtype="XSLTSelectionPattern">
+         <description>
+            <para>[EDIT] option match</para>
+         </description>
+      </option>
+   </signature>
+   <summary>
+      <para>[EDIT]</para>
+      <para>The <code>p:delete</code> step deletes items specified by a selection pattern from the <code>source</code> input document and produces the resulting document, with the deleted items removed, on the <port>result</port> port.</para>
+   </summary>
+   <description>
+      <para>[EDIT]</para>
+      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. A selection pattern may match multiple items to be deleted.</para>
+      <para>If an element is selected by the <option>match</option> option, the entire subtree rooted at that element is deleted.</para>
+      <para>
+         <emphasis role="bold">[ERROR <step-error-ref code="C0023"/>]</emphasis>
+      </para>
+      <para>This step cannot be used to remove namespaces. <emphasis role="bold">[ERROR <step-error-ref code="C0062"/>]</emphasis> Also, note that deleting an attribute named <tag class="attribute">xml:base</tag> does not change the base URI of the element on which it occurred.</para>
+      <bridgehead>Document properties</bridgehead>
+      <para feature="delete-preserves-partially">If the resulting document contains exactly one text node, the <literal>content-type</literal> property is changed to <literal>text/plain</literal> and the <literal>serialization</literal> property is removed, while all other document properties are preserved. In all other cases, all document properties are preserved.</para>
+   </description>
+   <step-errors>
+      <step-error code="C0023">
+         <description>
+            <para>It is a dynamic error if the <option>match</option> option matches the document node.</para>
+         </description>
+      </step-error>
+      <step-error code="C0062">
+         <description>
+            <para>It is a dynamic error if the <option>match</option> option matches a namespace node.</para>
+         </description>
+      </step-error>
+   </step-errors>
+</step>

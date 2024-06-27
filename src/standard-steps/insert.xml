@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="insert"
+      version-idref="v30"
+      category-idrefs="standard-steps"
+      short-description="[EDIT] insert short description"
+      required="true"
+      publish="false"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.xtpxlib.nl/ns/xprocref">
+   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.insert"/>
+   <signature>
+      <input port="source"
+             primary="true"
+             content-types="xml html"
+             sequence="true">
+         <description>
+            <para>[EDIT] input source</para>
+         </description>
+      </input>
+      <input port="insertion"
+             sequence="true"
+             content-types="xml html"
+             primary="true">
+         <description>
+            <para>[EDIT] input insertion</para>
+         </description>
+      </input>
+      <output port="result"
+              content-types="xml html"
+              primary="true"
+              sequence="true">
+         <description>
+            <para>[EDIT] output result</para>
+         </description>
+      </output>
+      <option name="match"
+              as="xs:string"
+              select="'/*'"
+              subtype="XSLTSelectionPattern"
+              required="false">
+         <description>
+            <para>[EDIT] option match</para>
+         </description>
+      </option>
+      <option name="position"
+              values="('first-child','last-child','before','after')"
+              select="'after'"
+              required="false"
+              as="item()*">
+         <description>
+            <para>[EDIT] option position</para>
+         </description>
+      </option>
+   </signature>
+   <summary>
+      <para>[EDIT]</para>
+      <para>The <code>p:insert</code> step inserts the <code>insertion</code> port's document into the <port>source</port> port's document relative to the matching elements in the <code>source</code> port's document.</para>
+   </summary>
+   <description>
+      <para>[EDIT]</para>
+      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="C0023"/>]</emphasis> Multiple matches are allowed, in which case multiple copies of the <port>insertion</port> documents will occur. If no elements match, then the document is unchanged.</para>
+      <para>The value of the <option>position</option> option must be an NMTOKEN in the following list: </para>
+      <itemizedlist>
+         <listitem>
+            <para>“<literal>first-child</literal>” - the insertion is made as the first child of the match;</para>
+         </listitem>
+         <listitem>
+            <para>“<literal>last-child</literal>” - the insertion is made as the last child of the match;</para>
+         </listitem>
+         <listitem>
+            <para>“<literal>before</literal>” - the insertion is made as the immediate preceding sibling of the match;</para>
+         </listitem>
+         <listitem>
+            <para>“<literal>after</literal>” - the insertion is made as the immediate following sibling of the match.</para>
+         </listitem>
+      </itemizedlist>
+      <para>
+         <emphasis role="bold">[ERROR <step-error-ref code="C0025"/>]</emphasis>
+         <emphasis role="bold">[ERROR <step-error-ref code="C0024"/>]</emphasis>
+      </para>
+      <para>As the inserted elements are part of the output of the step they are not considered in determining matching elements. If an empty sequence appears on the <port>insertion</port> port, the result will be the same as the source.</para>
+      <bridgehead>Document properties</bridgehead>
+      <para feature="insert-preserves-all">All document properties on the <port>source</port> port are preserved. The document properties on the <port>insertion</port> port are not preserved or present in the result document.</para>
+   </description>
+   <step-errors>
+      <step-error code="C0023">
+         <description>
+            <para>It is a dynamic error if that pattern matches an attribute or a namespace node.</para>
+         </description>
+      </step-error>
+      <step-error code="C0025">
+         <description>
+            <para>It is a dynamic error if the selection pattern matches anything other than an element or a document node and the value of the <option>position</option> option is “<literal>first-child</literal>” or “<literal>last-child</literal>”.</para>
+         </description>
+      </step-error>
+      <step-error code="C0024">
+         <description>
+            <para>It is a dynamic error if the selection pattern matches a document node and the value of the <option>position</option> is “<literal>before</literal>” or “<literal>after</literal>”.</para>
+         </description>
+      </step-error>
+   </step-errors>
+</step>

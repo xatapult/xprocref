@@ -30,6 +30,8 @@
 
   <xsl:param name="href-xprocref-schema" as="xs:string" required="true"/>
 
+  <xsl:param name="step-required" as="xs:boolean" required="true"/>
+
   <!-- ======================================================================= -->
   <!-- GLOBAL DECLARATIONS: -->
 
@@ -92,7 +94,8 @@
       </xsl:call-template>
     </xsl:if>
 
-    <step name="{$step-name}" version-idref="{$version-idref}" category-idrefs="{$step-group-id}" short-description="{$edit-marker} {$step-name} short description">
+    <step name="{$step-name}" version-idref="{$version-idref}" category-idrefs="{$step-group-id}"
+      short-description="{$edit-marker} {$step-name} short description" required="{$step-required}" publish="false">
       <xsl:attribute name="xsi:schemaLocation" select="'http://www.xtpxlib.nl/ns/xprocref ' || $href-xprocref-schema-rel"/>
 
       <specification-link>

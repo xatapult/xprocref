@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="archive-manifest"
+      version-idref="v30"
+      category-idrefs="standard-steps"
+      short-description="[EDIT] archive-manifest short description"
+      required="true"
+      publish="false"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.xtpxlib.nl/ns/xprocref">
+   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.archive-manifest"/>
+   <signature>
+      <input port="source"
+             primary="true"
+             content-types="any"
+             sequence="false">
+         <description>
+            <para>[EDIT] input source</para>
+         </description>
+      </input>
+      <output port="result"
+              primary="true"
+              content-types="application/xml"
+              sequence="false">
+         <description>
+            <para>[EDIT] output result</para>
+         </description>
+      </output>
+      <option name="format"
+              as="xs:QName?"
+              required="false">
+         <description>
+            <para>[EDIT] option format</para>
+         </description>
+      </option>
+      <option name="parameters"
+              as="map(xs:QName, item()*)?"
+              required="false">
+         <description>
+            <para>[EDIT] option parameters</para>
+         </description>
+      </option>
+      <option name="relative-to"
+              as="xs:anyURI?"
+              required="false">
+         <description>
+            <para>[EDIT] option relative-to</para>
+         </description>
+      </option>
+      <option name="override-content-types"
+              as="array(array(xs:string))?"
+              required="false">
+         <description>
+            <para>[EDIT] option override-content-types</para>
+         </description>
+      </option>
+   </signature>
+   <summary>
+      <para>[EDIT]</para>
+      <para>The <code>p:archive-manifest</code> creates an XML manifest file describing the contents of the archive appearing on its <port>source</port> port.</para>
+   </summary>
+   <description>
+      <para>[EDIT]</para>
+      <para>The <code>p:archive-manifest</code> step inspects the archive appearing on its <port>source</port> port and outputs a manifest describing the contents of the archive on its <port>result</port> port. </para>
+      <para>The format of the archive is determined as follows:</para>
+      <itemizedlist>
+         <listitem>
+            <para>If the <option>format</option> option is specified, this determines the format of the archive. Implementations must support the <link xlink:href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT"
+                     role="newpage"
+                     xmlns:xlink="http://www.w3.org/1999/xlink">ZIP</link> format, specified with the value <code>zip</code>. It is implementation-defined what other formats are supported. </para>
+         </listitem>
+         <listitem>
+            <para>If no <option>format</option> option is specified or if its value is the empty sequence, the archive's format will be determined by the step, using the <code>content-type</code> document-property of the document on the <port>source</port> port and/or by inspecting its contents. It is implementation-defined how the step determines the archive's format. Implementations should recognize archives in <link xlink:href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT"
+                     role="newpage"
+                     xmlns:xlink="http://www.w3.org/1999/xlink">ZIP</link> format. </para>
+         </listitem>
+      </itemizedlist>
+      <para>
+         <emphasis role="bold">[ERROR <step-error-ref code="C0085"/>]</emphasis>
+      </para>
+      <para>The <option>parameters</option> option can be used to supply parameters to control the archive manifest generation. The semantics of the keys and the allowed values for these keys are implementation-defined. <emphasis role="bold">[ERROR <step-error-ref code="C0079"/>]</emphasis>
+      </para>
+      <para>The <option>relative-to</option> option, when present, is used in creating the value of the manifest's <code>c:entry/@href</code> attribute. If the option is relative, it is made absolute against the base URI of the element on which it is specified (<tag>p:with-option</tag> or the step in case of a syntactic shortcut value). <emphasis role="bold">[ERROR <step-error-ref code="D0064"/>]</emphasis>
+      </para>
+      <para>The generated manifest has the format as described in <xref linkend="cv.archive-manifest"/>. Implementations must supply an <tag>c:entry</tag> element and its <code>name</code> and <code>content-type</code> attributes for every entry in the archive. The value of the generated manifest's <code>c:entry/@href</code> attribute will be determined in the same way as a base URI of an unarchived document by <xref linkend="c.unarchive"/>. <emphasis role="bold">[ERROR <step-error-ref code="C0120"/>]</emphasis> Additional information provided for entries in <tag>p:archive-manifest</tag> is implementation-defined.</para>
+      <sect2 xml:id="override-content-type">
+         <title>Overriding content types</title>
+         <para>The <option>override-content-types</option> option can be used to partially override the content-type determination mechanism. If present, it must be an array of arrays, where the inner arrays consist of exactly two strings: </para>
+         <itemizedlist>
+            <listitem>
+               <para>The first member in an inner array must be a regular expression as specified in <link xlink:href="https://www.w3.org/TR/xpath-functions-31/"
+                        role="newpage"
+                        xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1 functions</link> , section 7.61 “<literal>Regular Expression Syntax</literal>”. <emphasis role="bold">[ERROR <step-error-ref code="C0147"/>]</emphasis>
+               </para>
+            </listitem>
+            <listitem>
+               <para>The second member in an inner array must be a valid a MIME content-type. <emphasis role="bold">[ERROR <step-error-ref code="D0079"/>]</emphasis>
+               </para>
+            </listitem>
+         </itemizedlist>
+         <para>
+            <emphasis role="bold">[ERROR <step-error-ref code="C0146"/>]</emphasis>
+         </para>
+         <para>Determining an archive entry's content-type is as follows:</para>
+         <itemizedlist>
+            <listitem>
+               <para>The XPath regular expressions (the first members of the inner arrays) will be matched against the path of the entry <emphasis>in</emphasis> the archive. This will be done in the order of appearance in the outer array (so order is significant). The matching is done unanchored: it is a match if the regular expression matches part of the entry's path. Informally: matching behaves like applying the XPath <code>matches#2</code> function, like in <code>matches($path-in-archive, $regular-expression)</code>.</para>
+               <note>
+                  <para>Depending on how archives are constructed, the path of an entry in an archive can be with or without a leading slash. Usually it will be without. For archives constructed by <tag>p:archive</tag> no leading slash will be present.</para>
+               </note>
+            </listitem>
+            <listitem>
+               <para>If a match is found, the content-type (the second member of the inner array for which the match was found) is used as the entry's content-type.</para>
+            </listitem>
+            <listitem>
+               <para>If no match was found for all inner arrays, the normal (implementation-defined) mechanism for determining the content-type is used. </para>
+            </listitem>
+         </itemizedlist>
+         <para>For example: setting the <option>override-content-types</option> option to <code>[ ['.rels$', 'application/xml'], ['^special/', 'application/octet-stream'] ]</code> means that all files ending with <code>.rels</code> will get the content-type <code>application/xml</code>. All files in the archive's <code>special</code> directory (including sub-directories) will get the content-type <code>application/octet-stream</code>.</para>
+      </sect2>
+      <bridgehead>Document properties</bridgehead>
+      <para feature="archive-manifest-preserves-none">No document properties are preserved. The manifest has no <property>base-uri</property>.</para>
+   </description>
+   <step-errors>
+      <step-error code="C0085">
+         <description>
+            <para>It is a dynamic error if the format of the archive does not match the specified format, cannot be understood, determined and/or processed.</para>
+         </description>
+      </step-error>
+      <step-error code="C0079">
+         <description>
+            <para>It is a dynamic error if the map <option>parameters</option> contains an entry whose key is defined by the implementation and whose value is not valid for that key.</para>
+         </description>
+      </step-error>
+      <step-error code="D0064">
+         <description>
+            <para>It is a dynamic error if the base URI is not both absolute and valid according to <link xlink:href="https://www.rfc-editor.org/info/rfc3986"
+                     role="newpage"
+                     xmlns:xlink="http://www.w3.org/1999/xlink">RFC 3986</link> .</para>
+         </description>
+      </step-error>
+      <step-error code="C0120">
+         <description>
+            <para>It is a dynamic error if the <option>relative-to</option> option is not present and the document on the <port>source</port> port does not have a base URI.</para>
+         </description>
+      </step-error>
+      <step-error code="C0147">
+         <description>
+            <para>It is a dynamic error if the specified value is not a valid XPath regular expression.</para>
+         </description>
+      </step-error>
+      <step-error code="D0079">
+         <description>
+            <para>It is a dynamic error if a supplied content-type is not a valid media type of the form “<literal>
+                  <replaceable>type</replaceable>/<replaceable>subtype</replaceable>+<replaceable>ext</replaceable>
+               </literal>” or “<literal>
+                  <replaceable>type</replaceable>/<replaceable>subtype</replaceable>
+               </literal>”.</para>
+         </description>
+      </step-error>
+      <step-error code="C0146">
+         <description>
+            <para>It is a dynamic error if the specified value for the <option>override-content-types</option> option is not an array of arrays, where the inner arrays have exactly two members of type <code>xs:string</code>.</para>
+         </description>
+      </step-error>
+   </step-errors>
+</step>

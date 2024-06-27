@@ -68,7 +68,7 @@
   <p:add-attribute attribute-name="specification-baselink" attribute-value="{$specification-baselink}"/>
 
   <!-- Convert it: -->
-  <xpref:convert-steps>
+  <xpref:convert-steps steps-required="true">
     <p:with-option name="version-idref" select="$version-idref"/>
   </xpref:convert-steps>
 

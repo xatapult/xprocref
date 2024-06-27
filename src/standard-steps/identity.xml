@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="identity"
+      version-idref="v30"
+      category-idrefs="standard-steps"
+      short-description="[EDIT] identity short description"
+      required="true"
+      publish="false"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.xtpxlib.nl/ns/xprocref">
+   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.identity"/>
+   <signature>
+      <input port="source"
+             sequence="true"
+             content-types="any"
+             primary="true">
+         <description>
+            <para>[EDIT] input source</para>
+         </description>
+      </input>
+      <output port="result"
+              sequence="true"
+              content-types="any"
+              primary="true">
+         <description>
+            <para>[EDIT] output result</para>
+         </description>
+      </output>
+   </signature>
+   <summary>
+      <para>[EDIT]</para>
+      <para>The <code>p:identity</code> step makes a verbatim copy of its input available on its output.</para>
+   </summary>
+   <description>
+      <para>[EDIT]</para>
+      <para>If the implementation supports passing PSVI annotations between steps, the <tag>p:identity</tag> step must preserve any annotations that appear in the input.</para>
+      <bridgehead>Document properties</bridgehead>
+      <para feature="identity-preserves-all">All document properties are preserved.</para>
+   </description>
+</step>

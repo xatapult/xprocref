@@ -4,23 +4,25 @@
   xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref" version="3.0" exclude-inline-prefixes="#all" name="test-process-xprocref">
 
   <p:documentation>
-    Test driver for the main processing pipeline.
+    Produces a production version of the XProcRef site (with only published steps)
   </p:documentation>
 
   <!-- ======================================================================= -->
   <!-- IMPORTS: -->
 
-  <p:import href="../xpl3/process-xprocref.xpl"/>
+  <p:import href="process-xprocref.xpl"/>
 
   <!-- ======================================================================= -->
   <!-- PORTS: -->
 
-  <p:input port="source" primary="true" sequence="false" content-types="xml" href="xprocref-test-1.xml"/>
+  <p:input port="source" primary="true" sequence="false" content-types="xml" href="../src/xprocref.src.main.xml"/>
 
   <p:output port="result" primary="true" sequence="false" content-types="xml" serialization="map{'method': 'xml', 'indent': true()}"/>
 
   <!-- ================================================================== -->
 
-  <xpref:process-xprocref production-version="false"/>
+  <xpref:process-xprocref production-version="true" p:message="* Creating XprocRef PRODUCTION version">
+    <p:with-option name="href-build-location" select="resolve-uri('../docs', static-base-uri())"/>
+  </xpref:process-xprocref>
 
 </p:declare-step>

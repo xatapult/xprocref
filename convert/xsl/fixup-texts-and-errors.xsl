@@ -13,14 +13,14 @@
   <xsl:output method="xml" indent="no" encoding="UTF-8"/>
 
   <xsl:mode on-no-match="shallow-copy"/>
-  
+
   <xsl:include href="../../../xtpxlib-common/xslmod/general.mod.xsl"/>
-  
+
   <!-- ======================================================================= -->
-  
+
   <xsl:variable name="href-bibliorefs-replacement" as="xs:string" select="resolve-uri('../data/bibliorefs-replacements.xml', static-base-uri())"/>
   <xsl:variable name="bibliorefs-replacments" as="document-node()" select="doc($href-bibliorefs-replacement)"/>
-  
+
   <!-- ======================================================================= -->
 
   <xsl:template match="xpref:simplesect">
@@ -44,9 +44,9 @@
       <emphasis role="bold">[RNG Pattern {@name}]</emphasis>
     </para>
   </xsl:template>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
+
   <xsl:template match="xpref:biblioref">
     <xsl:variable name="linkend" as="xs:string" select="xs:string(@linkend)"/>
     <xsl:variable name="replacment" as="element(xpref:biblioref)?" select="$bibliorefs-replacments/*/xpref:biblioref[@linkend eq $linkend][1]"/>
@@ -58,7 +58,7 @@
         <xsl:call-template name="xtlc:raise-error">
           <xsl:with-param name="msg-parts" select="('Could not find biblioref ', xtlc:q($linkend), ' in ', xtlc:q($href-bibliorefs-replacement))"/>
         </xsl:call-template>
-      </xsl:otherwise>  
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
@@ -69,16 +69,17 @@
     <xsl:copy>
       <xsl:apply-templates select="@* | node()"/>
       <step-errors>
-        <xsl:for-each select=".//xpref:error">
-          <xsl:variable name="code" as="xs:string" select="xs:string(@code)"/>
-          <step-error code="{$code}">
-            <description>
-              <para>
-                <xsl:apply-templates/>
-              </para>
-            </description>
-          </step-error>
-        </xsl:for-each>
+        <xsl:for-each-group select=".//xpref:error" group-by="xs:string(@code)">
+          <xsl:for-each select="current-group()[1]">
+            <step-error code="{current-grouping-key()}">
+              <description>
+                <para>
+                  <xsl:apply-templates/>
+                </para>
+              </description>
+            </step-error>
+          </xsl:for-each>
+        </xsl:for-each-group>
       </step-errors>
     </xsl:copy>
   </xsl:template>

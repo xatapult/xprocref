@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<errors xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.xtpxlib.nl/ns/xprocref">
+   <!-- == Errors for: Standard steps == -->
+   <error code="C0001">
+      <description>
+         <para>It is a dynamic error if the value of option <option>override-content-type</option> is not a text media type.</para>
+      </description>
+   </error>
+   <error code="C0003">
+      <description>
+         <para>It is a dynamic error if a “<literal>username</literal>” or a “<literal>password</literal>” key is present without specifying a value for the “<literal>auth-method</literal>” key, if the requested <literal>auth-method</literal> isn't supported, or the authentication challenge contains an authentication method that isn't supported.</para>
+      </description>
+   </error>
+   <error code="C0007">
+      <description>
+         <para>It is a dynamic error if any key in <option>parameters</option> is associated to a value which is not an instance of the XQuery 1.0 and XPath 2.0 Data Model, e.g. with a map, an array, or a function.</para>
+      </description>
+   </error>
+   <error code="C0008">
+      <description>
+         <para>It is a dynamic error if the stylesheet does not support a given mode.</para>
+      </description>
+   </error>
+   <error code="C0009">
+      <description>
+         <para>It is a dynamic error if the specified XQuery version is not available.</para>
+      </description>
+   </error>
+   <error code="C0013">
+      <description>
+         <para>It is a dynamic error if the pattern matches a processing instruction and the new name has a non-null namespace.</para>
+      </description>
+   </error>
+   <error code="C0014">
+      <description>
+         <para>It is a dynamic error if the XML namespace (<uri>http://www.w3.org/XML/1998/namespace</uri>) or the XMLNS namespace (<uri>http://www.w3.org/2000/xmlns/</uri>) is the value of either the <option>from</option> option or the <option>to</option> option.</para>
+      </description>
+   </error>
+   <error code="C0019">
+      <description>
+         <para>It is a dynamic error if the documents are not equal according to the specified comparison <option>method</option>, and the value of the <option>fail-if-not-equal</option> option is <literal>true</literal>.</para>
+      </description>
+   </error>
+   <error code="C0023">
+      <description>
+         <para>It is a dynamic error if the selection pattern matches a node which is not an element.</para>
+      </description>
+      <!-- == It is a dynamic error if the match option matches the document node. == -->
+      <!-- == It is a dynamic error if that pattern matches an attribute or a namespace node. == -->
+      <!-- == It is a dynamic error if that expression matches anything other than element nodes. == -->
+      <!-- == It is a dynamic error if the pattern matches anything other than element or attribute nodes. == -->
+      <!-- == It is a dynamic error if the pattern matches anything other than element, attribute or processing instruction nodes. == -->
+      <!-- == It is a dynamic error if that pattern matches an attribute or a namespace nodes. == -->
+      <!-- == It is a dynamic error if that pattern matches anything other than element nodes. == -->
+      <!-- == It is a dynamic error if that pattern matches anything other than the document node or element nodes. == -->
+      <!-- == It is a dynamic error if the pattern matches anything other than document, element, text, processing instruction, and comment nodes. == -->
+   </error>
+   <error code="C0024">
+      <description>
+         <para>It is a dynamic error if the selection pattern matches a document node and the value of the <option>position</option> is “<literal>before</literal>” or “<literal>after</literal>”.</para>
+      </description>
+   </error>
+   <error code="C0025">
+      <description>
+         <para>It is a dynamic error if the selection pattern matches anything other than an element or a document node and the value of the <option>position</option> option is “<literal>first-child</literal>” or “<literal>last-child</literal>”.</para>
+      </description>
+   </error>
+   <error code="C0029">
+      <description>
+         <para>It is a dynamic error if an XInclude error occurs during processing.</para>
+      </description>
+   </error>
+   <error code="C0030">
+      <description>
+         <para>It is a dynamic error if the response body cannot be interpreted as requested (e.g. <literal>application/json</literal> to override <literal>application/xml</literal> content).</para>
+      </description>
+   </error>
+   <error code="C0036">
+      <description>
+         <para>It is a dynamic error if the requested hash algorithm is not one that the processor understands or if the value or parameters are not appropriate for that algorithm.</para>
+      </description>
+   </error>
+   <error code="C0037">
+      <description>
+         <para>It is a dynamic error if the <option>value</option> provided is not a properly <literal>x-www-form-urlencoded</literal> value.</para>
+      </description>
+   </error>
+   <error code="C0038">
+      <description>
+         <para>It is a dynamic error if the specified xslt version is not available.</para>
+      </description>
+   </error>
+   <error code="C0039">
+      <description>
+         <para>It is a dynamic error if the source port does not contain exactly one XML document or one HTML document if XSLT 1.0 is used.</para>
+      </description>
+   </error>
+   <error code="C0050">
+      <description>
+         <para>It is a dynamic error if the URI scheme is not supported or the step cannot store to the specified location.</para>
+      </description>
+   </error>
+   <error code="C0056">
+      <description>
+         <para>It is a dynamic error if the stylesheet does not provide a given template.</para>
+      </description>
+   </error>
+   <error code="C0058">
+      <description>
+         <para>It is a dynamic error if the <option>all</option> and <option>relative</option> options are <emphasis>both</emphasis>
+            <literal>true</literal>.</para>
+      </description>
+   </error>
+   <error code="C0059">
+      <description>
+         <para>It is a dynamic error if the QName value in the <option>attribute-name</option> option uses the prefix “<literal>xmlns</literal>” or any other prefix that resolves to the namespace name <uri>http://www.w3.org/2000/xmlns/</uri>. </para>
+      </description>
+   </error>
+   <error code="C0060">
+      <description>
+         <para>It is a dynamic error if the processor does not support the specified <option>version</option> of the UUID algorithm.</para>
+      </description>
+   </error>
+   <error code="C0062">
+      <description>
+         <para>It is a dynamic error if the <option>match</option> option matches a namespace node.</para>
+      </description>
+   </error>
+   <error code="C0069">
+      <description>
+         <para>It is a dynamic error if the <option>properties</option> map contains a key equal to the string “<literal>content-type</literal>”.</para>
+      </description>
+   </error>
+   <error code="C0071">
+      <description>
+         <para>It is a dynamic error if the <tag>p:cast-content-type</tag> step cannot perform the requested cast.</para>
+      </description>
+   </error>
+   <error code="C0072">
+      <description>
+         <para>It is a dynamic error if the <tag>c:data</tag> contains content is not a valid base64 string.</para>
+      </description>
+   </error>
+   <error code="C0073">
+      <description>
+         <para>It is a dynamic error if the <tag>c:data</tag> element does not have a <tag class="attribute">content-type</tag> attribute.</para>
+      </description>
+   </error>
+   <error code="C0074">
+      <description>
+         <para>It is a dynamic error if the <option>content-type</option> is supplied and is not the same as the <tag class="attribute">content-type</tag> specified on the <tag>c:data</tag> element.</para>
+      </description>
+   </error>
+   <error code="C0076">
+      <description>
+         <para>It is a dynamic error if the comparison <option>method</option> specified in <tag>p:compare</tag> is not supported by the implementation.</para>
+      </description>
+   </error>
+   <error code="C0077">
+      <description>
+         <para>It is a dynamic error if the media types of the documents supplied are incompatible with the comparison <option>method</option>.</para>
+      </description>
+   </error>
+   <error code="C0078">
+      <description>
+         <para>It is a dynamic error if the value associated with the “<literal>fail-on-timeout</literal>” is associated with <code>true()</code> and a HTTP status code <literal>408</literal> is encountered.</para>
+      </description>
+   </error>
+   <error code="C0079">
+      <description>
+         <para>It is a dynamic error if the map <option>parameters</option> contains an entry whose key is defined by the implementation and whose value is not valid for that key.</para>
+      </description>
+      <!-- == It is a dynamic error if the map parameters contains an entry whose key is defined by the implementation and whose value is not valid for that key. == -->
+      <!-- == It is a dynamic error if the map parameters contains an entry whose key is defined by the implementation and whose value is not valid for that key. == -->
+      <!-- == It is a dynamic error if the map parameters contains an entry whose key is defined by the implementation and whose value is not valid for that key. == -->
+      <!-- == It is a dynamic error if the map parameters contains an entry whose key is defined by the implementation and whose value is not valid for that key. == -->
+      <!-- == It is a dynamic error if the map parameters contains an entry whose key is defined by the implementation and whose value is not valid for that key. == -->
+   </error>
+   <error code="C0080">
+      <description>
+         <para>It is a dynamic error if the number of documents on the <port>archive</port> does not match the expected number of archive input documents for the given <code>format</code> and <code>command</code>.</para>
+      </description>
+   </error>
+   <error code="C0081">
+      <description>
+         <para>It is a dynamic error if the format of the archive does not match the format as specified in the <option>format</option> option.</para>
+      </description>
+   </error>
+   <error code="C0083">
+      <description>
+         <para>It is a dynamic error if the <tag class="attribute">namespace</tag> attribute is specified, the <tag class="attribute">name</tag> contains a colon, and the specified namespace is not the same as the in-scope namespace binding for the specified prefix.</para>
+      </description>
+   </error>
+   <error code="C0084">
+      <description>
+         <para>It is a dynamic error if two or more documents appear on the <code>p:archive</code> step's <port>source</port> port that have the same base URI or if any document that appears on the <port>source</port> port has no base URI.</para>
+      </description>
+      <!-- == It is a dynamic error if the parameter list contains any elements other than c:param. == -->
+   </error>
+   <error code="C0085">
+      <description>
+         <para>It is a dynamic error if the format of the archive does not match the specified format, cannot be understood, determined and/or processed.</para>
+      </description>
+      <!-- == It is a dynamic error if the format of the archive does not match the specified format, cannot be understood, determined and/or processed. == -->
+      <!-- == It is a dynamic error for any unqualified attribute names other than “name”, “namespace”, “as”, or “value” to appear on a c:param element. == -->
+      <!-- == It is a dynamic error if the format of the archive does not match the specified format, cannot be understood, determined and/or processed. == -->
+   </error>
+   <error code="C0086">
+      <description>
+         <para>It is a dynamic error for any unqualified attribute names to appear on a <tag>c:param-set</tag> element.</para>
+      </description>
+   </error>
+   <error code="C0087">
+      <description>
+         <para>It is a dynamic error if the <tag class="attribute">namespace</tag> attribute is not specified, the <tag class="attribute">name</tag> contains a colon, and the specified prefix is not in the in-scope namespace bindings.</para>
+      </description>
+   </error>
+   <error code="C0089">
+      <description>
+         <para>It is a dynamic error if the sequence type is not syntactically valid.</para>
+      </description>
+   </error>
+   <error code="C0092">
+      <description>
+         <para>It is a dynamic error if as a consequence of changing or removing the namespace of an attribute the attribute's name is not unique on the respective element.</para>
+      </description>
+   </error>
+   <error code="C0093">
+      <description>
+         <para> It is a dynamic error if a static error occurs during the static analysis of the XSLT stylesheet.</para>
+      </description>
+   </error>
+   <error code="C0094">
+      <description>
+         <para>It is a dynamic error if any document supplied on the source port is not an XML document, an HTML documents, or a Text document if XSLT 2.0 is used.</para>
+      </description>
+   </error>
+   <error code="C0095">
+      <description>
+         <para>It is a dynamic error if an error occurred during the transformation.</para>
+      </description>
+   </error>
+   <error code="C0096">
+      <description>
+         <para>It is a dynamic error if the transformation is terminated by XSLT message termination.</para>
+      </description>
+   </error>
+   <error code="C0098">
+      <description>
+         <para>It is a dynamic error if a dynamic XPath error occurred while applying sort-key to a line.</para>
+      </description>
+   </error>
+   <error code="C0099">
+      <description>
+         <para>It is a dynamic error if the result of applying <code>sort-key</code> to a given line results in a sequence with more than one item.</para>
+      </description>
+   </error>
+   <error code="C0100">
+      <description>
+         <para>It is a dynamic error if the document on port <port>manifest</port> does not conform to the given schema.</para>
+      </description>
+   </error>
+   <error code="C0101">
+      <description>
+         <para>It is a dynamic error if a document appearing on port <port>source</port> cannot be represented in the XDM version associated with the chosen XQuery version, e.g. when a JSON document contains a map and XDM 3.0 is used.</para>
+      </description>
+   </error>
+   <error code="C0102">
+      <description>
+         <para>It is a dynamic error if any key in option <option>parameters</option> is associated to a value that cannot be represented in the XDM version associated with the chosen XQuery version, e.g. with a map, an array, or a function when XDM 3.0 is used.</para>
+      </description>
+   </error>
+   <error code="C0103">
+      <description>
+         <para>It is a dynamic error if any error occurs during XQuery’s static analysis phase.</para>
+      </description>
+   </error>
+   <error code="C0104">
+      <description>
+         <para>It is a dynamic error if any error occurs during XQuery’s dynamic evaluation phase.</para>
+      </description>
+   </error>
+   <error code="C0105">
+      <description>
+         <para>It is a dynamic error if an XSLT 1.0 stylesheet is invoked and option <option>parameters</option> contains a value that is not an atomic value or a node.</para>
+      </description>
+   </error>
+   <error code="C0106">
+      <description>
+         <para>It is a dynamic error if duplicate keys are encountered and option <option>duplicates</option> has value “<literal>reject</literal>”.</para>
+      </description>
+   </error>
+   <error code="C0107">
+      <description>
+         <para> It is a dynamic error if a document of a not supported document type appears on port <port>source</port> of <code>p:json-merge</code>.</para>
+      </description>
+   </error>
+   <error code="C0108">
+      <description>
+         <para>It is a dynamic error if any prefix is not in-scope at the point where the <code>p:namespace-delete</code> occurs.</para>
+      </description>
+   </error>
+   <error code="C0109">
+      <description>
+         <para>It is a dynamic error if a namespace is to be removed from an attribute and the element already has an attribute with the resulting name.</para>
+      </description>
+   </error>
+   <error code="C0110">
+      <description>
+         <para>It is a dynamic error if the evaluation of the XPath expression in option <option>key</option> for a given item returns either a sequence, an array, a map, or a function.</para>
+      </description>
+   </error>
+   <error code="C0111">
+      <description>
+         <para> It is a dynamic error if a document of an unsupported document type appears on port <port>source</port> of <code>p:json-join</code>.</para>
+      </description>
+   </error>
+   <error code="C0112">
+      <description>
+         <para>It is a dynamic error if more than one document appears on the port <port>manifest</port>.</para>
+      </description>
+   </error>
+   <error code="C0118">
+      <description>
+         <para>It is a dynamic error if an archive manifest is invalid according to the specification.</para>
+      </description>
+   </error>
+   <error code="C0119">
+      <description>
+         <para>It is a dynamic error if <option>flatten</option> is neither “<literal>unbounded</literal>”, nor a string that may be cast to a non-negative integer.</para>
+      </description>
+   </error>
+   <error code="C0120">
+      <description>
+         <para>It is a dynamic error if the <option>relative-to</option> option is not present and the document on the <port>source</port> port does not have a base URI.</para>
+      </description>
+      <!-- == It is a dynamic error if the relative-to option is not present and the document on the source port does not have a base URI. == -->
+   </error>
+   <error code="C0121">
+      <description>
+         <para>It is a dynamic error if a document appearing on the <port>secondary</port> port has a base URI that is not both absolute and valid according to <link xlink:href="https://www.rfc-editor.org/info/rfc3986"
+                  role="newpage"
+                  xmlns:xlink="http://www.w3.org/1999/xlink">RFC 3986</link> .</para>
+      </description>
+   </error>
+   <error code="C0122">
+      <description>
+         <para>It is a dynamic error if the given method is not supported.</para>
+      </description>
+   </error>
+   <error code="C0123">
+      <description>
+         <para>It is a dynamic error if any key in the “<literal>auth</literal>” map is associated with a value that is not an instance of the required type.</para>
+      </description>
+   </error>
+   <error code="C0124">
+      <description>
+         <para>It is a dynamic error if any key in the “parameters” map is associated with a value that is not an instance of the required type.</para>
+      </description>
+   </error>
+   <error code="C0125">
+      <description>
+         <para>It is a dynamic error if the key “<literal>accept-multipart</literal>” as the value <code>false()</code> and a multipart response is detected.</para>
+      </description>
+   </error>
+   <error code="C0126">
+      <description>
+         <para>It is a dynamic error if the XPath expression in <option>assert</option> evaluates to <code>false</code>.</para>
+      </description>
+   </error>
+   <error code="C0127">
+      <description>
+         <para>It is a dynamic error if the <option>headers</option> map contains two keys that are the same when compared in a case-insensitive manner.</para>
+      </description>
+   </error>
+   <error code="C0128">
+      <description>
+         <para>It is a dynamic error if the URI’s scheme is unknown or not supported.</para>
+      </description>
+   </error>
+   <error code="C0129">
+      <description>
+         <para>It is a dynamic error if the requested HTTP version is not supported.</para>
+      </description>
+   </error>
+   <error code="C0131">
+      <description>
+         <para>It is a dynamic error if the processor cannot support the requested encoding.</para>
+      </description>
+   </error>
+   <error code="C0132">
+      <description>
+         <para>It is a dynamic error if the override content encoding cannot be supported.</para>
+      </description>
+   </error>
+   <error code="C0133">
+      <description>
+         <para>It is a dynamic error if more than one document appears on the <port>source</port> port and a <literal>content-type</literal> header is present and the content type specified is not a multipart content type.</para>
+      </description>
+   </error>
+   <error code="C0146">
+      <description>
+         <para>It is a dynamic error if the specified value for the <option>override-content-types</option> option is not an array of arrays, where the inner arrays have exactly two members of type <code>xs:string</code>.</para>
+      </description>
+   </error>
+   <error code="C0147">
+      <description>
+         <para>It is a dynamic error if the specified value is not a valid XPath regular expression.</para>
+      </description>
+      <!-- == It is a dynamic error if the specified value is not a valid XPath regular expression. == -->
+      <!-- == It is a dynamic error if a specified value is not a valid XPath regular expression. == -->
+   </error>
+   <error code="C0150">
+      <description>
+         <para>It is a dynamic error if evaluating the XPath expression in option <option>test</option> on a context document results in an error.</para>
+      </description>
+   </error>
+   <error code="C0201">
+      <description>
+         <para>It is a dynamic error if the <tag>p:uncompress</tag> step cannot perform the requested content-type cast.</para>
+      </description>
+   </error>
+   <error code="C0202">
+      <description>
+         <para>It is a dynamic error if the compression format cannot be understood, determined and/or processed.</para>
+      </description>
+      <!-- == It is a dynamic error if the compression format cannot be understood, determined and/or processed. == -->
+   </error>
+   <error code="C0203">
+      <description>
+         <para>It is a dynamic error if the specified boundary is not valid (for example, if it begins with two hyphens “--”).</para>
+      </description>
+   </error>
+   <error code="D0011">
+      <description>
+         <para>It is a dynamic error if the resource referenced by the <option>href</option> option does not exist, cannot be accessed or is not a file.</para>
+      </description>
+      <!-- == It is a dynamic error if the resource referenced by a p:load element does not exist or cannot be accessed. == -->
+   </error>
+   <error code="D0023">
+      <description>
+         <para>It is a dynamic error if a DTD validation is performed and either the document is not valid or no DTD is found.</para>
+      </description>
+   </error>
+   <error code="D0036">
+      <description>
+         <para>It is a dynamic error if the supplied value of a variable or option cannot be converted to the required type.</para>
+      </description>
+   </error>
+   <error code="D0043">
+      <description>
+         <para>It is a dynamic error if the <option>dtd-validate</option> parameter is <literal>true</literal> and the processor does not support DTD validation.</para>
+      </description>
+   </error>
+   <error code="D0049">
+      <description>
+         <para>It is a dynamic error if the text value is not a well-formed XML document</para>
+      </description>
+      <!-- == It is a dynamic error if the loaded content is not a well-formed XML document. == -->
+   </error>
+   <error code="D0057">
+      <description>
+         <para>It is a dynamic error if the text document does not conform to the JSON grammar, unless the parameter liberal is true and the processor chooses to accept the deviation.</para>
+      </description>
+      <!-- == It is a dynamic error if the loaded content does not conform to the JSON grammar, unless the parameter liberal is true and the processor chooses to accept the deviation. == -->
+   </error>
+   <error code="D0058">
+      <description>
+         <para>It is a dynamic error if the parameter duplicates is reject and the text document contains a JSON object with duplicate keys.</para>
+      </description>
+      <!-- == It is a dynamic error if the parameter duplicates is reject and the value of loaded content contains a JSON object with duplicate keys. == -->
+   </error>
+   <error code="D0059">
+      <description>
+         <para>It is a dynamic error if the parameter map contains an entry whose key is defined in the specification of <function>fn:parse-json</function> and whose value is not valid for that key, or if it contains an entry with the key fallback when the parameter <literal>escape</literal> with <literal>true()</literal> is also present.</para>
+      </description>
+      <!-- == It is a dynamic error if the parameter map contains an entry whose key is defined in the specification of fn:parse-json and whose value is not valid for that key, or if it contains an entry with the key fallback when the parameter escape with true() is also present. == -->
+   </error>
+   <error code="D0060">
+      <description>
+         <para>It is a dynamic error if the text document can not be converted into the XPath data model</para>
+      </description>
+      <!-- == It is a dynamic error if the content-type specifies an encoding, which is not supported by the processor. == -->
+   </error>
+   <error code="D0062">
+      <description>
+         <para>It is a dynamic error if the <tag class="attribute">content-type</tag> is specified and the document-properties has a “<code>content-type</code>” that is not the same.</para>
+      </description>
+   </error>
+   <error code="D0064">
+      <description>
+         <para>It is a dynamic error if the base URI is not both absolute and valid according to <link xlink:href="https://www.rfc-editor.org/info/rfc3986"
+                  role="newpage"
+                  xmlns:xlink="http://www.w3.org/1999/xlink">RFC 3986</link> .</para>
+      </description>
+      <!-- == It is a dynamic error if the base URI is not both absolute and valid according to RFC 3986 . == -->
+      <!-- == It is a dynamic error if the base URI is not both absolute and valid according to RFC 3986 . == -->
+      <!-- == It is a dynamic error if the base URI is not both absolute and valid according to RFC 3986 . == -->
+      <!-- == It is a dynamic error if the base URI is not both absolute and valid according to RFC 3986 . == -->
+      <!-- == It is a dynamic error if the option is not a valid URI according to RFC 3986 . == -->
+   </error>
+   <error code="D0070">
+      <description>
+         <para>It is a dynamic error if a value is assigned to the <code>serialization</code> document property that cannot be converted into <code>map(xs:QName, item()*)</code> according to the rules in section “QName handling” of <link xlink:href="https://xproc.org/"
+                  role="newpage"
+                  xmlns:xlink="http://www.w3.org/1999/xlink">XProc 3.0</link> .</para>
+      </description>
+   </error>
+   <error code="D0078">
+      <description>
+         <para>It is a dynamic error if the loaded document cannot be represented as an HTML document in the XPath data model.</para>
+      </description>
+   </error>
+   <error code="D0079">
+      <description>
+         <para>It is a dynamic error if a supplied content-type is not a valid media type of the form “<literal>
+               <replaceable>type</replaceable>/<replaceable>subtype</replaceable>+<replaceable>ext</replaceable>
+            </literal>” or “<literal>
+               <replaceable>type</replaceable>/<replaceable>subtype</replaceable>
+            </literal>”.</para>
+      </description>
+      <!-- == It is a dynamic error if a supplied content-type is not a valid media type of the form “type/subtype+ext” or “type/subtype”. == -->
+      <!-- == It is a dynamic error if a supplied content-type is not a valid media type of the form “type/subtype+ext” or “type/subtype”. == -->
+      <!-- == It is a dynamic error if a supplied content-type is not a valid media type of the form “type/subtype+ext” or “type/subtype”. == -->
+      <!-- == It is a dynamic error if a supplied content-type is not a valid media type of the form “type/subtype+ext” or “type/subtype”. == -->
+      <!-- == It is a dynamic error if a supplied content-type is not a valid media type of the form “type/subtype+ext” or “type/subtype”. == -->
+   </error>
+</errors>
