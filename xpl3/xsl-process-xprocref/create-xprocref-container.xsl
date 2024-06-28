@@ -6,7 +6,7 @@
   exclude-result-prefixes="#all" expand-text="true">
   <!-- ================================================================== -->
   <!-- 
-       TBD DESCR
+       TBD
        
        Input is the (normalized and enhanced) XProcRef definition.
   -->
@@ -27,6 +27,8 @@
   <xsl:param name="xprocref-index" as="document-node()" required="true"/>
 
   <xsl:param name="production-version" as="xs:boolean" required="true"/>
+  
+  <xsl:param name="wip" as="xs:boolean" required="true"/>
 
   <!-- ================================================================== -->
   <!-- GLOBAL DECLARATIONS: -->
@@ -844,13 +846,16 @@
         <db:info>
           <db:title/>
         </db:info>
+        <xsl:if test="$wip">
+          <db:para role="page-banner">This site is work in progress and therefore incomplete yet.</db:para>
+        </xsl:if>        
+        <xsl:if test="not($production-version)">
+          <db:para role="page-banner">You are looking at the TEST version!</db:para>
+        </xsl:if>
         <db:sect1>
           <db:title>
             <xsl:copy-of select="$prev-marker" copy-namespaces="false"/>
             <xsl:value-of select="$title"/>
-            <xsl:if test="not($production-version)">
-              <xsl:text> [TEST]</xsl:text>
-            </xsl:if>
             <xsl:copy-of select="$next-marker" copy-namespaces="false"/>
           </db:title>
           <xsl:copy-of select="$content"/>

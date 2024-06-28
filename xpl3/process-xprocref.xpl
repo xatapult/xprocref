@@ -58,7 +58,13 @@
   </p:option>
 
   <p:option name="production-version" as="xs:boolean" required="false" select="false()">
-    <p:documentation>Whether to create a production version (for a production version, all steps with @publish="false" will not appear in the output).</p:documentation>
+    <p:documentation>Whether to create a production version . For a production version, all steps with @publish="false" will not appear in the output. 
+      A test version will get a warning banner.
+    </p:documentation>
+  </p:option>
+
+  <p:option name="wip" as="xs:boolean" required="false" select="false()">
+    <p:documentation>Whether to add a warning banner on every page that the site is work in progress.</p:documentation>
   </p:option>
 
   <!-- ======================================================================= -->
@@ -101,6 +107,7 @@
   <!-- MAIN: -->
 
   <p:identity message="* XProcRef processing"/>
+  <p:identity message="  * {if ($production-version) then 'Production' else 'Test'} version{if ($wip) then ' (marked as WIP)' else ()}"/>
   <p:identity message="  * Source document: {$xprocref-base-uri}"/>
   <p:identity message="  * Build location: {$href-build-location}"/>
 
@@ -173,7 +180,7 @@
   <p:xslt message="  * Creating pages">
     <p:with-input pipe="@prepared-xprocref-specification"/>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/create-xprocref-container.xsl"/>
-    <p:with-option name="parameters" select="map{'xprocref-index': $xprocref-index, 'production-version': $production-version}"/>
+    <p:with-option name="parameters" select="map{'xprocref-index': $xprocref-index, 'production-version': $production-version, 'wip': $wip}"/>
   </p:xslt>
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-texts.xsl"/>
@@ -181,12 +188,12 @@
 
   <!-- Process the Markdown (into DocBook): -->
   <xdoc:markdown-to-docbook/>
-  
+
   <!-- Add a ToC to the steps: -->
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/add-toc-to-steps.xsl"/>
   </p:xslt>
-  
+
   <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-raw-container.xml"/>
 
   <!-- Process the resulting DocBook/xdoc into XHTML: -->

@@ -45,6 +45,14 @@ p.tocentry {
   font-size: 90%;
 }
 
+p.page-banner {
+  background-color: darkred !important;
+  color: white;
+  font-weight: bold;
+  font-size: 110%;
+  padding-left: 1rem;
+}
+
 /* Code and code-blocks: */
 pre {
   margin-top: 1rem ! important;

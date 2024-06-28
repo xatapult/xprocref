@@ -21,7 +21,7 @@
 
   <!-- ================================================================== -->
 
-  <xpref:process-xprocref production-version="true" p:message="* Creating XprocRef PRODUCTION version">
+  <xpref:process-xprocref production-version="true">
     <p:with-option name="href-build-location" select="resolve-uri('../docs', static-base-uri())"/>
   </xpref:process-xprocref>
 
