@@ -87,6 +87,7 @@
         <submenu-entry caption="versions" href="{xpref:href-combine($homedir-path, (), $xpref:name-versions-overview-page)}"/>
         <submenu-entry caption="error codes" href="{xpref:href-combine($homedir-path, (), $xpref:name-error-codes-overview-page)}"/>
         <submenu-entry caption="namespaces" href="{xpref:href-combine($homedir-path, (), $xpref:name-namespaces-overview-page)}"/>
+        <submenu-entry caption="XProc" href="https://xproc.org"/>
       </menu-entry>
       <menu-entry caption="about" href="{xpref:href-combine($homedir-path, (), $xpref:name-about-page)}"/>
     </menu>

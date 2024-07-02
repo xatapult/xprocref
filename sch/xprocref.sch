@@ -52,7 +52,18 @@
           select="$namespace-prefix"/>" is undefined.</assert>
     </rule>
   </pattern>
-
+  
+  <!-- ======================================================================= -->
+  <!-- Check whether there is exactly one error namespace defined: -->
+  
+  <pattern>
+    <rule context="xpref:namespaces">
+      <let name="error-namespace-definitions" value="xpref:namespace[xs:boolean((@error-namespace, false())[1])]"></let>
+      <assert test="count($error-namespace-definitions) eq 1">There must be exactly one error namespace.</assert>
+    </rule>
+    
+  </pattern>
+  
   <!-- ======================================================================= -->
   <!-- Check error codes: -->
 

@@ -5,10 +5,10 @@
       short-description="[EDIT] json-merge short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.json-merge"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.json-merge"/>
    <signature>
       <input port="source"
              sequence="true"
@@ -56,14 +56,14 @@
          <listitem>
             <para>If the document under inspection is a JSON document representing a map, all key-value pairs are copied into the result map unless this map already contains an entry with the given key. In this case the value of option <option>duplicates</option> determines the policy for handling duplicate keys as specified for function <code>map:merge</code> in <link xlink:href="https://www.w3.org/TR/xpath-functions-31/"
                      role="newpage"
-                     xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1 functions</link> . <emphasis role="bold">[ERROR <step-error-ref code="C0106"/>]</emphasis>
+                     xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1 functions</link> . <emphasis role="bold">[ERROR <step-error-ref code="XC0106"/>]</emphasis>
             </para>
          </listitem>
          <listitem>
-            <para>For every other type of JSON document, for XML documents, HTML documents, or text documents a new key-value pair is created and put into the resulting map. The key is created by evaluating the XPath expression in option <option>key</option> with the inspected document as context item. If the evaluation result is a single atomic value, it is taken as key. If the evaluation result is a node, its string value is taken as key. <emphasis role="bold">[ERROR <step-error-ref code="C0110"/>]</emphasis> Duplicate keys are handled as described above. The XDM representation of the inspected document is taken as value of the key-value pair.</para>
+            <para>For every other type of JSON document, for XML documents, HTML documents, or text documents a new key-value pair is created and put into the resulting map. The key is created by evaluating the XPath expression in option <option>key</option> with the inspected document as context item. If the evaluation result is a single atomic value, it is taken as key. If the evaluation result is a node, its string value is taken as key. <emphasis role="bold">[ERROR <step-error-ref code="XC0110"/>]</emphasis> Duplicate keys are handled as described above. The XDM representation of the inspected document is taken as value of the key-value pair.</para>
          </listitem>
          <listitem>
-            <para>It is implementation defined if <code>p:json-merge</code> is able to process document types not mentioned yet, i.e. types of binary documents. If a processor supports a given type of documents, the key-value pair is created as described above. <emphasis role="bold">[ERROR <step-error-ref code="C0107"/>]</emphasis>
+            <para>It is implementation defined if <code>p:json-merge</code> is able to process document types not mentioned yet, i.e. types of binary documents. If a processor supports a given type of documents, the key-value pair is created as described above. <emphasis role="bold">[ERROR <step-error-ref code="XC0107"/>]</emphasis>
             </para>
          </listitem>
       </itemizedlist>
@@ -72,17 +72,17 @@
       <para feature="json-merge-preserves-none">No document properties are preserved. The merged document has no <property>base-uri</property>. </para>
    </description>
    <step-errors>
-      <step-error code="C0106">
+      <step-error code="XC0106">
          <description>
             <para>It is a dynamic error if duplicate keys are encountered and option <option>duplicates</option> has value “<literal>reject</literal>”.</para>
          </description>
       </step-error>
-      <step-error code="C0110">
+      <step-error code="XC0110">
          <description>
             <para>It is a dynamic error if the evaluation of the XPath expression in option <option>key</option> for a given item returns either a sequence, an array, a map, or a function.</para>
          </description>
       </step-error>
-      <step-error code="C0107">
+      <step-error code="XC0107">
          <description>
             <para> It is a dynamic error if a document of a not supported document type appears on port <port>source</port> of <code>p:json-merge</code>.</para>
          </description>

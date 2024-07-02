@@ -32,7 +32,7 @@
     <p:documentation>The directory where all the step description sources are.</p:documentation>
   </p:option>
 
-  <p:option name="href-build" as="xs:string" required="false" select="resolve-uri('build/standard-steps', static-base-uri())">
+  <p:option name="href-build" as="xs:string" required="false" select="resolve-uri('../build/converted-standard-steps', static-base-uri())">
     <p:documentation>URI where the results will be write. Watch out: *never* overwrite any, possibly already edited, real sources!</p:documentation>
   </p:option>
   

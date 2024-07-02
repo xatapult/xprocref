@@ -5,10 +5,10 @@
       short-description="[EDIT] set-attributes short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.set-attributes"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.set-attributes"/>
    <signature>
       <input port="source"
              primary="true"
@@ -49,7 +49,7 @@
    </summary>
    <description>
       <para>[EDIT]</para>
-      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="C0023"/>]</emphasis>
+      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="XC0023"/>]</emphasis>
       </para>
       <para>A new attribute is created for each entry in the map appearing on the <option>attributes</option> option. The attribute name is taken from the entry's key while the attribute value is taken from the string value of the entry's value.</para>
       <para>If an attribute with the same name as one of the attributes to be created already exists, the value specified on the <option>attributes</option> option is used. The result port of this step produces a copy of the <port>source</port> port's document with the matching elements' attributes modified.</para>
@@ -60,7 +60,7 @@
       <para feature="set-attributes-preserves-all">All document properties are preserved.</para>
    </description>
    <step-errors>
-      <step-error code="C0023">
+      <step-error code="XC0023">
          <description>
             <para>It is a dynamic error if that pattern matches anything other than element nodes.</para>
          </description>

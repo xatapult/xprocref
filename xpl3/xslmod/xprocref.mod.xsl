@@ -14,8 +14,10 @@
 
   <!-- ======================================================================= -->
   <!-- GENERIC: -->
-  
+
   <xsl:variable name="xpref:page-extension" as="xs:string" select="'html'"/>
+
+  <xsl:variable name="xpref:default-namespace-prefix" as="xs:string" select="'p'"/>
 
   <!-- ======================================================================= -->
   <!-- PAGE NAMES: -->
@@ -30,7 +32,7 @@
   <xsl:variable name="xpref:name-categories-overview-page" as="xs:string" select="'categories.' || $xpref:page-extension"/>
   <xsl:variable name="xpref:name-error-codes-overview-page" as="xs:string" select="'error-codes.' || $xpref:page-extension"/>
   <xsl:variable name="xpref:name-namespaces-overview-page" as="xs:string" select="'namespaces.' || $xpref:page-extension"/>
-  
+
   <!-- Types set on the container document elements, so we can find things back when dereferencing references: -->
   <xsl:variable name="xpref:type-step" as="xs:string" select="'step'"/>
   <xsl:variable name="xpref:type-category" as="xs:string" select="'category'"/>
@@ -55,12 +57,35 @@
 
     <xsl:sequence select="xpref:href-combine((), $version-name, $filename)"/>
   </xsl:function>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
+
   <xsl:function name="xpref:error-code-anchor" as="xs:string">
     <xsl:param name="code" as="xs:string"/>
     <xsl:sequence select="'error-' || $code"/>
   </xsl:function>
-  
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:function name="xpref:example-anchor" as="xs:string?">
+    <!-- Returns an appropriate id for an example  -->
+    <xsl:param name="example-elm" as="element(xpref:example)"/>
+    <xsl:if test="exists($example-elm/@id)">
+      <xsl:variable name="step-elm" as="element(xpref:step)" select="$example-elm/ancestor::xpref:step"/>
+      <xsl:sequence select="xpref:example-anchor($step-elm/@name, $step-elm/@version-idref, $example-elm/@id)"/>
+    </xsl:if>
+  </xsl:function>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:function name="xpref:example-anchor" as="xs:string?">
+    <!-- Returns an appropriate id for an example  -->
+    <xsl:param name="step-name" as="xs:string"/>
+    <xsl:param name="version-id" as="xs:string"/>
+    <xsl:param name="example-id" as="xs:string"/>
+    <xsl:variable name="step-name-full" as="xs:string"
+      select="if (starts-with($step-name, $xpref:default-namespace-prefix || ':')) then $step-name else $xpref:default-namespace-prefix || ':' || $step-name"/>
+    <xsl:sequence select="string-join(($step-name-full, $version-id, $example-id), '-') => xtlc:str2id()"/>
+  </xsl:function>
+
 </xsl:stylesheet>

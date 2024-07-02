@@ -5,10 +5,10 @@
       short-description="[EDIT] http-request short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.http-request"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.http-request"/>
    <signature>
       <input port="source"
              content-types="any"
@@ -127,7 +127,7 @@
             </term>
             <listitem>
                <para>The <option>href</option> option specifies the request’s IRI. Relative values are resolved against the base URI of the element on which the option is specified (the relevant <tag>p:with-option</tag> or the step element in the case of a syntactic shortcut value).</para>
-               <para>Fragment identifiers are removed before making the request. Query parameters are passed through unchanged. <emphasis role="bold">[ERROR <step-error-ref code="C0128"/>]</emphasis> It is the pipeline author’s responsibility to escape problematic UTF-8 characters in the <option>href</option> value, for example with <function>escape-html-uri()</function>. </para>
+               <para>Fragment identifiers are removed before making the request. Query parameters are passed through unchanged. <emphasis role="bold">[ERROR <step-error-ref code="XC0128"/>]</emphasis> It is the pipeline author’s responsibility to escape problematic UTF-8 characters in the <option>href</option> value, for example with <function>escape-html-uri()</function>. </para>
             </listitem>
          </varlistentry>
          <varlistentry>
@@ -135,7 +135,7 @@
                <option>method</option>
             </term>
             <listitem>
-               <para>The <option>method</option> specifies the HTTP request method. The value is implicitly turned into an uppercase string if necessary. It is implementation defined which HTTP methods are supported. An implementation should implement at least the methods <literal>GET</literal>, <literal>POST</literal>, <literal>PUT</literal>, <literal>DELETE</literal>, and <literal>HEAD</literal> (for HTTP and HTTPS). <emphasis role="bold">[ERROR <step-error-ref code="C0122"/>]</emphasis>
+               <para>The <option>method</option> specifies the HTTP request method. The value is implicitly turned into an uppercase string if necessary. It is implementation defined which HTTP methods are supported. An implementation should implement at least the methods <literal>GET</literal>, <literal>POST</literal>, <literal>PUT</literal>, <literal>DELETE</literal>, and <literal>HEAD</literal> (for HTTP and HTTPS). <emphasis role="bold">[ERROR <step-error-ref code="XC0122"/>]</emphasis>
                </para>
             </listitem>
          </varlistentry>
@@ -163,7 +163,7 @@
                      <listitem>
                         <para>If a <literal>content-type</literal> header is provided, it will be used. For a single document request, this overrides the content type value of the document. If the content type specified begins with “<literal>multipart/</literal>”, a multipart request will be sent to the server.</para>
                         <para>
-                           <emphasis role="bold">[ERROR <step-error-ref code="D0079"/>]</emphasis>
+                           <emphasis role="bold">[ERROR <step-error-ref code="XD0079"/>]</emphasis>
                         </para>
                      </listitem>
                   </varlistentry>
@@ -172,7 +172,7 @@
                         <literal>transfer-encoding</literal>
                      </term>
                      <listitem>
-                        <para>If a <literal>transfer-encoding</literal> header is provided, the request must be sent with that encoding. <emphasis role="bold">[ERROR <step-error-ref code="C0131"/>]</emphasis>
+                        <para>If a <literal>transfer-encoding</literal> header is provided, the request must be sent with that encoding. <emphasis role="bold">[ERROR <step-error-ref code="XC0131"/>]</emphasis>
                         </para>
                      </listitem>
                   </varlistentry>
@@ -186,7 +186,7 @@
                      </listitem>
                   </varlistentry>
                </variablelist>
-               <para>HTTP headers are case-insensitive but keys in maps are not; be careful when specifying the request headers. <emphasis role="bold">[ERROR <step-error-ref code="C0127"/>]</emphasis> (That is, when <code>fn:uppercase($key1) = fn:uppercase($key2)</code>.) </para>
+               <para>HTTP headers are case-insensitive but keys in maps are not; be careful when specifying the request headers. <emphasis role="bold">[ERROR <step-error-ref code="XC0127"/>]</emphasis> (That is, when <code>fn:uppercase($key1) = fn:uppercase($key2)</code>.) </para>
             </listitem>
          </varlistentry>
          <varlistentry>
@@ -228,11 +228,11 @@
                      </listitem>
                   </varlistentry>
                </variablelist>
-               <para>Other key value pairs in map “<literal>auth</literal>” are implementation defined. <emphasis role="bold">[ERROR <step-error-ref code="C0123"/>]</emphasis>
+               <para>Other key value pairs in map “<literal>auth</literal>” are implementation defined. <emphasis role="bold">[ERROR <step-error-ref code="XC0123"/>]</emphasis>
                </para>
                <para>If the initial response to the request is an authentication challenge, the values provided in the <literal>auth</literal> map and any relevant data from the challenge are used to generate an “<literal>Authorization</literal>” header and the request is sent again. If that authorization fails, the request is not retried.</para>
                <para>
-                  <emphasis role="bold">[ERROR <step-error-ref code="C0003"/>]</emphasis> All implementations must support “Basic” and “Digest” authentication per <link xlink:href="https://www.rfc-editor.org/info/rfc2617"
+                  <emphasis role="bold">[ERROR <step-error-ref code="XC0003"/>]</emphasis> All implementations must support “Basic” and “Digest” authentication per <link xlink:href="https://www.rfc-editor.org/info/rfc2617"
                         role="newpage"
                         xmlns:xlink="http://www.w3.org/1999/xlink">RFC 2617</link> .</para>
             </listitem>
@@ -245,29 +245,29 @@
                   <varlistentry>
                      <term>override-content-type (<code>xs:string</code>)</term>
                      <listitem>
-                        <para>Ordinarily, the value of the <literal>content-type</literal> header provided in the server response controls the interpretation of any body in the response. If the “<literal>override-content-type</literal>” parameter is provided, then its value is used to interpret the body. The content-type header that appears on the <port>report</port> port is not changed. <emphasis role="bold">[ERROR <step-error-ref code="D0079"/>]</emphasis>
-                           <emphasis role="bold">[ERROR <step-error-ref code="C0030"/>]</emphasis>
+                        <para>Ordinarily, the value of the <literal>content-type</literal> header provided in the server response controls the interpretation of any body in the response. If the “<literal>override-content-type</literal>” parameter is provided, then its value is used to interpret the body. The content-type header that appears on the <port>report</port> port is not changed. <emphasis role="bold">[ERROR <step-error-ref code="XD0079"/>]</emphasis>
+                           <emphasis role="bold">[ERROR <step-error-ref code="XC0030"/>]</emphasis>
                         </para>
                      </listitem>
                   </varlistentry>
                   <varlistentry>
                      <term>http-version (<code>xs:string</code>)</term>
                      <listitem>
-                        <para>The <literal>http-version</literal> parameter indicates which version of HTTP must be used for the request. <emphasis role="bold">[ERROR <step-error-ref code="C0129"/>]</emphasis>
+                        <para>The <literal>http-version</literal> parameter indicates which version of HTTP must be used for the request. <emphasis role="bold">[ERROR <step-error-ref code="XC0129"/>]</emphasis>
                         </para>
                      </listitem>
                   </varlistentry>
                   <varlistentry>
                      <term>accept-multipart (<code>xs:boolean</code>)</term>
                      <listitem>
-                        <para>If the <literal>accept-multipart</literal> parameter is present and explicitly has the value <code>false()</code>, a dynamic error will be raised, if a multipart response is received from the server. This feature is a convenience for pipeline authors as it will raise an error when the multipart request is received, rather than having the presence of a sequence raise an error further along in the pipeline, or simply producing anomalous results. <emphasis role="bold">[ERROR <step-error-ref code="C0125"/>]</emphasis>
+                        <para>If the <literal>accept-multipart</literal> parameter is present and explicitly has the value <code>false()</code>, a dynamic error will be raised, if a multipart response is received from the server. This feature is a convenience for pipeline authors as it will raise an error when the multipart request is received, rather than having the presence of a sequence raise an error further along in the pipeline, or simply producing anomalous results. <emphasis role="bold">[ERROR <step-error-ref code="XC0125"/>]</emphasis>
                         </para>
                      </listitem>
                   </varlistentry>
                   <varlistentry>
                      <term>override-content-encoding (<code>xs:string</code>)</term>
                      <listitem>
-                        <para>If the “<literal>override-content-encoding</literal>” parameter is present, the response will be treated as if the response contained a “<literal>content-encoding</literal>” header with the specified value. The content-encoding header that appears on the <port>report</port> port is not changed. <emphasis role="bold">[ERROR <step-error-ref code="C0132"/>]</emphasis>
+                        <para>If the “<literal>override-content-encoding</literal>” parameter is present, the response will be treated as if the response contained a “<literal>content-encoding</literal>” header with the specified value. The content-encoding header that appears on the <port>report</port> port is not changed. <emphasis role="bold">[ERROR <step-error-ref code="XC0132"/>]</emphasis>
                         </para>
                      </listitem>
                   </varlistentry>
@@ -298,7 +298,7 @@
                   <varlistentry>
                      <term>fail-on-timeout (<code>xs:boolean</code>)</term>
                      <listitem>
-                        <para>If “<literal>fail-on-timeout</literal>” is true, a dynamic error is raised if a <literal>408</literal> response is received (either as a consequence of setting a value for the “<literal>timeout</literal>” parameter or as status code returned by a server). <emphasis role="bold">[ERROR <step-error-ref code="C0078"/>]</emphasis> If “<literal>fail-on-timeout</literal>” is true, it prevents any dynamic error with code <literal>C0126</literal> resulting from the <option>assert</option> option to be raised for request's timeout.</para>
+                        <para>If “<literal>fail-on-timeout</literal>” is true, a dynamic error is raised if a <literal>408</literal> response is received (either as a consequence of setting a value for the “<literal>timeout</literal>” parameter or as status code returned by a server). <emphasis role="bold">[ERROR <step-error-ref code="XC0078"/>]</emphasis> If “<literal>fail-on-timeout</literal>” is true, it prevents any dynamic error with code <literal>C0126</literal> resulting from the <option>assert</option> option to be raised for request's timeout.</para>
                         <note>
                            <title>Note</title>
                            <para>Please note that the “<literal>fail-on-timeout</literal>” parameter is different from the “<literal>timeout</literal>” option on the <tag>p:http-request</tag> step (see <xspecref spec="xproc"
@@ -326,14 +326,14 @@
                   </varlistentry>
                </variablelist>
                <para>
-                  <emphasis role="bold">[ERROR <step-error-ref code="C0124"/>]</emphasis>
+                  <emphasis role="bold">[ERROR <step-error-ref code="XC0124"/>]</emphasis>
                </para>
             </listitem>
          </varlistentry>
          <varlistentry>
             <term>assert (<code>xs:string</code>)</term>
             <listitem>
-               <para>The <option>assert</option> option can be used by pipeline authors to raise a dynamic error if the response does not fulfill the expectations of the receiver. The option's value (if present) is interpreted as an XPath expression which will be executed using the map that appears on the <port>report</port> port as its context item. If the effective boolean value of the expression is <code>false()</code>, a dynamic error is raised. <emphasis role="bold">[ERROR <step-error-ref code="C0126"/>]</emphasis> Implementations should provide an XML representation of the map used as the context item with the error document to enable pipelines to access the error's cause.</para>
+               <para>The <option>assert</option> option can be used by pipeline authors to raise a dynamic error if the response does not fulfill the expectations of the receiver. The option's value (if present) is interpreted as an XPath expression which will be executed using the map that appears on the <port>report</port> port as its context item. If the effective boolean value of the expression is <code>false()</code>, a dynamic error is raised. <emphasis role="bold">[ERROR <step-error-ref code="XC0126"/>]</emphasis> Implementations should provide an XML representation of the map used as the context item with the error document to enable pipelines to access the error's cause.</para>
             </listitem>
          </varlistentry>
       </variablelist>
@@ -344,7 +344,7 @@
                   xmlns:xlink="http://www.w3.org/1999/xlink">RFC 1521</link> . The content type of the request is derived from the “<literal>content-type</literal>” header:</para>
          <itemizedlist>
             <listitem>
-               <para>If the “<literal>content-type</literal>” header specifies a multipart content type, that value will be used as the content type. If the header includes a <literal>boundary</literal> parameter, that value will be used as the boundary. <emphasis role="bold">[ERROR <step-error-ref code="C0203"/>]</emphasis>
+               <para>If the “<literal>content-type</literal>” header specifies a multipart content type, that value will be used as the content type. If the header includes a <literal>boundary</literal> parameter, that value will be used as the boundary. <emphasis role="bold">[ERROR <step-error-ref code="XC0203"/>]</emphasis>
                </para>
             </listitem>
             <listitem>
@@ -352,7 +352,7 @@
             </listitem>
             <listitem>
                <para>
-                  <emphasis role="bold">[ERROR <step-error-ref code="C0133"/>]</emphasis>
+                  <emphasis role="bold">[ERROR <step-error-ref code="XC0133"/>]</emphasis>
                </para>
             </listitem>
          </itemizedlist>
@@ -369,17 +369,17 @@
       <para feature="http-request-preserves-none">No document properties are preserved.</para>
    </description>
    <step-errors>
-      <step-error code="C0128">
+      <step-error code="XC0128">
          <description>
             <para>It is a dynamic error if the URI’s scheme is unknown or not supported.</para>
          </description>
       </step-error>
-      <step-error code="C0122">
+      <step-error code="XC0122">
          <description>
             <para>It is a dynamic error if the given method is not supported.</para>
          </description>
       </step-error>
-      <step-error code="D0079">
+      <step-error code="XD0079">
          <description>
             <para>It is a dynamic error if a supplied content-type is not a valid media type of the form “<literal>
                   <replaceable>type</replaceable>/<replaceable>subtype</replaceable>+<replaceable>ext</replaceable>
@@ -388,67 +388,67 @@
                </literal>”.</para>
          </description>
       </step-error>
-      <step-error code="C0131">
+      <step-error code="XC0131">
          <description>
             <para>It is a dynamic error if the processor cannot support the requested encoding.</para>
          </description>
       </step-error>
-      <step-error code="C0127">
+      <step-error code="XC0127">
          <description>
             <para>It is a dynamic error if the <option>headers</option> map contains two keys that are the same when compared in a case-insensitive manner.</para>
          </description>
       </step-error>
-      <step-error code="C0123">
+      <step-error code="XC0123">
          <description>
             <para>It is a dynamic error if any key in the “<literal>auth</literal>” map is associated with a value that is not an instance of the required type.</para>
          </description>
       </step-error>
-      <step-error code="C0003">
+      <step-error code="XC0003">
          <description>
             <para>It is a dynamic error if a “<literal>username</literal>” or a “<literal>password</literal>” key is present without specifying a value for the “<literal>auth-method</literal>” key, if the requested <literal>auth-method</literal> isn't supported, or the authentication challenge contains an authentication method that isn't supported.</para>
          </description>
       </step-error>
-      <step-error code="C0030">
+      <step-error code="XC0030">
          <description>
             <para>It is a dynamic error if the response body cannot be interpreted as requested (e.g. <literal>application/json</literal> to override <literal>application/xml</literal> content).</para>
          </description>
       </step-error>
-      <step-error code="C0129">
+      <step-error code="XC0129">
          <description>
             <para>It is a dynamic error if the requested HTTP version is not supported.</para>
          </description>
       </step-error>
-      <step-error code="C0125">
+      <step-error code="XC0125">
          <description>
             <para>It is a dynamic error if the key “<literal>accept-multipart</literal>” as the value <code>false()</code> and a multipart response is detected.</para>
          </description>
       </step-error>
-      <step-error code="C0132">
+      <step-error code="XC0132">
          <description>
             <para>It is a dynamic error if the override content encoding cannot be supported.</para>
          </description>
       </step-error>
-      <step-error code="C0078">
+      <step-error code="XC0078">
          <description>
             <para>It is a dynamic error if the value associated with the “<literal>fail-on-timeout</literal>” is associated with <code>true()</code> and a HTTP status code <literal>408</literal> is encountered.</para>
          </description>
       </step-error>
-      <step-error code="C0124">
+      <step-error code="XC0124">
          <description>
             <para>It is a dynamic error if any key in the “parameters” map is associated with a value that is not an instance of the required type.</para>
          </description>
       </step-error>
-      <step-error code="C0126">
+      <step-error code="XC0126">
          <description>
             <para>It is a dynamic error if the XPath expression in <option>assert</option> evaluates to <code>false</code>.</para>
          </description>
       </step-error>
-      <step-error code="C0203">
+      <step-error code="XC0203">
          <description>
             <para>It is a dynamic error if the specified boundary is not valid (for example, if it begins with two hyphens “--”).</para>
          </description>
       </step-error>
-      <step-error code="C0133">
+      <step-error code="XC0133">
          <description>
             <para>It is a dynamic error if more than one document appears on the <port>source</port> port and a <literal>content-type</literal> header is present and the content type specified is not a multipart content type.</para>
          </description>

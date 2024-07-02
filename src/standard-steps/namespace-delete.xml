@@ -5,10 +5,10 @@
       short-description="[EDIT] namespace-delete short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.namespace-delete"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.namespace-delete"/>
    <signature>
       <input port="source"
              content-types="xml html"
@@ -40,22 +40,22 @@
    </summary>
    <description>
       <para>[EDIT]</para>
-      <para>The value of option <option>prefixes</option> is taken as a space separated list of prefixes. <emphasis role="bold">[ERROR <step-error-ref code="C0108"/>]</emphasis>
+      <para>The value of option <option>prefixes</option> is taken as a space separated list of prefixes. <emphasis role="bold">[ERROR <step-error-ref code="XC0108"/>]</emphasis>
       </para>
       <para>For any prefix the associated namespace is removed from the elements and attributes in the document appearing on port <port>source</port>. The respective elements or attributes in the document appearing on port <port>result</port> will be in no namespace.</para>
       <para>
-         <emphasis role="bold">[ERROR <step-error-ref code="C0109"/>]</emphasis>
+         <emphasis role="bold">[ERROR <step-error-ref code="XC0109"/>]</emphasis>
       </para>
       <bridgehead>Document properties</bridgehead>
       <para feature="namespace-delete-preserves-all">All document properties are preserved.</para>
    </description>
    <step-errors>
-      <step-error code="C0108">
+      <step-error code="XC0108">
          <description>
             <para>It is a dynamic error if any prefix is not in-scope at the point where the <code>p:namespace-delete</code> occurs.</para>
          </description>
       </step-error>
-      <step-error code="C0109">
+      <step-error code="XC0109">
          <description>
             <para>It is a dynamic error if a namespace is to be removed from an attribute and the element already has an attribute with the resulting name.</para>
          </description>

@@ -5,10 +5,10 @@
       short-description="[EDIT] www-form-urldecode short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.www-form-urldecode"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.www-form-urldecode"/>
    <signature>
       <output port="result"
               content-types="application/json"
@@ -34,14 +34,14 @@
       <para>[EDIT]</para>
       <para>A JSON object of the form “<literal>map(xs:string, xs:string+)</literal>” will appear on <port>result</port> port. The <option>value</option> option is interpreted as a string of parameter values encoded using the <literal>x-www-form-urlencoded</literal> algorithm. Each name/value pair is represented in the JSON object as key/value entry. </para>
       <para>
-         <emphasis role="bold">[ERROR <step-error-ref code="C0037"/>]</emphasis>
+         <emphasis role="bold">[ERROR <step-error-ref code="XC0037"/>]</emphasis>
       </para>
       <para>If any parameter name occurs more than once in the encoded string, a sequence will be associated with the respective key. The order in the sequence retains the order of name/value pairs in the encoded string.</para>
       <bridgehead>Document properties</bridgehead>
       <para feature="www-form-urldecode-preserves-none">The resulting JSON document has no properties apart from <property>content-type</property>. In particular, it has no <property>base-uri</property>.</para>
    </description>
    <step-errors>
-      <step-error code="C0037">
+      <step-error code="XC0037">
          <description>
             <para>It is a dynamic error if the <option>value</option> provided is not a properly <literal>x-www-form-urlencoded</literal> value.</para>
          </description>

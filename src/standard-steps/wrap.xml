@@ -5,10 +5,10 @@
       short-description="[EDIT] wrap short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.wrap"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.wrap"/>
    <signature>
       <input port="source"
              content-types="xml html"
@@ -56,7 +56,7 @@
    </summary>
    <description>
       <para>[EDIT]</para>
-      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="C0023"/>]</emphasis>
+      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="XC0023"/>]</emphasis>
       </para>
       <para>The value of the <option>group-adjacent</option> option must be an XPathExpression.</para>
       <para>If the node matched is the document node (<code>match="/"</code>), the result is a new document where the document element is a new element node whose QName is the value specified in the <option>wrapper</option> option. That new element contains copies of all of the children of the original document node.</para>
@@ -67,7 +67,7 @@
       <para feature="wrap-preserves-all">All document properties are preserved.</para>
    </description>
    <step-errors>
-      <step-error code="C0023">
+      <step-error code="XC0023">
          <description>
             <para>It is a dynamic error if the pattern matches anything other than document, element, text, processing instruction, and comment nodes.</para>
          </description>

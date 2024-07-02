@@ -71,7 +71,7 @@
       <step-errors>
         <xsl:for-each-group select=".//xpref:error" group-by="xs:string(@code)">
           <xsl:for-each select="current-group()[1]">
-            <step-error code="{current-grouping-key()}">
+            <step-error code="X{current-grouping-key()}">
               <description>
                 <para>
                   <xsl:apply-templates/>
@@ -88,7 +88,7 @@
 
   <xsl:template match="xpref:error">
     <xsl:variable name="code" as="xs:string" select="xs:string(@code)"/>
-    <emphasis role="bold">[ERROR <step-error-ref code="{$code}"/>]</emphasis>
+    <emphasis role="bold">[ERROR <step-error-ref code="X{$code}"/>]</emphasis>
   </xsl:template>
 
 </xsl:stylesheet>

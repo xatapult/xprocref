@@ -5,10 +5,10 @@
       short-description="[EDIT] text-sort short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.text-sort"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.text-sort"/>
    <signature>
       <input port="source"
              primary="true"
@@ -85,8 +85,8 @@
       <para>The <tag>p:text-sort</tag> step sorts the lines in the text document appearing on its <port>source</port> port and returns the result as another text document on its <port>result</port> port. The sort key is obtained by applying the XPath expression in <option>sort-key</option> to each line in turn.</para>
       <itemizedlist>
          <listitem>
-            <para>The <option>sort-key</option> is used to obtain a sort key for each of the lines in the document appearing on <port>source</port>. The <code>context item</code> is the line as an instance of <code>xs:string</code>, the <code>context position</code> is the number of the line in the document on port <port>source</port>, the <code>context size</code> is the number of lines in this document. <emphasis role="bold">[ERROR <step-error-ref code="C0098"/>]</emphasis>
-               <emphasis role="bold">[ERROR <step-error-ref code="C0099"/>]</emphasis>
+            <para>The <option>sort-key</option> is used to obtain a sort key for each of the lines in the document appearing on <port>source</port>. The <code>context item</code> is the line as an instance of <code>xs:string</code>, the <code>context position</code> is the number of the line in the document on port <port>source</port>, the <code>context size</code> is the number of lines in this document. <emphasis role="bold">[ERROR <step-error-ref code="XC0098"/>]</emphasis>
+               <emphasis role="bold">[ERROR <step-error-ref code="XC0099"/>]</emphasis>
             </para>
          </listitem>
          <listitem>
@@ -116,12 +116,12 @@
       <para feature="text-sort-preserves-all">All document properties are preserved.</para>
    </description>
    <step-errors>
-      <step-error code="C0098">
+      <step-error code="XC0098">
          <description>
             <para>It is a dynamic error if a dynamic XPath error occurred while applying sort-key to a line.</para>
          </description>
       </step-error>
-      <step-error code="C0099">
+      <step-error code="XC0099">
          <description>
             <para>It is a dynamic error if the result of applying <code>sort-key</code> to a given line results in a sequence with more than one item.</para>
          </description>

@@ -127,7 +127,7 @@
   <xtlc:expand-macro-definitions/>
 
   <!-- Validate: -->
-  <xtlc:validate>
+  <xtlc:validate simplify-error-messages="true">
     <p:with-option name="href-schema" select="$href-xprocref-schema"/>
     <p:with-option name="href-schematron" select="$href-xprocref-schematron"/>
   </xtlc:validate>
@@ -185,6 +185,16 @@
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-texts.xsl"/>
   </p:xslt>
+
+  <!-- Do the XProc example stuff: -->
+  <p:viewport match="db:xproc-example">
+    <p:xslt>
+      <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-examples.xsl"/>
+    </p:xslt>
+
+  </p:viewport>
+
+
 
   <!-- Process the Markdown (into DocBook): -->
   <xdoc:markdown-to-docbook/>

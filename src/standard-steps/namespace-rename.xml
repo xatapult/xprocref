@@ -5,10 +5,10 @@
       short-description="[EDIT] namespace-rename short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.namespace-rename"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.namespace-rename"/>
    <signature>
       <input port="source"
              content-types="xml html"
@@ -60,7 +60,7 @@
       <para>The value of the <option>to</option> option must be an <type>anyURI</type>. It should be empty or absolute, but will not be resolved in any case.</para>
       <para>The value of the <option>apply-to</option> option must be one of “<literal>all</literal>”, “<literal>elements</literal>”, or “<literal>attributes</literal>”. If the value is “<literal>elements</literal>”, only elements will be renamed, if the value is “<literal>attributes</literal>”, only attributes will be renamed, if the value is “<literal>all</literal>”, both elements and attributes will be renamed.</para>
       <para>
-         <emphasis role="bold">[ERROR <step-error-ref code="C0014"/>]</emphasis>
+         <emphasis role="bold">[ERROR <step-error-ref code="XC0014"/>]</emphasis>
       </para>
       <para>If the value of the <option>from</option> option is the same as the value of the <option>to</option> option, the input is reproduced unchanged on the output. Otherwise, namespace bindings, namespace attributes and element and attribute names are changed as follows:</para>
       <itemizedlist>
@@ -88,7 +88,7 @@
             </itemizedlist>
             <para>If the <option>from</option> option is absent, or its value is the empty string, then for every element and attribute, as appropriate, whose namespace name has no value, in the output its namespace name is set to the value of the <option>to</option> option.</para>
             <para>
-               <emphasis role="bold">[ERROR <step-error-ref code="C0092"/>]</emphasis>
+               <emphasis role="bold">[ERROR <step-error-ref code="XC0092"/>]</emphasis>
             </para>
          </listitem>
          <listitem>
@@ -111,12 +111,12 @@
       <para feature="namespace-rename-preserves-all">All document properties are preserved.</para>
    </description>
    <step-errors>
-      <step-error code="C0014">
+      <step-error code="XC0014">
          <description>
             <para>It is a dynamic error if the XML namespace (<uri>http://www.w3.org/XML/1998/namespace</uri>) or the XMLNS namespace (<uri>http://www.w3.org/2000/xmlns/</uri>) is the value of either the <option>from</option> option or the <option>to</option> option.</para>
          </description>
       </step-error>
-      <step-error code="C0092">
+      <step-error code="XC0092">
          <description>
             <para>It is a dynamic error if as a consequence of changing or removing the namespace of an attribute the attribute's name is not unique on the respective element.</para>
          </description>

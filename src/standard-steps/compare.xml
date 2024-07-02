@@ -5,10 +5,10 @@
       short-description="[EDIT] compare short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.compare"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.compare"/>
    <signature>
       <input port="source"
              primary="true"
@@ -74,27 +74,27 @@
       <para>This step takes single documents on each of two ports and compares them. If <option>method</option> is not specified, or if <code>deep-equal</code> is specified, the comparison uses <function>fn:deep-equal</function> (as defined in <link xlink:href="https://www.w3.org/TR/xpath-functions-31/"
                role="newpage"
                xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1 functions</link> ). Implementations of <tag>p:compare</tag> must support the <code>deep-equal</code>
-         <option>method</option>; other supported methods are implementation-defined. <emphasis role="bold">[ERROR <step-error-ref code="C0076"/>]</emphasis>
-         <emphasis role="bold">[ERROR <step-error-ref code="C0077"/>]</emphasis>
+         <option>method</option>; other supported methods are implementation-defined. <emphasis role="bold">[ERROR <step-error-ref code="XC0076"/>]</emphasis>
+         <emphasis role="bold">[ERROR <step-error-ref code="XC0077"/>]</emphasis>
       </para>
       <para>
-         <emphasis role="bold">[ERROR <step-error-ref code="C0019"/>]</emphasis> If the documents are equal, or if the value of the <option>fail-if-not-equal</option> option is <literal>false</literal>, a <tag>c:result</tag> document is produced with contents <literal>true</literal> if the documents are equal, otherwise <literal>false</literal>.</para>
+         <emphasis role="bold">[ERROR <step-error-ref code="XC0019"/>]</emphasis> If the documents are equal, or if the value of the <option>fail-if-not-equal</option> option is <literal>false</literal>, a <tag>c:result</tag> document is produced with contents <literal>true</literal> if the documents are equal, otherwise <literal>false</literal>.</para>
       <para>If <option>fail-if-not-equal</option> is <code>false</code>, and the documents differ, an implementation-defined summary of the differences between the two documents may appear on the <port>differences</port> port.</para>
       <bridgehead>Document properties</bridgehead>
       <para feature="compare-preserves-none">No document properties are preserved. The comparison document has no <property>base-uri</property>.</para>
    </description>
    <step-errors>
-      <step-error code="C0076">
+      <step-error code="XC0076">
          <description>
             <para>It is a dynamic error if the comparison <option>method</option> specified in <tag>p:compare</tag> is not supported by the implementation.</para>
          </description>
       </step-error>
-      <step-error code="C0077">
+      <step-error code="XC0077">
          <description>
             <para>It is a dynamic error if the media types of the documents supplied are incompatible with the comparison <option>method</option>.</para>
          </description>
       </step-error>
-      <step-error code="C0019">
+      <step-error code="XC0019">
          <description>
             <para>It is a dynamic error if the documents are not equal according to the specified comparison <option>method</option>, and the value of the <option>fail-if-not-equal</option> option is <literal>true</literal>.</para>
          </description>

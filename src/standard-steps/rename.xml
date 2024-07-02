@@ -5,10 +5,10 @@
       short-description="[EDIT] rename short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.rename"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.rename"/>
    <signature>
       <input port="source"
              content-types="xml html"
@@ -49,23 +49,23 @@
    </summary>
    <description>
       <para>[EDIT]</para>
-      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="C0023"/>]</emphasis>
+      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="XC0023"/>]</emphasis>
       </para>
       <para>Each element, attribute, or processing-instruction in the input matched by the selection pattern specified in the <option>match</option> option is renamed in the output to the name specified by the <option>new-name</option> option.</para>
       <para>If the <option>match</option> option matches an attribute and if the element on which it occurs already has an attribute whose expanded name is the same as the expanded name of the specified <option>new-name</option>, then the results is as if the current attribute named “<replaceable>new-name</replaceable>” was deleted before renaming the matched attribute.</para>
       <para>With respect to attributes named “<literal>xml:base</literal>”, the following semantics apply: renaming an <emphasis>from</emphasis> “<literal>xml:base</literal>” <emphasis>to</emphasis> something else has no effect on the underlying base URI of the element; however, if an attribute is renamed <emphasis>from</emphasis> something else <emphasis>to</emphasis> “<literal>xml:base</literal>”, the base URI of the element must also be amended accordingly.</para>
-      <para>If the pattern matches processing instructions, then it is the processing instruction target that is renamed. <emphasis role="bold">[ERROR <step-error-ref code="C0013"/>]</emphasis>
+      <para>If the pattern matches processing instructions, then it is the processing instruction target that is renamed. <emphasis role="bold">[ERROR <step-error-ref code="XC0013"/>]</emphasis>
       </para>
       <bridgehead>Document properties</bridgehead>
       <para feature="rename-preserves-all">All document properties are preserved.</para>
    </description>
    <step-errors>
-      <step-error code="C0023">
+      <step-error code="XC0023">
          <description>
             <para>It is a dynamic error if the pattern matches anything other than element, attribute or processing instruction nodes.</para>
          </description>
       </step-error>
-      <step-error code="C0013">
+      <step-error code="XC0013">
          <description>
             <para>It is a dynamic error if the pattern matches a processing instruction and the new name has a non-null namespace.</para>
          </description>

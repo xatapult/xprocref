@@ -9,6 +9,9 @@
     <namespace prefix="p" uri="http://www.w3.org/ns/xproc">
       <description>The main XProc namespace, used for all of its elements, steps and some of its attributes.</description>
     </namespace>
+    <namespace prefix="err" uri="ERROROR" error-namespace="true">
+      <description>Error namespace</description>
+    </namespace>
   </namespaces>
 
   <!-- ======================================================================= -->
@@ -68,9 +71,7 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <step name="insert" category-idrefs="c.test c.test2 c.test3" version-idref="v31" short-description="Insert a piece of content in another" required="true">
-
-      <specification-link href="https://spec.xproc.org/master/head/steps/#c.insert"/>
+    <step name="insert" category-idrefs="c.test c.test2 c.test3" version-idref="v31" short-description="Insert a piece of content in another" required="true" href-specification="https://spec.xproc.org/master/head/steps/#c.insert">
 
       <signature>
         <input port="source" sequence="false" primary="true" content-types="xml html">
@@ -116,7 +117,9 @@
       <detail>All are preserved again</detail>
 
       <example title="Simple example">Bla bla bla</example>
-      <example title="Simple example 2">Bla bla bla</example>
+      <example title="Simple example 2">
+        <xproc-example href="examples/add-attribute-01.xpl"/>
+      </example>
       
       
       <step-errors>
@@ -132,9 +135,7 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <step name="replace" version-idref="v31" category-idrefs="c.test" short-description="Replaces matching nodes">
-
-      <specification-link href="https://spec.xproc.org/master/head/steps/#c.replace"/>
+    <step name="replace" version-idref="v31" category-idrefs="c.test" short-description="Replaces matching nodes" href-specification="https://spec.xproc.org/master/head/steps/#c.replace">
 
       <signature>
         <input port="source" primary="true" sequence="false" content-types="xml html">
@@ -193,9 +194,7 @@
     <!-- ======================================================================= -->
     <!-- v30 -->
 
-    <step id="step.replace" name="replace" version-idref="v30" category-idrefs="c.test" short-description="Replaces matching nodes">
-
-      <specification-link href="https://spec.xproc.org/master/head/steps/#c.replace"/>
+    <step id="step.replace" name="replace" version-idref="v30" category-idrefs="c.test" short-description="Replaces matching nodes" href-specification="https://spec.xproc.org/master/head/steps/#c.replace">
 
       <signature>
         <input port="source" primary="true" sequence="false" content-types="xml html">

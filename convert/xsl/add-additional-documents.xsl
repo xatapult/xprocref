@@ -52,16 +52,17 @@
             <xsl:sort select="current-grouping-key()"></xsl:sort>
             <xsl:variable name="code" as="xs:string" select="current-grouping-key()"/>
             <error code="{$code}">
+              <xsl:comment> == {local:step-name-for-step-error(current-group()[1])} == </xsl:comment>
               <xsl:copy-of select="current-group()[1]/xpref:description"/>
               <!-- We add all other descriptions, so we can check whether there is much difference.  -->
               <xsl:for-each select="current-group()[position() gt 1]">
-                <xsl:comment> == {normalize-space(xpref:description)} == </xsl:comment>
+                <xsl:comment> == {local:step-name-for-step-error(.)} - {normalize-space(xpref:description)} == </xsl:comment>
               </xsl:for-each>
             </error>
           </xsl:for-each-group>
         </errors>
       </xtlcon:document>
-
+      
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <!-- Document that XIncludes everything: -->
 
@@ -147,5 +148,13 @@
     </xsl:copy>
 
   </xsl:template>
-
+  
+  <!-- ======================================================================= -->
+  
+  <xsl:function name="local:step-name-for-step-error" as="xs:string">
+    <xsl:param name="step-error" as="element(xpref:step-error)"/>
+    <xsl:variable name="step-elm" as="element(xpref:step)" select="$step-error/ancestor::xpref:step"/>
+    <xsl:sequence select="'p:' || $step-elm/@name"/>
+  </xsl:function>
+  
 </xsl:stylesheet>

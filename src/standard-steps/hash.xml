@@ -5,10 +5,10 @@
       short-description="[EDIT] hash short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.hash"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.hash"/>
    <signature>
       <input port="source"
              primary="true"
@@ -78,7 +78,7 @@
                role="newpage"
                xmlns:xlink="http://www.w3.org/1999/xlink">SHA1</link> hashes. It is implementation-defined what other algorithms are supported. The resulting hash should be returned as a string of hexadecimal characters. </para>
       <para>The value of the <option>match</option> option must be an XSLTSelectionPattern.</para>
-      <para>The hash of the specified value is computed using the algorithm and parameters specified. <emphasis role="bold">[ERROR <step-error-ref code="C0036"/>]</emphasis>
+      <para>The hash of the specified value is computed using the algorithm and parameters specified. <emphasis role="bold">[ERROR <step-error-ref code="XC0036"/>]</emphasis>
       </para>
       <para>The matched nodes are specified with the selection pattern in the <option>match</option> option. For each matching node, the string value of the computed hash is used in the output (if more than one node matches, the <emphasis>same</emphasis> hash value is used in each match). Nodes that do not match are copied without change.</para>
       <para>If the expression given in the <option>match</option> option matches an <emphasis>attribute</emphasis>, the hash is used as the new value of the attribute in the output. If the attribute is named “<tag class="attribute">xml:base</tag>”, the base URI of the element must also be amended accordingly.</para>
@@ -88,7 +88,7 @@
       <para feature="hash-preserves-partially">If the resulting document contains exactly one text node, the <literal>content-type</literal> property is changed to <literal>text/plain</literal> and the <literal>serialization</literal> property is removed, while all other document properties are preserved. For other document types, all document properties are preserved.</para>
    </description>
    <step-errors>
-      <step-error code="C0036">
+      <step-error code="XC0036">
          <description>
             <para>It is a dynamic error if the requested hash algorithm is not one that the processor understands or if the value or parameters are not appropriate for that algorithm.</para>
          </description>

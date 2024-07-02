@@ -1,106 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step-group xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <!-- == Step group for: Standard steps == -->
-   <xi:include href="add-attribute.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="add-xml-base.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="archive-manifest.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="archive.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="cast-content-type.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="compare.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="compress.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="count.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="delete.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="error.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="filter.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="hash.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="http-request.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="identity.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="in-scope-names.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="insert.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="json-join.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="json-merge.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="label-elements.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="load.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="make-absolute-uris.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="namespace-delete.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="namespace-rename.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="pack.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="parameters.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="rename.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="replace.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="set-attributes.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="set-properties.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="sink.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="split-sequence.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="store.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="string-replace.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="text-count.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="text-head.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="text-join.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="text-replace.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="text-sort.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="text-tail.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="unarchive.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="uncompress.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="unwrap.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="uuid.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="wrap-sequence.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="wrap.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="www-form-urldecode.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="www-form-urlencode.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="xinclude.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="xquery.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
-   <xi:include href="xslt.xml"
-               xmlns:xi="http://www.w3.org/2001/XInclude"/>
+<step-group xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  <!-- == Step group for: Standard steps == -->
+  <xi:include href="add-attribute.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="add-xml-base.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="archive-manifest.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="archive.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="cast-content-type.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="compare.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="compress.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="count.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="delete.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="error.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="filter.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="hash.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="http-request.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="identity.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="in-scope-names.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="insert.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="json-join.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="json-merge.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="label-elements.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="load.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="make-absolute-uris.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="namespace-delete.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="namespace-rename.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="pack.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="parameters.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="rename.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="replace.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="set-attributes.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="set-properties.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="sink.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="split-sequence.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="store.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="string-replace.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="text-count.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="text-head.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="text-join.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="text-replace.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="text-sort.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="text-tail.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="unarchive.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="uncompress.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="unwrap.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="uuid.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="wrap-sequence.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="wrap.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="www-form-urldecode.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="www-form-urlencode.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="xinclude.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="xquery.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="xslt.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 </step-group>

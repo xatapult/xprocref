@@ -5,10 +5,10 @@
       short-description="[EDIT] text-join short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.text-join"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.text-join"/>
    <signature>
       <input port="source"
              sequence="true"
@@ -73,15 +73,15 @@
             <para>When the <option>suffix</option> option is specified, the document appearing on the <port>result</port> port will always end with its value (also when there are no documents on the <port>source</port> port).</para>
          </listitem>
       </itemizedlist>
-      <para>When the <option>override-content-type</option> option is specified, the document appearing on the port <port>result</port> will have this media type as part of its document properties. <emphasis role="bold">[ERROR <step-error-ref code="D0079"/>]</emphasis>
-         <emphasis role="bold">[ERROR <step-error-ref code="C0001"/>]</emphasis>
+      <para>When the <option>override-content-type</option> option is specified, the document appearing on the port <port>result</port> will have this media type as part of its document properties. <emphasis role="bold">[ERROR <step-error-ref code="XD0079"/>]</emphasis>
+         <emphasis role="bold">[ERROR <step-error-ref code="XC0001"/>]</emphasis>
       </para>
       <para>Concatenating text documents does not require identifying individual lines in each document, consequently no special end-of-line handling is performed.</para>
       <bridgehead>Document properties</bridgehead>
       <para feature="text-join-preserves-none">No document properties are preserved. The joined document has no <property>base-uri</property> property. </para>
    </description>
    <step-errors>
-      <step-error code="D0079">
+      <step-error code="XD0079">
          <description>
             <para>It is a dynamic error if a supplied content-type is not a valid media type of the form “<literal>
                   <replaceable>type</replaceable>/<replaceable>subtype</replaceable>+<replaceable>ext</replaceable>
@@ -90,7 +90,7 @@
                </literal>”.</para>
          </description>
       </step-error>
-      <step-error code="C0001">
+      <step-error code="XC0001">
          <description>
             <para>It is a dynamic error if the value of option <option>override-content-type</option> is not a text media type.</para>
          </description>

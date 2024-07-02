@@ -5,10 +5,10 @@
       short-description="[EDIT] xinclude short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.xinclude"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.xinclude"/>
    <signature>
       <input port="source"
              content-types="xml html"
@@ -59,13 +59,13 @@
                xmlns:xlink="http://www.w3.org/1999/xlink">XInclude</link> .</para>
       <para>The included documents are located with the base URI of the input document and are not provided as input to the step.</para>
       <para>
-         <emphasis role="bold">[ERROR <step-error-ref code="C0029"/>]</emphasis>
+         <emphasis role="bold">[ERROR <step-error-ref code="XC0029"/>]</emphasis>
       </para>
       <bridgehead>Document properties</bridgehead>
       <para feature="xinclude-preserves-all">All document properties are preserved.</para>
    </description>
    <step-errors>
-      <step-error code="C0029">
+      <step-error code="XC0029">
          <description>
             <para>It is a dynamic error if an XInclude error occurs during processing.</para>
          </description>

@@ -5,10 +5,10 @@
       short-description="[EDIT] unarchive short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.unarchive"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.unarchive"/>
    <signature>
       <input port="source"
              primary="true"
@@ -94,19 +94,19 @@
                </listitem>
                <listitem>
                   <para>
-                     <emphasis role="bold">[ERROR <step-error-ref code="C0085"/>]</emphasis>
+                     <emphasis role="bold">[ERROR <step-error-ref code="XC0085"/>]</emphasis>
                   </para>
                </listitem>
             </itemizedlist>
          </listitem>
          <listitem>
-            <para>The <option>parameters</option> option can be used to supply parameters to control the unarchiving. The semantics of the keys and the allowed values for these keys are implementation-defined. <emphasis role="bold">[ERROR <step-error-ref code="C0079"/>]</emphasis>
+            <para>The <option>parameters</option> option can be used to supply parameters to control the unarchiving. The semantics of the keys and the allowed values for these keys are implementation-defined. <emphasis role="bold">[ERROR <step-error-ref code="XC0079"/>]</emphasis>
             </para>
          </listitem>
          <listitem>
             <para>If present, the value of the <option>include-filter</option> or <option>exclude-filter</option> option must be a sequence of strings, each one representing a regular expressions as specified in <link xlink:href="https://www.w3.org/TR/xpath-functions-31/"
                      role="newpage"
-                     xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1 functions</link> , section 7.61 “<literal>Regular Expression Syntax</literal>”. <emphasis role="bold">[ERROR <step-error-ref code="C0147"/>]</emphasis>
+                     xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1 functions</link> , section 7.61 “<literal>Regular Expression Syntax</literal>”. <emphasis role="bold">[ERROR <step-error-ref code="XC0147"/>]</emphasis>
             </para>
             <para>If neither the <option>include-filter</option> option nor the <option>exclude-filter</option> option is specified, the <code>p:unarchive</code> step outputs on its <port>result</port> port all entries in the archive.</para>
             <para>If the <option>include-filter</option> option or the <option>exclude-filter</option> option is specified, the <code>p:archive</code> step outputs on the <port>result</port> port the entries from the archive that conform to the following rules:</para>
@@ -147,8 +147,8 @@
          </listitem>
       </itemizedlist>
       <para>
-         <emphasis role="bold">[ERROR <step-error-ref code="C0120"/>]</emphasis>
-         <emphasis role="bold">[ERROR <step-error-ref code="D0064"/>]</emphasis>
+         <emphasis role="bold">[ERROR <step-error-ref code="XC0120"/>]</emphasis>
+         <emphasis role="bold">[ERROR <step-error-ref code="XD0064"/>]</emphasis>
       </para>
       <para>For instance, the base URI of an unarchived file called <code>xyz.xml</code> that resided in the <code>specs</code> subdirectory in an archive with base URI <code>file:///a/b/c.zip</code> will become: </para>
       <itemizedlist>
@@ -165,27 +165,27 @@
       <para feature="unarchive-preserves-none">No document properties are preserved. The <property>base-uri</property> property of each unarchived document is reflective of the base URI of the document. </para>
    </description>
    <step-errors>
-      <step-error code="C0085">
+      <step-error code="XC0085">
          <description>
             <para>It is a dynamic error if the format of the archive does not match the specified format, cannot be understood, determined and/or processed.</para>
          </description>
       </step-error>
-      <step-error code="C0079">
+      <step-error code="XC0079">
          <description>
             <para>It is a dynamic error if the map <option>parameters</option> contains an entry whose key is defined by the implementation and whose value is not valid for that key.</para>
          </description>
       </step-error>
-      <step-error code="C0147">
+      <step-error code="XC0147">
          <description>
             <para>It is a dynamic error if a specified value is not a valid XPath regular expression.</para>
          </description>
       </step-error>
-      <step-error code="C0120">
+      <step-error code="XC0120">
          <description>
             <para>It is a dynamic error if the <option>relative-to</option> option is not present and the document on the <port>source</port> port does not have a base URI.</para>
          </description>
       </step-error>
-      <step-error code="D0064">
+      <step-error code="XD0064">
          <description>
             <para>It is a dynamic error if the option is not a valid URI according to <link xlink:href="https://www.rfc-editor.org/info/rfc3986"
                      role="newpage"

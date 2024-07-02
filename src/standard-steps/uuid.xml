@@ -5,10 +5,10 @@
       short-description="[EDIT] uuid short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.uuid"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.uuid"/>
    <signature>
       <input port="source"
              primary="true"
@@ -52,7 +52,7 @@
    <description>
       <para>[EDIT]</para>
       <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. The value of the <option>version</option> option must be an integer.</para>
-      <para>If the <option>version</option> is specified, that version of UUID must be computed. <emphasis role="bold">[ERROR <step-error-ref code="C0060"/>]</emphasis> If the <option>version</option> is not specified, the version of UUID computed is implementation-defined.</para>
+      <para>If the <option>version</option> is specified, that version of UUID must be computed. <emphasis role="bold">[ERROR <step-error-ref code="XC0060"/>]</emphasis> If the <option>version</option> is not specified, the version of UUID computed is implementation-defined.</para>
       <para>Implementations must support version 4 UUIDs. Support for other versions of UUID, and the mechanism by which the necessary inputs are made available for computing other versions, is implementation-defined. </para>
       <para>The matched nodes are specified with the selection pattern in the <option>match</option> option. For each matching node, the generated UUID is used in the output (if more than one node matches, the <emphasis>same</emphasis> UUID is used in each match). Nodes that do not match are copied without change.</para>
       <para>If the expression given in the <option>match</option> option matches an <emphasis>attribute</emphasis>, the UUID is used as the new value of the attribute in the output. If the attribute is named “<tag class="attribute">xml:base</tag>”, the base URI of the element must also be amended accordingly.</para>
@@ -62,7 +62,7 @@
       <para feature="uuid-preserves-partially">If the resulting document contains exactly one text node, the <literal>content-type</literal> property is changed to <literal>text/plain</literal> and the <literal>serialization</literal> property is removed, while all other document properties are preserved. For other document types, all document properties are preserved.</para>
    </description>
    <step-errors>
-      <step-error code="C0060">
+      <step-error code="XC0060">
          <description>
             <para>It is a dynamic error if the processor does not support the specified <option>version</option> of the UUID algorithm.</para>
          </description>

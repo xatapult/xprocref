@@ -1,84 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="add-attribute"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] add-attribute short description"
-      required="true"
-      publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.add-attribute"/>
-   <signature>
-      <input port="source"
-             content-types="xml html"
-             primary="true"
-             sequence="true">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <output port="result"
-              content-types="xml html"
-              primary="true"
-              sequence="true">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-      <option name="match"
-              as="xs:string"
-              select="'/*'"
-              subtype="XSLTSelectionPattern"
-              required="false">
-         <description>
-            <para>[EDIT] option match</para>
-         </description>
-      </option>
-      <option name="attribute-name"
-              required="true"
-              as="xs:QName">
-         <description>
-            <para>[EDIT] option attribute-name</para>
-         </description>
-      </option>
-      <option name="attribute-value"
-              required="true"
-              as="xs:string">
-         <description>
-            <para>[EDIT] option attribute-value</para>
-         </description>
-      </option>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para>The <code>p:add-attribute</code> step adds a single attribute to a set of matching elements. The input document specified on the <code>source</code> is processed for matches specified by the selection pattern in the <option>match</option> option. For each of these matches, the attribute whose name is specified by the <option>attribute-name</option> option is set to the attribute value specified by the <option>attribute-value</option> option. </para>
-      <para>The resulting document is produced on the <code>result</code> output port and consists of a exact copy of the input with the exception of the matched elements. Each of the matched elements is copied to the output with the addition of the specified attribute with the specified value. </para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="C0023"/>]</emphasis>
-      </para>
-      <para>The value of the <option>attribute-value</option> option must be a legal attribute value according to XML.</para>
-      <para>If an attribute with the same name as the expanded name from the <option>attribute-name</option> option exists on the matched element, the value specified in the <option>attribute-value</option> option is used to set the value of that existing attribute. That is, the value of the existing attribute is changed to the <option>attribute-value</option> value. </para>
-      <note xml:id="note-multattr">
-         <para>If multiple attributes need to be set on the same element(s), the <tag>p:set-attributes</tag> step can be used to set them all at once.</para>
-      </note>
-      <para>This step cannot be used to add namespace declarations. <emphasis role="bold">[ERROR <step-error-ref code="C0059"/>]</emphasis> Note, however, that while namespace declarations cannot be added explicitly by this step, adding an attribute whose name is in a namespace for which there is no namespace declaration in scope on the matched element may result in a namespace binding being added by namespace fixup.</para>
-      <para>If an attribute named <tag class="attribute">xml:base</tag> is added or changed, the base URI of the element must also be amended accordingly.</para>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="add-attribute-preserves-all">All document properties are preserved.</para>
-   </description>
-   <step-errors>
-      <step-error code="C0023">
-         <description>
-            <para>It is a dynamic error if the selection pattern matches a node which is not an element.</para>
-         </description>
-      </step-error>
-      <step-error code="C0059">
-         <description>
-            <para>It is a dynamic error if the QName value in the <option>attribute-name</option> option uses the prefix “<literal>xmlns</literal>” or any other prefix that resolves to the namespace name <uri>http://www.w3.org/2000/xmlns/</uri>. </para>
-         </description>
-      </step-error>
-   </step-errors>
+<step name="add-attribute" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation"
+  short-description="Add (or replace) an attribute on a set of elements" href-specification="{$BASELINK-STANDARD-STEPS}#c.add-attribute"
+  required="true" publish="false" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <signature>
+
+    <input port="source" content-types="xml html" primary="true" sequence="true">
+      <description>
+        <para>The document to add (or replace) the attribute on.</para>
+      </description>
+    </input>
+    <output port="result" content-types="xml html" primary="true" sequence="true">
+      <description>
+        <para>The resulting document.</para>
+      </description>
+    </output>
+
+    <option name="match" as="xs:string" select="'/*'" subtype="XSLTSelectionPattern" required="false">
+      <description>
+        <para>The XSLT match pattern that selects the element(s) to add (or replace) the attribute on. If not specified, the root element is
+          used.</para>
+        <para>This must be an XSLT match pattern that matches an element. If it matches any other kind of node, error <step-error-ref code="XC0023"/>
+          is raised.</para>
+      </description>
+    </option>
+    <option name="attribute-name" required="true" as="xs:QName">
+      <description>
+        <para>The name of the attribute. This may contain a namespace specification.</para>
+      </description>
+    </option>
+    <option name="attribute-value" required="true" as="xs:string">
+      <description>
+        <para>The value of the attribute.</para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <summary>
+    <para>The <step>p:add-attribute</step> step adds (or replaces) an attribute. This is done for the element(s) matched by the <option>match</option>
+      option.</para>
+  </summary>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <description>
+    <para>The <step>p:add-attribute</step> step:</para>
+    <itemizedlist>
+      <listitem>
+        <para>Takes the document appearing on its <port>source</port> port.</para>
+      </listitem>
+      <listitem>
+        <para>Processes the elements that match the pattern in the <option>match</option> option:</para>
+        <itemizedlist><listitem>
+            <para>If a selected element does <emphasis>not</emphasis> contain an attribute with the name given in the <option>attribute-name</option>
+              option, an attribute with this name and a value as given in the <option>attribute-value</option> option is added to it.</para>
+          </listitem>
+          <listitem><para>If a selected element already has such an attribute, its value is replaced with the value given in the
+                <option>attribute-value</option> option.</para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>The resulting document appears on its <port>result</port> port.</para>
+      </listitem>
+    </itemizedlist>
+    <para>The <step>p:add-attribute</step> step can only set a <emphasis>single</emphasis> attribute. The <step-ref name="p:set-attributes"/> step can
+      be used to set multiple attributes at once.</para>
+  </description>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>{$DOCUMENT-PROPERTIES-PRESERVED}</detail>
+  <detail>
+    <para>You cannot use this step to add or change a namespace declaration. Attempting to do so will result in error <step-error-ref code="XC0059"
+      />.</para>
+    <para>Note, however, that it is possible to add an attribute whose namespace is not in scope on the element it is added to. The XProc namespace
+      fixup mechanism will take care of handling this. </para>
+  </detail>
+  <detail>
+    <para>If an attribute named <tag class="attribute">xml:base</tag> is added or changed, the base URI of the element must also be amended
+      accordingly.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Adding an attribute" id="ex01">
+    <para>Assume our input document is:</para>
+    <programlisting><![CDATA[<doc>
+  <text>Hello there!</text>
+  <text>This is an example.</text>
+</doc>]]></programlisting>
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <step-errors>
+    <step-error code="XC0023">
+      <description>
+        <para>It is a dynamic error if the selection pattern matches a node which is not an element.</para>
+      </description>
+    </step-error>
+    <step-error code="XC0059"/>
+  </step-errors>
 </step>

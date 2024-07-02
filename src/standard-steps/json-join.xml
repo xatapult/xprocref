@@ -5,10 +5,10 @@
       short-description="[EDIT] json-join short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.json-join"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.json-join"/>
    <signature>
       <input port="source"
              sequence="true"
@@ -50,21 +50,21 @@
             <para>For every other type of JSON document, for XML documents, HTML documents, or text documents, their XDM representation is appended to the resulting array.</para>
          </listitem>
          <listitem>
-            <para>It is implementation defined if <code>p:json-join</code> is able to process document types not mentioned yet, i.e. types of binary documents. If a processor supports a given type of documents, an entry is created as described above. <emphasis role="bold">[ERROR <step-error-ref code="C0111"/>]</emphasis>
+            <para>It is implementation defined if <code>p:json-join</code> is able to process document types not mentioned yet, i.e. types of binary documents. If a processor supports a given type of documents, an entry is created as described above. <emphasis role="bold">[ERROR <step-error-ref code="XC0111"/>]</emphasis>
             </para>
          </listitem>
       </itemizedlist>
-      <para>The option <option>flatten-to-depth</option> controls whether and to which depth members of an array appearing on port <port>source</port> are flattened. <emphasis role="bold">[ERROR <step-error-ref code="C0119"/>]</emphasis> An integer value of <literal>0</literal>, which is the default, means that no flattening takes place, so the array appearing on port <port>source</port> will be contained as an array in the resulting array. An integer value of <literal>1</literal> means that an array on port <port>source</port> is flattened, i.e. the members of that array will appear as individual members in the resulting array. Any value greater than <literal>1</literal> means that the flattening is applied recursively to arrays in arrays up to the given depth. A value of “<literal>unbounded</literal>” means that all arrays in arrays will be flattened. As a consequence, the resulting array appearing on port <port>result</port> will not have any arrays as members. </para>
+      <para>The option <option>flatten-to-depth</option> controls whether and to which depth members of an array appearing on port <port>source</port> are flattened. <emphasis role="bold">[ERROR <step-error-ref code="XC0119"/>]</emphasis> An integer value of <literal>0</literal>, which is the default, means that no flattening takes place, so the array appearing on port <port>source</port> will be contained as an array in the resulting array. An integer value of <literal>1</literal> means that an array on port <port>source</port> is flattened, i.e. the members of that array will appear as individual members in the resulting array. Any value greater than <literal>1</literal> means that the flattening is applied recursively to arrays in arrays up to the given depth. A value of “<literal>unbounded</literal>” means that all arrays in arrays will be flattened. As a consequence, the resulting array appearing on port <port>result</port> will not have any arrays as members. </para>
       <bridgehead>Document properties</bridgehead>
       <para feature="json-join-preserves-none">No document properties are preserved. The joined document has no <property>base-uri</property>. </para>
    </description>
    <step-errors>
-      <step-error code="C0111">
+      <step-error code="XC0111">
          <description>
             <para> It is a dynamic error if a document of an unsupported document type appears on port <port>source</port> of <code>p:json-join</code>.</para>
          </description>
       </step-error>
-      <step-error code="C0119">
+      <step-error code="XC0119">
          <description>
             <para>It is a dynamic error if <option>flatten</option> is neither “<literal>unbounded</literal>”, nor a string that may be cast to a non-negative integer.</para>
          </description>

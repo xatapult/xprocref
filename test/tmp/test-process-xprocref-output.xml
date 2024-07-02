@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xtlcon:document-container timestamp="2024-06-27T15:29:34.1257898+02:00"
+<xtlcon:document-container timestamp="2024-07-02T14:06:39.307666+02:00"
                            _href-target-path="file:///C:/Data/Erik/work/xatapult/xprocref/build"
                            xmlns:xtlcon="http://www.xtpxlib.nl/ns/container">
    <!-- == MAIN PAGES: == -->
@@ -20,7 +20,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="js/bootstrap.bundle.min.js"/>
-            <title>Steps [TEST]</title>
+            <title>XProc steps</title>
             <link rel="shortcut icon"
                   href="images/favicon.ico"/>
          </head>
@@ -61,6 +61,10 @@
                               <a class="dropdown-item"
                                  href="namespaces.html">namespaces</a>
                            </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="https://xproc.org">XProc</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item lead">
@@ -71,8 +75,9 @@
                </div>
             </nav>
             <div class="container pt-5">
+               <p class="para page-banner">You are looking at the TEST version!</p>
                <div class="sect1">
-                  <h1 class="sect1">Steps [TEST]</h1>
+                  <h1 class="sect1">XProc steps</h1>
                   <p class="para">All steps for XProc version 3.1. You can also view these steps <a href="3.1/categories.html">
                         <span class="link">by category</span>
                      </a>.</p>
@@ -93,7 +98,7 @@
                            <p class="para">
                               <a href="3.1/p.insert.html">
                                  <span class="link">p:insert</span>
-                              </a> - Insert a piece of content in another</p>
+                              </a> - Insert a piece of content in another.</p>
                         </li>
                      </ul>
                   </div>
@@ -108,7 +113,7 @@
                            <p class="para">
                               <a href="3.1/p.replace.html">
                                  <span class="link">p:replace</span>
-                              </a> - Replaces matching nodes</p>
+                              </a> - Replaces matching nodes.</p>
                         </li>
                      </ul>
                   </div>
@@ -134,7 +139,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="js/bootstrap.bundle.min.js"/>
-            <title>XProc versions [TEST]</title>
+            <title>XProc versions</title>
             <link rel="shortcut icon"
                   href="images/favicon.ico"/>
          </head>
@@ -175,6 +180,10 @@
                               <a class="dropdown-item"
                                  href="namespaces.html">namespaces</a>
                            </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="https://xproc.org">XProc</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item lead">
@@ -185,12 +194,13 @@
                </div>
             </nav>
             <div class="container pt-5">
+               <p class="para page-banner">You are looking at the TEST version!</p>
                <div class="sect1">
-                  <h1 class="sect1">XProc versions [TEST]</h1>
+                  <h1 class="sect1">XProc versions</h1>
                   <ul class="itemizedlist versions-list">
                      <li>
                         <p class="para">
-                           <a href="3.1/index.html">
+                           <a href="index.html">
                               <span class="link">Version 3.1</span>
                            </a>
                         </p>
@@ -227,7 +237,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="js/bootstrap.bundle.min.js"/>
-            <title>Error codes [TEST]</title>
+            <title>Error codes</title>
             <link rel="shortcut icon"
                   href="images/favicon.ico"/>
          </head>
@@ -268,6 +278,10 @@
                               <a class="dropdown-item"
                                  href="namespaces.html">namespaces</a>
                            </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="https://xproc.org">XProc</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item lead">
@@ -278,8 +292,12 @@
                </div>
             </nav>
             <div class="container pt-5">
+               <p class="para page-banner">You are looking at the TEST version!</p>
                <div class="sect1">
-                  <h1 class="sect1">Error codes [TEST]</h1>
+                  <h1 class="sect1">Error codes</h1>
+                  <p class="para break-after">All errors are in the <code class="code">ERROROR</code> namespace (recommended prefix:
+              <code class="code">err</code>).</p>
+                  <p class="break"> </p>
                   <div class="table nonumber error-codes-table">
                      <table class="table nonumber error-codes-table">
                         <thead>
@@ -346,7 +364,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="js/bootstrap.bundle.min.js"/>
-            <title>Namespaces used [TEST]</title>
+            <title>Namespaces used</title>
             <link rel="shortcut icon"
                   href="images/favicon.ico"/>
          </head>
@@ -387,6 +405,10 @@
                               <a class="dropdown-item"
                                  href="namespaces.html">namespaces</a>
                            </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="https://xproc.org">XProc</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item lead">
@@ -397,13 +419,19 @@
                </div>
             </nav>
             <div class="container pt-5">
+               <p class="para page-banner">You are looking at the TEST version!</p>
                <div class="sect1">
-                  <h1 class="sect1">Namespaces used [TEST]</h1>
+                  <h1 class="sect1">Namespaces used</h1>
                   <ul class="itemizedlist">
                      <li>
                         <p class="para">
                            <code class="code">http://www.w3.org/ns/xproc</code> (recommended prefix: <code class="code">p</code>)</p>
                         <p class="para">The main XProc namespace, used for all of its elements, steps and some of its attributes.</p>
+                     </li>
+                     <li>
+                        <p class="para">
+                           <code class="code">ERROROR</code> (recommended prefix: <code class="code">err</code>)</p>
+                        <p class="para">Error namespace</p>
                      </li>
                   </ul>
                </div>
@@ -428,7 +456,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="js/bootstrap.bundle.min.js"/>
-            <title>About XProcRef [TEST]</title>
+            <title>About XProcRef</title>
             <link rel="shortcut icon"
                   href="images/favicon.ico"/>
          </head>
@@ -469,6 +497,10 @@
                               <a class="dropdown-item"
                                  href="namespaces.html">namespaces</a>
                            </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="https://xproc.org">XProc</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item lead">
@@ -479,8 +511,9 @@
                </div>
             </nav>
             <div class="container pt-5">
+               <p class="para page-banner">You are looking at the TEST version!</p>
                <div class="sect1">
-                  <h1 class="sect1">About XProcRef [TEST]</h1>
+                  <h1 class="sect1">About XProcRef</h1>
                   <p class="para break-after">The XprocRef site contains reference information about the steps in the <a href="https://xproc.org/"
                         target="_blank">
                         <span class="link newpage">XProc programming language</span>
@@ -515,7 +548,7 @@
                      </a>
                   </p>
                   <p class="para"> </p>
-                  <p class="para site-remark">Site published  [TEST VERSION]: 2024-06-27 15:29</p>
+                  <p class="para site-remark">Site published  [TEST VERSION]: 2024-07-02 14:06</p>
                </div>
             </div>
             <p> </p>
@@ -540,7 +573,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
-            <title>Categories [TEST]</title>
+            <title>Categories</title>
             <link rel="shortcut icon"
                   href="../images/favicon.ico"/>
          </head>
@@ -581,6 +614,10 @@
                               <a class="dropdown-item"
                                  href="../namespaces.html">namespaces</a>
                            </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="https://xproc.org">XProc</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item lead">
@@ -591,8 +628,9 @@
                </div>
             </nav>
             <div class="container pt-5">
+               <p class="para page-banner">You are looking at the TEST version!</p>
                <div class="sect1">
-                  <h1 class="sect1">Categories [TEST]</h1>
+                  <h1 class="sect1">Categories</h1>
                   <ul class="itemizedlist category-list">
                      <li>
                         <p class="para">
@@ -645,7 +683,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
-            <title>Category: Test [TEST] </title>
+            <title>Category: Test </title>
             <link rel="shortcut icon"
                   href="../images/favicon.ico"/>
          </head>
@@ -686,6 +724,10 @@
                               <a class="dropdown-item"
                                  href="../namespaces.html">namespaces</a>
                            </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="https://xproc.org">XProc</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item lead">
@@ -696,8 +738,9 @@
                </div>
             </nav>
             <div class="container pt-5">
+               <p class="para page-banner">You are looking at the TEST version!</p>
                <div class="sect1">
-                  <h1 class="sect1">Category: Test [TEST] <a href="Test_2.html">
+                  <h1 class="sect1">Category: Test <a href="Test_2.html">
                         <span class="link">
                            <img src="../images/next.png"
                                 class="inlinemediaobject next-prev-marker"
@@ -722,7 +765,7 @@
                            <p class="para">
                               <a href="p.insert.html">
                                  <span class="link">p:insert</span>
-                              </a> - Insert a piece of content in another</p>
+                              </a> - Insert a piece of content in another.</p>
                         </li>
                      </ul>
                   </div>
@@ -737,7 +780,7 @@
                            <p class="para">
                               <a href="p.replace.html">
                                  <span class="link">p:replace</span>
-                              </a> - Replaces matching nodes</p>
+                              </a> - Replaces matching nodes.</p>
                         </li>
                      </ul>
                   </div>
@@ -767,7 +810,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
-            <title> Category: Test 2 [TEST] </title>
+            <title> Category: Test 2 </title>
             <link rel="shortcut icon"
                   href="../images/favicon.ico"/>
          </head>
@@ -808,6 +851,10 @@
                               <a class="dropdown-item"
                                  href="../namespaces.html">namespaces</a>
                            </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="https://xproc.org">XProc</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item lead">
@@ -818,6 +865,7 @@
                </div>
             </nav>
             <div class="container pt-5">
+               <p class="para page-banner">You are looking at the TEST version!</p>
                <div class="sect1">
                   <h1 class="sect1">
                      <a href="Test.html">
@@ -826,7 +874,7 @@
                                 class="inlinemediaobject next-prev-marker"
                                 width="1.5%"/>
                         </span>
-                     </a> Category: Test 2 [TEST] <a href="Test_3.html">
+                     </a> Category: Test 2 <a href="Test_3.html">
                         <span class="link">
                            <img src="../images/next.png"
                                 class="inlinemediaobject next-prev-marker"
@@ -840,7 +888,7 @@
                         <p class="para">
                            <a href="p.insert.html">
                               <span class="link">p:insert</span>
-                           </a> - Insert a piece of content in another</p>
+                           </a> - Insert a piece of content in another.</p>
                      </li>
                   </ul>
                </div>
@@ -869,7 +917,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
-            <title> Category: Test 3 [TEST]</title>
+            <title> Category: Test 3</title>
             <link rel="shortcut icon"
                   href="../images/favicon.ico"/>
          </head>
@@ -910,6 +958,10 @@
                               <a class="dropdown-item"
                                  href="../namespaces.html">namespaces</a>
                            </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="https://xproc.org">XProc</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item lead">
@@ -920,6 +972,7 @@
                </div>
             </nav>
             <div class="container pt-5">
+               <p class="para page-banner">You are looking at the TEST version!</p>
                <div class="sect1">
                   <h1 class="sect1">
                      <a href="Test_2.html">
@@ -928,14 +981,14 @@
                                 class="inlinemediaobject next-prev-marker"
                                 width="1.5%"/>
                         </span>
-                     </a> Category: Test 3 [TEST]</h1>
+                     </a> Category: Test 3</h1>
                   <p class="para">Just another test category</p>
                   <ul class="itemizedlist step-list">
                      <li>
                         <p class="para">
                            <a href="p.insert.html">
                               <span class="link">p:insert</span>
-                           </a> - Insert a piece of content in another</p>
+                           </a> - Insert a piece of content in another.</p>
                      </li>
                   </ul>
                </div>
@@ -964,7 +1017,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
-            <title>p:insert [TEST] </title>
+            <title>p:insert </title>
             <link rel="shortcut icon"
                   href="../images/favicon.ico"/>
          </head>
@@ -1005,6 +1058,10 @@
                               <a class="dropdown-item"
                                  href="../namespaces.html">namespaces</a>
                            </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="https://xproc.org">XProc</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item lead">
@@ -1015,8 +1072,9 @@
                </div>
             </nav>
             <div class="container pt-5">
+               <p class="para page-banner">You are looking at the TEST version!</p>
                <div class="sect1">
-                  <h1 class="sect1">p:insert [TEST] <a href="p.replace.html">
+                  <h1 class="sect1">p:insert <a href="p.replace.html">
                         <span class="link">
                            <img src="../images/next.png"
                                 class="inlinemediaobject next-prev-marker"
@@ -1024,54 +1082,54 @@
                         </span>
                      </a>
                   </h1>
-                  <p class="para">Insert a piece of content in another</p>
+                  <p class="para">Insert a piece of content in another.</p>
                   <ul class="itemizedlist toc">
                      <li>
                         <p class="para tocentry">
-                           <a href="#sect2-d91e276">
+                           <a href="#sect2-d95e314">
                               <span class="link">Summary</span>
                            </a>
                         </p>
                      </li>
                      <li>
                         <p class="para tocentry">
-                           <a href="#sect2-d91e457">
+                           <a href="#sect2-d95e495">
                               <span class="link">Description</span>
                            </a>
                         </p>
                      </li>
                      <li>
                         <p class="para tocentry">
-                           <a href="#sect2-d91e510">
+                           <a href="#sect2-d95e548">
                               <span class="link">Examples</span>
                            </a>
                         </p>
                      </li>
                      <li>
                         <p class="para tocentry">
-                           <a href="#sect2-d91e523">
+                           <a href="#sect2-d95e560">
                               <span class="link">Additional details</span>
                            </a>
                         </p>
                      </li>
                      <li>
                         <p class="para tocentry">
-                           <a href="#sect2-d91e533">
+                           <a href="#sect2-d95e570">
                               <span class="link">Errors raised</span>
                            </a>
                         </p>
                      </li>
                      <li>
                         <p class="para tocentry">
-                           <a href="#sect2-d91e566">
+                           <a href="#sect2-d95e603">
                               <span class="link">Reference information</span>
                            </a>
                         </p>
                      </li>
                   </ul>
                   <div class="sect2"
-                       id="sect2-d91e276">
-                     <a name="sect2-d91e276">
+                       id="sect2-d95e314">
+                     <a name="sect2-d95e314">
                         <!---->
                      </a>
                      <h2 class="sect2">Summary</h2>
@@ -1276,8 +1334,8 @@
                      </div>
                   </div>
                   <div class="sect2"
-                       id="sect2-d91e457">
-                     <a name="sect2-d91e457">
+                       id="sect2-d95e495">
+                     <a name="sect2-d95e495">
                         <!---->
                      </a>
                      <h2 class="sect2">Description</h2>
@@ -1314,8 +1372,8 @@
                      <p class="para">BLOEB</p>
                   </div>
                   <div class="sect2"
-                       id="sect2-d91e510">
-                     <a name="sect2-d91e510">
+                       id="sect2-d95e548">
+                     <a name="sect2-d95e548">
                         <!---->
                      </a>
                      <h2 class="sect2">Examples</h2>
@@ -1325,12 +1383,27 @@
                      </div>
                      <div class="sect3">
                         <h3 class="sect3">Simple example 2</h3>
-                        <p class="para">Bla bla bla</p>
+                        <p class="para">Input document:</p>
+                        <div class="programlisting">
+                           <pre class="programlisting">&lt;texts&gt;
+   &lt;text&gt;Hello there!&lt;/text&gt;
+   &lt;text&gt;This is funny…&lt;/text&gt;
+   &lt;text type="normal"&gt;And that's normal.&lt;/text&gt;
+&lt;/texts&gt;</pre>
+                        </div>
+                        <p class="para">Pipeline:</p>
+                        <div class="programlisting">
+                           <pre class="programlisting">&lt;p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
+   &lt;p:input port="source"/&gt;
+   &lt;p:output port="result"/&gt;
+   &lt;p:add-attribute match="text" attribute-name="type" attribute-value="special"/&gt;
+&lt;/p:declare-step&gt;</pre>
+                        </div>
                      </div>
                   </div>
                   <div class="sect2"
-                       id="sect2-d91e523">
-                     <a name="sect2-d91e523">
+                       id="sect2-d95e560">
+                     <a name="sect2-d95e560">
                         <!---->
                      </a>
                      <h2 class="sect2">Additional details</h2>
@@ -1344,8 +1417,8 @@
                      </ul>
                   </div>
                   <div class="sect2"
-                       id="sect2-d91e533">
-                     <a name="sect2-d91e533">
+                       id="sect2-d95e570">
+                     <a name="sect2-d95e570">
                         <!---->
                      </a>
                      <h2 class="sect2">Errors raised</h2>
@@ -1403,8 +1476,8 @@
                      </div>
                   </div>
                   <div class="sect2"
-                       id="sect2-d91e566">
-                     <a name="sect2-d91e566">
+                       id="sect2-d95e603">
+                     <a name="sect2-d95e603">
                         <!---->
                      </a>
                      <h2 class="sect2">Reference information</h2>
@@ -1466,7 +1539,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
-            <title> p:replace [TEST]</title>
+            <title> p:replace</title>
             <link rel="shortcut icon"
                   href="../images/favicon.ico"/>
          </head>
@@ -1507,6 +1580,10 @@
                               <a class="dropdown-item"
                                  href="../namespaces.html">namespaces</a>
                            </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="https://xproc.org">XProc</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item lead">
@@ -1517,6 +1594,7 @@
                </div>
             </nav>
             <div class="container pt-5">
+               <p class="para page-banner">You are looking at the TEST version!</p>
                <div class="sect1">
                   <h1 class="sect1">
                      <a href="p.insert.html">
@@ -1525,41 +1603,41 @@
                                 class="inlinemediaobject next-prev-marker"
                                 width="1.5%"/>
                         </span>
-                     </a> p:replace [TEST]</h1>
-                  <p class="para">Replaces matching nodes</p>
+                     </a> p:replace</h1>
+                  <p class="para">Replaces matching nodes.</p>
                   <ul class="itemizedlist toc">
                      <li>
                         <p class="para tocentry">
-                           <a href="#sect2-d91e616">
+                           <a href="#sect2-d95e655">
                               <span class="link">Summary</span>
                            </a>
                         </p>
                      </li>
                      <li>
                         <p class="para tocentry">
-                           <a href="#sect2-d91e771">
+                           <a href="#sect2-d95e810">
                               <span class="link">Description</span>
                            </a>
                         </p>
                      </li>
                      <li>
                         <p class="para tocentry">
-                           <a href="#sect2-d91e815">
+                           <a href="#sect2-d95e854">
                               <span class="link">Examples</span>
                            </a>
                         </p>
                      </li>
                      <li>
                         <p class="para tocentry">
-                           <a href="#sect2-d91e836">
+                           <a href="#sect2-d95e875">
                               <span class="link">Reference information</span>
                            </a>
                         </p>
                      </li>
                   </ul>
                   <div class="sect2"
-                       id="sect2-d91e616">
-                     <a name="sect2-d91e616">
+                       id="sect2-d95e655">
+                     <a name="sect2-d95e655">
                         <!---->
                      </a>
                      <h2 class="sect2">Summary</h2>
@@ -1739,8 +1817,8 @@
                      </div>
                   </div>
                   <div class="sect2"
-                       id="sect2-d91e771">
-                     <a name="sect2-d91e771">
+                       id="sect2-d95e810">
+                     <a name="sect2-d95e810">
                         <!---->
                      </a>
                      <h2 class="sect2">Description</h2>
@@ -1761,8 +1839,8 @@
             preserved. For other document types, all document properties are preserved.</p>
                   </div>
                   <div class="sect2"
-                       id="sect2-d91e815">
-                     <a name="sect2-d91e815">
+                       id="sect2-d95e854">
+                     <a name="sect2-d95e854">
                         <!---->
                      </a>
                      <h2 class="sect2">Examples</h2>
@@ -1780,8 +1858,8 @@
                      </div>
                   </div>
                   <div class="sect2"
-                       id="sect2-d91e836">
-                     <a name="sect2-d91e836">
+                       id="sect2-d95e875">
+                     <a name="sect2-d95e875">
                         <!---->
                      </a>
                      <h2 class="sect2">Reference information</h2>
@@ -1824,7 +1902,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
-            <title>Steps (3.0) [TEST]</title>
+            <title>XProc steps (3.0)</title>
             <link rel="shortcut icon"
                   href="../images/favicon.ico"/>
          </head>
@@ -1865,6 +1943,10 @@
                               <a class="dropdown-item"
                                  href="../namespaces.html">namespaces</a>
                            </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="https://xproc.org">XProc</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item lead">
@@ -1875,8 +1957,9 @@
                </div>
             </nav>
             <div class="container pt-5">
+               <p class="para page-banner">You are looking at the TEST version!</p>
                <div class="sect1">
-                  <h1 class="sect1">Steps (3.0) [TEST]</h1>
+                  <h1 class="sect1">XProc steps (3.0)</h1>
                   <p class="para">All steps for XProc version 3.0. You can also view these steps <a href="categories.html">
                         <span class="link">by category</span>
                      </a>.</p>
@@ -1886,7 +1969,7 @@
                         <p class="para">
                            <a href="p.replace.html">
                               <span class="link">p:replace</span>
-                           </a> - Replaces matching nodes</p>
+                           </a> - Replaces matching nodes.</p>
                      </li>
                   </ul>
                </div>
@@ -1912,7 +1995,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
-            <title>Categories (3.0) [TEST]</title>
+            <title>Categories (3.0)</title>
             <link rel="shortcut icon"
                   href="../images/favicon.ico"/>
          </head>
@@ -1953,6 +2036,10 @@
                               <a class="dropdown-item"
                                  href="../namespaces.html">namespaces</a>
                            </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="https://xproc.org">XProc</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item lead">
@@ -1963,8 +2050,9 @@
                </div>
             </nav>
             <div class="container pt-5">
+               <p class="para page-banner">You are looking at the TEST version!</p>
                <div class="sect1">
-                  <h1 class="sect1">Categories (3.0) [TEST]</h1>
+                  <h1 class="sect1">Categories (3.0)</h1>
                   <ul class="itemizedlist category-list">
                      <li>
                         <p class="para">
@@ -2001,7 +2089,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
-            <title>Category: Test [TEST]</title>
+            <title>Category: Test</title>
             <link rel="shortcut icon"
                   href="../images/favicon.ico"/>
          </head>
@@ -2042,6 +2130,10 @@
                               <a class="dropdown-item"
                                  href="../namespaces.html">namespaces</a>
                            </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="https://xproc.org">XProc</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item lead">
@@ -2052,15 +2144,16 @@
                </div>
             </nav>
             <div class="container pt-5">
+               <p class="para page-banner">You are looking at the TEST version!</p>
                <div class="sect1">
-                  <h1 class="sect1">Category: Test [TEST]</h1>
+                  <h1 class="sect1">Category: Test</h1>
                   <p class="para">Just a test category</p>
                   <ul class="itemizedlist step-list">
                      <li>
                         <p class="para">
                            <a href="p.replace.html">
                               <span class="link">p:replace</span>
-                           </a> - Replaces matching nodes</p>
+                           </a> - Replaces matching nodes.</p>
                      </li>
                   </ul>
                </div>
@@ -2089,7 +2182,7 @@
                   rel="stylesheet"/>
             <script defer="defer"
                     src="../js/bootstrap.bundle.min.js"/>
-            <title>p:replace (3.0) [TEST]</title>
+            <title>p:replace (3.0)</title>
             <link rel="shortcut icon"
                   href="../images/favicon.ico"/>
          </head>
@@ -2130,6 +2223,10 @@
                               <a class="dropdown-item"
                                  href="../namespaces.html">namespaces</a>
                            </li>
+                           <li class="lead">
+                              <a class="dropdown-item"
+                                 href="https://xproc.org">XProc</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item lead">
@@ -2140,35 +2237,36 @@
                </div>
             </nav>
             <div class="container pt-5">
+               <p class="para page-banner">You are looking at the TEST version!</p>
                <div class="sect1">
-                  <h1 class="sect1">p:replace (3.0) [TEST]</h1>
-                  <p class="para">Replaces matching nodes</p>
+                  <h1 class="sect1">p:replace (3.0)</h1>
+                  <p class="para">Replaces matching nodes.</p>
                   <ul class="itemizedlist toc">
                      <li>
                         <p class="para tocentry">
-                           <a href="#sect2-d91e929">
+                           <a href="#sect2-d95e976">
                               <span class="link">Summary</span>
                            </a>
                         </p>
                      </li>
                      <li>
                         <p class="para tocentry">
-                           <a href="#sect2-d91e1084">
+                           <a href="#sect2-d95e1131">
                               <span class="link">Description</span>
                            </a>
                         </p>
                      </li>
                      <li>
                         <p class="para tocentry">
-                           <a href="#sect2-d91e1134">
+                           <a href="#sect2-d95e1181">
                               <span class="link">Reference information</span>
                            </a>
                         </p>
                      </li>
                   </ul>
                   <div class="sect2"
-                       id="sect2-d91e929">
-                     <a name="sect2-d91e929">
+                       id="sect2-d95e976">
+                     <a name="sect2-d95e976">
                         <!---->
                      </a>
                      <h2 class="sect2">Summary</h2>
@@ -2348,8 +2446,8 @@
                      </div>
                   </div>
                   <div class="sect2"
-                       id="sect2-d91e1084">
-                     <a name="sect2-d91e1084">
+                       id="sect2-d95e1131">
+                     <a name="sect2-d95e1131">
                         <!---->
                      </a>
                      <h2 class="sect2">Description</h2>
@@ -2367,8 +2465,8 @@
                      <p class="error">[*** Unrecognized element: &lt;db:simplesect&gt; (phase: main)]</p>
                   </div>
                   <div class="sect2"
-                       id="sect2-d91e1134">
-                     <a name="sect2-d91e1134">
+                       id="sect2-d95e1181">
+                     <a name="sect2-d95e1181">
                         <!---->
                      </a>
                      <h2 class="sect2">Reference information</h2>

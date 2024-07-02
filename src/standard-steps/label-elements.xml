@@ -5,10 +5,10 @@
       short-description="[EDIT] label-elements short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.label-elements"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.label-elements"/>
    <signature>
       <input port="source"
              content-types="xml html"
@@ -68,7 +68,7 @@
    <description>
       <para>[EDIT]</para>
       <para>The value of the <option>label</option> option is an XPath expression used to generate the value of the attribute label.</para>
-      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="C0023"/>]</emphasis>
+      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="XC0023"/>]</emphasis>
       </para>
       <para>The value of the <option>replace</option> must be a boolean value and is used to indicate whether existing attribute values are replaced.</para>
       <para>This step operates by generating attribute labels for each element matched. For every matched element, the expression is evaluated with the context node set to the matched element. An attribute is added to the matched element using the attribute name is specified the <option>attribute</option> option and the string value of result of evaluating the expression. If the attribute already exists on the matched element, the value is replaced with the string value only if the <option>replace</option> option has the value of <literal>true</literal>.</para>
@@ -79,7 +79,7 @@
       <para feature="label-elements-preserves-all">All document properties are preserved.</para>
    </description>
    <step-errors>
-      <step-error code="C0023">
+      <step-error code="XC0023">
          <description>
             <para>It is a dynamic error if that expression matches anything other than element nodes.</para>
          </description>

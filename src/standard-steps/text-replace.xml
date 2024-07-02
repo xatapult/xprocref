@@ -5,10 +5,10 @@
       short-description="[EDIT] text-replace short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.text-replace"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.text-replace"/>
    <signature>
       <input port="source"
              primary="true"
@@ -64,14 +64,14 @@
             <function>fn:replace</function>
          </link> function. The <option>pattern</option> option must be a regular expression as specified in <link xlink:href="https://www.w3.org/TR/xpath-functions-31/"
                role="newpage"
-               xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1 functions</link> , section 7.61 “<literal>Regular Expression Syntax</literal>”. <emphasis role="bold">[ERROR <step-error-ref code="C0147"/>]</emphasis>
+               xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1 functions</link> , section 7.61 “<literal>Regular Expression Syntax</literal>”. <emphasis role="bold">[ERROR <step-error-ref code="XC0147"/>]</emphasis>
       </para>
       <para>Replacing strings in text documents does not require identifying individual lines in each document, consequently no special end-of-line handling is performed.</para>
       <bridgehead>Document properties</bridgehead>
       <para feature="add-attribute-preserves-all">All document properties are preserved.</para>
    </description>
    <step-errors>
-      <step-error code="C0147">
+      <step-error code="XC0147">
          <description>
             <para>It is a dynamic error if the specified value is not a valid XPath regular expression.</para>
          </description>

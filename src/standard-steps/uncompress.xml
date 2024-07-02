@@ -5,10 +5,10 @@
       short-description="[EDIT] uncompress short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.uncompress"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.uncompress"/>
    <signature>
       <input port="source"
              primary="true"
@@ -60,7 +60,7 @@
          <listitem>
             <para>If the <option>format</option> option is specified, this determines the compression format. Implementations must support the <link xlink:href="https://datatracker.ietf.org/doc/html/rfc1952"
                      role="newpage"
-                     xmlns:xlink="http://www.w3.org/1999/xlink">GZIP</link> format, specified with the value <code>gzip</code>. It is implementation-defined what other formats are supported. <emphasis role="bold">[ERROR <step-error-ref code="C0202"/>]</emphasis>
+                     xmlns:xlink="http://www.w3.org/1999/xlink">GZIP</link> format, specified with the value <code>gzip</code>. It is implementation-defined what other formats are supported. <emphasis role="bold">[ERROR <step-error-ref code="XC0202"/>]</emphasis>
             </para>
          </listitem>
          <listitem>
@@ -69,13 +69,13 @@
                      xmlns:xlink="http://www.w3.org/1999/xlink">GZIP</link> format. </para>
          </listitem>
       </itemizedlist>
-      <para>The <option>parameters</option> option can be used to supply parameters to control the uncompression. The semantics of the keys and the allowed values for these keys are implementation-defined. <emphasis role="bold">[ERROR <step-error-ref code="C0079"/>]</emphasis>
+      <para>The <option>parameters</option> option can be used to supply parameters to control the uncompression. The semantics of the keys and the allowed values for these keys are implementation-defined. <emphasis role="bold">[ERROR <step-error-ref code="XC0079"/>]</emphasis>
       </para>
       <para>Identification of the uncompressed document's content-type is done as follows:</para>
       <orderedlist>
          <listitem>
-            <para>If the <option>content-type</option> option is specified, the uncompressed document must be interpreted according to that content-type. <emphasis role="bold">[ERROR <step-error-ref code="D0079"/>]</emphasis>
-               <emphasis role="bold">[ERROR <step-error-ref code="C0201"/>]</emphasis>
+            <para>If the <option>content-type</option> option is specified, the uncompressed document must be interpreted according to that content-type. <emphasis role="bold">[ERROR <step-error-ref code="XD0079"/>]</emphasis>
+               <emphasis role="bold">[ERROR <step-error-ref code="XC0201"/>]</emphasis>
             </para>
          </listitem>
          <listitem>
@@ -86,17 +86,17 @@
       <para feature="uncompress-preserves-some">All document properties are preserved, except for the <code>content-type</code> property which is updated accordingly.</para>
    </description>
    <step-errors>
-      <step-error code="C0202">
+      <step-error code="XC0202">
          <description>
             <para>It is a dynamic error if the compression format cannot be understood, determined and/or processed.</para>
          </description>
       </step-error>
-      <step-error code="C0079">
+      <step-error code="XC0079">
          <description>
             <para>It is a dynamic error if the map <option>parameters</option> contains an entry whose key is defined by the implementation and whose value is not valid for that key.</para>
          </description>
       </step-error>
-      <step-error code="D0079">
+      <step-error code="XD0079">
          <description>
             <para>It is a dynamic error if a supplied content-type is not a valid media type of the form “<literal>
                   <replaceable>type</replaceable>/<replaceable>subtype</replaceable>+<replaceable>ext</replaceable>
@@ -105,7 +105,7 @@
                </literal>”.</para>
          </description>
       </step-error>
-      <step-error code="C0201">
+      <step-error code="XC0201">
          <description>
             <para>It is a dynamic error if the <tag>p:uncompress</tag> step cannot perform the requested content-type cast.</para>
          </description>

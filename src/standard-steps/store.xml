@@ -5,10 +5,10 @@
       short-description="[EDIT] store short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.store"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.store"/>
    <signature>
       <input port="source"
              content-types="any"
@@ -56,7 +56,7 @@
    <description>
       <para>[EDIT]</para>
       <para>The value of the <option>href</option> option must be an <type>anyURI</type>. If it is relative, it is made absolute against the base URI of the element on which it is specified (<tag>p:with-option</tag> or <tag>p:store</tag> in the case of a syntactic shortcut value).</para>
-      <para>The step attempts to store the document to the specified URI. If the URI scheme “<literal>file:</literal>” is supported, the processor should try to create all non existing folders in the URI’s path. <emphasis role="bold">[ERROR <step-error-ref code="C0050"/>]</emphasis>
+      <para>The step attempts to store the document to the specified URI. If the URI scheme “<literal>file:</literal>” is supported, the processor should try to create all non existing folders in the URI’s path. <emphasis role="bold">[ERROR <step-error-ref code="XC0050"/>]</emphasis>
       </para>
       <para>The output of this step on the <port>result-uri</port> port is a document containing a single <tag>c:result</tag> element whose content is the absolute URI of the document stored by the step.</para>
       <para>The <option>serialization</option> option is provided to control the serialization of content when it is stored. If the document to be stored has a “serialization” property, the serialization is controlled by the merger of the two maps where the entries in the “serialization” property take precedence. Serialization is described in <link xlink:href="https://xproc.org/"
@@ -66,7 +66,7 @@
       <para feature="store-preserves-all">All document properties are preserved.</para>
    </description>
    <step-errors>
-      <step-error code="C0050">
+      <step-error code="XC0050">
          <description>
             <para>It is a dynamic error if the URI scheme is not supported or the step cannot store to the specified location.</para>
          </description>

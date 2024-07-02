@@ -96,12 +96,9 @@
 
     <step name="{$step-name}" version-idref="{$version-idref}" category-idrefs="{$step-group-id}"
       short-description="{$edit-marker} {$step-name} short description" required="{$step-required}" publish="false">
+      <xsl:attribute name="href-specification" select="'{$' || $macrodef-step-group-baselink || '}#' || $step-specification-id"/>
       <xsl:attribute name="xsi:schemaLocation" select="'http://www.xtpxlib.nl/ns/xprocref ' || $href-xprocref-schema-rel"/>
-
-      <specification-link>
-        <xsl:attribute name="href" select="'{$' || $macrodef-step-group-baselink || '}#' || $step-specification-id"/>
-      </specification-link>
-
+      
       <signature>
         <xsl:call-template name="copy-no-namespace">
           <xsl:with-param name="elms" select="p:declare-step[1]/*"/>

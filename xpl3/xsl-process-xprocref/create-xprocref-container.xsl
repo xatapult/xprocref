@@ -27,7 +27,7 @@
   <xsl:param name="xprocref-index" as="document-node()" required="true"/>
 
   <xsl:param name="production-version" as="xs:boolean" required="true"/>
-  
+
   <xsl:param name="wip" as="xs:boolean" required="true"/>
 
   <!-- ================================================================== -->
@@ -114,7 +114,9 @@
               <xsl:variable name="version-elm" as="element(xpref:version)" select="$version-id-to-elm($version-id)"/>
               <db:listitem>
                 <db:para>
-                  <db:link xlink:href="{local:href-result-file($version-id, $xpref:name-version-home-page)}">Version {$version-elm/@name}</db:link>
+                  <db:link
+                    xlink:href="{local:href-result-file(if ($version-id eq $last-version-id) then () else $version-id, $xpref:name-version-home-page)}"
+                    >Version {$version-elm/@name}</db:link>
                 </db:para>
                 <xsl:call-template name="process-text">
                   <xsl:with-param name="surrounding-elm" select="$version-elm/xpref:description"/>
@@ -126,10 +128,14 @@
       </xsl:call-template>
 
       <!-- Error codes page: -->
+      <xsl:variable name="error-namespace-elm" as="element(xpref:namespace)"
+        select="$specification/*/xpref:namespaces/xpref:namespace[xtlc:str2bln(@error-namespace, false())]"/>
       <xsl:call-template name="create-docbook-article">
         <xsl:with-param name="href-target" select="local:href-result-file($xpref:name-error-codes-overview-page)"/>
         <xsl:with-param name="title" select="'Error codes'"/>
         <xsl:with-param name="content">
+          <db:para role="break-after">All errors are in the <db:code>{$error-namespace-elm/@uri}</db:code> namespace (recommended prefix:
+              <db:code>{$error-namespace-elm/@prefix}</db:code>).</db:para>
           <db:table role="nonumber error-codes-table">
             <db:title/>
             <db:tgroup cols="2">
@@ -300,7 +306,7 @@
 
     <xsl:call-template name="create-docbook-article">
       <xsl:with-param name="href-target" select="$href-target"/>
-      <xsl:with-param name="title" select="'Steps' || (if ($version-id ne $last-version-id) then ' (' || $version-name || ')' else ())"/>
+      <xsl:with-param name="title" select="'XProc steps' || (if ($version-id ne $last-version-id) then ' (' || $version-name || ')' else ())"/>
       <xsl:with-param name="content">
         <db:para>All steps for XProc version {$version-name}. You can also view these steps <db:link
             xlink:href="{local:href-result-file($version-id-for-links, $xpref:name-categories-overview-page)}">by category</db:link>.</db:para>
@@ -335,8 +341,8 @@
       <xsl:with-param name="title" select="$step-full-name || (if ($version-id ne $last-version-id) then ' (' || $version-name || ')' else ())"/>
       <xsl:with-param name="content">
         <!-- The short description to start with: -->
-        <db:para>{$step-elm/@short-description}</db:para>
-        
+        <db:para>{local:description($step-elm/@short-description)}</db:para>
+
         <!-- Summary: -->
         <db:sect2>
           <db:title>Summary</db:title>
@@ -366,6 +372,10 @@
             <db:title>Examples</db:title>
             <xsl:for-each select="$examples">
               <db:sect3>
+                <xsl:variable name="example-id" as="xs:string?" select="xpref:example-anchor(.)"/>
+                <xsl:if test="exists($example-id)">
+                  <xsl:attribute name="xml:id" select="$example-id"/>
+                </xsl:if>
                 <db:title>{@title}</db:title>
                 <xsl:call-template name="process-text">
                   <xsl:with-param name="surrounding-elm" select="."/>
@@ -473,7 +483,7 @@
               xlink:href="{$version-link}">{$version-name}</db:link>. {$required-text}</db:para>
 
           <db:para>The formal specification for the <db:step>{$step-full-name}</db:step> step can be found <db:link
-              xlink:href="{$step-elm/xpref:specification-link/@href}" role="newpage">here</db:link>.</db:para>
+              xlink:href="{$step-elm/@href-specification}" role="newpage">here</db:link>.</db:para>
 
           <xsl:variable name="category-refs" as="element(xpref:categoryref)*" select="$stepref-elm/xpref:categoryref"/>
           <xsl:choose>
@@ -848,7 +858,7 @@
         </db:info>
         <xsl:if test="$wip">
           <db:para role="page-banner">This site is work in progress and therefore incomplete yet.</db:para>
-        </xsl:if>        
+        </xsl:if>
         <xsl:if test="not($production-version)">
           <db:para role="page-banner">You are looking at the TEST version!</db:para>
         </xsl:if>
@@ -934,7 +944,7 @@
       <xsl:for-each select="$step-ids">
         <xsl:variable name="step-id" as="xs:string" select="."/>
         <xsl:variable name="step-elm" as="element(xpref:step)" select="$step-id-to-elm($step-id)"/>
-        <xsl:variable name="step-short-description" as="xs:string" select="normalize-space($step-elm/@short-description)"/>
+        <xsl:variable name="step-short-description" as="xs:string" select="local:description($step-elm/@short-description)"/>
         <db:listitem>
           <db:para><db:link xlink:href="{local:href-result-file($version-id-for-links, local:step-page-name($step-id))}"
               >{local:step-full-name($step-id)}</db:link> - {$step-short-description}</db:para>
@@ -1090,5 +1100,15 @@
     </xsl:choose>
   </xsl:function>
 
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:function name="local:description" as="xs:string">
+    <!-- Prepares a description string for output. Normalizes it and makes sure it ends with a dot. -->
+    <xsl:param name="description" as="xs:string"/>
+
+    <xsl:variable name="description-normalized" as="xs:string" select="normalize-space($description)"/>
+    <xsl:variable name="ends-with-dot" as="xs:boolean" select="ends-with($description-normalized, '.')"/>
+    <xsl:sequence select="$description-normalized || (if ($ends-with-dot) then () else '.')"/>
+  </xsl:function>
 
 </xsl:stylesheet>

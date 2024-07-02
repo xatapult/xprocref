@@ -5,10 +5,10 @@
       short-description="[EDIT] archive short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.archive"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.archive"/>
    <signature>
       <input port="source"
              primary="true"
@@ -91,7 +91,7 @@
                <port>source</port>
             </term>
             <listitem>
-               <para>The (primary) <port>source</port> port is used to provide documents to be archived (for instance constructed by other steps). How and which of these documents are processed is governed by the document(s) appearing on the other input ports and the combination of options and parameters. See below for details. <emphasis role="bold">[ERROR <step-error-ref code="C0084"/>]</emphasis>
+               <para>The (primary) <port>source</port> port is used to provide documents to be archived (for instance constructed by other steps). How and which of these documents are processed is governed by the document(s) appearing on the other input ports and the combination of options and parameters. See below for details. <emphasis role="bold">[ERROR <step-error-ref code="XC0084"/>]</emphasis>
                </para>
             </listitem>
          </varlistentry>
@@ -100,10 +100,10 @@
                <port>manifest</port>
             </term>
             <listitem>
-               <para>The <port>manifest</port> port can receive a manifest document that tells the step how to construct the archive. If no manifest document is provided on this port, a default manifest is constructed automatically. See <xref linkend="cv.archive-manifest"/>. <emphasis role="bold">[ERROR <step-error-ref code="C0100"/>]</emphasis>
+               <para>The <port>manifest</port> port can receive a manifest document that tells the step how to construct the archive. If no manifest document is provided on this port, a default manifest is constructed automatically. See <xref linkend="cv.archive-manifest"/>. <emphasis role="bold">[ERROR <step-error-ref code="XC0100"/>]</emphasis>
                </para>
                <para>
-                  <emphasis role="bold">[ERROR <step-error-ref code="C0112"/>]</emphasis>
+                  <emphasis role="bold">[ERROR <step-error-ref code="XC0112"/>]</emphasis>
                </para>
                <para>The default input for this port is the empty sequence.</para>
             </listitem>
@@ -154,7 +154,7 @@
                <option>parameters</option>
             </term>
             <listitem>
-               <para>The <option>parameters</option> option can be used to supply parameters to control the archiving. The semantics of the keys and the allowed values for these keys are implementation-defined. <emphasis role="bold">[ERROR <step-error-ref code="C0079"/>]</emphasis>
+               <para>The <option>parameters</option> option can be used to supply parameters to control the archiving. The semantics of the keys and the allowed values for these keys are implementation-defined. <emphasis role="bold">[ERROR <step-error-ref code="XC0079"/>]</emphasis>
                </para>
             </listitem>
          </varlistentry>
@@ -163,7 +163,7 @@
                <option>relative-to</option>
             </term>
             <listitem>
-               <para>The <option>relative-to</option> option is used in creating a manifest when no manifest is provided on the <port>manifest</port> port. If a manifest is present this option is not used. If the option’s value is a relative URI, it is made absolute against the base URI of the element on which it is specified (<tag>p:with-option</tag> or the step in case of a syntactic shortcut value). <emphasis role="bold">[ERROR <step-error-ref code="D0064"/>]</emphasis>
+               <para>The <option>relative-to</option> option is used in creating a manifest when no manifest is provided on the <port>manifest</port> port. If a manifest is present this option is not used. If the option’s value is a relative URI, it is made absolute against the base URI of the element on which it is specified (<tag>p:with-option</tag> or the step in case of a syntactic shortcut value). <emphasis role="bold">[ERROR <step-error-ref code="XD0064"/>]</emphasis>
                </para>
             </listitem>
          </varlistentry>
@@ -173,7 +173,7 @@
          <listitem>
             <para>If the <option>format</option> option is specified, this determines the format of the archive. Implementations must support the <link xlink:href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT"
                      role="newpage"
-                     xmlns:xlink="http://www.w3.org/1999/xlink">ZIP</link> format, specified with the value <code>zip</code>. It is implementation-defined what other formats are supported. <emphasis role="bold">[ERROR <step-error-ref code="C0081"/>]</emphasis>
+                     xmlns:xlink="http://www.w3.org/1999/xlink">ZIP</link> format, specified with the value <code>zip</code>. It is implementation-defined what other formats are supported. <emphasis role="bold">[ERROR <step-error-ref code="XC0081"/>]</emphasis>
             </para>
          </listitem>
          <listitem>
@@ -183,7 +183,7 @@
          </listitem>
       </itemizedlist>
       <para>
-         <emphasis role="bold">[ERROR <step-error-ref code="C0085"/>]</emphasis>
+         <emphasis role="bold">[ERROR <step-error-ref code="XC0085"/>]</emphasis>
       </para>
       <sect2 xml:id="cv.archive-manifest">
          <title>The archive manifest</title>
@@ -247,7 +247,7 @@
             </listitem>
          </itemizedlist>
          <para>
-            <emphasis role="bold">[ERROR <step-error-ref code="C0118"/>]</emphasis>
+            <emphasis role="bold">[ERROR <step-error-ref code="XC0118"/>]</emphasis>
          </para>
       </sect2>
       <sect2 xml:id="cv.archive-zips">
@@ -302,7 +302,7 @@
                            <code>create</code>
                         </term>
                         <listitem>
-                           <para>When the <code>command</code> parameter is set to <code>create</code>, the ZIP archive will be created. Creating a ZIP archive behaves exactly like <literal>update</literal> except that any timestamps are ignored; every ZIP entry will be updated or created if there is a <tag>c:entry</tag> or matching document for it. The document must be obtained by dereferencing the URI in <option>href</option>. <emphasis role="bold">[ERROR <step-error-ref code="D0011"/>]</emphasis>
+                           <para>When the <code>command</code> parameter is set to <code>create</code>, the ZIP archive will be created. Creating a ZIP archive behaves exactly like <literal>update</literal> except that any timestamps are ignored; every ZIP entry will be updated or created if there is a <tag>c:entry</tag> or matching document for it. The document must be obtained by dereferencing the URI in <option>href</option>. <emphasis role="bold">[ERROR <step-error-ref code="XD0011"/>]</emphasis>
                            </para>
                         </listitem>
                      </varlistentry>
@@ -349,7 +349,7 @@
             </varlistentry>
          </variablelist>
          <para>
-            <emphasis role="bold">[ERROR <step-error-ref code="C0080"/>]</emphasis>
+            <emphasis role="bold">[ERROR <step-error-ref code="XC0080"/>]</emphasis>
          </para>
          <para>Implementations of other archive formats should use the same parameter names if applicable. The value spaces for these parameters may be format-specific though. The actual parameter names supported by <tag>p:archive</tag> for a particular format are implementation-defined.</para>
       </sect2>
@@ -357,54 +357,54 @@
       <para feature="archive-preserves-none">No document properties are preserved. The archive has no <property>base-uri</property>.</para>
    </description>
    <step-errors>
-      <step-error code="C0084">
+      <step-error code="XC0084">
          <description>
             <para>It is a dynamic error if two or more documents appear on the <code>p:archive</code> step's <port>source</port> port that have the same base URI or if any document that appears on the <port>source</port> port has no base URI.</para>
          </description>
       </step-error>
-      <step-error code="C0100">
+      <step-error code="XC0100">
          <description>
             <para>It is a dynamic error if the document on port <port>manifest</port> does not conform to the given schema.</para>
          </description>
       </step-error>
-      <step-error code="C0112">
+      <step-error code="XC0112">
          <description>
             <para>It is a dynamic error if more than one document appears on the port <port>manifest</port>.</para>
          </description>
       </step-error>
-      <step-error code="C0079">
+      <step-error code="XC0079">
          <description>
             <para>It is a dynamic error if the map <option>parameters</option> contains an entry whose key is defined by the implementation and whose value is not valid for that key.</para>
          </description>
       </step-error>
-      <step-error code="D0064">
+      <step-error code="XD0064">
          <description>
             <para>It is a dynamic error if the base URI is not both absolute and valid according to <link xlink:href="https://www.rfc-editor.org/info/rfc3986"
                      role="newpage"
                      xmlns:xlink="http://www.w3.org/1999/xlink">RFC 3986</link> .</para>
          </description>
       </step-error>
-      <step-error code="C0081">
+      <step-error code="XC0081">
          <description>
             <para>It is a dynamic error if the format of the archive does not match the format as specified in the <option>format</option> option.</para>
          </description>
       </step-error>
-      <step-error code="C0085">
+      <step-error code="XC0085">
          <description>
             <para>It is a dynamic error if the format of the archive does not match the specified format, cannot be understood, determined and/or processed.</para>
          </description>
       </step-error>
-      <step-error code="C0118">
+      <step-error code="XC0118">
          <description>
             <para>It is a dynamic error if an archive manifest is invalid according to the specification.</para>
          </description>
       </step-error>
-      <step-error code="D0011">
+      <step-error code="XD0011">
          <description>
             <para>It is a dynamic error if the resource referenced by the <option>href</option> option does not exist, cannot be accessed or is not a file.</para>
          </description>
       </step-error>
-      <step-error code="C0080">
+      <step-error code="XC0080">
          <description>
             <para>It is a dynamic error if the number of documents on the <port>archive</port> does not match the expected number of archive input documents for the given <code>format</code> and <code>command</code>.</para>
          </description>

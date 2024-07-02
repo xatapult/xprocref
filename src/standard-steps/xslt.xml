@@ -5,10 +5,10 @@
       short-description="[EDIT] xslt short description"
       required="true"
       publish="false"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      href-specification="{$BASELINK-STANDARD-STEPS}#c.xslt"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <specification-link href="{$BASELINK-STANDARD-STEPS}#c.xslt"/>
    <signature>
       <input port="source"
              content-types="any"
@@ -107,12 +107,12 @@
    <description>
       <para>[EDIT]</para>
       <para>If <option>output-base-uri</option> is relative, it is made absolute against the base URI of the element on which it is specified (<tag>p:with-option</tag> or <tag>p:xslt</tag> in the case of a syntactic shortcut value).</para>
-      <para>If the step specifies a <option>version</option>, then that version of XSLT must be used to process the transformation. <emphasis role="bold">[ERROR <step-error-ref code="C0038"/>]</emphasis> If the step does not specify a version, the implementation may use any version it has available and may use any means to determine what version to use, including, but not limited to, examining the version of the stylesheet. It is implementation-defined which XSLT version(s) is/are supported.</para>
-      <para>The XSLT stylesheet provided on the <port>stylesheet</port> port is invoked. <emphasis role="bold">[ERROR <step-error-ref code="C0093"/>]</emphasis> Any parameters passed in the <option>parameters</option> option are used to define top-level stylesheet parameters.</para>
+      <para>If the step specifies a <option>version</option>, then that version of XSLT must be used to process the transformation. <emphasis role="bold">[ERROR <step-error-ref code="XC0038"/>]</emphasis> If the step does not specify a version, the implementation may use any version it has available and may use any means to determine what version to use, including, but not limited to, examining the version of the stylesheet. It is implementation-defined which XSLT version(s) is/are supported.</para>
+      <para>The XSLT stylesheet provided on the <port>stylesheet</port> port is invoked. <emphasis role="bold">[ERROR <step-error-ref code="XC0093"/>]</emphasis> Any parameters passed in the <option>parameters</option> option are used to define top-level stylesheet parameters.</para>
       <para>Parameters passed in the <option>static-parameters</option> option are passed as static parameters to the XSLT invocation. Whether static parameters are supported is implementation-defined and depends on the XSLT version (which must be 3.0 or higher). If static parameters are not supported the option is ignored.</para>
       <para>
-         <emphasis role="bold">[ERROR <step-error-ref code="C0095"/>]</emphasis>
-         <emphasis role="bold">[ERROR <step-error-ref code="C0096"/>]</emphasis> How XSLT message termination errors are reported to the XProc processor is implementation-dependent. Implementations should raise an error using the error code from the XSLT step (for example, the <tag class="attribute">error-code</tag> specified on the <tag>xsl:message</tag> or <code>Q{http://www.w3.org/2005/xqt-errors}XTTM9000</code> if no code is provided).</para>
+         <emphasis role="bold">[ERROR <step-error-ref code="XC0095"/>]</emphasis>
+         <emphasis role="bold">[ERROR <step-error-ref code="XC0096"/>]</emphasis> How XSLT message termination errors are reported to the XProc processor is implementation-dependent. Implementations should raise an error using the error code from the XSLT step (for example, the <tag class="attribute">error-code</tag> specified on the <tag>xsl:message</tag> or <code>Q{http://www.w3.org/2005/xqt-errors}XTTM9000</code> if no code is provided).</para>
       <para>If XSLT 2.0 or XSLT 3.0 is used, the outputs of this step may include PSVI annotations.</para>
       <para>The interpretation of the input and output ports as well as for the other options depends on the selected XSLT version.</para>
       <sect2>
@@ -127,11 +127,11 @@
             </listitem>
          </itemizedlist>
          <para>The <option>populate-default-collection</option> option is used to control whether all the documents appearing on <port>source</port> port form the default collection for the XSLT transformation.</para>
-         <para>If no value is supplied for <option>template-name</option> option an “Apply-template invocation” is performed. The documents that appear on <port>source</port> are taken to be the initial match selection. The default collection is undefined. If a value is supplied for the <option>initial-mode</option> option, this value is used as the initial-mode for the invocation. <emphasis role="bold">[ERROR <step-error-ref code="C0008"/>]</emphasis> If no value is supplied, nothing is supplied to the invocation, so the default behaviour defined for XSLT 3.0 could be applied.</para>
-         <para>If a value is supplied for option <option>template-name</option> a “Call template invocation” is performed. The documents on port <port>source</port> are taken as the default collection in this case. Option <option>initial-mode</option> is ignored. <emphasis role="bold">[ERROR <step-error-ref code="C0056"/>]</emphasis>
+         <para>If no value is supplied for <option>template-name</option> option an “Apply-template invocation” is performed. The documents that appear on <port>source</port> are taken to be the initial match selection. The default collection is undefined. If a value is supplied for the <option>initial-mode</option> option, this value is used as the initial-mode for the invocation. <emphasis role="bold">[ERROR <step-error-ref code="XC0008"/>]</emphasis> If no value is supplied, nothing is supplied to the invocation, so the default behaviour defined for XSLT 3.0 could be applied.</para>
+         <para>If a value is supplied for option <option>template-name</option> a “Call template invocation” is performed. The documents on port <port>source</port> are taken as the default collection in this case. Option <option>initial-mode</option> is ignored. <emphasis role="bold">[ERROR <step-error-ref code="XC0056"/>]</emphasis>
          </para>
          <para>Independent of the way the stylesheet is invoked, the principal result(s) will appear on output port <port>result</port> while secondary result(s) will appear on output port <port>secondary</port>. The order in which result documents appear on the <port>secondary</port> port is implementation dependent. Whether the raw results are delivered or a result tree is constructed, depends on the (explicit or implicit) setting for attribute <literal>build-tree</literal> of in the output-definition for the respective result. If a result tree is constructed, the result will be a text document if it is a single text node wrapped into a document node. Otherwise it will be either an XML document or an HTML document depending on the attribute <literal>method</literal> on the output-definition for the respective result. If no result tree is constructed, the stylesheet invocation may additionally deliver a sequence of atomic values, maps, or arrays. For each item in this sequence a JSON document will be constructed and appear on the steps output port.</para>
-         <para>Option <option>output-base-uri</option> sets the base output URI per XSLT 3.0 specification. If a final result tree is constructed, this URI is used to resolve a relative URI reference. If no value is supplied for <option>output-base-uri</option>, the base URI of the first document in the <port>source</port> port's sequence is used. If no document is supplied on port <port>source</port> the base URI of the document on port <port>stylesheet</port> is used. <emphasis role="bold">[ERROR <step-error-ref code="C0121"/>]</emphasis>
+         <para>Option <option>output-base-uri</option> sets the base output URI per XSLT 3.0 specification. If a final result tree is constructed, this URI is used to resolve a relative URI reference. If no value is supplied for <option>output-base-uri</option>, the base URI of the first document in the <port>source</port> port's sequence is used. If no document is supplied on port <port>source</port> the base URI of the document on port <port>stylesheet</port> is used. <emphasis role="bold">[ERROR <step-error-ref code="XC0121"/>]</emphasis>
          </para>
          <note>
             <para>If no result tree is constructed for one of secondary results, a sequence of documents sharing the same value for attribute <literal>href</literal> may appear on output port <port>result</port>.</para>
@@ -139,80 +139,80 @@
       </sect2>
       <sect2>
          <title>Invoking an XSLT 2.0 stylesheet</title>
-         <para>If a sequence of documents is provided on the <port>source</port> port, the first document is used as the initial context node. The whole sequence is also the default collection. If no documents are provided on the <port>source</port> port, the initial context node is undefined and the default collection is empty. <emphasis role="bold">[ERROR <step-error-ref code="C0094"/>]</emphasis>
+         <para>If a sequence of documents is provided on the <port>source</port> port, the first document is used as the initial context node. The whole sequence is also the default collection. If no documents are provided on the <port>source</port> port, the initial context node is undefined and the default collection is empty. <emphasis role="bold">[ERROR <step-error-ref code="XC0094"/>]</emphasis>
          </para>
          <para>The <option>populate-default-collection</option> option is used to control whether all the documents appearing on <port>source</port> port form the default collection for the XSLT transformation.</para>
-         <para>The value of option <option>global-context-item</option> is ignored if a stylesheet is invoked as per XSLT 2.0. The invocation of the transformation is controlled by the <option>initial-mode</option> and <option>template-name</option> options that set the initial mode and/or named template in the XSLT transformation where processing begins. <emphasis role="bold">[ERROR <step-error-ref code="C0007"/>]</emphasis>
-            <emphasis role="bold">[ERROR <step-error-ref code="C0008"/>]</emphasis>
-            <emphasis role="bold">[ERROR <step-error-ref code="C0056"/>]</emphasis>
+         <para>The value of option <option>global-context-item</option> is ignored if a stylesheet is invoked as per XSLT 2.0. The invocation of the transformation is controlled by the <option>initial-mode</option> and <option>template-name</option> options that set the initial mode and/or named template in the XSLT transformation where processing begins. <emphasis role="bold">[ERROR <step-error-ref code="XC0007"/>]</emphasis>
+            <emphasis role="bold">[ERROR <step-error-ref code="XC0008"/>]</emphasis>
+            <emphasis role="bold">[ERROR <step-error-ref code="XC0056"/>]</emphasis>
          </para>
          <para>The primary result document of the transformation, if there is one, appears on the <port>result</port> port. At most one document can appear on the <port>result</port> port. All other result documents appear on the <port>secondary</port> port. The order in which result documents appear on the <port>secondary</port> port is implementation dependent. </para>
-         <para>The <option>output-base-uri</option> option sets the context's output base URI per the XSLT 2.0 specification, otherwise the base URI of the <port>result</port> document is the base URI of the first document in the <code>source</code> port's sequence. If no document is supplied on port <port>source</port> the base URI of the document on port <port>stylesheet</port> is used. <emphasis role="bold">[ERROR <step-error-ref code="C0121"/>]</emphasis>
+         <para>The <option>output-base-uri</option> option sets the context's output base URI per the XSLT 2.0 specification, otherwise the base URI of the <port>result</port> document is the base URI of the first document in the <code>source</code> port's sequence. If no document is supplied on port <port>source</port> the base URI of the document on port <port>stylesheet</port> is used. <emphasis role="bold">[ERROR <step-error-ref code="XC0121"/>]</emphasis>
          </para>
       </sect2>
       <sect2>
          <title>Invoking an XSLT 1.0 stylesheet</title>
-         <para>The document provided for <port>source</port> is used the transformations source tree. <emphasis role="bold">[ERROR <step-error-ref code="C0039"/>]</emphasis> The values supplied for options <option>global-context-item</option>, <option>initial-mode</option>, and <option>template-name</option> are ignored. If XSLT 1.0 is used, an empty sequence of documents must appear on the <port>secondary</port> port. An XSLT 1.0 step should use the value of the <option>output-base-uri</option> as the base URI of its output, if the option is specified.</para>
-         <para>The key/value pairs supplied in <option>parameters</option> are used to set top-level parameters in the stylesheet. If the value is an atomic value or a node, its string value is supplied to the stylesheet. <emphasis role="bold">[ERROR <step-error-ref code="C0105"/>]</emphasis>
+         <para>The document provided for <port>source</port> is used the transformations source tree. <emphasis role="bold">[ERROR <step-error-ref code="XC0039"/>]</emphasis> The values supplied for options <option>global-context-item</option>, <option>initial-mode</option>, and <option>template-name</option> are ignored. If XSLT 1.0 is used, an empty sequence of documents must appear on the <port>secondary</port> port. An XSLT 1.0 step should use the value of the <option>output-base-uri</option> as the base URI of its output, if the option is specified.</para>
+         <para>The key/value pairs supplied in <option>parameters</option> are used to set top-level parameters in the stylesheet. If the value is an atomic value or a node, its string value is supplied to the stylesheet. <emphasis role="bold">[ERROR <step-error-ref code="XC0105"/>]</emphasis>
          </para>
       </sect2>
       <bridgehead>Document properties</bridgehead>
       <para feature="xslt-preserves-none">No document properties are preserved. The <property>base-uri</property> property of each document will reflect the base URI specified by the tranformation. If the transformation does not establish a base URI, the document will not have one. </para>
    </description>
    <step-errors>
-      <step-error code="C0038">
+      <step-error code="XC0038">
          <description>
             <para>It is a dynamic error if the specified xslt version is not available.</para>
          </description>
       </step-error>
-      <step-error code="C0093">
+      <step-error code="XC0093">
          <description>
             <para> It is a dynamic error if a static error occurs during the static analysis of the XSLT stylesheet.</para>
          </description>
       </step-error>
-      <step-error code="C0095">
+      <step-error code="XC0095">
          <description>
             <para>It is a dynamic error if an error occurred during the transformation.</para>
          </description>
       </step-error>
-      <step-error code="C0096">
+      <step-error code="XC0096">
          <description>
             <para>It is a dynamic error if the transformation is terminated by XSLT message termination.</para>
          </description>
       </step-error>
-      <step-error code="C0008">
+      <step-error code="XC0008">
          <description>
             <para>It is a dynamic error if the stylesheet does not support a given mode.</para>
          </description>
       </step-error>
-      <step-error code="C0056">
+      <step-error code="XC0056">
          <description>
             <para>It is a dynamic error if the stylesheet does not provide a given template.</para>
          </description>
       </step-error>
-      <step-error code="C0121">
+      <step-error code="XC0121">
          <description>
             <para>It is a dynamic error if a document appearing on the <port>secondary</port> port has a base URI that is not both absolute and valid according to <link xlink:href="https://www.rfc-editor.org/info/rfc3986"
                      role="newpage"
                      xmlns:xlink="http://www.w3.org/1999/xlink">RFC 3986</link> .</para>
          </description>
       </step-error>
-      <step-error code="C0094">
+      <step-error code="XC0094">
          <description>
             <para>It is a dynamic error if any document supplied on the source port is not an XML document, an HTML documents, or a Text document if XSLT 2.0 is used.</para>
          </description>
       </step-error>
-      <step-error code="C0007">
+      <step-error code="XC0007">
          <description>
             <para>It is a dynamic error if any key in <option>parameters</option> is associated to a value which is not an instance of the XQuery 1.0 and XPath 2.0 Data Model, e.g. with a map, an array, or a function.</para>
          </description>
       </step-error>
-      <step-error code="C0039">
+      <step-error code="XC0039">
          <description>
             <para>It is a dynamic error if the source port does not contain exactly one XML document or one HTML document if XSLT 1.0 is used.</para>
          </description>
       </step-error>
-      <step-error code="C0105">
+      <step-error code="XC0105">
          <description>
             <para>It is a dynamic error if an XSLT 1.0 stylesheet is invoked and option <option>parameters</option> contains a value that is not an atomic value or a node.</para>
          </description>

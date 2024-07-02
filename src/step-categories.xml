@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<categories xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../xsd/xprocref.xsd"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<categories xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
-  
+
   <!-- ======================================================================= -->
   <!-- PRIMARY CATEGORIES: -->
   <!-- Primary categories are used for the classification the specification makes also. -->
-  
-  <category id="standard-steps" name="Standard steps" primary="true">
+
+  <category id="standard-steps" name="Standard XProc steps" primary="true">
     <description>
-      <para>Bogus category for testing group Standard steps…</para>
+      <para>These are the XProc steps that a conformant XProc processor <emphasis>must</emphasis> support. In other words: whatever processor you use for processing your XProc pipelines, you can trust that these steps will always work.</para>
     </description>
   </category>
-  
+
   <!-- ======================================================================= -->
   <!-- SECONDARY CATEGORIES: -->
+
+  <category id="basic-xml-manipulation" name="Basic XML manipulation">
+    <description>These steps implement basic XML manipulation, like adding attributes, inserting elements, etc.</description>
+  </category>
   
 </categories>

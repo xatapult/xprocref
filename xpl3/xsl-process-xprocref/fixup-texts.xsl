@@ -67,18 +67,18 @@
   <xsl:template match="db:step-ref | db:category-ref">
 
     <xsl:try>
-      <xsl:variable name="document-elm" as="element(xtlcon:document)" select="ancestor::xtlcon:document"/>
-      <xsl:variable name="current-version-id" as="xs:string" select="xs:string($document-elm/@version-id)"/>
-      <xsl:variable name="current-href-target" as="xs:string" select="xs:string($document-elm/@href-target)"/>
+      <xsl:variable name="container-document-elm" as="element(xtlcon:document)" select="ancestor::xtlcon:document"/>
+      <xsl:variable name="current-version-id" as="xs:string" select="xs:string($container-document-elm/@version-id)"/>
+      <xsl:variable name="current-href-target" as="xs:string" select="xs:string($container-document-elm/@href-target)"/>
 
       <xsl:variable name="referred-type" as="xs:string" select="if (exists(self::db:step-ref)) then $xpref:type-step else $xpref:type-category"/>
       <xsl:variable name="referred-ref" as="xs:string" select="if ($referred-type eq $xpref:type-step) then xs:string(@name) else xs:string(@idref)"/>
       <xsl:variable name="referred-version-id" as="xs:string" select="xs:string((@version-id, $current-version-id)[1])"/>
 
-      <xsl:variable name="referred-document-elm" as="element(xtlcon:document)"
+      <xsl:variable name="referred-container-document-elm" as="element(xtlcon:document)"
         select="/*/xtlcon:document[@type eq $referred-type][@ref eq $referred-ref][@version-id eq $referred-version-id][1]"/>
-      <xsl:variable name="referred-href-target" as="xs:string" select="xs:string($referred-document-elm/@href-target)"/>
-      <xsl:variable name="referred-name" as="xs:string" select="xs:string(($referred-document-elm/@name, $referred-ref)[1])"/>
+      <xsl:variable name="referred-href-target" as="xs:string" select="xs:string($referred-container-document-elm/@href-target)"/>
+      <xsl:variable name="referred-name" as="xs:string" select="xs:string(($referred-container-document-elm/@name, $referred-ref)[1])"/>
 
       <xsl:variable name="link-elm" as="element(db:link)">
         <link xlink:href="{xtlc:href-relative($current-href-target, $referred-href-target)}">{$referred-name}</link>
@@ -102,5 +102,50 @@
     </xsl:try>
 
   </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="db:example-ref">
+
+    <xsl:try>
+      <xsl:variable name="current-container-document-elm" as="element(xtlcon:document)" select="ancestor::xtlcon:document"/>
+      <xsl:variable name="current-version-id" as="xs:string" select="xs:string($current-container-document-elm/@version-id)"/>
+      <xsl:variable name="current-step-name" as="xs:string" select="xs:string($current-container-document-elm/@name)"/>
+      <xsl:variable name="referred-step-name" as="xs:string" select="xs:string((@step-name, $current-step-name)[1])"/>
+      <xsl:variable name="referred-example-id" as="xs:string" select="xs:string(@idref)"/>
+      <xsl:variable name="in-own-step" as="xs:boolean" select="$referred-step-name eq $current-step-name"/>
+      <xsl:variable name="referred-container-document-elm" as="element(xtlcon:document)"
+        select="if ($in-own-step) then $current-container-document-elm else /*/xtlcon:document[@type eq $xpref:type-step][@name eq $referred-step-name][1]"/>
+      <xsl:variable name="referred-anchor" as="xs:string" select="xpref:example-anchor($referred-step-name, $current-version-id, $referred-example-id)"/>
+      <xsl:variable name="referred-example-section" as="element()"
+        select="$referred-container-document-elm//db:*[@xml:id eq $referred-anchor]"/>
+
+      <xsl:variable name="href-link-to-target" as="xs:string?">
+        <xsl:if test="not($in-own-step)">
+          <xsl:variable name="current-href-target" as="xs:string" select="xs:string($current-container-document-elm/@href-target)"/>
+          <xsl:variable name="referred-href-target" as="xs:string" select="xs:string($referred-container-document-elm/@href-target)"/>
+          <xsl:sequence select="xtlc:href-relative($current-href-target, $referred-href-target)"/>
+        </xsl:if>
+      </xsl:variable>
+    
+      <xsl:text>&#x201c;</xsl:text>
+      <link xlink:href="{$href-link-to-target}#{$referred-anchor}">{normalize-space($referred-example-section/db:title)}</link>
+      <xsl:text>&#x201d;</xsl:text>
+      <xsl:if test="not($in-own-step)">
+        <xsl:text> in step </xsl:text>
+        <code role="step">
+          <link xlink:href="{$href-link-to-target}">{$referred-step-name}</link>
+        </code>
+      </xsl:if>
+      
+      <xsl:catch>
+        <xsl:call-template name="xtlc:raise-error">
+          <xsl:with-param name="msg-parts" select="('Could not dereference ', .)"/>
+        </xsl:call-template>
+      </xsl:catch>
+    </xsl:try>
+
+  </xsl:template>
+
 
 </xsl:stylesheet>
