@@ -339,6 +339,7 @@
       <xsl:with-param name="href-target" select="local:href-result-file($version-id, local:step-page-name($step-id))"/>
       <xsl:with-param name="prev-next" select="local:get-prev-next($stepref-elm)"/>
       <xsl:with-param name="title" select="$step-full-name || (if ($version-id ne $last-version-id) then ' (' || $version-name || ')' else ())"/>
+      <xsl:with-param name="test-version-remark" select="'published: ' || xtlc:str2bln($step-elm/@publish, false())"/>
       <xsl:with-param name="content">
         <!-- The short description to start with: -->
         <db:para>{local:description($step-elm/@short-description)}</db:para>
@@ -459,7 +460,6 @@
             </db:table>
           </db:sect2>
         </xsl:if>
-
 
         <!-- Reference information: -->
         <db:sect2>
@@ -637,16 +637,16 @@
               <db:para>Type</db:para>
             </db:entry>
             <db:entry>
-              <db:para>Port name</db:para>
+              <db:para>Port</db:para>
             </db:entry>
             <db:entry>
-              <db:para>Primary</db:para>
+              <db:para>Primary?</db:para>
             </db:entry>
             <db:entry>
               <db:para>Content types</db:para>
             </db:entry>
             <db:entry>
-              <db:para>Sequence</db:para>
+              <db:para>Seq?</db:para>
             </db:entry>
             <db:entry>
               <db:para>Description</db:para>
@@ -670,6 +670,7 @@
     </db:table>
 
     <!-- Options: -->
+    <xsl:variable name="has-selects" as="xs:boolean" select="exists($signature-elm/xpref:option/@select)"/>
     <db:para role="table-header">Options:</db:para>
     <db:table role="nonumber options-table">
       <db:title/>
@@ -680,14 +681,16 @@
               <db:para>Name</db:para>
             </db:entry>
             <db:entry>
-              <db:para>As</db:para>
+              <db:para>Type</db:para>
             </db:entry>
             <db:entry>
-              <db:para>Required</db:para>
+              <db:para>Req?</db:para>
             </db:entry>
-            <db:entry>
-              <db:para>Select</db:para>
-            </db:entry>
+            <xsl:if test="$has-selects">
+              <db:entry>
+                <db:para>Default</db:para>
+              </db:entry>
+            </xsl:if>
             <db:entry>
               <db:para>Description</db:para>
             </db:entry>
@@ -712,13 +715,10 @@
                   </db:code>
                   <xsl:if test="exists(@subtype)">
                     <xsl:text> (</xsl:text>
-                    <db:code>
-                      <xsl:value-of select="@subtype"/>
-                    </db:code>
+                    <xsl:value-of select="local:option-subtype-description(@subtype)"/>
                     <xsl:text>)</xsl:text>
                   </xsl:if>
                 </db:para>
-
               </db:entry>
               <db:entry>
                 <db:para>
@@ -727,13 +727,15 @@
                   </db:code>
                 </db:para>
               </db:entry>
-              <db:entry>
-                <db:para>
-                  <db:code>
-                    <xsl:value-of select="(@select, '&#160;')[1]"/>
-                  </db:code>
-                </db:para>
-              </db:entry>
+              <xsl:if test="$has-selects">
+                <db:entry>
+                  <db:para>
+                    <db:code>
+                      <xsl:value-of select="(@select, '&#160;')[1]"/>
+                    </db:code>
+                  </db:para>
+                </db:entry>
+              </xsl:if>
               <db:entry>
                 <xsl:call-template name="process-text">
                   <xsl:with-param name="surrounding-elm" select="xpref:description"/>
@@ -755,7 +757,9 @@
     <db:row>
       <db:entry>
         <db:para>
-          <xsl:value-of select="local-name($port-elm) => xtlc:capitalize()"/>
+          <db:code>
+            <xsl:value-of select="local-name($port-elm)"/>
+          </db:code>
         </db:para>
       </db:entry>
       <db:entry>
@@ -811,6 +815,7 @@
     <xsl:param name="name" as="xs:string?" required="false" select="()">
       <!-- The name to use when this document is linked to. -->
     </xsl:param>
+    <xsl:param name="test-version-remark" as="xs:string?" required="false" select="()"/>
 
     <xsl:variable name="prev-marker" as="node()*">
       <xsl:if test="map:contains($prev-next, $key-prev)">
@@ -860,7 +865,8 @@
           <db:para role="page-banner">This site is work in progress and therefore incomplete yet.</db:para>
         </xsl:if>
         <xsl:if test="not($production-version)">
-          <db:para role="page-banner">You are looking at the TEST version!</db:para>
+          <db:para role="page-banner">You are looking at the TEST version!{if (exists($test-version-remark)) then (' (' || $test-version-remark ||
+            ')') else ()}</db:para>
         </xsl:if>
         <db:sect1>
           <db:title>
@@ -1109,6 +1115,40 @@
     <xsl:variable name="description-normalized" as="xs:string" select="normalize-space($description)"/>
     <xsl:variable name="ends-with-dot" as="xs:boolean" select="ends-with($description-normalized, '.')"/>
     <xsl:sequence select="$description-normalized || (if ($ends-with-dot) then () else '.')"/>
+  </xsl:function>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:function name="local:option-subtype-description" as="xs:string?">
+    <xsl:param name="subtype" as="xs:string?"/>
+    <xsl:choose>
+      <xsl:when test="empty($subtype)">
+        <xsl:sequence select="()"/>
+      </xsl:when>
+      <xsl:when test="$subtype eq 'XSLTSelectionPattern'">
+        <xsl:sequence select="'XSLT selection pattern'"/>
+      </xsl:when>
+      <xsl:when test="$subtype eq 'XPathExpression'">
+        <xsl:sequence select="'XPath expression'"/>
+      </xsl:when>
+      <xsl:when test="$subtype eq 'XPathSequenceType'">
+        <xsl:sequence select="'XPath sequence type'"/>
+      </xsl:when>
+      <xsl:when test="$subtype eq 'ContentType'">
+        <xsl:sequence select="'MIME type'"/>
+      </xsl:when>
+      <xsl:when test="$subtype eq 'ContentTypes'">
+        <xsl:sequence select="'list of MIME types'"/>
+      </xsl:when>
+      <xsl:when test="$subtype eq 'RegularExpression'">
+        <xsl:sequence select="'XPath regular expression'"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="xtlc:raise-error">
+          <xsl:with-param name="msg-parts" select="('Unrecoginized option subtype: ', xtlc:q($subtype))"/>
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:function>
 
 </xsl:stylesheet>

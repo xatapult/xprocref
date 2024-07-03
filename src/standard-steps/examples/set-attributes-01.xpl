@@ -10,6 +10,6 @@
   </p:input>
   <p:output port="result"/>
 
-  <p:add-attribute match="text" attribute-name="type" attribute-value="special"/>
+  <p:set-attributes match="text" attributes="map{'type': 'special', 'level': 2}"/>
 
 </p:declare-step>

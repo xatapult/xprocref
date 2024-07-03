@@ -33,10 +33,11 @@
   
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   
-  <xsl:template match="*:xproc-example[exists(@href)]">
+  <xsl:template match="*:xproc-example[exists(@href)] | *:example-doc[exists(@href)]">
     <xsl:copy>
       <xsl:variable name="href-xml-base" as="xs:string" select="(ancestor-or-self::*[exists(@xml:base)])[last()]/@xml:base => string()"/>
       <xsl:attribute name="href" select="resolve-uri(@href, $href-xml-base) => xtlc:href-canonical()"/>
+      <xsl:apply-templates select="(@* except @href) | node()"></xsl:apply-templates>
     </xsl:copy>
   </xsl:template>
   

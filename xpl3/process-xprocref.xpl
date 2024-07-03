@@ -131,13 +131,12 @@
     <p:with-option name="href-schema" select="$href-xprocref-schema"/>
     <p:with-option name="href-schematron" select="$href-xprocref-schematron"/>
   </xtlc:validate>
-
+  
   <!-- Prepare some attributes and unwrap the step-groups: -->
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/prepare-xprocref-specification.xsl"/>
   </p:xslt>
   <p:unwrap match="xpref:step-group"/>
-  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-prepared.xml"/>
 
   <!-- Remove the unpublished steps when creating a production version: -->
   <p:variable name="step-count-1" as="xs:integer" select="count(/*/xpref:steps/xpref:step)"/>
@@ -152,6 +151,7 @@
       </p:with-input>
     </p:error>
   </p:if>
+  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-prepared.xml"/>
   <p:identity name="prepared-xprocref-specification" message="  * Step count: {$step-count-2}/{$step-count-1}"/>
 
   <!-- Clean the result directory: -->
@@ -187,17 +187,33 @@
   </p:xslt>
 
   <!-- Do the XProc example stuff: -->
-  <p:viewport match="db:xproc-example">
+
+  <p:viewport match="db:xproc-example" name="process-xproc-example" message="  * Handling examples">
+    <!-- Run the pipeline and add the result, wrapped in <_RESULT>: -->
+    <p:variable name="href-pipeline" as="xs:string" select="xs:string(/*/@href)"/>
+    <p:run>
+      <p:with-input href="{$href-pipeline}"/>
+      <p:run-input port="source">
+        <!-- Remark: The pipelines we use for the examples are self-sufficient in providing their own input by default. 
+          Therefore we supply empty on the source port. -->
+        <p:empty/>
+      </p:run-input>
+      <p:output port="result" primary="true"/>
+    </p:run>
+    <p:wrap match="/*" wrapper="_RESULT" name="wrapped-pipeline-result"/>
+    <p:insert match="/*" position="last-child">
+      <p:with-input port="source" pipe="current@process-xproc-example"/>
+      <p:with-input port="insertion" pipe="result@wrapped-pipeline-result"/>
+    </p:insert>
+
+    <!-- Use the now enhanced element to create the final output: -->
     <p:xslt>
       <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-examples.xsl"/>
     </p:xslt>
-
   </p:viewport>
 
-
-
-  <!-- Process the Markdown (into DocBook): -->
-  <xdoc:markdown-to-docbook/>
+  <!-- Process any Markdown (into DocBook): -->
+  <xdoc:markdown-to-docbook p:message="  * Finalizing pages"/>
 
   <!-- Add a ToC to the steps: -->
   <p:xslt>
@@ -207,7 +223,8 @@
   <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-raw-container.xml"/>
 
   <!-- Process the resulting DocBook/xdoc into XHTML: -->
-  <p:viewport match="xtlcon:document[exists(db:article)]" message="  * Converting pages to HTML">
+  <p:variable name="html-page-count" as="xs:integer" select="count(/*/xtlcon:document[exists(db:article)])"/>
+  <p:viewport match="xtlcon:document[exists(db:article)]" message="  * Converting {$html-page-count} pages to HTML">
     <p:variable name="href-target" as="xs:string" select="xs:string(/*/@href-target)"/>
     <p:viewport match="db:article[1]">
       <xdoc:xdoc-to-xhtml add-numbering="false" add-identifiers="false" create-header="false"/>

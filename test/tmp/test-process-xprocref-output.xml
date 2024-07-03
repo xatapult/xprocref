@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xtlcon:document-container timestamp="2024-07-02T14:06:39.307666+02:00"
+<xtlcon:document-container timestamp="2024-07-03T10:53:13.1886129+02:00"
                            _href-target-path="file:///C:/Data/Erik/work/xatapult/xprocref/build"
                            xmlns:xtlcon="http://www.xtpxlib.nl/ns/container">
    <!-- == MAIN PAGES: == -->
@@ -76,7 +76,11 @@
             </nav>
             <div class="container pt-5">
                <p class="para page-banner">You are looking at the TEST version!</p>
-               <div class="sect1">
+               <div class="sect1"
+                    id="sect1-d95e9">
+                  <a name="sect1-d95e9">
+                     <!---->
+                  </a>
                   <h1 class="sect1">XProc steps</h1>
                   <p class="para">All steps for XProc version 3.1. You can also view these steps <a href="3.1/categories.html">
                         <span class="link">by category</span>
@@ -195,7 +199,11 @@
             </nav>
             <div class="container pt-5">
                <p class="para page-banner">You are looking at the TEST version!</p>
-               <div class="sect1">
+               <div class="sect1"
+                    id="sect1-d95e46">
+                  <a name="sect1-d95e46">
+                     <!---->
+                  </a>
                   <h1 class="sect1">XProc versions</h1>
                   <ul class="itemizedlist versions-list">
                      <li>
@@ -293,7 +301,11 @@
             </nav>
             <div class="container pt-5">
                <p class="para page-banner">You are looking at the TEST version!</p>
-               <div class="sect1">
+               <div class="sect1"
+                    id="sect1-d95e68">
+                  <a name="sect1-d95e68">
+                     <!---->
+                  </a>
                   <h1 class="sect1">Error codes</h1>
                   <p class="para break-after">All errors are in the <code class="code">ERROROR</code> namespace (recommended prefix:
               <code class="code">err</code>).</p>
@@ -420,7 +432,11 @@
             </nav>
             <div class="container pt-5">
                <p class="para page-banner">You are looking at the TEST version!</p>
-               <div class="sect1">
+               <div class="sect1"
+                    id="sect1-d95e113">
+                  <a name="sect1-d95e113">
+                     <!---->
+                  </a>
                   <h1 class="sect1">Namespaces used</h1>
                   <ul class="itemizedlist">
                      <li>
@@ -512,7 +528,11 @@
             </nav>
             <div class="container pt-5">
                <p class="para page-banner">You are looking at the TEST version!</p>
-               <div class="sect1">
+               <div class="sect1"
+                    id="sect1-d95e143">
+                  <a name="sect1-d95e143">
+                     <!---->
+                  </a>
                   <h1 class="sect1">About XProcRef</h1>
                   <p class="para break-after">The XprocRef site contains reference information about the steps in the <a href="https://xproc.org/"
                         target="_blank">
@@ -548,7 +568,7 @@
                      </a>
                   </p>
                   <p class="para"> </p>
-                  <p class="para site-remark">Site published  [TEST VERSION]: 2024-07-02 14:06</p>
+                  <p class="para site-remark">Site published  [TEST VERSION]: 2024-07-03 10:53</p>
                </div>
             </div>
             <p> </p>
@@ -629,7 +649,11 @@
             </nav>
             <div class="container pt-5">
                <p class="para page-banner">You are looking at the TEST version!</p>
-               <div class="sect1">
+               <div class="sect1"
+                    id="sect1-d95e193">
+                  <a name="sect1-d95e193">
+                     <!---->
+                  </a>
                   <h1 class="sect1">Categories</h1>
                   <ul class="itemizedlist category-list">
                      <li>
@@ -739,7 +763,11 @@
             </nav>
             <div class="container pt-5">
                <p class="para page-banner">You are looking at the TEST version!</p>
-               <div class="sect1">
+               <div class="sect1"
+                    id="sect1-d95e221">
+                  <a name="sect1-d95e221">
+                     <!---->
+                  </a>
                   <h1 class="sect1">Category: Test <a href="Test_2.html">
                         <span class="link">
                            <img src="../images/next.png"
@@ -866,7 +894,11 @@
             </nav>
             <div class="container pt-5">
                <p class="para page-banner">You are looking at the TEST version!</p>
-               <div class="sect1">
+               <div class="sect1"
+                    id="sect1-d95e258">
+                  <a name="sect1-d95e258">
+                     <!---->
+                  </a>
                   <h1 class="sect1">
                      <a href="Test.html">
                         <span class="link">
@@ -973,7 +1005,11 @@
             </nav>
             <div class="container pt-5">
                <p class="para page-banner">You are looking at the TEST version!</p>
-               <div class="sect1">
+               <div class="sect1"
+                    id="sect1-d95e283">
+                  <a name="sect1-d95e283">
+                     <!---->
+                  </a>
                   <h1 class="sect1">
                      <a href="Test_2.html">
                         <span class="link">
@@ -1073,7 +1109,11 @@
             </nav>
             <div class="container pt-5">
                <p class="para page-banner">You are looking at the TEST version!</p>
-               <div class="sect1">
+               <div class="sect1"
+                    id="sect1-d95e305">
+                  <a name="sect1-d95e305">
+                     <!---->
+                  </a>
                   <h1 class="sect1">p:insert <a href="p.replace.html">
                         <span class="link">
                            <img src="../images/next.png"
@@ -1083,45 +1123,70 @@
                      </a>
                   </h1>
                   <p class="para">Insert a piece of content in another.</p>
-                  <ul class="itemizedlist toc">
+                  <ul class="itemizedlist toc toc-2">
                      <li>
-                        <p class="para tocentry">
+                        <p class="para tocentry tocentry-2">
                            <a href="#sect2-d95e314">
                               <span class="link">Summary</span>
                            </a>
                         </p>
                      </li>
                      <li>
-                        <p class="para tocentry">
+                        <p class="para tocentry tocentry-2">
                            <a href="#sect2-d95e495">
                               <span class="link">Description</span>
                            </a>
                         </p>
+                        <ul class="itemizedlist toc toc-3">
+                           <li>
+                              <p class="para tocentry tocentry-3">
+                                 <a href="#sect3-d95e540">
+                                    <span class="link">BLAH SECTION!</span>
+                                 </a>
+                              </p>
+                           </li>
+                        </ul>
                      </li>
                      <li>
-                        <p class="para tocentry">
-                           <a href="#sect2-d95e548">
+                        <p class="para tocentry tocentry-2">
+                           <a href="#sect2-d95e559">
                               <span class="link">Examples</span>
                            </a>
                         </p>
+                        <ul class="itemizedlist toc toc-3">
+                           <li>
+                              <p class="para tocentry tocentry-3">
+                                 <a href="#sect3-d95e562">
+                                    <span class="link">Simple example</span>
+                                 </a>
+                              </p>
+                           </li>
+                           <li>
+                              <p class="para tocentry tocentry-3">
+                                 <a href="#sect3-d95e567">
+                                    <span class="link">Simple example 2</span>
+                                 </a>
+                              </p>
+                           </li>
+                        </ul>
                      </li>
                      <li>
-                        <p class="para tocentry">
-                           <a href="#sect2-d95e560">
+                        <p class="para tocentry tocentry-2">
+                           <a href="#sect2-d95e581">
                               <span class="link">Additional details</span>
                            </a>
                         </p>
                      </li>
                      <li>
-                        <p class="para tocentry">
-                           <a href="#sect2-d95e570">
+                        <p class="para tocentry tocentry-2">
+                           <a href="#sect2-d95e591">
                               <span class="link">Errors raised</span>
                            </a>
                         </p>
                      </li>
                      <li>
-                        <p class="para tocentry">
-                           <a href="#sect2-d95e603">
+                        <p class="para tocentry tocentry-2">
+                           <a href="#sect2-d95e624">
                               <span class="link">Reference information</span>
                            </a>
                         </p>
@@ -1368,30 +1433,53 @@
                      <p class="para">Some markup: <span class="emphasis italic">emphasized</span> or <span class="emphasis bold">bold</span> or <span class="emphasis underline">underline</span>…</p>
                      <p class="bridgehead">Bridgehead</p>
                      <p class="para">Some more text</p>
-                     <p class="bridgehead section">BLAH</p>
-                     <p class="para">BLOEB</p>
-                  </div>
-                  <div class="sect2"
-                       id="sect2-d95e548">
-                     <a name="sect2-d95e548">
-                        <!---->
-                     </a>
-                     <h2 class="sect2">Examples</h2>
-                     <div class="sect3">
-                        <h3 class="sect3">Simple example</h3>
-                        <p class="para">Bla bla bla</p>
-                     </div>
-                     <div class="sect3">
-                        <h3 class="sect3">Simple example 2</h3>
-                        <p class="para">Input document:</p>
+                     <div class="sect3"
+                          id="sect3-d95e540">
+                        <a name="sect3-d95e540">
+                           <!---->
+                        </a>
+                        <h3 class="sect3">BLAH SECTION!</h3>
+                        <p class="para">BLOEB</p>
+                        <p class="bridgehead">SECTION LEVEL 4</p>
+                        <p class="para">Some contents………</p>
                         <div class="programlisting">
-                           <pre class="programlisting">&lt;texts&gt;
+                           <pre class="programlisting">&lt;texts-from-separate-doc&gt;
    &lt;text&gt;Hello there!&lt;/text&gt;
    &lt;text&gt;This is funny…&lt;/text&gt;
    &lt;text type="normal"&gt;And that's normal.&lt;/text&gt;
-&lt;/texts&gt;</pre>
+&lt;/texts-from-separate-doc&gt;</pre>
                         </div>
-                        <p class="para">Pipeline:</p>
+                     </div>
+                  </div>
+                  <div class="sect2"
+                       id="sect2-d95e559">
+                     <a name="sect2-d95e559">
+                        <!---->
+                     </a>
+                     <h2 class="sect2">Examples</h2>
+                     <div class="sect3"
+                          id="sect3-d95e562">
+                        <a name="sect3-d95e562">
+                           <!---->
+                        </a>
+                        <h3 class="sect3">Simple example</h3>
+                        <p class="para">Bla bla bla</p>
+                     </div>
+                     <div class="sect3"
+                          id="sect3-d95e567">
+                        <a name="sect3-d95e567">
+                           <!---->
+                        </a>
+                        <h3 class="sect3">Simple example 2</h3>
+                        <p class="para">Bla bla <span class="emphasis italic">emphasis</span> bla</p>
+                        <div class="programlisting">
+                           <pre class="programlisting">&lt;texts-from-separate-doc&gt;
+   &lt;text&gt;Hello there!&lt;/text&gt;
+   &lt;text&gt;This is funny…&lt;/text&gt;
+   &lt;text type="normal"&gt;And that's normal.&lt;/text&gt;
+&lt;/texts-from-separate-doc&gt;</pre>
+                        </div>
+                        <p class="para keep-with-next">Pipeline document:</p>
                         <div class="programlisting">
                            <pre class="programlisting">&lt;p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
    &lt;p:input port="source"/&gt;
@@ -1399,11 +1487,19 @@
    &lt;p:add-attribute match="text" attribute-name="type" attribute-value="special"/&gt;
 &lt;/p:declare-step&gt;</pre>
                         </div>
+                        <p class="para keep-with-next">Result document:</p>
+                        <div class="programlisting">
+                           <pre class="programlisting">&lt;texts-from-separate-doc&gt;
+   &lt;text type="special"&gt;Hello there!&lt;/text&gt;
+   &lt;text type="special"&gt;This is funny…&lt;/text&gt;
+   &lt;text type="special"&gt;And that's normal.&lt;/text&gt;
+&lt;/texts-from-separate-doc&gt;</pre>
+                        </div>
                      </div>
                   </div>
                   <div class="sect2"
-                       id="sect2-d95e560">
-                     <a name="sect2-d95e560">
+                       id="sect2-d95e581">
+                     <a name="sect2-d95e581">
                         <!---->
                      </a>
                      <h2 class="sect2">Additional details</h2>
@@ -1417,8 +1513,8 @@
                      </ul>
                   </div>
                   <div class="sect2"
-                       id="sect2-d95e570">
-                     <a name="sect2-d95e570">
+                       id="sect2-d95e591">
+                     <a name="sect2-d95e591">
                         <!---->
                      </a>
                      <h2 class="sect2">Errors raised</h2>
@@ -1476,8 +1572,8 @@
                      </div>
                   </div>
                   <div class="sect2"
-                       id="sect2-d95e603">
-                     <a name="sect2-d95e603">
+                       id="sect2-d95e624">
+                     <a name="sect2-d95e624">
                         <!---->
                      </a>
                      <h2 class="sect2">Reference information</h2>
@@ -1595,7 +1691,11 @@
             </nav>
             <div class="container pt-5">
                <p class="para page-banner">You are looking at the TEST version!</p>
-               <div class="sect1">
+               <div class="sect1"
+                    id="sect1-d95e667">
+                  <a name="sect1-d95e667">
+                     <!---->
+                  </a>
                   <h1 class="sect1">
                      <a href="p.insert.html">
                         <span class="link">
@@ -1605,39 +1705,55 @@
                         </span>
                      </a> p:replace</h1>
                   <p class="para">Replaces matching nodes.</p>
-                  <ul class="itemizedlist toc">
+                  <ul class="itemizedlist toc toc-2">
                      <li>
-                        <p class="para tocentry">
-                           <a href="#sect2-d95e655">
+                        <p class="para tocentry tocentry-2">
+                           <a href="#sect2-d95e676">
                               <span class="link">Summary</span>
                            </a>
                         </p>
                      </li>
                      <li>
-                        <p class="para tocentry">
-                           <a href="#sect2-d95e810">
+                        <p class="para tocentry tocentry-2">
+                           <a href="#sect2-d95e831">
                               <span class="link">Description</span>
                            </a>
                         </p>
                      </li>
                      <li>
-                        <p class="para tocentry">
-                           <a href="#sect2-d95e854">
+                        <p class="para tocentry tocentry-2">
+                           <a href="#sect2-d95e875">
                               <span class="link">Examples</span>
                            </a>
                         </p>
+                        <ul class="itemizedlist toc toc-3">
+                           <li>
+                              <p class="para tocentry tocentry-3">
+                                 <a href="#sect3-d95e878">
+                                    <span class="link">First example</span>
+                                 </a>
+                              </p>
+                           </li>
+                           <li>
+                              <p class="para tocentry tocentry-3">
+                                 <a href="#sect3-d95e887">
+                                    <span class="link">Second example</span>
+                                 </a>
+                              </p>
+                           </li>
+                        </ul>
                      </li>
                      <li>
-                        <p class="para tocentry">
-                           <a href="#sect2-d95e875">
+                        <p class="para tocentry tocentry-2">
+                           <a href="#sect2-d95e896">
                               <span class="link">Reference information</span>
                            </a>
                         </p>
                      </li>
                   </ul>
                   <div class="sect2"
-                       id="sect2-d95e655">
-                     <a name="sect2-d95e655">
+                       id="sect2-d95e676">
+                     <a name="sect2-d95e676">
                         <!---->
                      </a>
                      <h2 class="sect2">Summary</h2>
@@ -1817,8 +1933,8 @@
                      </div>
                   </div>
                   <div class="sect2"
-                       id="sect2-d95e810">
-                     <a name="sect2-d95e810">
+                       id="sect2-d95e831">
+                     <a name="sect2-d95e831">
                         <!---->
                      </a>
                      <h2 class="sect2">Description</h2>
@@ -1839,18 +1955,26 @@
             preserved. For other document types, all document properties are preserved.</p>
                   </div>
                   <div class="sect2"
-                       id="sect2-d95e854">
-                     <a name="sect2-d95e854">
+                       id="sect2-d95e875">
+                     <a name="sect2-d95e875">
                         <!---->
                      </a>
                      <h2 class="sect2">Examples</h2>
-                     <div class="sect3">
+                     <div class="sect3"
+                          id="sect3-d95e878">
+                        <a name="sect3-d95e878">
+                           <!---->
+                        </a>
                         <h3 class="sect3">First example</h3>
                         <p class="para">bla bla bla</p>
                         <p class="para">bla bla bla</p>
                         <p class="para">bla bla bla</p>
                      </div>
-                     <div class="sect3">
+                     <div class="sect3"
+                          id="sect3-d95e887">
+                        <a name="sect3-d95e887">
+                           <!---->
+                        </a>
                         <h3 class="sect3">Second example</h3>
                         <p class="para">bla bla bla</p>
                         <p class="para">bla bla bla</p>
@@ -1858,8 +1982,8 @@
                      </div>
                   </div>
                   <div class="sect2"
-                       id="sect2-d95e875">
-                     <a name="sect2-d95e875">
+                       id="sect2-d95e896">
+                     <a name="sect2-d95e896">
                         <!---->
                      </a>
                      <h2 class="sect2">Reference information</h2>
@@ -1958,7 +2082,11 @@
             </nav>
             <div class="container pt-5">
                <p class="para page-banner">You are looking at the TEST version!</p>
-               <div class="sect1">
+               <div class="sect1"
+                    id="sect1-d95e938">
+                  <a name="sect1-d95e938">
+                     <!---->
+                  </a>
                   <h1 class="sect1">XProc steps (3.0)</h1>
                   <p class="para">All steps for XProc version 3.0. You can also view these steps <a href="categories.html">
                         <span class="link">by category</span>
@@ -2051,7 +2179,11 @@
             </nav>
             <div class="container pt-5">
                <p class="para page-banner">You are looking at the TEST version!</p>
-               <div class="sect1">
+               <div class="sect1"
+                    id="sect1-d95e959">
+                  <a name="sect1-d95e959">
+                     <!---->
+                  </a>
                   <h1 class="sect1">Categories (3.0)</h1>
                   <ul class="itemizedlist category-list">
                      <li>
@@ -2145,7 +2277,11 @@
             </nav>
             <div class="container pt-5">
                <p class="para page-banner">You are looking at the TEST version!</p>
-               <div class="sect1">
+               <div class="sect1"
+                    id="sect1-d95e975">
+                  <a name="sect1-d95e975">
+                     <!---->
+                  </a>
                   <h1 class="sect1">Category: Test</h1>
                   <p class="para">Just a test category</p>
                   <ul class="itemizedlist step-list">
@@ -2238,35 +2374,39 @@
             </nav>
             <div class="container pt-5">
                <p class="para page-banner">You are looking at the TEST version!</p>
-               <div class="sect1">
+               <div class="sect1"
+                    id="sect1-d95e992">
+                  <a name="sect1-d95e992">
+                     <!---->
+                  </a>
                   <h1 class="sect1">p:replace (3.0)</h1>
                   <p class="para">Replaces matching nodes.</p>
-                  <ul class="itemizedlist toc">
+                  <ul class="itemizedlist toc toc-2">
                      <li>
-                        <p class="para tocentry">
-                           <a href="#sect2-d95e976">
+                        <p class="para tocentry tocentry-2">
+                           <a href="#sect2-d95e997">
                               <span class="link">Summary</span>
                            </a>
                         </p>
                      </li>
                      <li>
-                        <p class="para tocentry">
-                           <a href="#sect2-d95e1131">
+                        <p class="para tocentry tocentry-2">
+                           <a href="#sect2-d95e1152">
                               <span class="link">Description</span>
                            </a>
                         </p>
                      </li>
                      <li>
-                        <p class="para tocentry">
-                           <a href="#sect2-d95e1181">
+                        <p class="para tocentry tocentry-2">
+                           <a href="#sect2-d95e1202">
                               <span class="link">Reference information</span>
                            </a>
                         </p>
                      </li>
                   </ul>
                   <div class="sect2"
-                       id="sect2-d95e976">
-                     <a name="sect2-d95e976">
+                       id="sect2-d95e997">
+                     <a name="sect2-d95e997">
                         <!---->
                      </a>
                      <h2 class="sect2">Summary</h2>
@@ -2446,8 +2586,8 @@
                      </div>
                   </div>
                   <div class="sect2"
-                       id="sect2-d95e1131">
-                     <a name="sect2-d95e1131">
+                       id="sect2-d95e1152">
+                     <a name="sect2-d95e1152">
                         <!---->
                      </a>
                      <h2 class="sect2">Description</h2>
@@ -2465,8 +2605,8 @@
                      <p class="error">[*** Unrecognized element: &lt;db:simplesect&gt; (phase: main)]</p>
                   </div>
                   <div class="sect2"
-                       id="sect2-d95e1181">
-                     <a name="sect2-d95e1181">
+                       id="sect2-d95e1202">
+                     <a name="sect2-d95e1202">
                         <!---->
                      </a>
                      <h2 class="sect2">Reference information</h2>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:map="http://www.w3.org/2005/xpath-functions/map"
-  xmlns:array="http://www.w3.org/2005/xpath-functions/array" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:local="#local.rfp_2dj_5bc"
+  xmlns:array="http://www.w3.org/2005/xpath-functions/array" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:local="#local.rfp_2dj_5bc" xmlns:db="http://docbook.org/ns/docbook"
   xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref" exclude-result-prefixes="#all" expand-text="true">
   <!-- ================================================================== -->
   <!-- 
@@ -11,6 +11,8 @@
 
   <xsl:include href="../../../xtpxlib-common/xslmod/general.mod.xsl"/>
   <xsl:include href="../../../xtpxlib-common/xslmod/href.mod.xsl"/>
+  
+  <xsl:mode name="local:mode-remove-unused-namespaces" on-no-match="shallow-copy"/>
 
   <!-- ======================================================================= -->
   <!-- GENERIC: -->
@@ -18,6 +20,10 @@
   <xsl:variable name="xpref:page-extension" as="xs:string" select="'html'"/>
 
   <xsl:variable name="xpref:default-namespace-prefix" as="xs:string" select="'p'"/>
+  
+  <xsl:variable name="xpref:max-section-level" as="xs:integer" select="3"/>
+
+  <xsl:variable name="xpref:standard-serialization" as="map(*)" select="map{'indent': true(), 'omit-xml-declaration': true()}"/>
 
   <!-- ======================================================================= -->
   <!-- PAGE NAMES: -->
@@ -87,5 +93,29 @@
       select="if (starts-with($step-name, $xpref:default-namespace-prefix || ':')) then $step-name else $xpref:default-namespace-prefix || ':' || $step-name"/>
     <xsl:sequence select="string-join(($step-name-full, $version-id, $example-id), '-') => xtlc:str2id()"/>
   </xsl:function>
+  
+  <!-- ======================================================================= -->
+  
+  <xsl:template name="xpref:list-document">
+    <xsl:param name="root-elm" as="element()" required="true"/>
+    
+    <db:programlisting xml:space="preserve"><xsl:value-of select="serialize(xpref:remove-unused-namespaces($root-elm), $xpref:standard-serialization)"/></db:programlisting>
+  </xsl:template>
+  
+  <!-- ======================================================================= -->
+  <!-- REMOVE UNUSED NAMESPACES -->
+  
+  <xsl:function name="xpref:remove-unused-namespaces" as="element()">
+    <xsl:param name="in" as="element()"/>
+    <xsl:apply-templates select="$in" mode="local:mode-remove-unused-namespaces"/>
+  </xsl:function>
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <xsl:template match="*" mode="local:mode-remove-unused-namespaces">
+    <xsl:copy copy-namespaces="false">
+      <xsl:apply-templates select="@* | node()" mode="#current"/>
+    </xsl:copy>
+  </xsl:template>
 
 </xsl:stylesheet>

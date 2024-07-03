@@ -44,25 +44,51 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="db:sect2[empty(@xml:id)]">
+  <xsl:template match="db:*[matches(local-name(.), 'sect[0-9]+')][empty(@xml:id)]">
     <!-- These are used for ToCs and must have an identifier. -->
     <xsl:copy>
-      <xsl:attribute name="xml:id" select="'sect2-' || generate-id(.)"/>
+      <xsl:attribute name="xml:id" select="local-name(.) || '-' || generate-id(.)"/>
       <xsl:apply-templates select="@* | node()"/>
     </xsl:copy>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="db:section[exists(db:title)]">
-    <!-- Change into bridgehead: -->
-    <bridgehead role="section">
-      <xsl:apply-templates select="db:title/node()"/>
-    </bridgehead>
-    <xsl:apply-templates select="* except db:title"/>
-  </xsl:template>
+  <xsl:template match="db:section">
+    <!-- Change a <section> element into a numbered one (<sect…>) or a bridgehead if nested too deep: -->
+    <xsl:variable name="level" as="xs:integer" select="count(ancestor-or-self::*[matches(local-name(.), 'section|sect[0-9]+')])"/>
+    <xsl:choose>
+      <xsl:when test="$level le $xpref:max-section-level">
+        <xsl:variable name="element-name" as="xs:string" select="'sect' || $level"/>
+        <xsl:element name="{$element-name}">
+          <xsl:if test="empty(@xml:id)">
+            <xsl:attribute name="xml:id" select="$element-name || '-' || generate-id(.)"/>
+          </xsl:if>
+          <xsl:apply-templates select="@* | node()"/>
+        </xsl:element>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:bridgehead>
+          <xsl:copy-of select="db:title/node()"/>
+        </db:bridgehead>
+        <xsl:apply-templates select="node() except db:title"/>
+      </xsl:otherwise>
+    </xsl:choose>
 
+  </xsl:template>
+  
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <xsl:template match="db:example-doc">
+    <xsl:variable name="href" as="xs:string" select="xs:string(@href)"/>
+    <xsl:variable name="example-document" as="document-node()" select="doc($href)"/>
+    <xsl:call-template name="xpref:list-document">
+      <xsl:with-param name="root-elm" select="$example-document/*"/>
+    </xsl:call-template>
+  </xsl:template>
+  
+  <!-- ======================================================================= -->
+  <!-- REFERENCES: -->
 
   <xsl:template match="db:step-ref | db:category-ref">
 
@@ -116,9 +142,9 @@
       <xsl:variable name="in-own-step" as="xs:boolean" select="$referred-step-name eq $current-step-name"/>
       <xsl:variable name="referred-container-document-elm" as="element(xtlcon:document)"
         select="if ($in-own-step) then $current-container-document-elm else /*/xtlcon:document[@type eq $xpref:type-step][@name eq $referred-step-name][1]"/>
-      <xsl:variable name="referred-anchor" as="xs:string" select="xpref:example-anchor($referred-step-name, $current-version-id, $referred-example-id)"/>
-      <xsl:variable name="referred-example-section" as="element()"
-        select="$referred-container-document-elm//db:*[@xml:id eq $referred-anchor]"/>
+      <xsl:variable name="referred-anchor" as="xs:string"
+        select="xpref:example-anchor($referred-step-name, $current-version-id, $referred-example-id)"/>
+      <xsl:variable name="referred-example-section" as="element()" select="$referred-container-document-elm//db:*[@xml:id eq $referred-anchor]"/>
 
       <xsl:variable name="href-link-to-target" as="xs:string?">
         <xsl:if test="not($in-own-step)">
@@ -127,7 +153,7 @@
           <xsl:sequence select="xtlc:href-relative($current-href-target, $referred-href-target)"/>
         </xsl:if>
       </xsl:variable>
-    
+
       <xsl:text>&#x201c;</xsl:text>
       <link xlink:href="{$href-link-to-target}#{$referred-anchor}">{normalize-space($referred-example-section/db:title)}</link>
       <xsl:text>&#x201d;</xsl:text>
@@ -137,7 +163,7 @@
           <link xlink:href="{$href-link-to-target}">{$referred-step-name}</link>
         </code>
       </xsl:if>
-      
+
       <xsl:catch>
         <xsl:call-template name="xtlc:raise-error">
           <xsl:with-param name="msg-parts" select="('Could not dereference ', .)"/>

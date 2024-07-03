@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="add-attribute" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation"
   short-description="Add (or replace) an attribute on a set of elements" href-specification="{$BASELINK-STANDARD-STEPS}#c.add-attribute"
-  required="true" publish="false" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
+  required="true" publish="true" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -10,12 +10,12 @@
 
     <input port="source" content-types="xml html" primary="true" sequence="true">
       <description>
-        <para>The document to add (or replace) the attribute on.</para>
+        <para>The document(s) to add (or replace) the attribute on.</para>
       </description>
     </input>
     <output port="result" content-types="xml html" primary="true" sequence="true">
       <description>
-        <para>The resulting document.</para>
+        <para>The resulting document(s).</para>
       </description>
     </output>
 
@@ -53,11 +53,12 @@
     <para>The <step>p:add-attribute</step> step:</para>
     <itemizedlist>
       <listitem>
-        <para>Takes the document appearing on its <port>source</port> port.</para>
+        <para>Takes the document(s) appearing on its <port>source</port> port.</para>
       </listitem>
       <listitem>
         <para>Processes the elements that match the pattern in the <option>match</option> option:</para>
-        <itemizedlist><listitem>
+        <itemizedlist>
+          <listitem>
             <para>If a selected element does <emphasis>not</emphasis> contain an attribute with the name given in the <option>attribute-name</option>
               option, an attribute with this name and a value as given in the <option>attribute-value</option> option is added to it.</para>
           </listitem>
@@ -67,7 +68,7 @@
         </itemizedlist>
       </listitem>
       <listitem>
-        <para>The resulting document appears on its <port>result</port> port.</para>
+        <para>The resulting document(s) appear on its <port>result</port> port.</para>
       </listitem>
     </itemizedlist>
     <para>The <step>p:add-attribute</step> step can only set a <emphasis>single</emphasis> attribute. The <step-ref name="p:set-attributes"/> step can
@@ -81,21 +82,15 @@
     <para>You cannot use this step to add or change a namespace declaration. Attempting to do so will result in error <step-error-ref code="XC0059"
       />.</para>
     <para>Note, however, that it is possible to add an attribute whose namespace is not in scope on the element it is added to. The XProc namespace
-      fixup mechanism will take care of handling this. </para>
-  </detail>
-  <detail>
-    <para>If an attribute named <tag class="attribute">xml:base</tag> is added or changed, the base URI of the element must also be amended
-      accordingly.</para>
+      fixup mechanism will take care of handling this and add the appropriate namespace declarations. </para>
   </detail>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <example title="Adding an attribute" id="ex01">
-    <para>Assume our input document is:</para>
-    <programlisting><![CDATA[<doc>
-  <text>Hello there!</text>
-  <text>This is an example.</text>
-</doc>]]></programlisting>
+  <example title="Adding/replacing an attribute" id="ex01">
+    <para>This example adds a <code>type="special"</code> attribute to all <tag>text</tag> elements. One of the input <tag>text</tag> elements already
+      has such an attribute, but with a different value. This existing attribute is replaced.</para>
+    <xproc-example href="examples/add-attribute-01.xpl"/>
   </example>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

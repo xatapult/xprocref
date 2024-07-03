@@ -107,8 +107,18 @@
         <para>Some more text</para>
         
         <section>
-          <title>BLAH</title>
+          <title>BLAH SECTION!</title>
+          
           <para>BLOEB</para>
+          
+          <section>
+            <title>SECTION LEVEL 4</title>
+            <para>Some contents………</para>
+            
+            <example-doc href="examples/in.xml"/>
+            
+          </section>
+          
         </section>
         
       </description>
@@ -118,7 +128,13 @@
 
       <example title="Simple example">Bla bla bla</example>
       <example title="Simple example 2">
-        <xproc-example href="examples/add-attribute-01.xpl"/>
+        
+        <xproc-example href="examples/add-attribute-01.xpl" blub="bloeb">
+          <source-header>
+            <para>Bla bla <emphasis>emphasis</emphasis> bla</para>
+          </source-header>
+          
+        </xproc-example>
       </example>
       
       

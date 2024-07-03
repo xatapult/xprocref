@@ -2,13 +2,7 @@
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0">
 
   <p:input port="source">
-    <p:inline>
-      <texts>
-        <text>Hello there!</text>
-        <text>This is funny…</text>
-        <text type="normal">And that's normal.</text>
-      </texts>
-    </p:inline>
+    <p:document href="in.xml"/>
   </p:input>
   <p:output port="result"/>
 

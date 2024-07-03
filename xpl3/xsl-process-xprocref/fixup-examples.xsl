@@ -14,64 +14,132 @@
   <xsl:output method="xml" indent="no" encoding="UTF-8"/>
 
   <xsl:mode on-no-match="shallow-copy"/>
-  <xsl:mode name="mode-remove-unused-namespaces" on-no-match="shallow-copy"/>
   <xsl:mode name="mode-prepare-pipeline-for-display" on-no-match="shallow-copy"/>
 
   <xsl:include href="../xslmod/xprocref.mod.xsl"/>
-
-  <!-- ================================================================== -->
-
-  <xsl:variable name="standard-serialization" as="map(*)" select="map{'indent': true(), 'omit-xml-declaration': true()}"/>
 
   <!-- ======================================================================= -->
 
   <xsl:template match="db:xproc-example">
 
-    <xsl:variable name="href" as="xs:string" select="xs:string(@href)"/>
-    <xsl:variable name="example-pipeline" as="document-node()" select="doc($href)"/>
+    <xsl:variable name="show-source" as="xs:boolean" select="xtlc:str2bln(@show-source, true())"/>
+    <xsl:variable name="show-pipeline" as="xs:boolean" select="xtlc:str2bln(@show-pipeline, true())"/>
+    <xsl:variable name="show-result" as="xs:boolean" select="xtlc:str2bln(@show-result, true())"/>
 
-    <xsl:variable name="input-document" as="element()" select="$example-pipeline/*/p:input[@port eq 'source']/p:inline/*[1] => local:remove-unused-namespaces()"/>
-    <xsl:variable name="pipeline-for-display" as="element(p:declare-step)" select="$example-pipeline/* => local:prepare-pipeline-for-display()"/>
-    
-    <para>Input document:</para>
-    <programlisting xml:space="preserve"><xsl:value-of select="serialize($input-document, $standard-serialization)"/></programlisting>
+    <xsl:variable name="href-pipeline" as="xs:string" select="xs:string(@href)"/>
+    <xsl:variable name="example-pipeline" as="document-node()" select="doc($href-pipeline)"/>
 
-    <para>Pipeline:</para>
-    <programlisting xml:space="preserve"><xsl:value-of select="serialize($pipeline-for-display, $standard-serialization)"/></programlisting>
+    <!-- Source document: -->
+    <xsl:if test="$show-source">
+      <xsl:variable name="source-port-elm" as="element(p:input)" select="$example-pipeline/*/p:input[@port eq 'source']"/>
+      <xsl:variable name="href-input" as="xs:string?">
+        <xsl:choose>
+          <xsl:when test="exists($source-port-elm/@href)">
+            <xsl:sequence select="$source-port-elm/@href"/>
+          </xsl:when>
+          <xsl:when test="exists($source-port-elm/p:document/@href)">
+            <xsl:sequence select="$source-port-elm/p:document/@href"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <!-- No reference to an input document with an @href. -->
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="source-document-root-elm" as="element()">
+        <xsl:choose>
+          <xsl:when test="exists($href-input)">
+            <xsl:variable name="href-full" as="xs:string" select="resolve-uri($href-input, base-uri($source-port-elm))"/>
+            <xsl:sequence select="doc($href-full)/*"/>
+          </xsl:when>
+          <xsl:when test="exists($source-port-elm/p:inline)">
+            <xsl:sequence select="$source-port-elm/p:inline/*[1]"/>
+          </xsl:when>
+          <xsl:when test="exists($source-port-elm/*)">
+            <xsl:sequence select="$source-port-elm/*[1]"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:call-template name="xtlc:raise-error">
+              <xsl:with-param name="msg-parts" select="('Could not resolve source document for XProc example pipeline ', xtlc:q($href-pipeline))"/>
+            </xsl:call-template>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+
+      <xsl:call-template name="process-header">
+        <xsl:with-param name="header-elm" select="db:source-header"/>
+        <xsl:with-param name="document-type" select="'source'"/>
+      </xsl:call-template>
+
+      <xsl:call-template name="xpref:list-document">
+        <xsl:with-param name="root-elm" select="$source-document-root-elm"/>
+      </xsl:call-template>
+    </xsl:if>
+
+    <!-- Pipeline document: -->
+    <xsl:if test="$show-pipeline">
+      <xsl:call-template name="process-header">
+        <xsl:with-param name="header-elm" select="db:pipeline-header"/>
+        <xsl:with-param name="document-type" select="'pipeline'"/>
+      </xsl:call-template>
+      <xsl:call-template name="xpref:list-document">
+        <xsl:with-param name="root-elm" select="local:prepare-pipeline-for-display($example-pipeline/*)"/>
+      </xsl:call-template>
+    </xsl:if>
+
+    <!-- Result document: -->
+    <xsl:if test="$show-result">
+      <xsl:call-template name="process-header">
+        <xsl:with-param name="header-elm" select="db:result-header"/>
+        <xsl:with-param name="document-type" select="'result'"/>
+      </xsl:call-template>
+      <xsl:call-template name="xpref:list-document">
+        <xsl:with-param name="root-elm" select="_RESULT/*[1]"/>
+      </xsl:call-template>
+    </xsl:if>
 
   </xsl:template>
-  
+
   <!-- ======================================================================= -->
   <!-- PREPARE PIPELINE: -->
-  
+
   <xsl:function name="local:prepare-pipeline-for-display" as="element(p:declare-step)">
     <xsl:param name="xpl" as="element(p:declare-step)"/>
-    <xsl:apply-templates select="$xpl" mode="mode-prepare-pipeline-for-display"></xsl:apply-templates>
+    <xsl:apply-templates select="$xpl" mode="mode-prepare-pipeline-for-display"/>
   </xsl:function>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
+
   <xsl:template match="p:input[@port eq 'source']/node()" mode="mode-prepare-pipeline-for-display">
     <!-- Remove... -->
   </xsl:template>
-  
-  <!-- ======================================================================= -->
-  <!-- REMOVE UNUSED NAMESPACES -->
 
-  <xsl:function name="local:remove-unused-namespaces" as="element()">
-    <xsl:param name="in" as="element()"/>
-    <xsl:apply-templates select="$in" mode="mode-remove-unused-namespaces"/>
-  </xsl:function>
-  
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
-  <xsl:template match="*" mode="mode-remove-unused-namespaces">
-    <xsl:copy copy-namespaces="false">
-      <xsl:apply-templates select="@* | node()" mode="#current"/>
-    </xsl:copy>
+
+  <xsl:template match="p:input[@port eq 'source']/@href" mode="mode-prepare-pipeline-for-display">
+    <!-- Remove... -->
   </xsl:template>
 
+  <!-- ======================================================================= -->
+  <!-- OTHER SUPPORT: -->
 
+  <xsl:template name="process-header">
+    <xsl:param name="header-elm" as="element()?" required="true">
+      <!-- The *-header element from the input, if any. -->
+    </xsl:param>
+    <xsl:param name="document-type" as="xs:string" required="true"/>
 
+    <xsl:choose>
+      <xsl:when test="empty($header-elm)">
+        <!-- Create a default text: -->
+        <db:para role="keep-with-next">{xtlc:capitalize($document-type)} document:</db:para>
+      </xsl:when>
+      <xsl:when test="$header-elm/*">
+        <xsl:copy-of select="$header-elm/*"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- No header. -->
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
 </xsl:stylesheet>

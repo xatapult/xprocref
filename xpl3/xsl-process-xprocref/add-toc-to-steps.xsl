@@ -17,29 +17,49 @@
 
   <xsl:include href="../xslmod/xprocref.mod.xsl"/>
 
-  <!-- ================================================================== -->
+  <!-- ======================================================================= -->
 
   <xsl:template match="xtlcon:document[@type eq $xpref:type-step]/db:article/db:sect1">
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
-      <!-- Copy the title and the short description: -->
+
+      <!-- Copy the title and the short description first: -->
       <xsl:apply-templates select="db:*[position() le 2]"/>
 
-      <xsl:variable name="subsects" as="element(db:sect2)*" select="db:sect2[exists(@xml:id)]"/>
-      <xsl:if test="exists($subsects)">
-        <itemizedlist role="toc">
-          <xsl:for-each select="$subsects">
-            <listitem role="toc">
-              <para role="tocentry">
-                <link xlink:href="#{@xml:id}">{normalize-space(db:title)}</link>
-              </para>
-            </listitem>
-          </xsl:for-each>
-        </itemizedlist>
-      </xsl:if>
+      <xsl:call-template name="add-toc-list-for-level">
+        <xsl:with-param name="level" select="2"/>
+      </xsl:call-template>
 
       <xsl:apply-templates select="db:*[position() gt 2]"/>
     </xsl:copy>
   </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template name="add-toc-list-for-level">
+    <xsl:param name="root" as="element()" required="false" select="."/>
+    <xsl:param name="level" as="xs:integer" required="true"/>
+
+    <xsl:variable name="subsect-element-name" as="xs:string" select="'sect' || $level"/>
+    <xsl:variable name="subsects" as="element()*" select="$root/db:*[local-name(.) eq $subsect-element-name]"/>
+    <xsl:if test="exists($subsects)">
+      <itemizedlist role="toc toc-{$level}">
+        <xsl:for-each select="$subsects">
+          <listitem role="toc toc-{$level}">
+            <para role="tocentry tocentry-{$level}">
+              <link xlink:href="#{@xml:id}">{normalize-space(db:title)}</link>
+            </para>
+            <xsl:if test="$level lt $xpref:max-section-level">
+              <xsl:call-template name="add-toc-list-for-level">
+                <xsl:with-param name="level" select="$level + 1"/>
+              </xsl:call-template>
+            </xsl:if>
+          </listitem>
+        </xsl:for-each>
+      </itemizedlist>
+    </xsl:if>
+
+  </xsl:template>
+
 
 </xsl:stylesheet>
