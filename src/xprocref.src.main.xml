@@ -7,13 +7,8 @@
   <!-- MACRODEFS: -->
 
   <macrodefs>
-    
     <!-- Baselinks to the standard: -->
     <macrodef name="BASELINK-STANDARD-STEPS" value="https://spec.xproc.org/master/head/steps/"/>
-    
-    <!-- Some standard text phrases: -->
-    <macrodef name="DOCUMENT-PROPERTIES-PRESERVED" value="All document properties are preserved."/>
-    
   </macrodefs>
 
   <!-- ======================================================================= -->
@@ -21,16 +16,23 @@
 
   <namespaces>
     <namespace prefix="p" uri="http://www.w3.org/ns/xproc">
-      <description>The main XProc namespace, used for all of its elements, steps and some of its attributes.</description>
+      <description>
+        <para>The main XProc namespace, used for all of its elements, steps and some of its attributes.</para>
+      </description>
     </namespace>
     <namespace prefix="c" uri="http://www.w3.org/ns/xproc-step">
-      <description>This namespace is used for documents that are inputs or outputs from several standard and optional steps.</description>
+      <description>
+        <para>This namespace is used for documents that are inputs or outputs from several standard and optional steps.</para>
+      </description>
     </namespace>
     <namespace prefix="err" uri="http://www.w3.org/ns/xproc-error" error-namespace="true">
-      <description>This namespace is used for XProc errors.</description>
+      <description>
+        <para>This namespace is used for XProc errors.</para></description>
     </namespace>
     <namespace prefix="xs" uri="http://www.w3.org/2001/XMLSchema">
-      <description>This namespace is used for data types, such as <code>xs:string</code> and <emphasis>xs:boolean</emphasis>.</description>
+      <description>
+        <para>This namespace is used for data types, such as <code>xs:string</code> and <code>xs:boolean</code>.</para>
+      </description>
     </namespace>
   </namespaces>
 
@@ -48,7 +50,7 @@
   <!-- ======================================================================= -->
   <!-- ERRORS: -->
 
-  <xi:include href="step-errors.xml"/>
+  <xi:include href="step-errors.xml"/> 
 
   <!-- ======================================================================= -->
   <!-- CATEGORIES: -->

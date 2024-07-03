@@ -19,10 +19,36 @@
 
   <!-- ================================================================== -->
 
-  <xsl:template match="db:port | db:option | db:step | db:property">
+  <xsl:template match="db:fragment">
+    <!-- Just unwrap -->
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="db:port | db:option | db:property">
     <code role="{local-name(.)}">
       <xsl:apply-templates/>
     </code>
+  </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="db:step">
+    <xsl:choose>
+      <xsl:when test="empty(node())">
+        <!-- Refers to this particular step: -->
+        <xsl:variable name="container-document-elm" as="element(xtlcon:document)" select="ancestor::xtlcon:document"/>
+        <code role="{local-name(.)}">
+          <xsl:value-of select="$container-document-elm/@name"/>
+        </code>
+      </xsl:when>
+      <xsl:otherwise>
+        <code role="{local-name(.)}">
+          <xsl:apply-templates/>
+        </code>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -76,17 +102,14 @@
     </xsl:choose>
 
   </xsl:template>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
+
   <xsl:template match="db:example-doc">
     <xsl:variable name="href" as="xs:string" select="xs:string(@href)"/>
-    <xsl:variable name="example-document" as="document-node()" select="doc($href)"/>
-    <xsl:call-template name="xpref:list-document">
-      <xsl:with-param name="root-elm" select="$example-document/*"/>
-    </xsl:call-template>
+    <db:programlisting xml:space="preserve"><xsl:value-of select="unparsed-text($href)"/></db:programlisting>
   </xsl:template>
-  
+
   <!-- ======================================================================= -->
   <!-- REFERENCES: -->
 
