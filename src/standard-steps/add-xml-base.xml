@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="add-xml-base" version-idref="v30" category-idrefs="standard-steps xml-base-related"
-  short-description="Add explicit xml:base attributes to a document" required="true" publish="false"
+  short-description="Add explicit xml:base attributes to a document" required="true" publish="true"
   href-specification="{$BASELINK-STANDARD-STEPS}#c.add-xml-base" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink">
