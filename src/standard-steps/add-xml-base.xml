@@ -42,7 +42,7 @@
   <description>
     <para>Nodes (elements, attributes, etc.) in XML documents &#x201c;remember&#x201d; where they came from: they have a so-called &#x201c;base
       URI&#x201d; attached. This is usually the URI this node came from: the path (for instance on disk) to the document where it belonged to. In most
-      cases the base URI is invisible. The <step/> step exposes this by adding explicit <code>xml:base</code> attributes.</para>
+      cases the base URI is invisible. The <step/> step exposes this by adding (or adapting) <code>xml:base</code> attributes.</para>
     <para>The operation of the <step/> step depends on the values of the <option>all</option> and <option>relative</option> options:</para>
     <table role="nonumber">
       <title/>
@@ -84,6 +84,7 @@
             <entry><para><code>false</code></para></entry>
             <entry><para><code>true</code></para></entry>
             <entry>
+              <para>These are the default values for these options.</para>
               <itemizedlist>
                 <listitem>
                   <para>The root element of the document gets an <code>xml:base</code> attribute with an <emphasis>absolute</emphasis> URI. An
@@ -109,7 +110,7 @@
                     existing <code>xml:base</code> attribute is updated.</para>
                 </listitem>
                 <listitem>
-                  <para>All child elements get an <code>xml:base</code> attribute with an <emphasis>absolute</emphasis> URI. An existing
+                  <para><emphasis>All</emphasis> child elements get an <code>xml:base</code> attribute with an <emphasis>absolute</emphasis> URI. An existing
                       <code>xml:base</code> attribute is updated.</para>
                 </listitem>
               </itemizedlist>
@@ -118,7 +119,7 @@
           <row>
             <entry><para><code>true</code></para></entry>
             <entry><para><code>true</code></para></entry>
-            <entry><para>This is not allowed and will result in error <step-error-ref code="XC0058"/>.</para></entry>
+            <entry><para>This is not allowed. Error <step-error-ref code="XC0058"/> is raised.</para></entry>
           </row>
         </tbody>
       </tgroup>
