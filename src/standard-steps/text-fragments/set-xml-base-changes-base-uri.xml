@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fragment>
+  <para>If an attribute called <code>xml:base</code> is added or changed, the base URI of the element is updated accordingly. See also category
+    <category-ref idref="xml-base-related"/>.</para>
+</fragment>

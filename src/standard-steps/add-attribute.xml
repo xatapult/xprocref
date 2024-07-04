@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="add-attribute" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation"
+<step name="add-attribute" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation xml-base-related"
   short-description="Add (or replace) an attribute on a set of elements" href-specification="{$BASELINK-STANDARD-STEPS}#c.add-attribute"
-  required="true" publish="true" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  required="true" publish="true" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
+  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -81,6 +81,9 @@
     <xi:include href="../text-fragments/document-properties-preserved.xml"/>
   </detail>
   <detail>
+    <xi:include href="text-fragments/set-xml-base-changes-base-uri.xml"/>
+  </detail>
+  <detail>
     <para>You cannot use this step to add or change a namespace declaration. Attempting to do so will result in error <step-error-ref code="XC0059"
       />.</para>
     <para>Note, however, that it is possible to add an attribute whose namespace is not in scope on the element it is added to. The XProc namespace
@@ -92,7 +95,7 @@
   <example title="Adding/replacing an attribute" id="ex01">
     <para>This example adds a <code>type="special"</code> attribute to all <tag>text</tag> elements. One of the input <tag>text</tag> elements already
       has such an attribute, but with a different value. This existing attribute is replaced.</para>
-    <xproc-example href="examples/add-attribute-01.xpl"/>
+    <xproc-example href="examples/add-attribute/add-attribute-01.xpl"/>
   </example>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="set-attributes" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation"
+<step name="set-attributes" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation xml-base-related"
   short-description="Add (or replace) attributes on a set of elements" required="true" publish="true"
   href-specification="{$BASELINK-STANDARD-STEPS}#c.set-attributes" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
@@ -74,6 +74,9 @@
     <xi:include href="../text-fragments/document-properties-preserved.xml"/>
   </detail>
   <detail>
+    <xi:include href="text-fragments/set-xml-base-changes-base-uri.xml"/>
+  </detail>
+  <detail>
     <para>You cannot use this step to add or change a namespace declaration. Attempting to do so will result in error <step-error-ref code="XC0059"
       />.</para>
     <para>Note, however, that it is possible to add an attribute whose namespace is not in scope on the element it is added to. The XProc namespace
@@ -85,7 +88,7 @@
   <example title="Adding/replacing multiple attributes">
     <para>This example adds the <code>type="special"</code> and a <code>level="2"</code> attributes to all <tag>text</tag> elements. One of the input
         <tag>text</tag> elements already has a <code>type</code> attribute, but with a different value. This existing attribute is replaced.</para>
-    <xproc-example href="examples/set-attributes-01.xpl"/>
+    <xproc-example href="examples/set-attributes/set-attributes-01.xpl"/>
   </example>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

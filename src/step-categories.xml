@@ -19,4 +19,8 @@
     <description>These steps implement basic XML manipulation, like adding attributes, inserting elements, etc.</description>
   </category>
   
+  <category id="xml-base-related" name="Base URI related">
+    <description>These steps act on or use the base URI value of elements.</description>
+  </category>
+  
 </categories>

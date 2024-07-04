@@ -200,6 +200,9 @@
       </p:run-input>
       <p:output port="result" primary="true"/>
     </p:run>
+    <p:xslt>
+      <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-example-results.xsl"/>
+    </p:xslt>
     <p:wrap match="/*" wrapper="_RESULT" name="wrapped-pipeline-result"/>
     <p:insert match="/*" position="last-child">
       <p:with-input port="source" pipe="current@process-xproc-example"/>
@@ -208,7 +211,7 @@
 
     <!-- Use the now enhanced element to create the final output: -->
     <p:xslt>
-      <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-examples.xsl"/>
+      <p:with-input port="stylesheet" href="xsl-process-xprocref/create-examples.xsl"/>
     </p:xslt>
   </p:viewport>
 

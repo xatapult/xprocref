@@ -47,13 +47,13 @@
     <itemizedlist>
       <listitem>
         <para>On an error catch you want some <tag>error …</tag> element as result:</para>
-        <example-doc href="examples/identity-01.xml"/>
+        <example-doc href="examples/identity/identity-01.xml"/>
       </listitem>
       <listitem>
         <para>Some pipelines write their main results to disk and the actual output of the pipeline doesn&#x2019;t matter. In these cases is often
           useful to produce some kind of report document with relevant information (for instance, when it happened, where the results are,
           etc.):</para>
-        <example-doc href="examples/identity-02.xml"/>
+        <example-doc href="examples/identity/identity-02.xml"/>
       </listitem>
     </itemizedlist>
   </example>
@@ -62,7 +62,7 @@
     <para>Because the <step/> step does&#x2019;t do anything, it can be used to create &#x201c;anchor points&#x201d; in your pipeline. Assume you have
       a complicated pipeline where some version of the document flowing through must be used somewhere else. The <step/> step can be used to mark such
       a location explicitly. In the following example an anchor point called <code>raw-version</code> is created and, later on, referred to:</para>
-    <example-doc href="examples/identity-03.xml"/>
+    <example-doc href="examples/identity/identity-03.xml"/>
     <para>You could also achieve this by using the <code>name="raw-version"</code> attribute on the last step of the first batch of computations.
       However, by using an explicit <step/> step it stands out in the code. Also, when the computations change (and they will), you don’t have to
       remember to keep the <code>name="raw-version"</code> attribute on the <emphasis>last</emphasis> one always.</para>
@@ -72,7 +72,7 @@
     <para>XProc has a <code>message</code> attribute (or <code>p:message</code> on steps not in the XProc namespace) that results in a message when
       the pipeline runs. Where this message appears depends on how the pipeline is run. Sometimes you want to explicitly produce messages when some
       point in your pipeline is reached. Since <step/> does&#x2019;t do anything, it is ideal for this:</para>
-    <example-doc href="examples/identity-04.xml"/>
+    <example-doc href="examples/identity/identity-04.xml"/>
   </example>
 
 </step>

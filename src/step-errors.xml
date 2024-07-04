@@ -138,8 +138,7 @@
   <error code="XC0058">
     <!-- == p:add-xml-base == -->
     <description>
-      <para>It is a dynamic error if the <option>all</option> and <option>relative</option> options are <emphasis>both</emphasis>
-        <literal>true</literal>.</para>
+      <para>It is a dynamic error if the <option>all</option> and <option>relative</option> options are both <code>true</code>.</para>
     </description>
   </error>
   <error code="XC0059">
