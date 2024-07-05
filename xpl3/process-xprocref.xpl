@@ -187,7 +187,6 @@
   </p:xslt>
 
   <!-- Do the XProc example stuff: -->
-
   <p:viewport match="db:xproc-example" name="process-xproc-example" message="  * Handling examples">
     <!-- Run the pipeline and add the result, wrapped in <_RESULT>: -->
     <p:variable name="href-pipeline" as="xs:string" select="xs:string(/*/@href)"/>
@@ -209,7 +208,7 @@
       <p:with-input port="insertion" pipe="result@wrapped-pipeline-result"/>
     </p:insert>
 
-    <!-- Use the now enhanced element to create the final output: -->
+    <!-- Use the now enhanced xproc-example element to create the final output for the examples: -->
     <p:xslt>
       <p:with-input port="stylesheet" href="xsl-process-xprocref/create-examples.xsl"/>
     </p:xslt>

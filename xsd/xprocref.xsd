@@ -293,7 +293,6 @@
             <xs:complexContent>
               <xs:extension base="xpref:ct-text">
                 <xs:attribute name="title" type="xpref:t-non-empty-string" use="required"/>
-                <xs:attributeGroup ref="xpref:ag-id-optional"/>
               </xs:extension>
             </xs:complexContent>
           </xs:complexType>
