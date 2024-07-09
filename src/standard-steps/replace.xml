@@ -20,7 +20,7 @@
       </input>
       <input port="replacement"
              content-types="text xml html"
-             primary="true"
+             primary="false"
              sequence="true">
          <description>
             <para>[EDIT] input replacement</para>

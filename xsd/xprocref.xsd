@@ -263,7 +263,7 @@
                       </xs:restriction>
                     </xs:simpleType>
                   </xs:attribute>
-                  <xs:attribute name="select" type="xpref:t-xpath-expression">
+                  <xs:attribute name="select" type="xpref:t-xpath-expression" default="()">
                     <xs:annotation>
                       <xs:documentation>The default value for the option.</xs:documentation>
                     </xs:annotation>

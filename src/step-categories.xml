@@ -8,7 +8,8 @@
 
   <category id="standard-steps" name="Standard XProc steps" primary="true">
     <description>
-      <para>These are the XProc steps that a conformant XProc processor <emphasis>must</emphasis> support. In other words: whatever processor you use for processing your XProc pipelines, you can trust that these steps will always work.</para>
+      <para>These are the XProc steps that a conformant XProc processor <emphasis>must</emphasis> support. In other words: whatever processor you use
+        for processing your XProc pipelines, you can trust that these steps will always work.</para>
     </description>
   </category>
 
@@ -16,11 +17,21 @@
   <!-- SECONDARY CATEGORIES: -->
 
   <category id="basic-xml-manipulation" name="Basic XML manipulation">
-    <description>These steps implement basic XML manipulation, like adding attributes, inserting elements, etc.</description>
+    <description>
+      <para>These steps implement basic XML manipulation, like adding attributes, inserting elements, etc.</para>
+    </description>
   </category>
-  
+
   <category id="xml-base-related" name="Base URI related">
-    <description>These steps act on or use the base URI value of elements.</description>
+    <description>
+      <para>These steps act on or use the base URI value of elements.</para>
+    </description>
   </category>
-  
+
+  <category id="archive" name="Archive handling related">
+    <description>
+      <para>These steps handle archives (for instance, ZIP files).</para>
+    </description>
+  </category>
+
 </categories>

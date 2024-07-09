@@ -41,4 +41,14 @@
     </xsl:copy>
   </xsl:template>
   
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <xsl:template match="xpref:signature/xpref:option[not(xs:boolean(@required))][empty(@select)]">
+    <xsl:copy>
+      <xsl:attribute name="select" select="'()'"/>
+      <xsl:apply-templates select="@* | node()"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  
 </xsl:stylesheet>

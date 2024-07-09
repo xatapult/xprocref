@@ -9,12 +9,12 @@
         <para>[EDIT] input source</para>
       </description>
     </input>
-    <input port="manifest" content-types="xml" sequence="true" primary="true" empty="true">
+    <input port="manifest" content-types="xml" sequence="true" primary="false" empty="true">
       <description>
         <para>[EDIT] input manifest</para>
       </description>
     </input>
-    <input port="archive" content-types="any" sequence="true" primary="true" empty="true">
+    <input port="archive" content-types="any" sequence="true" primary="false" empty="true">
       <description>
         <para>[EDIT] input archive</para>
       </description>
@@ -24,7 +24,7 @@
         <para>[EDIT] output result</para>
       </description>
     </output>
-    <output port="report" content-types="application/xml" sequence="false" primary="true">
+    <output port="report" content-types="application/xml" sequence="false" primary="false">
       <description>
         <para>[EDIT] output report</para>
       </description>

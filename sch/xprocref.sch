@@ -98,9 +98,6 @@
     <rule context="xpref:step/xpref:signature/xpref:option[xs:boolean(@required)]">
       <assert test="empty(@select)">A required option cannot have a select attribute.</assert>
     </rule>
-    <rule context="xpref:step/xpref:signature/xpref:option[not(xs:boolean(@required))]">
-      <assert test="exists(@select)">A non-required option must have a select attribute.</assert>
-    </rule>
   </pattern>
 
 </schema>

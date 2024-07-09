@@ -20,7 +20,7 @@
       </input>
       <input port="stylesheet"
              content-types="xml"
-             primary="true"
+             primary="false"
              sequence="true">
          <description>
             <para>[EDIT] input stylesheet</para>
@@ -37,7 +37,7 @@
       <output port="secondary"
               sequence="true"
               content-types="any"
-              primary="true">
+              primary="false">
          <description>
             <para>[EDIT] output secondary</para>
          </description>
