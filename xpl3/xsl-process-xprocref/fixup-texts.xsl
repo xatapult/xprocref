@@ -177,9 +177,7 @@
         </xsl:if>
       </xsl:variable>
 
-      <xsl:text>&#x201c;</xsl:text>
       <link xlink:href="{$href-link-to-target}#{$referred-anchor}">{normalize-space($referred-example-section/db:title)}</link>
-      <xsl:text>&#x201d;</xsl:text>
       <xsl:if test="not($in-own-step)">
         <xsl:text> in step </xsl:text>
         <code role="step">

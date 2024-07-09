@@ -172,16 +172,153 @@
   <chapter>
     <title>The XProcRef markup language</title>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect1>
+      <title>Overall structure</title>
+      <para>This is not documented (yet). Please refer to the schema in <code>xprocref/xsd/xprocref.xsd</code>.</para>
+    </sect1>
+    
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    
+    <sect1>
+      <title>Describing a step</title>
+      <para>This is not documented (yet). Please refer to the schema (<tag>step</tag> element) in <code>xprocref/xsd/xprocref.xsd</code>.</para>
+    </sect1>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <sect1>
       <title>XprocRef DocBook sections</title>
 
-      <para>Using Markdown, using xdoc extensions</para>
+      <warning>
+        <title/>
+        <para>DocBook sections are <emphasis>not</emphasis> validated (yet)!</para>
+      </warning>
 
-      <sect2>
+      <para>For any element in the XprocRef markup that can contain text, the following applies:</para>
+      <itemizedlist>
+        <listitem>
+          <para>The basic language is DocBook 5 (the <link xlink:href="https://xdoc.xtpxlib.org/6_DocBook_dialect.html">xtpxlib-xdoc dialect</link>),
+            with <link xlink:href="https://xdoc.xtpxlib.org/">xtpxlib-xdoc</link> extensions. These extensions can be used to, for instance, create
+            descriptions of XML elements.</para>
+        </listitem>
+        <listitem>
+          <para>Elements do <emphasis>not</emphasis> have to be in the DocBook namespace. Any element that is not in the DocBook 5
+              (<code>http://docbook.org/ns/docbook</code>) or xtpxlib-xdoc (<code>http://www.xtpxlib.nl/ns/xdoc</code>) namespace is automatically
+            changed into the DOcBook namespace. </para>
+        </listitem>
+        <listitem>
+          <para>Any non-empty text element that is a direct child of the encompassing element is supposed to be in simple Markdown (see <link
+              xlink:href="https://xdoc.xtpxlib.org/5_XProc_3.0_support.html#xpl3-xtpxlib-xdoc.mod.xpl">here</link>) and transformed into DocBook
+            automatically. </para>
+        </listitem>
+        <listitem>
+          <para>There are several additional elements that can be used on top of the normal DocBook and xtpxlib-xdoc elements. See <xref
+              linkend="xprocref-docbook-extensions"/>.</para>
+        </listitem>
+      </itemizedlist>
+
+      <sect2 xml:id="xprocref-docbook-extensions">
         <title>XprocRef specific DocBook extensions</title>
 
-        <para>All the elements</para>
+        <table role="nonumber">
+          <title/>
+          <tgroup cols="2">
+            <thead>
+              <row>
+                <entry>
+                  <para>Element</para>
+                </entry>
+                <entry>
+                  <para>Description</para>
+                </entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry>
+                  <para>
+                    <tag>step</tag></para><para><tag>port</tag></para><para><tag>option</tag></para><para><tag>property</tag>
+                  </para>
+                </entry>
+                <entry>
+                  <para>Adds some special markup for the name of the step, port, option or (document) property (an HTML class with the same value). </para>
+                  <para>An empty <tag class="emptytag">step</tag> element in a step description results in the step name itself.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <para><tag class="emptytag">step-error-ref code="…"</tag></para>
+                </entry>
+                <entry>
+                  <para>Adds a reference to one of the step errors. The text of the reference is the error <emphasis>code</emphasis>.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <para><tag class="emptytag">step-ref name=…" version-id?=…"</tag></para>
+                </entry>
+                <entry>
+                  <para>Adds a reference to a step. The name of the step must be including the namespace prefix (e.g.
+                    <code>name="p:identity"</code>).</para>
+                  <para>You can optionally refer to a step in another version by adding the <code>version-id</code> attribute.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <para><tag class="emptytag">category-ref idref="…"</tag></para>
+                </entry>
+                <entry>
+                  <para>Adds a reference to a category. The text of the reference is the name of the category.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <para><tag class="emptytag">example-ref idref=…" step-name?=…"</tag></para>
+                </entry>
+                <entry>
+                  <para>Adds a reference to an example. The text of the reference is the name of the example.</para>
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  <para><tag class="emptytag">example-doc href="…"</tag></para>
+                </entry>
+                <entry>
+                  <para>Inserts some example document. This is done as (unparsed) text, so make sure XML documents have no XML header!</para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <sect3>
+          <title>Adding an XProc example with auto-execute </title>
+
+
+          <itemizedlist>
+            <listitem>
+              <para>It is possible to add XProc example pipelines that execute automatically. The result of this execution is available and shown as
+                the result of the example pipeline.</para>
+            </listitem>
+            <listitem>
+              <para>The XProc example pipeline must be self-running. That is, the input document must either be referenced (<code>@href</code>) on the
+                  <code>source</code> port or must be inlined. It will be presented for the example as a <emphasis>separate</emphasis> document. The
+                reference or inlined document is removed from the pipeline in the example text.</para>
+            </listitem>
+          </itemizedlist>
+
+          <xdoc:transform href="$xdoc/xml-description.xpl">
+            <xi:include href="descriptions/xproc-example.description.xml"/>
+          </xdoc:transform>
+
+
+
+        </sect3>
+
 
       </sect2>
 

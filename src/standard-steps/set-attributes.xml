@@ -65,7 +65,7 @@
         <para>The resulting document(s) appear on its <port>result</port> port.</para>
       </listitem>
     </itemizedlist>
-    <para>If you only want to set a single attribute, you can also use the <step-ref name="p:add-attribute"/> step.</para>
+    <para>If you just want to set a single attribute, you can also use the <step-ref name="p:add-attribute"/> step.</para>
   </description>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

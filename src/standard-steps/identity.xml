@@ -29,7 +29,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <description>
-    <para>The <step>p:identity</step> step does… nothing. It makes a verbatim copy of all documents appearing on its <port>source</port> port to its
+    <para>The <step/> step does… nothing. It makes a verbatim copy of all documents appearing on its <port>source</port> port to its
         <port>result</port> port. Although it doesn&#x2019;t do anything, it is actually extremely useful and virtually indispensable. The examples
       below show some use cases.</para>
   </description>

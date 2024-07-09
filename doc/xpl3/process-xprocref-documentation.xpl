@@ -13,11 +13,6 @@
   <p:import href="../../../xtpxlib-xdoc/xpl3/xdoc-to-pdf.xpl"/>
 
   <!-- ======================================================================= -->
-  <!-- DEVELOPMENT SETTINGS: -->
-
-  <p:option name="develop" as="xs:boolean" static="true" select="false()"/>
-
-  <!-- ======================================================================= -->
   <!-- PORTS: -->
 
   <p:input port="source" primary="true" sequence="false" content-types="xml" href="../src/xprocref-documentation.xml">

@@ -18,7 +18,7 @@
 
   <!-- ================================================================== -->
 
-  <xsl:template match="xpref:step">
+  <xsl:template match="xpref:steps/xpref:step">
     <!-- Make sure some optional attributes are filled in. -->
     <xsl:copy>
       <xsl:if test="empty(@id)">

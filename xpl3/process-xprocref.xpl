@@ -133,15 +133,15 @@
   </xtlc:validate>
   
   <!-- Prepare some attributes and unwrap the step-groups: -->
+  <p:unwrap match="xpref:step-group"/>
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/prepare-xprocref-specification.xsl"/>
   </p:xslt>
-  <p:unwrap match="xpref:step-group"/>
 
   <!-- Remove the unpublished steps when creating a production version: -->
   <p:variable name="step-count-1" as="xs:integer" select="count(/*/xpref:steps/xpref:step)"/>
   <p:if test="$production-version">
-    <p:delete match="xpref:step[not(xs:boolean((@publish, false())[1]))]"/>
+    <p:delete match="xpref:steps/xpref:step[not(xs:boolean((@publish, false())[1]))]"/>
   </p:if>
   <p:variable name="step-count-2" as="xs:integer" select="count(/*/xpref:steps/xpref:step)"/>
   <p:if test="$step-count-2 lt 1">
@@ -182,9 +182,12 @@
     <p:with-input port="stylesheet" href="xsl-process-xprocref/create-xprocref-container.xsl"/>
     <p:with-option name="parameters" select="map{'xprocref-index': $xprocref-index, 'production-version': $production-version, 'wip': $wip}"/>
   </p:xslt>
+  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-raw-container-X.xml"/>
+  
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-texts.xsl"/>
   </p:xslt>
+  
 
   <!-- Do the XProc example stuff: -->
   <p:viewport match="db:xproc-example" name="process-xproc-example" message="  * Handling examples">
