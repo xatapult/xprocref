@@ -147,8 +147,6 @@
     </xtlc:validate>
   </p:if>
   
-  
-  
   <!-- Prepare some attributes and unwrap the step-groups: -->
   <p:unwrap match="xpref:step-group"/>
   <p:xslt>

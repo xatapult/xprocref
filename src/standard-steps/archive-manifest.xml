@@ -2,7 +2,8 @@
 <step name="archive-manifest" version-idref="v30" category-idrefs="standard-steps archive"
   short-description="Create an XML manifest document describing the contents of an archive file" required="true" publish="false"
   href-specification="{$BASELINK-STANDARD-STEPS}#c.archive-manifest" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xlink="http://www.w3.org/1999/xlink">
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -14,7 +15,7 @@
     </input>
     <output port="result" primary="true" content-types="application/xml" sequence="false">
       <description>
-        <para>The created XML manifest document.</para>
+        <para>The created XML manifest document. See <xref linkend="archive-manifest-format"/>.</para>
       </description>
     </output>
 
@@ -38,7 +39,8 @@
     </option>
     <option name="parameters" as="map(xs:QName, item()*)?" required="false" select="()">
       <description>
-        <para>Parameters used to control the XML manifest document generation.</para>
+        <para>Parameters used to control the XML manifest document generation. The XProc specification does not define any parameters for this option.
+          A specific XProc processor might define its own.</para>
       </description>
     </option>
     <option name="relative-to" as="xs:anyURI?" required="false" select="()">
@@ -62,12 +64,25 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <description>
-    <para>TBD</para>
+    <para>The <step/> step takes an archive file on its <port>source</port> port, for instance a ZIP file, and returns on its <port>result</port> port
+      an XML document that describes the contents of the archive: the <emphasis>archive&#160;manifest</emphasis>.</para>
+    <para>Archives come in many formats. The only format the <step/> step is required to handle is ZIP. However, depending on the XProc processor
+      used, other formats may also be processed.</para>
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <section xml:id="archive-manifest-format">
       <!-- BREAK OUT IN SEP DOC?!? FOR INCLUSION IN OTHER ARCHIVE STEPS -->
-      <title>The XML manifest document format</title>
-      <para>TBD</para>
+      <title>The XML archive manifest document format</title>
+      <para>The root element of an XML manifest document is <tag>c:archive</tag> (the <code>c</code> prefix here is bound to the
+          <code>http://www.w3.org/ns/xproc-step</code> namespace):</para>
+      <xdoc:transform href="$xdoc/xml-description.xpl">
+        <xi:include href="element-descriptions/c-archive.description.xml"/>
+      </xdoc:transform>
+      <para>A <tag>c:entry</tag> element describes a single entry (a file) in the archive:</para>
+      <xdoc:transform href="$xdoc/xml-description.xpl">
+        <xi:include href="element-descriptions/c-archive-entry.description.xml"/>
+      </xdoc:transform>
     </section>
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <section xml:id="override-content-type">
       <title>Overriding content types</title>
       <para>The <option>override-content-types</option> option can be used to partially override the content-type determination mechanism. If present,
@@ -128,50 +143,74 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
+  <example title="Basic usage">
+    <para>Assume we have a simple ZIP file with two entries:</para>
+    <itemizedlist>
+      <listitem>
+        <para>An XML file in the root called <code>reference.xml</code></para>
+      </listitem>
+      <listitem>
+        <para>An image in an <code>images/</code> sub-directory called <code>logo.png</code>.</para>
+      </listitem>
+    </itemizedlist>
+    <xproc-example href="examples/archive-manifest/archive-manifest-01.xpl" show-source="false">
+      <pipeline-header>
+        <para>The following pipeline creates an archive manifest for this ZIP file:</para>
+      </pipeline-header>
+      <result-header>
+        <para>Archive manifest:</para>
+      </result-header>
+    </xproc-example>
+    <para>As you can see, the XProc processor I&#x2019;m using to process this example (Morgana) adds a few attributes to the <tag>c:entry</tag>
+      elements: <code>size</code>, <code>compressed-size</code> and <code>time</code>.</para>
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
   <step-errors>
     <step-error code="XC0085">
-      <description>
+      <!--<description>
         <para>It is a dynamic error if the format of the archive does not match the specified format, cannot be understood, determined and/or
           processed.</para>
-      </description>
+      </description>-->
     </step-error>
     <step-error code="XC0079">
-      <description>
+      <!--<description>
         <para>It is a dynamic error if the map <option>parameters</option> contains an entry whose key is defined by the implementation and whose
           value is not valid for that key.</para>
-      </description>
+      </description>-->
     </step-error>
     <step-error code="XD0064">
-      <description>
+      <!--<description>
         <para>It is a dynamic error if the base URI is not both absolute and valid according to <link
             xlink:href="https://www.rfc-editor.org/info/rfc3986" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink">RFC 3986</link> .</para>
-      </description>
+      </description>-->
     </step-error>
     <step-error code="XC0120">
-      <description>
+      <!--<description>
         <para>It is a dynamic error if the <option>relative-to</option> option is not present and the document on the <port>source</port> port does
           not have a base URI.</para>
-      </description>
+      </description>-->
     </step-error>
     <step-error code="XC0147">
-      <description>
+      <!--<description>
         <para>It is a dynamic error if the specified value is not a valid XPath regular expression.</para>
-      </description>
+      </description>-->
     </step-error>
     <step-error code="XD0079">
-      <description>
+      <!--<description>
         <para>It is a dynamic error if a supplied content-type is not a valid media type of the form “<literal>
             <replaceable>type</replaceable>/<replaceable>subtype</replaceable>+<replaceable>ext</replaceable>
           </literal>” or “<literal>
             <replaceable>type</replaceable>/<replaceable>subtype</replaceable>
           </literal>”.</para>
-      </description>
+      </description>-->
     </step-error>
     <step-error code="XC0146">
-      <description>
+      <!--<description>
         <para>It is a dynamic error if the specified value for the <option>override-content-types</option> option is not an array of arrays, where the
           inner arrays have exactly two members of type <code>xs:string</code>.</para>
-      </description>
+      </description>-->
     </step-error>
   </step-errors>
 </step>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element-description xmlns="http://www.xtpxlib.nl/ns/xdoc" xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xdoc
+  ../../../../../xatapult/xtpxlib-xdoc/xsd/element-description.xsd" name="c:entry" sort-attributes="false">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <attribute name="name" required="true">
+    <description>
+      <para>The name of the entry. This is the path of the file <emphasis>within</emphasis> the archive.</para>
+      <para>Usually this is a relative path. However, depending on how archives are constructed, an absolute path (a path starting with a <code>/</code>)
+        is possible. Archives constructed by XProc steps always produce relative paths (no leading <code>/</code>).</para>
+    </description>
+    <type name="xs:string"/>
+  </attribute>
+  <attribute name="href" required="true">
+    <description>
+      <para>The URI of the entry. TBD TBD</para>
+    </description>
+    <type name="xs:anyURI"/>
+  </attribute>
+  <attribute name="content-type" required="false">
+    <description>
+      <para>The content-type (MIME type) of the entry. The <code>p:archive-manifest</code> step will always add this attribute, but it can be absent
+        and will usually be ignored for other archiving related steps.</para>
+    </description>
+    <type name="xs:string"/>
+  </attribute>
+  <attribute name="comment" required="false">
+    <description>
+      <para>An optional comment associated with the entry.</para>
+    </description>
+    <type name="xs:string"/>
+  </attribute>
+  <attribute name="method" required="false">
+    <description>
+      <para>The compression method of the entry. There is only one defined value: <code>none</code>, meaning, of course, no compression. Any other
+        values are XProc processor dependent.</para>
+    </description>
+    <type name="xs:string"/>
+  </attribute>
+  <attribute name="level" required="false">
+    <description>
+      <para>The compression level of the entry. There are no defined values, all values are XProc processor dependent.</para>
+    </description>
+    <type name="xs:string"/>
+  </attribute>
+  <attribute name="(any other attribute)" describe="false" required="true"/>
+
+  <element-placeholder as-comment="false">(any child element)*</element-placeholder>
+
+</element-description>

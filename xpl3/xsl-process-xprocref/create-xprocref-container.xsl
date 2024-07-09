@@ -1001,7 +1001,7 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="*" mode="mode-process-text-inner-elements">
+  <xsl:template match="*[not(namespace-uri(.) = $namespaces-leave-unchanged)]" mode="mode-process-text-inner-elements">
     <xsl:element name="db:{local-name(.)}">
       <xsl:apply-templates select="@* | node()" mode="#current"/>
     </xsl:element>
