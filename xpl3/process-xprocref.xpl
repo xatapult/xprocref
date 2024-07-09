@@ -127,10 +127,27 @@
   <xtlc:expand-macro-definitions/>
 
   <!-- Validate: -->
-  <xtlc:validate simplify-error-messages="true">
+  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-before-validation-1.xml"/>
+  <xtlc:validate simplify-error-messages="true" p:message="  * Validating primary source">
     <p:with-option name="href-schema" select="$href-xprocref-schema"/>
     <p:with-option name="href-schematron" select="$href-xprocref-schematron"/>
   </xtlc:validate>
+  
+  <!-- Handle the step-identity elements: -->
+  <p:if test="exists(/*/xpref:steps//xpref:step-identity)">
+    <p:xslt message="  * Handling step identities">
+      <p:with-input port="stylesheet" href="xsl-process-xprocref/handle-step-identities.xsl"/>
+    </p:xslt>
+    <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-before-validation-2.xml"/>
+    <!-- Just to be sure, re-validate -->
+    <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-before-validation-1.xml"/>
+    <xtlc:validate simplify-error-messages="true" >
+      <p:with-option name="href-schema" select="$href-xprocref-schema"/>
+      <p:with-option name="href-schematron" select="$href-xprocref-schematron"/>
+    </xtlc:validate>
+  </p:if>
+  
+  
   
   <!-- Prepare some attributes and unwrap the step-groups: -->
   <p:unwrap match="xpref:step-group"/>

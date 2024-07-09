@@ -11,61 +11,62 @@
   <!-- ======================================================================= -->
   <!-- Define the keys for the identifier lookups: -->
 
-  <xsl:key name="version-identifiers" match="/*/xpref:versions/xpref:version" use="xs:string(@id)"/>
-  <xsl:key name="category-identifiers" match="/*/xpref:categories/xpref:category" use="xs:string(@id)"/>
-
+  <let name="defined-version-ids" value="/*/xpref:versions/xpref:version/@id/string()"/>
+  <let name="defined-category-ids" value="/*/xpref:categories/xpref:category/@id/string()"/>
+  <let name="defined-namespace-prefixes" value="/*/xpref:namespaces/xpref:namespace/@prefix/string()"/>
   <let name="defined-error-codes" value="/*/xpref:errors/xpref:error/@code/string()"/>
 
   <!-- ======================================================================= -->
-  <!-- step/@version-idref must exist: -->
+  <!-- Check the version id referencest: -->
 
   <pattern>
-    <rule context="xpref:step/@version-idref">
-      <let name="version-idref" value="xs:string(.)"/>
-      <assert test="exists(key('version-identifiers', $version-idref))">A version with identifier "<value-of select="$version-idref"/>" does not
-        exist</assert>
+    <rule context="(xpref:step | xpref:step-identity)/@version-idref">
+      <let name="version-idref" value="string(.)"/>
+      <assert test="$version-idref = $defined-version-ids">A version with identifier "<value-of select="$version-idref"/>" does not exist</assert>
+    </rule>
+  </pattern>
+  
+  <pattern>
+    <rule context="xpref:step-identity/@base-version-idref">
+      <let name="version-idref" value="string(.)"/>
+      <assert test="$version-idref = $defined-version-ids">A base version with identifier "<value-of select="$version-idref"/>" does not exist</assert>
     </rule>
   </pattern>
 
   <!-- ======================================================================= -->
-  <!-- step/@category-idrefs must be unique and exist. -->
+  <!-- Check the category id references: -->
 
   <pattern>
-    <rule context="xpref:step/@category-idrefs">
-      <!-- Remark: The schema validation makes the data-type of this attribute a sequence. Since we cannot be sure that schema validation takes place 
-        beforehand, tie it together again first... :( -->
-      <let name="category-idrefs" value="tokenize(string-join(., ' '), '\s')[.]"/>
-      <assert test="every $ref in $category-idrefs satisfies exists(key('category-identifiers', $ref))">The value of @<value-of select="local-name(.)"
-        /> "<value-of select="$category-idrefs"/>" references non-existing categories.</assert>
+    <rule context="(xpref:step | xpref:step-identity)/@category-idrefs">
+      <let name="category-idrefs" value="tokenize(., '\s')[.]"/>
+      <assert test="every $ref in $category-idrefs satisfies ($ref = $defined-category-ids)">The value of @<value-of select="local-name(.)"/>
+          "<value-of select="$category-idrefs"/>" references non-existing categories.</assert>
       <assert test="count($category-idrefs) eq count(distinct-values($category-idrefs))">The value of @<value-of select="local-name(.)"/> "<value-of
           select="$category-idrefs"/>" contains duplicate values.</assert>
     </rule>
   </pattern>
 
   <!-- ======================================================================= -->
-  <!-- Check the namespace prefix: -->
+  <!-- Checks on namespace prefixes: -->
 
   <pattern>
-    <rule context="xpref:step">
+    <rule context="xpref:step | xpref:step-identity">
       <let name="namespace-prefix" value="xs:string((@namespace-prefix, 'p')[1])"/>
-      <assert test="exists(/*/xpref:namespaces/xpref:namespace[@prefix eq $namespace-prefix])">The step namespace prefix "<value-of
-          select="$namespace-prefix"/>" is undefined.</assert>
+      <assert test="$namespace-prefix = $defined-namespace-prefixes">The step namespace prefix "<value-of select="$namespace-prefix"/>" is
+        undefined.</assert>
     </rule>
   </pattern>
-  
-  <!-- ======================================================================= -->
-  <!-- Check whether there is exactly one error namespace defined: -->
-  
+
   <pattern>
     <rule context="xpref:namespaces">
-      <let name="error-namespace-definitions" value="xpref:namespace[xs:boolean((@error-namespace, false())[1])]"></let>
+      <let name="error-namespace-definitions" value="xpref:namespace[xs:boolean((@error-namespace, false())[1])]"/>
       <assert test="count($error-namespace-definitions) eq 1">There must be exactly one error namespace.</assert>
     </rule>
-    
+
   </pattern>
-  
+
   <!-- ======================================================================= -->
-  <!-- Check error codes: -->
+  <!-- Check error codes in steps: -->
 
   <pattern>
     <rule context="xpref:step-error-ref">
@@ -80,6 +81,25 @@
     <rule context="xpref:step-error">
       <let name="error-code" value="xs:string(@code)"/>
       <assert test="$error-code = $defined-error-codes">The error code "<value-of select="$error-code"/>" is undefined.</assert>
+    </rule>
+  </pattern>
+
+  <!-- ======================================================================= -->
+  <!-- Check the step signatures: -->
+
+  <pattern>
+    <rule context="xpref:step/xpref:signature">
+      <assert test="count(xpref:input[xs:boolean(@primary)]) le 1">Step signature has more than one primary input port.</assert>
+      <assert test="count(xpref:output[xs:boolean(@primary)]) le 1">Step signature has more than one primary output port.</assert>
+    </rule>
+  </pattern>
+
+  <pattern>
+    <rule context="xpref:step/xpref:signature/xpref:option[xs:boolean(@required)]">
+      <assert test="empty(@select)">A required option cannot have a select attribute.</assert>
+    </rule>
+    <rule context="xpref:step/xpref:signature/xpref:option[not(xs:boolean(@required))]">
+      <assert test="exists(@select)">A non-required option must have a select attribute.</assert>
     </rule>
   </pattern>
 
