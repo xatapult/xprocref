@@ -29,6 +29,18 @@
     </description>
     <type name="xs:boolean"/>
   </attribute>
+  <attribute name="fixup-uris" default="true" >
+    <description>
+      <para>Whether to fixup any URIs (change the path to something bogus so source disk layout stays hidden).</para>
+    </description>
+    <type name="xs:boolean"></type>
+  </attribute>
+  <attribute name="keep-from">
+    <description>
+      <para>When fixing up URIs, use the path including and after this string. If not set only the filename is used.</para>
+    </description>
+    <type name="xs:string"></type>
+  </attribute>
 
   <element name="source-header" occurs="?">
     <description>

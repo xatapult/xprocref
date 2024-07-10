@@ -123,13 +123,19 @@
             xlink:href="https://www.xatapult.nl">Xatapult Content Engineering</link>:</para>
         <itemizedlist>
           <listitem>
-            <para><link xlink:href="https://common.xtpxlib.org/">Xtpxlib Common</link></para>
+            <para>
+              <link xlink:href="https://common.xtpxlib.org/">Xtpxlib Common</link>
+            </para>
           </listitem>
           <listitem>
-            <para><link xlink:href="https://container.xtpxlib.org/">Xtpxlib Container</link></para>
+            <para>
+              <link xlink:href="https://container.xtpxlib.org/">Xtpxlib Container</link>
+            </para>
           </listitem>
           <listitem>
-            <para><link xlink:href="https://xdoc.xtpxlib.org/">Xtpxlib Xdoc</link></para>
+            <para>
+              <link xlink:href="https://xdoc.xtpxlib.org/">Xtpxlib Xdoc</link>
+            </para>
           </listitem>
         </itemizedlist>
       </listitem>
@@ -178,9 +184,9 @@
       <title>Overall structure</title>
       <para>This is not documented (yet). Please refer to the schema in <code>xprocref/xsd/xprocref.xsd</code>.</para>
     </sect1>
-    
+
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    
+
     <sect1>
       <title>Describing a step</title>
       <para>This is not documented (yet). Please refer to the schema (<tag>step</tag> element) in <code>xprocref/xsd/xprocref.xsd</code>.</para>
@@ -239,7 +245,16 @@
               <row>
                 <entry>
                   <para>
-                    <tag>step</tag></para><para><tag>port</tag></para><para><tag>option</tag></para><para><tag>property</tag>
+                    <tag>step</tag>
+                  </para>
+                  <para>
+                    <tag>port</tag>
+                  </para>
+                  <para>
+                    <tag>option</tag>
+                  </para>
+                  <para>
+                    <tag>property</tag>
                   </para>
                 </entry>
                 <entry>
@@ -249,7 +264,9 @@
               </row>
               <row>
                 <entry>
-                  <para><tag class="emptytag">step-error-ref code="…"</tag></para>
+                  <para>
+                    <tag class="emptytag">step-error-ref code="…"</tag>
+                  </para>
                 </entry>
                 <entry>
                   <para>Adds a reference to one of the step errors. The text of the reference is the error <emphasis>code</emphasis>.</para>
@@ -257,7 +274,9 @@
               </row>
               <row>
                 <entry>
-                  <para><tag class="emptytag">step-ref name=…" version-id?=…"</tag></para>
+                  <para>
+                    <tag class="emptytag">step-ref name="…" version-id?=…"</tag>
+                  </para>
                 </entry>
                 <entry>
                   <para>Adds a reference to a step. The name of the step must be including the namespace prefix (e.g.
@@ -267,7 +286,9 @@
               </row>
               <row>
                 <entry>
-                  <para><tag class="emptytag">category-ref idref="…"</tag></para>
+                  <para>
+                    <tag class="emptytag">category-ref idref="…"</tag>
+                  </para>
                 </entry>
                 <entry>
                   <para>Adds a reference to a category. The text of the reference is the name of the category.</para>
@@ -275,7 +296,9 @@
               </row>
               <row>
                 <entry>
-                  <para><tag class="emptytag">example-ref idref=…" step-name?=…"</tag></para>
+                  <para>
+                    <tag class="emptytag">example-ref idref=…" step-name?=…"</tag>
+                  </para>
                 </entry>
                 <entry>
                   <para>Adds a reference to an example. The text of the reference is the name of the example.</para>
@@ -283,7 +306,9 @@
               </row>
               <row>
                 <entry>
-                  <para><tag class="emptytag">example-doc href="…"</tag></para>
+                  <para>
+                    <tag class="emptytag">example-doc href="…"</tag>
+                  </para>
                 </entry>
                 <entry>
                   <para>Inserts some example document. This is done as (unparsed) text, so make sure XML documents have no XML header!</para>

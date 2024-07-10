@@ -67,6 +67,10 @@
     <p:documentation>Whether to add a warning banner on every page that the site is work in progress.</p:documentation>
   </p:option>
 
+  <p:option name="limit-to-steps" as="xs:string*" required="false" select="()">
+    <p:documentation>Limit the output to the steps mentioned here. Use the step names *without* a namespace prefix!</p:documentation>
+  </p:option>
+
   <!-- ======================================================================= -->
   <!-- SUBSTEPS: -->
 
@@ -102,12 +106,18 @@
   <p:variable name="href-xprocref-schema" as="xs:string" select="resolve-uri('../xsd/xprocref.xsd', static-base-uri())"/>
   <p:variable name="href-xprocref-schematron" as="xs:string" select="resolve-uri('../sch/xprocref.sch', static-base-uri())"/>
 
-
   <!-- ================================================================== -->
   <!-- MAIN: -->
 
-  <p:identity message="* XProcRef processing"/>
-  <p:identity message="  * {if ($production-version) then 'Production' else 'Test'} version{if ($wip) then ' (marked as WIP)' else ()}"/>
+  <p:variable name="start-timestamp" as="xs:dateTime" select="current-dateTime()"/>
+
+  <p:variable name="limit-to-steps-sequence" as="xs:string"
+    select="'(' || string-join(for $s in $limit-to-steps return ('''' || $s || ''''), ', ') || ')'"/>
+  <p:variable name="type-string" as="xs:string" select="(if ($production-version) then 'Production' else 'Test') || ' version' || 
+    (if ($wip) then '; marked as WIP)' else ()) ||
+    (if (exists($limit-to-steps)) then ('; Limit to ' || $limit-to-steps-sequence) else ())"/>
+
+  <p:identity message="* XProcRef processing ({$type-string})"/>
   <p:identity message="  * Source document: {$xprocref-base-uri}"/>
   <p:identity message="  * Build location: {$href-build-location}"/>
 
@@ -132,7 +142,7 @@
     <p:with-option name="href-schema" select="$href-xprocref-schema"/>
     <p:with-option name="href-schematron" select="$href-xprocref-schematron"/>
   </xtlc:validate>
-  
+
   <!-- Handle the step-identity elements: -->
   <p:if test="exists(/*/xpref:steps//xpref:step-identity)">
     <p:xslt message="  * Handling step identities">
@@ -141,12 +151,12 @@
     <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-before-validation-2.xml"/>
     <!-- Just to be sure, re-validate -->
     <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-before-validation-1.xml"/>
-    <xtlc:validate simplify-error-messages="true" >
+    <xtlc:validate simplify-error-messages="true">
       <p:with-option name="href-schema" select="$href-xprocref-schema"/>
       <p:with-option name="href-schematron" select="$href-xprocref-schematron"/>
     </xtlc:validate>
   </p:if>
-  
+
   <!-- Prepare some attributes and unwrap the step-groups: -->
   <p:unwrap match="xpref:step-group"/>
   <p:xslt>
@@ -155,6 +165,10 @@
 
   <!-- Remove the unpublished steps when creating a production version: -->
   <p:variable name="step-count-1" as="xs:integer" select="count(/*/xpref:steps/xpref:step)"/>
+  <p:if test="exists($limit-to-steps)">
+    <p:delete match="xpref:steps/xpref:step[not(xs:string(@name) = {$limit-to-steps-sequence})]"
+      message="  * WARNING: Limiting to steps: {$limit-to-steps-sequence}"/>
+  </p:if>
   <p:if test="$production-version">
     <p:delete match="xpref:steps/xpref:step[not(xs:boolean((@publish, false())[1]))]"/>
   </p:if>
@@ -162,7 +176,8 @@
   <p:if test="$step-count-2 lt 1">
     <p:error code="xpref:error">
       <p:with-input>
-        <p:inline content-type="text/plain">No steps to publish (production-version={$production-version})</p:inline>
+        <p:inline content-type="text/plain">No steps to publish (production-version={$production-version};
+          limit-to-steps=({string-join($limit-to-steps, ', ')}))</p:inline>
       </p:with-input>
     </p:error>
   </p:if>
@@ -198,14 +213,16 @@
     <p:with-option name="parameters" select="map{'xprocref-index': $xprocref-index, 'production-version': $production-version, 'wip': $wip}"/>
   </p:xslt>
   <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-raw-container-X.xml"/>
-  
+
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-texts.xsl"/>
   </p:xslt>
-  
+
 
   <!-- Do the XProc example stuff: -->
   <p:viewport match="db:xproc-example" name="process-xproc-example" message="  * Handling examples">
+    <p:variable name="xproc-example-elm" as="element(db:xproc-example)" select="/*"/>
+
     <!-- Run the pipeline and add the result, wrapped in <_RESULT>: -->
     <p:variable name="href-pipeline" as="xs:string" select="xs:string(/*/@href)"/>
     <p:run>
@@ -219,6 +236,7 @@
     </p:run>
     <p:xslt>
       <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-example-results.xsl"/>
+      <p:with-option name="parameters" select="map{'xproc-example-elm': $xproc-example-elm}"/>
     </p:xslt>
     <p:wrap match="/*" wrapper="_RESULT" name="wrapped-pipeline-result"/>
     <p:insert match="/*" position="last-child">
@@ -263,9 +281,19 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Finishing: -->
 
+  <!-- Check for any markup errors and report these: -->
+  <p:xslt>
+    <p:with-input port="stylesheet" href="xsl-process-xprocref/check-for-markup-errors.xsl"/>
+  </p:xslt>
+
   <!-- Write the container to disk: -->
   <xtlcon:container-to-disk remove-target="false" p:message="  * Writing to target">
     <p:with-option name="href-target-path" select="$href-build-location"/>
   </xtlcon:container-to-disk>
+
+  <p:variable name="duration" as="xs:string"
+    select="string(current-dateTime() - $start-timestamp) => replace('P', '') => replace('T', ' ') => normalize-space() => lower-case()"/>
+  <p:identity
+    message="* XprocRef processing done ({$type-string}; {$step-count-2}/{$step-count-1}) ({$duration})"/>
 
 </p:declare-step>

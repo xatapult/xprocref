@@ -2,6 +2,7 @@
 <step name="archive" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] archive short description" required="true"
   publish="false" href-specification="{$BASELINK-STANDARD-STEPS}#c.archive"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
   <signature>
     <input port="source" primary="true" content-types="any" sequence="true">
@@ -389,7 +390,29 @@
     </sect2>
     <bridgehead>Document properties</bridgehead>
     <para feature="archive-preserves-none">No document properties are preserved. The archive has no <property>base-uri</property>.</para>
+
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="archive-manifest-format">
+      <!-- BREAK OUT IN SEP DOC?!? FOR INCLUSION IN OTHER ARCHIVE STEPS -->
+
+      <title>The XML archive manifest document format</title>
+      <para>The root element of an XML manifest document is <tag>c:archive</tag> (the <code>c</code> prefix here is bound to the
+          <code>http://www.w3.org/ns/xproc-step</code> namespace):</para>
+      <xdoc:transform href="$xdoc/xml-description.xpl">
+        <xi:include href="element-descriptions/c-archive.description.xml"/>
+      </xdoc:transform>
+      <para>A <tag>c:entry</tag> element describes a single entry (a file) in the archive:</para>
+      <xdoc:transform href="$xdoc/xml-description.xpl">
+        <xi:include href="element-descriptions/c-archive-entry.description.xml"/>
+      </xdoc:transform>
+    </section>
+
   </description>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
   <step-errors>
     <step-error code="XC0084">
       <description>
