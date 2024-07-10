@@ -28,7 +28,7 @@
     </description>
   </category>
 
-  <category id="archive" name="Archive handling related">
+  <category id="archive" name="Archive handling">
     <description>
       <para>These steps handle archives (for instance, ZIP files).</para>
     </description>

@@ -1,182 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="archive" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] archive short description" required="true"
-  publish="false" href-specification="{$BASELINK-STANDARD-STEPS}#c.archive"
+<step name="archive" version-idref="v30" category-idrefs="standard-steps archive" short-description="Perform operations on archive files"
+  required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS}#c.archive"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <input port="source" primary="true" content-types="any" sequence="true">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The <port>source</port> port is used to provide the documents to be archived. How and which of these documents are processed is governed
+          by the document(s) appearing on the other input ports and the combination of options and parameters. See below for details.</para>
       </description>
     </input>
+
     <input port="manifest" content-types="xml" sequence="true" primary="false" empty="true">
       <description>
-        <para>[EDIT] input manifest</para>
+        <para>An optional manifest document that tells the step how to construct the archive. If no manifest document is provided on this port, a
+          default manifest is constructed automatically. See <xref linkend="archive-manifest-format"/> for details.</para>
       </description>
     </input>
+
     <input port="archive" content-types="any" sequence="true" primary="false" empty="true">
       <description>
-        <para>[EDIT] input archive</para>
+        <para>Optional archives for operations like update, freshen or merge.</para>
       </description>
     </input>
+
     <output port="result" primary="true" content-types="any" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting archive.</para>
       </description>
     </output>
+
     <output port="report" content-types="application/xml" sequence="false" primary="false">
       <description>
-        <para>[EDIT] output report</para>
+        <para>A report about the archiving operation. This will be the same as the manifest, optionally amended with additional attributes and/or
+          elements.</para>
       </description>
     </output>
+
     <option name="format" as="xs:QName" select="'zip'" required="false">
       <description>
-        <para>[EDIT] option format</para>
+        <para>The format of the archive. </para>
+        <itemizedlist>
+          <listitem>
+            <para>If its value is <code>zip</code> (the default), the <step/> step expects a ZIP archive on the <port>source</port> port.</para>
+          </listitem>
+          <listitem>
+            <para>Whether any other archive formats can be handled and what their names (values for this option) are depends on the XProc processor
+              used.</para>
+          </listitem>
+        </itemizedlist>
       </description>
     </option>
+
     <option name="relative-to" as="xs:anyURI?" required="false">
       <description>
-        <para>[EDIT] option relative-to</para>
+        <para>This is option is used in creating a manifest when no manifest is provided on the <port>manifest</port> port. If a manifest is present
+          this option is not used.</para>
       </description>
     </option>
+
     <option name="parameters" as="map(xs:QName, item()*)?" required="false">
       <description>
-        <para>[EDIT] option parameters</para>
+        <para>Parameters controlling the archiving. Several parameters are defined for processing ZIP archives (see <xref linkend="archive-zips"/>). A
+          specific XProc processor might define its own.</para>
       </description>
     </option>
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <code>p:archive</code> step outputs on its <port>result</port> port an archive (usually binary) document, for instance a ZIP file. A
-      specification of the contents of the archive may be specified in a manifest XML document on the <port>manifest</port> port. The step produces a
-      report on the <port>report</port> port, which contains the manifest, amended with additional information about the archiving.</para>
+    <para>The <step/> step can perform several different operations on archives. The most common one will likely be creating one, but it could also
+      provide services like update, freshen or even merge. The resulting archive appears on its <port>result</port> port.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The <code>p:archive</code> step can perform several different operations on archives. The most common one will likely be creating an
-      archive, but it could also, depending on the archive format, provide services like update, freshen or even merge. The only format
-      implementations must support is <link xlink:href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT" role="newpage"
-        xmlns:xlink="http://www.w3.org/1999/xlink">ZIP</link> . The list of formats supported by the <tag>p:archive</tag> step is
-      implementation-defined.</para>
-    <para>The <code>p:archive</code> step has the following input ports:</para>
-    <variablelist>
-      <varlistentry>
-        <term>
-          <port>source</port>
-        </term>
-        <listitem>
-          <para>The (primary) <port>source</port> port is used to provide documents to be archived (for instance constructed by other steps). How and
-            which of these documents are processed is governed by the document(s) appearing on the other input ports and the combination of options
-            and parameters. See below for details. <emphasis role="bold">[ERROR <step-error-ref code="XC0084"/>]</emphasis>
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <port>manifest</port>
-        </term>
-        <listitem>
-          <para>The <port>manifest</port> port can receive a manifest document that tells the step how to construct the archive. If no manifest
-            document is provided on this port, a default manifest is constructed automatically. See <xref linkend="cv.archive-manifest"/>. <emphasis
-              role="bold">[ERROR <step-error-ref code="XC0100"/>]</emphasis>
-          </para>
-          <para>
-            <emphasis role="bold">[ERROR <step-error-ref code="XC0112"/>]</emphasis>
-          </para>
-          <para>The default input for this port is the empty sequence.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <port>archive</port>
-        </term>
-        <listitem>
-          <para>The <port>archive</port> port is used to provide the step with existing archive(s) for operations like update, freshen or merge.
-            Handling of ZIP files supports modifying archives appearing on the <port>archive</port> port (<xref linkend="cv.archive-zips"/>). The list
-            of archive formats that can be modified by <tag>p:archive</tag> is implementation-defined. For instance an implementation that supports
-            archive merging may accept more than one document on the <port>archive</port> port.</para>
-          <para>The default input for this port is the empty sequence.</para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
-    <para>The <code>p:archive</code> step has the following output ports:</para>
-    <variablelist>
-      <varlistentry>
-        <term>
-          <port>result</port>
-        </term>
-        <listitem>
-          <para>The (primary) <port>result</port> port will output the resulting archive.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <port>report</port>
-        </term>
-        <listitem>
-          <para>The <port>report</port> port will output a report about the archiving operation. This will be the same as the manifest (as provided on
-            the <port>manifest</port> port or automatically created if there was no manifest provided), optionally amended with additional attributes
-            and/or elements. The semantics of any additional attributes, elements and their values are implementation-defined.</para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
-    <para>The <code>p:archive</code> step has the following options:</para>
-    <variablelist>
-      <varlistentry>
-        <term>
-          <option>format</option>
-        </term>
-        <listitem>
-          <para>The format of the archive can be specified using the <option>format</option> option. Implementations must support the <link
-              xlink:href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink"
-              >ZIP</link> format, specified with the value <code>zip</code>. It is implementation-defined what other formats are supported.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <option>parameters</option>
-        </term>
-        <listitem>
-          <para>The <option>parameters</option> option can be used to supply parameters to control the archiving. The semantics of the keys and the
-            allowed values for these keys are implementation-defined. <emphasis role="bold">[ERROR <step-error-ref code="XC0079"/>]</emphasis>
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <option>relative-to</option>
-        </term>
-        <listitem>
-          <para>The <option>relative-to</option> option is used in creating a manifest when no manifest is provided on the <port>manifest</port> port.
-            If a manifest is present this option is not used. If the option’s value is a relative URI, it is made absolute against the base URI of the
-            element on which it is specified (<tag>p:with-option</tag> or the step in case of a syntactic shortcut value). <emphasis role="bold"
-              >[ERROR <step-error-ref code="XD0064"/>]</emphasis>
-          </para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
-    <para>The format of the archive is determined as follows:</para>
-    <itemizedlist>
-      <listitem>
-        <para>If the <option>format</option> option is specified, this determines the format of the archive. Implementations must support the <link
-            xlink:href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink"
-            >ZIP</link> format, specified with the value <code>zip</code>. It is implementation-defined what other formats are supported. <emphasis
-            role="bold">[ERROR <step-error-ref code="XC0081"/>]</emphasis>
-        </para>
-      </listitem>
-      <listitem>
-        <para>If no <option>format</option> option is specified or if its value is the empty sequence, the archive's format will be determined by the
-          step, using the <code>content-type</code> document-property of the document on the <port>archive</port> port and/or by inspecting its
-          contents. It is implementation-defined how the step determines the archive's format. Implementations should recognize archives in <link
-            xlink:href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink"
-            >ZIP</link> format. </para>
-      </listitem>
-    </itemizedlist>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0085"/>]</emphasis>
-    </para>
-    <sect2 xml:id="cv.archive-manifest">
+    <para>The <step/> step is the Swiss army knife for handling archives. Its most common use is creating archives, but it could also be used for
+      operations like update, freshen or even merge.</para>
+
+    <para>Archives come in many formats. The only format the <step/> step is required to handle is ZIP (see <xref linkend="archive-zips"/>). However,
+      depending on the XProc processor used, other formats may also be processed.</para>
+
+
+    <!--<sect2 xml:id="cv.archive-manifest">
       <title>The archive manifest</title>
       <para>An archive manifest specifies which documents will be considered in processing the archive. Every entry in the archive must have a
         corresponding entry in the manifest; if no such entry is provided, one will be constructed automatically (see below). If manifest entries are
@@ -258,8 +171,9 @@
       <para>
         <emphasis role="bold">[ERROR <step-error-ref code="XC0118"/>]</emphasis>
       </para>
-    </sect2>
-    <sect2 xml:id="cv.archive-zips">
+    </sect2>-->
+
+    <section xml:id="archive-zips">
       <title>Handling of ZIP archives</title>
       <para>The format of the archive can be specified using the <option>format</option> option. Implementations must support the <link
           xlink:href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -387,17 +301,15 @@
       <para>Implementations of other archive formats should use the same parameter names if applicable. The value spaces for these parameters may be
         format-specific though. The actual parameter names supported by <tag>p:archive</tag> for a particular format are
         implementation-defined.</para>
-    </sect2>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="archive-preserves-none">No document properties are preserved. The archive has no <property>base-uri</property>.</para>
+    </section>
+
 
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <section xml:id="archive-manifest-format">
-      <!-- BREAK OUT IN SEP DOC?!? FOR INCLUSION IN OTHER ARCHIVE STEPS -->
-
       <title>The XML archive manifest document format</title>
+      <!-- TBD TBD SEE TEXT ORIGINAL -->
       <para>The root element of an XML manifest document is <tag>c:archive</tag> (the <code>c</code> prefix here is bound to the
           <code>http://www.w3.org/ns/xproc-step</code> namespace):</para>
       <xdoc:transform href="$xdoc/xml-description.xpl">
@@ -411,64 +323,45 @@
 
   </description>
 
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>The only document-property for the document appearing on the <port>result</port> is <property>content-type</property> (its value depending on the archive&#x2019;s format). Note it has no
+        <property>base-uri</property> document-property and no document-properties from the document on the <port>source</port> port survive.</para>
+  </detail>
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <detail>
+    <para>Documents appearing on the <port>source</port> port must have a <property>base-uri</property> document-property. All these
+        <property>base-uri</property> document-properties must have a unique value.</para>
+  </detail>
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
+  <detail>
+    <xi:include href="text-fragments/relative-to-detail.xml"/>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="text-fragments/zip-detail.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
-    <step-error code="XC0084">
-      <description>
-        <para>It is a dynamic error if two or more documents appear on the <code>p:archive</code> step's <port>source</port> port that have the same
-          base URI or if any document that appears on the <port>source</port> port has no base URI.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0100">
-      <description>
-        <para>It is a dynamic error if the document on port <port>manifest</port> does not conform to the given schema.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0112">
-      <description>
-        <para>It is a dynamic error if more than one document appears on the port <port>manifest</port>.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0079">
-      <description>
-        <para>It is a dynamic error if the map <option>parameters</option> contains an entry whose key is defined by the implementation and whose
-          value is not valid for that key.</para>
-      </description>
-    </step-error>
-    <step-error code="XD0064">
-      <description>
-        <para>It is a dynamic error if the base URI is not both absolute and valid according to <link
-            xlink:href="https://www.rfc-editor.org/info/rfc3986" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink">RFC 3986</link> .</para>
-      </description>
-    </step-error>
-    <step-error code="XC0081">
-      <description>
-        <para>It is a dynamic error if the format of the archive does not match the format as specified in the <option>format</option> option.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0085">
-      <description>
-        <para>It is a dynamic error if the format of the archive does not match the specified format, cannot be understood, determined and/or
-          processed.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0118">
-      <description>
-        <para>It is a dynamic error if an archive manifest is invalid according to the specification.</para>
-      </description>
-    </step-error>
-    <step-error code="XD0011">
-      <description>
-        <para>It is a dynamic error if the resource referenced by the <option>href</option> option does not exist, cannot be accessed or is not a
-          file.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0080">
-      <description>
-        <para>It is a dynamic error if the number of documents on the <port>archive</port> does not match the expected number of archive input
-          documents for the given <code>format</code> and <code>command</code>.</para>
-      </description>
-    </step-error>
+    <step-error code="XC0084"/>
+    <step-error code="XC0100"/>
+    <step-error code="XC0112"/>
+    <step-error code="XC0079"/>
+    <step-error code="XD0064"/>
+    <step-error code="XC0081"/>
+    <step-error code="XC0085"/>
+    <step-error code="XC0118"/>
+    <step-error code="XD0011"/>
+    <step-error code="XC0080"/>
   </step-errors>
+
 </step>

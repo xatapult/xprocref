@@ -5,7 +5,7 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
 
   <signature>
 
@@ -72,13 +72,13 @@
 
   </signature>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
 
   <summary>
     <para>The <step/> step creates an XML manifest document describing the contents of the archive appearing on its <port>source</port> port.</para>
   </summary>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
 
   <description>
 
@@ -140,22 +140,27 @@
 
   </description>
 
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>The only document-property for the document appearing on the <port>result</port> is <property>content-type</property>, with value
+        <code>application/xml</code>. Note it has no <property>base-uri</property> document-property and no document-properties from the document on
+      the <port>source</port> port survive.</para>
+  </detail>
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <detail>
-    <para>The only document-property for the document appearing on the <port>source</port> is <property>content-type</property>, with value
-        <code>application/xml</code>. Note it has no <property>base-uri</property> property and no document-properties from the document on the
-        <port>source</port> port survive.</para>
+    <xi:include href="text-fragments/relative-to-detail.xml"/>
   </detail>
-  <detail>
-    <para>A relative value for the <option>relative-to</option> option gets de-referenced against the base URI of the element in the pipeline it is
-      specified on. In most cases this will be the path of the pipeline document.</para>
-  </detail>
-  <detail>
-    <para>The only format this step is required to handle is ZIP. The ZIP format definition can be found <link
-        xlink:href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT" role="newpage">here</link>.</para>
-  </detail>
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="text-fragments/zip-detail.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
 
   <example title="Basic usage" id="basic-usage">
     <para>Assume we have a simple ZIP file with two entries:</para>
@@ -167,6 +172,7 @@
         <para>An image in an <code>images/</code> sub-directory called <code>logo.png</code>.</para>
       </listitem>
     </itemizedlist>
+
     <xproc-example href="examples/archive-manifest/archive-manifest-01.xpl" show-source="false" keep-from="test.zip">
       <pipeline-header>
         <para>The following pipeline creates an archive manifest for this ZIP file:</para>
@@ -175,6 +181,7 @@
         <para>Resulting archive manifest:</para>
       </result-header>
     </xproc-example>
+
     <para>As you can see, the XProc processor I&#x2019;m using to process this example (MorganaXProc-III) adds a few extra attributes to the
         <tag>c:entry</tag> elements: <code>size</code>, <code>compressed-size</code> and <code>time</code>.</para>
     <para>Also note the contents of the <code>c:entry/@href</code> attributes: they are a combination of the full path/filename of the archive and the
@@ -182,9 +189,12 @@
       important role when creating archives using <step-ref name="p:archive"/>.</para>
   </example>
 
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
   <example title="Overriding content types" id="overriding-content-types">
     <para>This example uses the same ZIP archive as in <example-ref idref="basic-usage"/>. The following pipeline explicitly sets the content-type for
         <code>.png</code> files to <code>application/octet-stream</code>:</para>
+
     <xproc-example href="examples/archive-manifest/archive-manifest-02.xpl" show-source="false" keep-from="test.zip">
       <result-header>
         <para>Resulting archive manifest:</para>
@@ -192,7 +202,7 @@
     </xproc-example>
   </example>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
 
   <step-errors>
     <step-error code="XC0085"/>
