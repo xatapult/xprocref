@@ -19,6 +19,17 @@
   <xsl:include href="../xslmod/xprocref.mod.xsl"/>
 
   <!-- ======================================================================= -->
+  <!-- PARAMETERS: -->
+
+  <xsl:param name="xproc-example-elm" as="element(db:xproc-example)" required="true">
+    <!-- This is the element that triggered the example processing. We need it because we process some of its attributes. -->
+  </xsl:param>
+
+  <!-- ======================================================================= -->
+
+  <xsl:variable name="fixup-pipeline-input" as="xs:boolean" select="xtlc:str2bln($xproc-example-elm/@fixup-pipeline-input, true())"/>
+
+  <!-- ======================================================================= -->
 
   <xsl:template match="db:xproc-example">
 
@@ -104,7 +115,14 @@
 
   <xsl:function name="local:prepare-pipeline-for-display" as="element(p:declare-step)">
     <xsl:param name="xpl" as="element(p:declare-step)"/>
-    <xsl:apply-templates select="$xpl" mode="mode-prepare-pipeline-for-display"/>
+    <xsl:choose>
+      <xsl:when test="$fixup-pipeline-input">
+        <xsl:apply-templates select="$xpl" mode="mode-prepare-pipeline-for-display"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="$xpl"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:function>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

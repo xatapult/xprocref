@@ -29,17 +29,23 @@
     </description>
     <type name="xs:boolean"/>
   </attribute>
-  <attribute name="fixup-uris" default="true" >
+  <attribute name="fixup-uris" default="true">
     <description>
       <para>Whether to fixup any URIs (change the path to something bogus so source disk layout stays hidden).</para>
     </description>
-    <type name="xs:boolean"></type>
+    <type name="xs:boolean"/>
   </attribute>
   <attribute name="keep-from">
     <description>
       <para>When fixing up URIs, use the path including and after this string. If not set only the filename is used.</para>
     </description>
-    <type name="xs:string"></type>
+    <type name="xs:string"/>
+  </attribute>
+  <attribute name="fixup-pipeline-input" default="true">
+    <description>
+      <para>Whether to fixup the pipeline&#x2019;s input (that is, remove any references to it).</para>
+    </description>
+    <type name="xs:boolean"/>
   </attribute>
 
   <element name="source-header" occurs="?">

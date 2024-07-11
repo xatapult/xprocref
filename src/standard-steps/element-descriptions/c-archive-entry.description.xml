@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <element-description xmlns="http://www.xtpxlib.nl/ns/xdoc" xmlns:db="http://docbook.org/ns/docbook"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xdoc
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xdoc 
   ../../../../../xatapult/xtpxlib-xdoc/xsd/element-description.xsd" name="c:entry" sort-attributes="false">
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -8,21 +8,22 @@
   <attribute name="name" required="true">
     <description>
       <para>The name of the entry. This is the path of the file <emphasis>within</emphasis> the archive.</para>
-      <para>Usually this is a relative path. However, depending on how archives are constructed, an absolute path (a path starting with a <code>/</code>)
-        is possible. Archives constructed by XProc steps always produce relative paths (no leading <code>/</code>).</para>
+      <para>Usually this is a relative path. However, depending on how archives are constructed, an absolute path (a path starting with a
+          <code>/</code>) is possible. Archives constructed by XProc steps always produce relative paths (no leading <code>/</code>).</para>
     </description>
     <type name="xs:string"/>
   </attribute>
   <attribute name="href" required="true">
     <description>
-      <para>The URI of the entry. TBD TBD</para>
+      <para>The URI of the entry. This plays an important role in determining which and how files are added to the archive, see below.</para>
+      <para>A relative value is made absolute against the base URI of the manifest itself.</para>
     </description>
     <type name="xs:anyURI"/>
   </attribute>
   <attribute name="content-type" required="false">
     <description>
-      <para>The content-type (MIME type) of the entry. The <code>p:archive-manifest</code> step will always add this attribute, but it can be absent
-        and will usually be ignored for other archiving related steps.</para>
+      <para>The content-type (MIME type) of the entry. The <db:step>p:archive</db:step> step ignores it, but the <db:step>p:archive-manifest</db:step>
+        step always adds it. </para>
     </description>
     <type name="xs:string"/>
   </attribute>

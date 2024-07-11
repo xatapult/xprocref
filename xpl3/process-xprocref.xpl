@@ -247,6 +247,7 @@
     <!-- Use the now enhanced xproc-example element to create the final output for the examples: -->
     <p:xslt>
       <p:with-input port="stylesheet" href="xsl-process-xprocref/create-examples.xsl"/>
+      <p:with-option name="parameters" select="map{'xproc-example-elm': $xproc-example-elm}"/>
     </p:xslt>
   </p:viewport>
 
