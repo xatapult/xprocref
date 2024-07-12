@@ -94,6 +94,7 @@
       </xsl:call-template>
       <xsl:call-template name="xpref:list-document">
         <xsl:with-param name="root-elm" select="local:prepare-pipeline-for-display($example-pipeline/*)"/>
+        <xsl:with-param name="preserve-space" select="true()"/>
       </xsl:call-template>
     </xsl:if>
 

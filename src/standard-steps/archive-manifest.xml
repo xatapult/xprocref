@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="archive-manifest" version-idref="v30" category-idrefs="standard-steps archive"
+<step name="archive-manifest" version-idref="v30" category-idrefs="standard-steps archive compress"
   short-description="Create an XML manifest document describing the contents of an archive file" required="true" publish="true"
   href-specification="{$BASELINK-STANDARD-STEPS}#c.archive-manifest" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -23,20 +23,7 @@
 
     <option name="format" as="xs:QName?" required="false" select="()">
       <description>
-        <para>The format of the archive file on the <port>source</port> port:</para>
-        <itemizedlist>
-          <listitem>
-            <para>If its value is <code>zip</code>, the <step/> step expects a ZIP archive on the <port>source</port> port.</para>
-          </listitem>
-          <listitem>
-            <para>If absent or the empty sequence, the <step/> step tries to guess the archive file format. The only format that this step is required
-              to recognize and handle is ZIP.</para>
-          </listitem>
-          <listitem>
-            <para>Whether any other archive formats can be handled and what their names (values for this option) are depends on the XProc processor
-              used.</para>
-          </listitem>
-        </itemizedlist>
+        <xi:include href="text-fragments/archive-format-option.xml"/>
       </description>
     </option>
 
@@ -75,7 +62,8 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>The <step/> step creates an XML manifest document describing the contents of the archive appearing on its <port>source</port> port.</para>
+    <para>The <step/> step creates an XML manifest document describing the contents of the archive file appearing on its <port>source</port> port (for
+      instance a ZIP file).</para>
   </summary>
 
   <!-- ======================================================================= -->
@@ -134,7 +122,7 @@
       <para>For example: setting the <option>override-content-types</option> option to <code>[&#160;['.rels$',&#160;'application/xml'],
           ['^special/',&#160;'application/octet-stream']&#160;]</code> means that all files ending with <code>.rels</code> will get the content-type
           <code>application/xml</code>. All files in the archive&#x2019;s <code>special</code> directory (including sub-directories) will get the
-        content-type <code>application/octet-stream</code>. See also <example-ref idref="overriding-content-types"/>.</para>
+        content-type <code>application/octet-stream</code>. See also the <example-ref idref="overriding-content-types"/> example.</para>
 
     </section>
 
@@ -196,6 +184,19 @@
         <code>.png</code> files to <code>application/octet-stream</code>:</para>
 
     <xproc-example href="examples/archive-manifest/archive-manifest-02.xpl" show-source="false" keep-from="test.zip">
+      <result-header>
+        <para>Resulting archive manifest:</para>
+      </result-header>
+    </xproc-example>
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Using the relative-to option" id="relative-to-option">
+    <para>This example uses the same ZIP archive as in <example-ref idref="basic-usage"/>. It sets the <option>relative-to</option> to
+        <code>file:///test/</code>. This is reflected in the <code>c:entry/@href</code> attributes:</para>
+
+    <xproc-example href="examples/archive-manifest/archive-manifest-03.xpl" show-source="false" fixup-uris="false">
       <result-header>
         <para>Resulting archive manifest:</para>
       </result-header>

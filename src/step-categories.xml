@@ -15,7 +15,11 @@
 
   <!-- ======================================================================= -->
   <!-- SECONDARY CATEGORIES: -->
-
+  
+  <category id="misc" name="Miscellaneous">
+    <description>Miscellaneous steps, which are usually used for housekeeping purposes in the pipeline.</description>
+  </category>
+  
   <category id="basic-xml-manipulation" name="Basic XML manipulation">
     <description>
       <para>These steps implement basic XML manipulation, like adding attributes, inserting elements, etc.</para>
@@ -33,5 +37,9 @@
       <para>These steps handle archives (for instance, ZIP files).</para>
     </description>
   </category>
-
+  
+  <category id="compress" name="Compression">
+    <description>Steps that have to do with compressing (or uncompressing) documents.</description>
+  </category>
+  
 </categories>

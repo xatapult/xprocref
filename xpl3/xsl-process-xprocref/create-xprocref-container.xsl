@@ -1145,7 +1145,7 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="xtlc:raise-error">
-          <xsl:with-param name="msg-parts" select="('Unrecoginized option subtype: ', xtlc:q($subtype))"/>
+          <xsl:with-param name="msg-parts" select="('Unrecognized option subtype: ', xtlc:q($subtype))"/>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>

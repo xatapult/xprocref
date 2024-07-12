@@ -1,196 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="unarchive"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] unarchive short description"
-      required="true"
-      publish="false"
-      href-specification="{$BASELINK-STANDARD-STEPS}#c.unarchive"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <signature>
-      <input port="source"
-             primary="true"
-             content-types="any"
-             sequence="false">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <output port="result"
-              primary="true"
-              content-types="any"
-              sequence="true">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-      <option name="include-filter"
-              as="xs:string*"
-              subtype="RegularExpression"
-              required="false">
-         <description>
-            <para>[EDIT] option include-filter</para>
-         </description>
-      </option>
-      <option name="exclude-filter"
-              as="xs:string*"
-              subtype="RegularExpression"
-              required="false">
-         <description>
-            <para>[EDIT] option exclude-filter</para>
-         </description>
-      </option>
-      <option name="format"
-              as="xs:QName?"
-              required="false">
-         <description>
-            <para>[EDIT] option format</para>
-         </description>
-      </option>
-      <option name="parameters"
-              as="map(xs:QName, item()*)?"
-              required="false">
-         <description>
-            <para>[EDIT] option parameters</para>
-         </description>
-      </option>
-      <option name="relative-to"
-              as="xs:anyURI?"
-              required="false">
-         <description>
-            <para>[EDIT] option relative-to</para>
-         </description>
-      </option>
-      <option name="override-content-types"
-              as="array(array(xs:string))?"
-              required="false">
-         <description>
-            <para>[EDIT] option override-content-types</para>
-         </description>
-      </option>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para>The <code>p:unarchive</code> step outputs on its <port>result</port> port specific entries in an archive (for instance from a zip file).</para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>The meaning and interpretation of the <code>p:unarchive</code> step's options is as follows:</para>
-      <itemizedlist>
-         <listitem>
-            <para>The format of the archive is determined as follows:</para>
-            <itemizedlist>
-               <listitem>
-                  <para>If the <option>format</option> option is specified, this determines the format of the archive. Implementations must support the <link xlink:href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT"
-                           role="newpage"
-                           xmlns:xlink="http://www.w3.org/1999/xlink">ZIP</link> format, specified with the value <code>zip</code>. It is implementation-defined what other formats are supported.</para>
-               </listitem>
-               <listitem>
-                  <para>If no <option>format</option> option is specified or if its value is the empty sequence, the archive's format will be determined by the step, using the <code>content-type</code> document-property of the document on the <port>source</port> port and/or by inspecting its contents. It is implementation-defined how the step determines the archive's format. Implementations should recognize archives in <link xlink:href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT"
-                           role="newpage"
-                           xmlns:xlink="http://www.w3.org/1999/xlink">ZIP</link> format. </para>
-               </listitem>
-               <listitem>
-                  <para>
-                     <emphasis role="bold">[ERROR <step-error-ref code="XC0085"/>]</emphasis>
-                  </para>
-               </listitem>
-            </itemizedlist>
-         </listitem>
-         <listitem>
-            <para>The <option>parameters</option> option can be used to supply parameters to control the unarchiving. The semantics of the keys and the allowed values for these keys are implementation-defined. <emphasis role="bold">[ERROR <step-error-ref code="XC0079"/>]</emphasis>
-            </para>
-         </listitem>
-         <listitem>
-            <para>If present, the value of the <option>include-filter</option> or <option>exclude-filter</option> option must be a sequence of strings, each one representing a regular expressions as specified in <link xlink:href="https://www.w3.org/TR/xpath-functions-31/"
-                     role="newpage"
-                     xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1 functions</link> , section 7.61 “<literal>Regular Expression Syntax</literal>”. <emphasis role="bold">[ERROR <step-error-ref code="XC0147"/>]</emphasis>
-            </para>
-            <para>If neither the <option>include-filter</option> option nor the <option>exclude-filter</option> option is specified, the <code>p:unarchive</code> step outputs on its <port>result</port> port all entries in the archive.</para>
-            <para>If the <option>include-filter</option> option or the <option>exclude-filter</option> option is specified, the <code>p:archive</code> step outputs on the <port>result</port> port the entries from the archive that conform to the following rules:</para>
-            <itemizedlist>
-               <listitem>
-                  <para>If any <option>include-filter</option> pattern matches an archive entry's name, the entry is included in the output.</para>
-               </listitem>
-               <listitem>
-                  <para>If any <option>exclude-filter</option> pattern matches an archive entry's name, the entry is excluded in the output.</para>
-               </listitem>
-               <listitem>
-                  <para>If both options are provided, the include filter is processed first, then the exclude filter. </para>
-               </listitem>
-               <listitem>
-                  <para>Names of entries in archives are always relative names. For instance, the name of a file called <code>xyz.xml</code> in a <code>specs</code> subdirectory in an archive is called in full <code>specs/xyz.xml</code> (and not <code>/specs/xyz.xml</code>).</para>
-               </listitem>
-            </itemizedlist>
-            <para>As a result: an item is included if it matches (at least) one of the <option>include-filter</option> values and none of the <option>exclude-filter</option> values.</para>
-            <para>The regular expressions specified in the <option>include-filter</option> and <option>exclude-filter</option> options will be matched against the path of the entry <emphasis>in</emphasis> the archive. The matching is done unanchored: it is a match if the regular expression matches part of the entry's path. Informally: matching behaves like applying the XPath <code>matches#2</code> function, like in <code>matches($path-in-archive, $regular-expression)</code>.</para>
-            <note>
-               <para>Depending on how archives are constructed, the path of an entry in an archive can be with or without a leading slash. Usually it will be without. For archives constructed by <tag>p:archive</tag> no leading slash will be present.</para>
-            </note>
-         </listitem>
-         <listitem>
-            <para>The <option>relative-to</option> option, when present, is used in creating the base URI of the unarchived documents. If the option is relative, it is made absolute against the base URI of the element on which it is specified (<tag>p:with-option</tag> or the step in case of a syntactic shortcut value).</para>
-         </listitem>
-         <listitem>
-            <para>The <option>override-content-types</option> option can be used to partially override the content-type determination mechanism, as described in <xref linkend="override-content-type"/>.</para>
-         </listitem>
-      </itemizedlist>
-      <para>The base URI of an unarchived document appearing on the <port>result</port> port is: </para>
-      <itemizedlist>
-         <listitem>
-            <para>If the <option>relative-to</option> option is present: Function <code>p:urify()</code> is called with the value of this option as second parameter (<code>$basedir</code>) and with the relative path of this document as it was in the archive as first parameter</para>
-         </listitem>
-         <listitem>
-            <para>If the <option>relative-to</option> option is <emphasis>not</emphasis> present: Function <code>p:urify()</code>is called with the value of the base URI of the archive appended with a “<literal>/</literal>” as second parameter (<code>$baseDir</code>) and the relative path of this document as it was in the archive as first parameter</para>
-         </listitem>
-      </itemizedlist>
-      <para>
-         <emphasis role="bold">[ERROR <step-error-ref code="XC0120"/>]</emphasis>
-         <emphasis role="bold">[ERROR <step-error-ref code="XD0064"/>]</emphasis>
-      </para>
-      <para>For instance, the base URI of an unarchived file called <code>xyz.xml</code> that resided in the <code>specs</code> subdirectory in an archive with base URI <code>file:///a/b/c.zip</code> will become: </para>
-      <itemizedlist>
-         <listitem>
-            <para>With the <option>relative-to</option> option set to <code>file:///x/y/z</code>: <code>file:///x/y/z/specs/xyz.xml</code>
-            </para>
-         </listitem>
-         <listitem>
-            <para>Without a <option>relative-to</option> option set: <code>file:///a/b/c.zip/specs/xyz.xml</code>
-            </para>
-         </listitem>
-      </itemizedlist>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="unarchive-preserves-none">No document properties are preserved. The <property>base-uri</property> property of each unarchived document is reflective of the base URI of the document. </para>
-   </description>
-   <step-errors>
-      <step-error code="XC0085">
-         <description>
-            <para>It is a dynamic error if the format of the archive does not match the specified format, cannot be understood, determined and/or processed.</para>
-         </description>
-      </step-error>
-      <step-error code="XC0079">
-         <description>
-            <para>It is a dynamic error if the map <option>parameters</option> contains an entry whose key is defined by the implementation and whose value is not valid for that key.</para>
-         </description>
-      </step-error>
-      <step-error code="XC0147">
-         <description>
-            <para>It is a dynamic error if a specified value is not a valid XPath regular expression.</para>
-         </description>
-      </step-error>
-      <step-error code="XC0120">
-         <description>
-            <para>It is a dynamic error if the <option>relative-to</option> option is not present and the document on the <port>source</port> port does not have a base URI.</para>
-         </description>
-      </step-error>
-      <step-error code="XD0064">
-         <description>
-            <para>It is a dynamic error if the option is not a valid URI according to <link xlink:href="https://www.rfc-editor.org/info/rfc3986"
-                     role="newpage"
-                     xmlns:xlink="http://www.w3.org/1999/xlink">RFC 3986</link> .</para>
-         </description>
-      </step-error>
-   </step-errors>
+<step name="unarchive" version-idref="v30" category-idrefs="standard-steps archive compress"
+  short-description="Extracts documents from an archive file" required="true" publish="false"
+  href-specification="{$BASELINK-STANDARD-STEPS}#c.unarchive" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" primary="true" content-types="any" sequence="false">
+      <description>
+        <para>The archive to extract the documents from.</para>
+      </description>
+    </input>
+
+    <output port="result" primary="true" content-types="any" sequence="true">
+      <description>
+        <para>The extracted documents.</para>
+      </description>
+    </output>
+
+    <option name="include-filter" as="xs:string*" subtype="RegularExpression" required="false">
+      <description>
+        <para>A sequence of XPath regular expressions (as strings) that determine which files in the archive are extracted. See <xref
+            linkend="determining-extracted-files"/>.</para>
+      </description>
+    </option>
+
+    <option name="exclude-filter" as="xs:string*" subtype="RegularExpression" required="false">
+      <description>
+        <para>A sequence of XPath regular expressions (as strings) that determine which files in the archive are <emphasis>not</emphasis> extracted.
+          See <xref linkend="determining-extracted-files"/>.</para>
+      </description>
+    </option>
+
+    <option name="format" as="xs:QName?" required="false" select="()">
+      <description>
+        <xi:include href="text-fragments/archive-format-option.xml"/>
+      </description>
+    </option>
+
+    <option name="parameters" as="map(xs:QName, item()*)?" required="false" select="()">
+      <description>
+        <para>Parameters used to control the document extraction. The XProc specification does not define any parameters for this option. A specific
+          XProc processor might define its own.</para>
+      </description>
+    </option>
+
+    <option name="relative-to" as="xs:anyURI?" required="false">
+      <description>
+        <para>This option can be used to explicitly set the <property>base-uri</property> document-property of the extracted documents. See <xref
+            linkend="determining-base-uri"/></para>
+      </description>
+    </option>
+
+    <option name="override-content-types" as="array(array(xs:string))?" required="false">
+      <description>
+        <para>Use this to override the content-type determination for the extracted files (the value of their <property>content-type</property>
+          document-property). This mechanism works the same as for the <step-ref name="p:archive-manifest"/> step.</para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> extracts document from an archive file (for instance a ZIP file) and returns these on its <port>result</port> port.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+    <para>The <step/> step allows you to extract one or more documents from an archive (for instance a ZIP file). The result will be a sequence of the
+      extracted documents on its <port>result</port> port.</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="determining-extracted-files">
+      <title>Determining which files to extract</title>
+
+      <para>The <option>include-filter</option> and <option>exclude-filter</option> options determine which files to extract. Both option must be a
+        sequence of zero or more XPath regular expressions, as strings.</para>
+
+      <para>TBD</para>
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="determining-base-uri">
+      <title>The base URI of the extracted files</title>
+      <para>TBD</para>
+    </section>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>No document-properties from the document on the <port>source</port> port survive.</para>
+  </detail>
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <detail>
+    <xi:include href="text-fragments/zip-detail.xml"/>
+  </detail>
+  
+  <!-- ======================================================================= -->
+
+  <step-errors>
+    <step-error code="XC0085"/>
+    <step-error code="XC0079"/>
+    <step-error code="XC0147"/>
+    <step-error code="XC0120"/>
+  </step-errors>
+  
 </step>

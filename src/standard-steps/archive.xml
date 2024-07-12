@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="archive" version-idref="v30" category-idrefs="standard-steps archive" short-description="Perform operations on archive files"
+<step name="archive" version-idref="v30" category-idrefs="standard-steps archive compress" short-description="Perform operations on archive files"
   required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS}#c.archive"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -75,8 +75,9 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>The <step/> step can perform several different operations on archives. The most common one will likely be creating one, but it could also
-      provide services like update, freshen or even merge. The resulting archive appears on its <port>result</port> port.</para>
+    <para>The <step/> step can perform several different operations on archive files (for instance ZIP files). The most common one will likely be
+      creating one, but it could also provide services like update, freshen or even merge. The resulting archive appears on its <port>result</port>
+      port.</para>
   </summary>
 
   <!-- ======================================================================= -->
@@ -121,7 +122,7 @@
 
       <itemizedlist>
         <listitem>
-          <para>If no manifest document appears on the <port>manifest</port> port, an empty one is created.</para>
+          <para>If no document appears on the <port>manifest</port> port, an empty manifest is created.</para>
         </listitem>
         <listitem>
           <para>The base URIs of the documents appearing on the <port>source</port> port are compared against the list of base URIs in the manifest
@@ -141,7 +142,7 @@
                 </listitem>
                 <listitem>
                   <para>If the base URI of the document does not start with the value of the <option>relative-to</option> option, the
-                      <code>c:entry/@name</code> attribute value becomes the path of the base URI (without a leading <code>/</code>).</para>
+                      <code>c:entry/@name</code> attribute value becomes the path of this base URI (without a leading <code>/</code>).</para>
                 </listitem>
               </itemizedlist>
               <para>For instance, assume the <option>relative-to</option> option is set to <code>file:///some/path/</code>. A document with base URI
@@ -153,32 +154,27 @@
         </listitem>
       </itemizedlist>
       <para>The result of all this is that we now have a manifest that has entries (<tag>c:entry</tag> elements) for all documents appearing on the
-          <port>source</port> port. It might however also have entries for documents that are <emphasis>not</emphasis> on the source port (because
-        these entries were already present in the initial manifest on the <port>manifest</port> port).</para>
+          <port>source</port> port. It might however also have entries for documents that are <emphasis>not</emphasis> on the source port, because
+        these entries were already present in the initial manifest on the <port>manifest</port> port.</para>
 
       <bridgehead>2 - Process the manifest</bridgehead>
-      <para>The completed manifest is processed:</para>
+      <para>The completed manifest is processed. For every entry (<tag>c:entry</tag> element):</para>
 
       <itemizedlist>
         <listitem>
-          <para>For every entry (<tag>c:entry</tag> element):</para>
-          <itemizedlist>
-            <listitem>
-              <para>If the value of the <code>c:entry/@href</code> attribute matches the base URI of one of the documents appearing on the
-                  <port>source</port> port, this document is added to the archive. </para>
-              <para>When appropriate (for instance for XML documents), the value of its (optional) <property>serialization</property>
-                document-property is used for serializing it (convert it to text format).</para>
-            </listitem>
-            <listitem>
-              <para>For other entries, the value of the <code>c:entry/@href</code> attribute is used to load the file (for instance from disk if it
-                starts with <code>file:/</code>) and add it to the archive.</para>
-            </listitem>
-          </itemizedlist>
-          <para>In both cases, the value of the <code>c:entry/@name</code> attribute becomes the name/path of the entry in the archive. The values of
-            the other attributes of the <tag>c:entry</tag> element might also get used, but this depends on the XProc processor used and/or the
-            archive&#x2019;s format.</para>
+          <para>If the value of the <code>c:entry/@href</code> attribute matches the base URI of one of the documents appearing on the
+              <port>source</port> port, this document is added to the archive. </para>
+          <para>When appropriate (for instance for XML documents), the value of its (optional) <property>serialization</property> document-property is
+            used for serializing it (convert it to text format).</para>
+        </listitem>
+        <listitem>
+          <para>For other entries, the value of the <code>c:entry/@href</code> attribute is used to load the file (for instance from disk if it starts
+            with <code>file:/</code>) and add it to the archive.</para>
         </listitem>
       </itemizedlist>
+      <para>In both cases, the value of the <code>c:entry/@name</code> attribute becomes the name/path of the entry in the archive. The values of the
+        other attributes of the <tag>c:entry</tag> element might also get used, but this depends on the XProc processor used and/or the
+        archive&#x2019;s format.</para>
 
       <para>The <step/> step is supposed to retain the order of the <tag>c:entry</tag> elements. This is, for instance, important when constructing an
         e-book in EPUB format: this has a non-compressed entry that must be first in the archive.</para>
@@ -432,11 +428,11 @@
       </listitem>
       <listitem>
         <para>The names of the entries in the resulting archive get constructed by &#x201c;subtracting&#x201d; the value of the
-            <option>relative-to</option> from the base URIs of the source documents. The result will be their relative names against the
+            <option>relative-to</option> option from the base URIs of the source documents. The results will be their relative names against the
           pipeline&#x2019;s location.</para>
       </listitem>
       <listitem>
-        <para>We store the resulting zip and, just to show what&#x2019;s inside, ask for an archive manifest using the <step-ref
+        <para>We store the resulting zip and, just to show you what&#x2019;s inside, ask for an archive manifest using the <step-ref
             name="p:archive-manifest"/> step.</para>
       </listitem>
     </itemizedlist>
@@ -447,13 +443,13 @@
 
   <example title="Using the report port">
 
-    <para>The <step/> also has a <port>report</port> port that outputs the manifest of the resulting archive. So, building on the <example-ref
+    <para>The <step/> step also has a <port>report</port> port that outputs the manifest of the resulting archive. So, building on the <example-ref
         idref="basic-example"/> example, we could also have shown what&#x2019;s inside the created archive like this:</para>
 
     <xproc-example href="examples/archive/archive-02.xpl" show-source="false" fixup-pipeline-input="false" keep-from="test"/>
 
-    <para>Note the the information in the manifest is less than what <step-ref name="p:archive-manifest"/> produces. What exactly happens here depends
-      on the XProc processor used.</para>
+    <para>Note that the information in the manifest is less than what <step-ref name="p:archive-manifest"/> produces. What exactly happens here
+      depends on the XProc processor used.</para>
 
   </example>
 
@@ -461,9 +457,9 @@
 
   <example title="Using a manifest">
 
-    <para>This example creates a manifest that references a file for the archive. Note that we give it different name in the archive than its source
-      using the <code>c:entry/@name</code> attribute. When the manifest is processed, <step/> notices that <code>test/in2.xml</code> is not on its
-        <port>source</port> port and loads it from disk.</para>
+    <para>This example creates a manifest that references some additional file for the archive. Note that in the archive we give it a different name
+      than its source using the <code>c:entry/@name</code> attribute. When the manifest is processed, <step/> notices that <code>test/in2.xml</code>
+      is not on its <port>source</port> port and therefore loads it from disk.</para>
 
     <xproc-example href="examples/archive/archive-03.xpl" show-source="false" fixup-pipeline-input="false" keep-from="test"/>
 

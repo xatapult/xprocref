@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fragment xmlns:xlink="http://www.w3.org/1999/xlink">
+  <para>The format of the archive file on the <port>source</port> port:</para>
+  <itemizedlist>
+    <listitem>
+      <para>If its value is <code>zip</code>, the <step/> step expects a ZIP archive on the <port>source</port> port.</para>
+    </listitem>
+    <listitem>
+      <para>If absent or the empty sequence, the <step/> step tries to guess the archive file format. The only format that this step is required to
+        recognize and handle is ZIP.</para>
+    </listitem>
+    <listitem>
+      <para>Whether any other archive formats can be handled and what their names (values for this option) are depends on the XProc processor
+        used.</para>
+    </listitem>
+  </itemizedlist>
+</fragment>

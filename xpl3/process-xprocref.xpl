@@ -239,16 +239,24 @@
       <p:with-option name="parameters" select="map{'xproc-example-elm': $xproc-example-elm}"/>
     </p:xslt>
     <p:wrap match="/*" wrapper="_RESULT" name="wrapped-pipeline-result"/>
+    
+    
     <p:insert match="/*" position="last-child">
       <p:with-input port="source" pipe="current@process-xproc-example"/>
       <p:with-input port="insertion" pipe="result@wrapped-pipeline-result"/>
     </p:insert>
 
     <!-- Use the now enhanced xproc-example element to create the final output for the examples: -->
-    <p:xslt>
+    <p:xslt name="create-examples">
       <p:with-input port="stylesheet" href="xsl-process-xprocref/create-examples.xsl"/>
       <p:with-option name="parameters" select="map{'xproc-example-elm': $xproc-example-elm}"/>
     </p:xslt>
+    
+    <p:store href="file:///C:/xdata/x.xml">
+      <p:with-input pipe="@create-examples"></p:with-input>
+    </p:store>
+    
+    
   </p:viewport>
 
   <!-- Process any Markdown (into DocBook): -->

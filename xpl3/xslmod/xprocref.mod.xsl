@@ -109,8 +109,33 @@
 
   <xsl:template name="xpref:list-document">
     <xsl:param name="root-elm" as="element()" required="true"/>
+    <xsl:param name="preserve-space" as="xs:boolean" required="false" select="false()">
+      <!-- This will attempt to keep the whitespace (empty lines!). The effect is, unfortunately, also that any 
+        existing xml:space="preserve" element is removed... -->
+    </xsl:param>
 
-    <db:programlisting xml:space="preserve"><xsl:value-of select="serialize(xpref:remove-unused-namespaces($root-elm), $xpref:standard-serialization)"/></db:programlisting>
+    <xsl:variable name="contents" as="xs:string">
+      <xsl:choose>
+        <xsl:when test="$preserve-space">
+          <!-- When preserving space, we add an xml:space="preserve" attribute and remove it later, as a string! -->
+          <xsl:variable name="root-elm-whitespace-preserve" as="element()">
+            <xsl:for-each select="$root-elm">
+              <xsl:copy>
+                <xsl:attribute name="xml:space" select="'preserve'"/>
+                <xsl:copy-of select="@* | node()"/>
+              </xsl:copy>
+            </xsl:for-each>
+          </xsl:variable>
+          <xsl:sequence
+            select="serialize(xpref:remove-unused-namespaces($root-elm-whitespace-preserve), $xpref:standard-serialization) => replace('\s+xml:space=[&quot;'']preserve[&quot;'']\s+', ' ')"
+          />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:sequence select="serialize(xpref:remove-unused-namespaces($root-elm), $xpref:standard-serialization)"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <db:programlisting xml:space="preserve"><xsl:value-of select="$contents"/></db:programlisting>
   </xsl:template>
 
   <!-- ======================================================================= -->
