@@ -30,6 +30,12 @@
         The base XProc version 3.0
       </description>
     </version>
+    
+    <version id="vTEST" name="TEST">
+      <description>
+        TEST VERSION FOR IDENTITIES
+      </description>
+    </version>
   </versions>
   
   <!-- ======================================================================= -->
@@ -68,7 +74,17 @@
   <!-- ======================================================================= -->
 
   <steps>
+    
+    <step-identity name="insert" base-version-idref="v31" version-idref="vTEST" href-specification="xxx">
+      <summary>
+        <para>TEST</para>
+      </summary>
+      
+      
+    </step-identity>
+    <step-identity name="replace" base-version-idref="v31" version-idref="vTEST" href-specification="xxx"></step-identity>
 
+    
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <step name="insert" category-idrefs="c.test c.test2 c.test3" version-idref="v31" short-description="Insert a piece of content in another" required="true" href-specification="https://spec.xproc.org/master/head/steps/#c.insert">
@@ -77,13 +93,14 @@
         <input port="source" sequence="false" primary="true" content-types="xml html">
           <description>The primary input port</description>
         </input>
+        
         <input port="insertion" primary="false" sequence="true" content-types="xml html">
           <description>The contents to insert</description>
         </input>
         <output port="result" primary="true" sequence="false" content-types="xml html">
           <description>The primary output port</description>
         </output>
-        <option name="match" as="xs:string" select="/*" subtype="XSLTSelectionPattern" required="false">
+        <option name="match" as="xs:string" select="/*" subtype="XSLTSelectionPattern" required="false" >
           <description>Where to insert stuff</description>
         </option>
         <option name="position" values="first-child last-child before after"  required="true" as="xs:string">

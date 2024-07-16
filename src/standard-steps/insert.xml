@@ -21,7 +21,7 @@
       <input port="insertion"
              sequence="true"
              content-types="xml html"
-             primary="true">
+             primary="false">
          <description>
             <para>[EDIT] input insertion</para>
          </description>

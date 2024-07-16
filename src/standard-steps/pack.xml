@@ -21,7 +21,7 @@
       <input port="alternate"
              sequence="true"
              content-types="text xml html"
-             primary="true">
+             primary="false">
          <description>
             <para>[EDIT] input alternate</para>
          </description>

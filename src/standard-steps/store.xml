@@ -28,7 +28,7 @@
       </output>
       <output port="result-uri"
               content-types="application/xml"
-              primary="true"
+              primary="false"
               sequence="true">
          <description>
             <para>[EDIT] output result-uri</para>

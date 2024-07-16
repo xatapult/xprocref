@@ -18,7 +18,7 @@
 
   <!-- ================================================================== -->
 
-  <xsl:template match="xpref:step">
+  <xsl:template match="xpref:steps/xpref:step">
     <!-- Make sure some optional attributes are filled in. -->
     <xsl:copy>
       <xsl:if test="empty(@id)">
@@ -40,5 +40,15 @@
       <xsl:apply-templates select="(@* except @href) | node()"></xsl:apply-templates>
     </xsl:copy>
   </xsl:template>
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <xsl:template match="xpref:signature/xpref:option[not(xs:boolean(@required))][empty(@select)]">
+    <xsl:copy>
+      <xsl:attribute name="select" select="'()'"/>
+      <xsl:apply-templates select="@* | node()"/>
+    </xsl:copy>
+  </xsl:template>
+  
   
 </xsl:stylesheet>

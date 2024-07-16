@@ -29,7 +29,7 @@
       <output port="not-matched"
               sequence="true"
               content-types="any"
-              primary="true">
+              primary="false">
          <description>
             <para>[EDIT] output not-matched</para>
          </description>

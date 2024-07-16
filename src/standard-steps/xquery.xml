@@ -20,7 +20,7 @@
       </input>
       <input port="query"
              content-types="text xml"
-             primary="true"
+             primary="false"
              sequence="true">
          <description>
             <para>[EDIT] input query</para>

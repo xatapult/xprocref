@@ -54,18 +54,10 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:step-error-ref">
-    <xsl:try>
-      <xsl:variable name="code" as="xs:string" select="xs:string(@code)"/>
-      <code>
-        <link xlink:href="#{xpref:error-code-anchor($code)}">{$code}</link>
-      </code>
-
-      <xsl:catch>
-        <xsl:call-template name="xtlc:raise-error">
-          <xsl:with-param name="msg-parts" select="('Could not dereference ', .)"/>
-        </xsl:call-template>
-      </xsl:catch>
-    </xsl:try>
+    <xsl:variable name="code" as="xs:string" select="xs:string(@code)"/>
+    <code>
+      <link xlink:href="#{xpref:error-code-anchor($code)}">{$code}</link>
+    </code>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -100,7 +92,6 @@
         <xsl:apply-templates select="node() except db:title"/>
       </xsl:otherwise>
     </xsl:choose>
-
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -144,8 +135,8 @@
       </xsl:choose>
 
       <xsl:catch>
-        <xsl:call-template name="xtlc:raise-error">
-          <xsl:with-param name="msg-parts" select="('Could not dereference ', .)"/>
+        <xsl:call-template name="xpref:markup-error">
+          <xsl:with-param name="error-text" select="'Could not dereference: ' || xtlc:elm2str(.)"/>
         </xsl:call-template>
       </xsl:catch>
     </xsl:try>
@@ -177,9 +168,7 @@
         </xsl:if>
       </xsl:variable>
 
-      <xsl:text>&#x201c;</xsl:text>
       <link xlink:href="{$href-link-to-target}#{$referred-anchor}">{normalize-space($referred-example-section/db:title)}</link>
-      <xsl:text>&#x201d;</xsl:text>
       <xsl:if test="not($in-own-step)">
         <xsl:text> in step </xsl:text>
         <code role="step">
@@ -188,8 +177,8 @@
       </xsl:if>
 
       <xsl:catch>
-        <xsl:call-template name="xtlc:raise-error">
-          <xsl:with-param name="msg-parts" select="('Could not dereference ', .)"/>
+        <xsl:call-template name="xpref:markup-error">
+          <xsl:with-param name="error-text" select="'Could not dereference: ' || xtlc:elm2str(.)"/>
         </xsl:call-template>
       </xsl:catch>
     </xsl:try>

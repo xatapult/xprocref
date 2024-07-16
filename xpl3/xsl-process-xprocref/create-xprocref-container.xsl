@@ -1001,7 +1001,7 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="*" mode="mode-process-text-inner-elements">
+  <xsl:template match="*[not(namespace-uri(.) = $namespaces-leave-unchanged)]" mode="mode-process-text-inner-elements">
     <xsl:element name="db:{local-name(.)}">
       <xsl:apply-templates select="@* | node()" mode="#current"/>
     </xsl:element>
@@ -1145,7 +1145,7 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="xtlc:raise-error">
-          <xsl:with-param name="msg-parts" select="('Unrecoginized option subtype: ', xtlc:q($subtype))"/>
+          <xsl:with-param name="msg-parts" select="('Unrecognized option subtype: ', xtlc:q($subtype))"/>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>

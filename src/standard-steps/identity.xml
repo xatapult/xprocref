@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="identity" version-idref="v30" category-idrefs="standard-steps" short-description="Copies the source to the result without modifications"
+<step name="identity" version-idref="v30" category-idrefs="standard-steps misc" short-description="Copies the source to the result without modifications"
   required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS}#c.identity"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
@@ -29,7 +29,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <description>
-    <para>The <step>p:identity</step> step does… nothing. It makes a verbatim copy of all documents appearing on its <port>source</port> port to its
+    <para>The <step/> step does… nothing. It makes a verbatim copy of all documents appearing on its <port>source</port> port to its
         <port>result</port> port. Although it doesn&#x2019;t do anything, it is actually extremely useful and virtually indispensable. The examples
       below show some use cases.</para>
   </description>

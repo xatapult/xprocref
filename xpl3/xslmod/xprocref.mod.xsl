@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:map="http://www.w3.org/2005/xpath-functions/map"
-  xmlns:array="http://www.w3.org/2005/xpath-functions/array" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:local="#local.rfp_2dj_5bc" xmlns:db="http://docbook.org/ns/docbook"
-  xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref" exclude-result-prefixes="#all" expand-text="true">
+  xmlns:array="http://www.w3.org/2005/xpath-functions/array" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:local="#local.rfp_2dj_5bc"
+  xmlns:db="http://docbook.org/ns/docbook" xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref"
+  exclude-result-prefixes="#all" expand-text="true">
   <!-- ================================================================== -->
   <!-- 
        Some shared definitions for the stylesheets in XProcRef.
@@ -11,7 +12,7 @@
 
   <xsl:include href="../../../xtpxlib-common/xslmod/general.mod.xsl"/>
   <xsl:include href="../../../xtpxlib-common/xslmod/href.mod.xsl"/>
-  
+
   <xsl:mode name="local:mode-remove-unused-namespaces" on-no-match="shallow-copy"/>
 
   <!-- ======================================================================= -->
@@ -20,10 +21,13 @@
   <xsl:variable name="xpref:page-extension" as="xs:string" select="'html'"/>
 
   <xsl:variable name="xpref:default-namespace-prefix" as="xs:string" select="'p'"/>
-  
+
   <xsl:variable name="xpref:max-section-level" as="xs:integer" select="3"/>
 
   <xsl:variable name="xpref:standard-serialization" as="map(*)" select="map{'indent': true(), 'omit-xml-declaration': true()}"/>
+
+  <xsl:variable name="xpref:error-start-marker" as="xs:string" select="'[***'"/>
+  <xsl:variable name="xpref:error-end-marker" as="xs:string" select="']'"/>
 
   <!-- ======================================================================= -->
   <!-- PAGE NAMES: -->
@@ -42,6 +46,13 @@
   <!-- Types set on the container document elements, so we can find things back when dereferencing references: -->
   <xsl:variable name="xpref:type-step" as="xs:string" select="'step'"/>
   <xsl:variable name="xpref:type-category" as="xs:string" select="'category'"/>
+
+  <!-- ======================================================================= -->
+
+  <xsl:template name="xpref:markup-error">
+    <xsl:param name="error-text" as="xs:string" required="true"/>
+    <db:emphasis role="bold">{$xpref:error-start-marker} {$error-text}{$xpref:error-end-marker}</db:emphasis>
+  </xsl:template>
 
   <!-- ======================================================================= -->
   <!-- FILE NAME SUPPORT: -->
@@ -93,25 +104,50 @@
       select="if (starts-with($step-name, $xpref:default-namespace-prefix || ':')) then $step-name else $xpref:default-namespace-prefix || ':' || $step-name"/>
     <xsl:sequence select="string-join(($step-name-full, $version-id, $example-id), '-') => xtlc:str2id()"/>
   </xsl:function>
-  
+
   <!-- ======================================================================= -->
-  
+
   <xsl:template name="xpref:list-document">
     <xsl:param name="root-elm" as="element()" required="true"/>
-    
-    <db:programlisting xml:space="preserve"><xsl:value-of select="serialize(xpref:remove-unused-namespaces($root-elm), $xpref:standard-serialization)"/></db:programlisting>
+    <xsl:param name="preserve-space" as="xs:boolean" required="false" select="false()">
+      <!-- This will attempt to keep the whitespace (empty lines!). The effect is, unfortunately, also that any 
+        existing xml:space="preserve" element is removed... -->
+    </xsl:param>
+
+    <xsl:variable name="contents" as="xs:string">
+      <xsl:choose>
+        <xsl:when test="$preserve-space">
+          <!-- When preserving space, we add an xml:space="preserve" attribute and remove it later, as a string! -->
+          <xsl:variable name="root-elm-whitespace-preserve" as="element()">
+            <xsl:for-each select="$root-elm">
+              <xsl:copy>
+                <xsl:attribute name="xml:space" select="'preserve'"/>
+                <xsl:copy-of select="@* | node()"/>
+              </xsl:copy>
+            </xsl:for-each>
+          </xsl:variable>
+          <xsl:sequence
+            select="serialize(xpref:remove-unused-namespaces($root-elm-whitespace-preserve), $xpref:standard-serialization) => replace('\s+xml:space=[&quot;'']preserve[&quot;'']\s+', ' ')"
+          />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:sequence select="serialize(xpref:remove-unused-namespaces($root-elm), $xpref:standard-serialization)"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <db:programlisting xml:space="preserve"><xsl:value-of select="$contents"/></db:programlisting>
   </xsl:template>
-  
+
   <!-- ======================================================================= -->
   <!-- REMOVE UNUSED NAMESPACES -->
-  
+
   <xsl:function name="xpref:remove-unused-namespaces" as="element()">
     <xsl:param name="in" as="element()"/>
     <xsl:apply-templates select="$in" mode="local:mode-remove-unused-namespaces"/>
   </xsl:function>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
+
   <xsl:template match="*" mode="local:mode-remove-unused-namespaces">
     <xsl:copy copy-namespaces="false">
       <xsl:apply-templates select="@* | node()" mode="#current"/>
