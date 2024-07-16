@@ -72,10 +72,20 @@
 
     <para>The <step/> step takes an archive file (for instance a ZIP file) on its <port>source</port> port and returns on its <port>result</port> port
       an XML document describing the contents of the archive: the <emphasis>archive&#160;manifest</emphasis>. The archive manifest format is described
-      in the <step-ref name="p:archive"/> step. See <example-ref idref="basic-usage"/> for an example.</para>
+      in the <step-ref name="p:archive"/> step.</para>
+    <para>Archive manifests can be used in several ways. Some examples:</para>
+    <itemizedlist>
+      <listitem>
+        <para>To inspect which files are present in an archive, for instance to check whether what you&#x2019;ve got is complete.</para>
+      </listitem>
+      <listitem>
+        <para>As an input manifest for <step-ref name="p:archive"/>. This step takes, on its <port>manifest</port> port, a manifest like the one
+          produced by <step/> and uses this to create a new archive or update an existing one. You could for instance first get a manifest using
+          <step/>, change it to reflect the changes you need and then feed it to <step-ref name="p:archive"/> to produce a new archive.</para>
+      </listitem>
+    </itemizedlist>
 
-    <para>Archives come in many formats. The only format the <step/> step is required to handle is ZIP. However, depending on the XProc processor
-      used, other formats may also be processed.</para>
+    <xi:include href="text-fragments/zip-remark.xml"/>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -151,7 +161,7 @@
   <!-- ======================================================================= -->
 
   <example title="Basic usage" id="basic-usage">
-    <para>Assume we have a simple ZIP file with two entries:</para>
+    <para>Assume we have a simple ZIP archive with two entries:</para>
     <itemizedlist>
       <listitem>
         <para>An XML file in the root called <code>reference.xml</code></para>
@@ -180,7 +190,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <example title="Overriding content types" id="overriding-content-types">
-    <para>This example uses the same ZIP archive as in <example-ref idref="basic-usage"/>. The following pipeline explicitly sets the content-type for
+    <para>This example uses the same ZIP archive as in <example-ref idref="basic-usage"/>. The following pipeline explicitly sets the content type for
         <code>.png</code> files to <code>application/octet-stream</code>:</para>
 
     <xproc-example href="examples/archive-manifest/archive-manifest-02.xpl" show-source="false" keep-from="test.zip">

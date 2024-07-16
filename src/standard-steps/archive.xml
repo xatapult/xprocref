@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="archive" version-idref="v30" category-idrefs="standard-steps archive compress" short-description="Perform operations on archive files"
-  required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS}#c.archive"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS}#c.archive"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
@@ -86,9 +86,28 @@
     <para>The <step/> step is the Swiss army knife for handling archives. Its most common use is creating archives, but it could also be used for
       operations like update, freshen or even merge.</para>
 
-    <para>Archives come in many formats. The only format the <step/> step is required to handle is ZIP (see <xref linkend="archive-zips"/>). However,
-      depending on the XProc processor used, other formats may also be processed.</para>
+    <para>To make all this possible, the operation of <step/> is unfortunately quite complicated. The details are below, here&#x2019;s a
+      summary:</para>
+    <itemizedlist>
+      <listitem>
+        <para>What&#x2019;s exactly in the resulting archive is controlled using a manifest document (see <xref linkend="archive-manifest-format"/>).
+          In such a manifest you specify the URI of the document to add and the path of this document <emphasis>in</emphasis> the archive.</para>
+        <para>A manifest of an existing archive, sometimes useful as a starting point, can be produced using the <step-ref name="p:archive-manifest"/>
+          step.</para>
+      </listitem>
+      <listitem>
+        <para>Besides the documents in the manifest you can also specify documents to add by providing these on the step&#x2019;s <port>source</port>
+          port. Any document appearing on this port that is not already mentioned in the manifest is automatically added to the manifest. The path of
+          such a document <emphasis>in</emphasis> the resulting archive can be controlled using the <option>relative-to</option> option.</para>
+      </listitem>
+      <listitem>
+        <para>When adding documents to the archive, <step/> compares the base URIs in the manifest with those of the documents appearing on the
+            <port>source</port> port (the value of the <property>base-uri</property> document-property). If these match, the document on the
+            <port>source</port> port is added. If not, the URI in the manifest is used to load a document (usually from disk).</para>
+      </listitem>
+    </itemizedlist>
 
+    <xi:include href="text-fragments/zip-remark.xml"/>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -112,7 +131,7 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <section>
+    <section xml:id="archive-algorithm">
       <title>The <step/> algorithm</title>
 
       <para>The <step/> step follows a, rather complicated, algorithm. It has two phases:</para>
@@ -154,11 +173,11 @@
         </listitem>
       </itemizedlist>
       <para>The result of all this is that we now have a manifest that has entries (<tag>c:entry</tag> elements) for all documents appearing on the
-          <port>source</port> port. It might however also have entries for documents that are <emphasis>not</emphasis> on the source port, because
-        these entries were already present in the initial manifest on the <port>manifest</port> port.</para>
+          <port>source</port> port. It can also have entries for documents that are <emphasis>not</emphasis> on the source port: because
+        such an entry was present in the initial manifest and no matching document on the <port>source</port> port was found for it.</para>
 
       <bridgehead>2 - Process the manifest</bridgehead>
-      <para>The completed manifest is processed. For every entry (<tag>c:entry</tag> element):</para>
+      <para>The now completed manifest is processed. For every entry (<tag>c:entry</tag> element):</para>
 
       <itemizedlist>
         <listitem>
@@ -170,6 +189,7 @@
         <listitem>
           <para>For other entries, the value of the <code>c:entry/@href</code> attribute is used to load the file (for instance from disk if it starts
             with <code>file:/</code>) and add it to the archive.</para>
+          <para>These documents are used &#x201c;as is&#x201d;: no parsing/serialization takes place.</para>
         </listitem>
       </itemizedlist>
       <para>In both cases, the value of the <code>c:entry/@name</code> attribute becomes the name/path of the entry in the archive. The values of the

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fragment>
+  <para>Archives come in many formats. The only format the <step/> step is required to handle is ZIP. However, depending on the XProc processor used,
+    other formats may also be processed.</para>
+</fragment>
