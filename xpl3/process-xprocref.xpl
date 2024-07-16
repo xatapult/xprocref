@@ -71,6 +71,10 @@
     <p:documentation>Limit the output to the steps mentioned here. Use the step names *without* a namespace prefix!</p:documentation>
   </p:option>
 
+  <p:option name="cname" as="xs:string" required="false" select="'xprocref.org'">
+    <p:documentation>The URI under which the pages are published (for GitHub pages).</p:documentation>
+  </p:option>
+
   <!-- ======================================================================= -->
   <!-- SUBSTEPS: -->
 
@@ -195,6 +199,15 @@
     <p:with-option name="href-build-location" select="$href-build-location"/>
   </local:copy-web-resources>
 
+  <!-- Create a CNAME document (for the GitHub pages): -->
+  <p:if test="$production-version">
+    <p:store href="{$href-build-location}/CNAME" serialization="map{'method': 'text'}" message="  * Creating CNAME ({$cname})">
+      <p:with-input>
+        <p:inline xml:space="preserve" content-type="text/plain">{$cname}</p:inline>
+      </p:with-input>
+    </p:store>
+  </p:if>
+
   <!-- Create an index document: -->
   <p:xslt>
     <p:with-input pipe="@prepared-xprocref-specification"/>
@@ -239,8 +252,8 @@
       <p:with-option name="parameters" select="map{'xproc-example-elm': $xproc-example-elm}"/>
     </p:xslt>
     <p:wrap match="/*" wrapper="_RESULT" name="wrapped-pipeline-result"/>
-    
-    
+
+
     <p:insert match="/*" position="last-child">
       <p:with-input port="source" pipe="current@process-xproc-example"/>
       <p:with-input port="insertion" pipe="result@wrapped-pipeline-result"/>
@@ -251,12 +264,12 @@
       <p:with-input port="stylesheet" href="xsl-process-xprocref/create-examples.xsl"/>
       <p:with-option name="parameters" select="map{'xproc-example-elm': $xproc-example-elm}"/>
     </p:xslt>
-    
+
     <p:store href="file:///C:/xdata/x.xml">
-      <p:with-input pipe="@create-examples"></p:with-input>
+      <p:with-input pipe="@create-examples"/>
     </p:store>
-    
-    
+
+
   </p:viewport>
 
   <!-- Process any Markdown (into DocBook): -->
@@ -302,7 +315,6 @@
 
   <p:variable name="duration" as="xs:string"
     select="string(current-dateTime() - $start-timestamp) => replace('P', '') => replace('T', ' ') => normalize-space() => lower-case()"/>
-  <p:identity
-    message="* XprocRef processing done ({$type-string}; {$step-count-2}/{$step-count-1}) ({$duration})"/>
+  <p:identity message="* XprocRef processing done ({$type-string}; {$step-count-2}/{$step-count-1}) ({$duration})"/>
 
 </p:declare-step>
