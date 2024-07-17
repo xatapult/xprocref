@@ -71,8 +71,8 @@
     <p:documentation>Limit the output to the steps mentioned here. Use the step names *without* a namespace prefix!</p:documentation>
   </p:option>
 
-  <p:option name="cname" as="xs:string" required="false" select="'xprocref.org'">
-    <p:documentation>The URI under which the pages are published (for GitHub pages).</p:documentation>
+  <p:option name="cname" as="xs:string?" required="false" select="'xprocref.org'">
+    <p:documentation>The URI under which the pages are published (for GitHub pages). If empty no CNAME entry is created.</p:documentation>
   </p:option>
 
   <!-- ======================================================================= -->
@@ -200,7 +200,7 @@
   </local:copy-web-resources>
 
   <!-- Create a CNAME document (for the GitHub pages): -->
-  <p:if test="$production-version">
+  <p:if test="$production-version and exists($cname)">
     <p:store href="{$href-build-location}/CNAME" serialization="map{'method': 'text'}" message="  * Creating CNAME ({$cname})">
       <p:with-input>
         <p:inline xml:space="preserve" content-type="text/plain">{$cname}</p:inline>
