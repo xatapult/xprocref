@@ -1,49 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="count"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] count short description"
-      required="true"
-      publish="false"
-      href-specification="{$BASELINK-STANDARD-STEPS}#c.count"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <signature>
-      <input port="source"
-             content-types="any"
-             sequence="true"
-             primary="true">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <output port="result"
-              content-types="application/xml"
-              primary="true"
-              sequence="true">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-      <option name="limit"
-              as="xs:integer"
-              select="0"
-              required="false">
-         <description>
-            <para>[EDIT] option limit</para>
-         </description>
-      </option>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para feature="p-count">The <code>p:count</code> step counts the number of documents in the <code>source</code> input sequence and returns a single document on <code>result</code> containing that number. The generated document contains a single <tag>c:result</tag> element whose contents is the string representation of the number of documents in the sequence.</para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>If the <tag feature="p-count-limit"
-              class="attribute">limit</tag> option is specified and is greater than zero, the <tag>p:count</tag> step will count at most that many documents. This provides a convenient mechanism to discover, for example, if a sequence consists of more than 1 document, without requiring every single document to be buffered before processing can continue.</para>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="count-preserves-none">No document properties are preserved. The count document has no <property>base-uri</property>.</para>
-   </description>
+<step name="count" version-idref="v30" category-idrefs="standard-steps misc" short-description="Count the number of documents" required="true"
+  publish="true" href-specification="{$BASELINK-STANDARD-STEPS}#c.count"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" content-types="any" sequence="true" primary="true">
+      <description>
+        <para>The sequence of documents to count.</para>
+      </description>
+    </input>
+
+    <output port="result" content-types="application/xml" primary="true" sequence="true">
+      <description>
+        <para>An XML document consisting of a single <tag>c:result</tag> element containing the number of documents on the <port>source</port> port
+          (or the limit set by the <option>limit</option> option).</para>
+        <para>Example: <code><![CDATA[<c:result>3</c:result>]]></code></para>
+      </description>
+    </output>
+
+    <option name="limit" as="xs:integer" select="0" required="false">
+      <description>
+        <para>If the value of this option is greater than 0, the <step/> will count at most that many documents. See the <example-ref
+            idref="limit-count"/> example.</para>
+        <para>Since <step/> will stop processing documents on its <port>source</port> when this limit is reached, this provides an efficient mechanism
+          to discover if a sequence consists of more than X documents.</para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step counts the number of documents appearing on its <port>source</port> port and returns an XML document on its
+        <port>result</port> port containing that number.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+    <para>The <step/> step simply counts the number of documents appearing on its <port>source</port> port. It emits a very simple document on its
+        <port>result</port> port containing this number, wrapped in a <tag>c:result</tag> element (the <code>c</code> prefix here is bound to the
+      <code>http://www.w3.org/ns/xproc-step</code> namespace). For example: <code><![CDATA[<c:result>3</c:result>]]></code>.</para>
+    <para>Using this step you can find out how many documents are flowing through your pipeline and make decision based on that number. For instance:
+      stop processing if there are too many.</para>
+    <para>There is another way of doing this, see the <example-ref idref="alternative"/> example. This is probably easier, because the required count
+      is directly in a variable and the flow of documents in the pipeline is not interrupted. Which method (<step/> or a count variable) is faster
+      is hard to say and also depends on the XProc processor used. If this matters to you, you&#x2019;;ll have to do some experiments.</para>
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>No document-properties from the documents on the <port>source</port> port survive. The resulting document has a
+        <property>content-type</property> document-property set to <code>application/xml</code> and no <property>base-uri</property>
+      document-property.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+    <xproc-example href="examples/count/count-01.xpl" show-source="false" fixup-pipeline-input="false">
+      <pipeline-header>
+        <para>The following pipeline produces a sequence of 3 documents and counts these:</para>
+      </pipeline-header>
+    </xproc-example>
+
+    <xproc-example href="examples/count/count-01b.xpl" show-source="false" fixup-pipeline-input="false">
+      <pipeline-header>
+        <para>Using this count to make a decision could be done as follows:</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Limiting the count" id="limit-count">
+    <xproc-example href="examples/count/count-02.xpl" show-source="false" fixup-pipeline-input="false">
+      <pipeline-header>
+        <para>The following pipeline produces a sequence of 3 documents and counts these with a limit of 1:</para>
+      </pipeline-header>
+    </xproc-example>
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Alternative to p:count" id="alternative">
+
+    <xproc-example href="examples/count/count-03.xpl" show-source="false" fixup-pipeline-input="false">
+      <pipeline-header>
+        <para>You don&#x2019;t need <step/> to count documents. An alternative is to declare a variable that gets its value by counting the size of
+          the collection of documents flowing through it:</para>
+      </pipeline-header>
+    </xproc-example>
+
+    <para>The <step>p:identity</step> after the variable declaration is only there for demonstration purposes: to show the value of the count. In a
+      real pipeline you would probably follow it up with a <tag>p:if</tag> or <tag>p:choose</tag>/<tag>p:when</tag>/<tag>p:otherwise</tag> and make
+      some decision based on the document count.</para>
+
+  </example>
+
 </step>

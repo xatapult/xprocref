@@ -669,83 +669,86 @@
       </db:tgroup>
     </db:table>
 
-    <!-- Options: -->
-    <xsl:variable name="has-selects" as="xs:boolean" select="exists($signature-elm/xpref:option/@select)"/>
-    <db:para role="table-header">Options:</db:para>
-    <db:table role="nonumber options-table">
-      <db:title/>
-      <db:tgroup cols="6">
-        <db:thead>
-          <db:row>
-            <db:entry>
-              <db:para>Name</db:para>
-            </db:entry>
-            <db:entry>
-              <db:para>Type</db:para>
-            </db:entry>
-            <db:entry>
-              <db:para>Req?</db:para>
-            </db:entry>
-            <xsl:if test="$has-selects">
-              <db:entry>
-                <db:para>Default</db:para>
-              </db:entry>
-            </xsl:if>
-            <db:entry>
-              <db:para>Description</db:para>
-            </db:entry>
-          </db:row>
-        </db:thead>
-        <db:tbody>
-
-          <xsl:for-each select="$signature-elm/xpref:option">
-            <xsl:sort select="xs:string(@name)"/>
+    <!-- Options (if any): -->
+    <xsl:variable name="option-elms" as="element(xpref:option)*" select="$signature-elm/xpref:option"/>
+    <xsl:if test="exists($option-elms)">
+      <xsl:variable name="has-selects" as="xs:boolean" select="exists($option-elms/@select)"/>
+      <db:para role="table-header">Options:</db:para>
+      <db:table role="nonumber options-table">
+        <db:title/>
+        <db:tgroup cols="6">
+          <db:thead>
             <db:row>
               <db:entry>
-                <db:para>
-                  <db:code>
-                    <xsl:value-of select="@name"/>
-                  </db:code>
-                </db:para>
+                <db:para>Name</db:para>
               </db:entry>
               <db:entry>
-                <db:para>
-                  <db:code>
-                    <xsl:value-of select="@as"/>
-                  </db:code>
-                  <xsl:if test="exists(@subtype)">
-                    <xsl:text> (</xsl:text>
-                    <xsl:value-of select="local:option-subtype-description(@subtype)"/>
-                    <xsl:text>)</xsl:text>
-                  </xsl:if>
-                </db:para>
+                <db:para>Type</db:para>
               </db:entry>
               <db:entry>
-                <db:para>
-                  <db:code>
-                    <xsl:value-of select="@required"/>
-                  </db:code>
-                </db:para>
+                <db:para>Req?</db:para>
               </db:entry>
               <xsl:if test="$has-selects">
                 <db:entry>
-                  <db:para>
-                    <db:code>
-                      <xsl:value-of select="(@select, '&#160;')[1]"/>
-                    </db:code>
-                  </db:para>
+                  <db:para>Default</db:para>
                 </db:entry>
               </xsl:if>
               <db:entry>
-                <xsl:call-template name="process-text">
-                  <xsl:with-param name="surrounding-elm" select="xpref:description"/>
-                </xsl:call-template>
+                <db:para>Description</db:para>
               </db:entry>
             </db:row>
-          </xsl:for-each>
-        </db:tbody>
-      </db:tgroup>
-    </db:table>
+          </db:thead>
+          <db:tbody>
+            
+            <xsl:for-each select="$option-elms">
+              <xsl:sort select="xs:string(@name)"/>
+              <db:row>
+                <db:entry>
+                  <db:para>
+                    <db:code>
+                      <xsl:value-of select="@name"/>
+                    </db:code>
+                  </db:para>
+                </db:entry>
+                <db:entry>
+                  <db:para>
+                    <db:code>
+                      <xsl:value-of select="@as"/>
+                    </db:code>
+                    <xsl:if test="exists(@subtype)">
+                      <xsl:text> (</xsl:text>
+                      <xsl:value-of select="local:option-subtype-description(@subtype)"/>
+                      <xsl:text>)</xsl:text>
+                    </xsl:if>
+                  </db:para>
+                </db:entry>
+                <db:entry>
+                  <db:para>
+                    <db:code>
+                      <xsl:value-of select="@required"/>
+                    </db:code>
+                  </db:para>
+                </db:entry>
+                <xsl:if test="$has-selects">
+                  <db:entry>
+                    <db:para>
+                      <db:code>
+                        <xsl:value-of select="(@select, '&#160;')[1]"/>
+                      </db:code>
+                    </db:para>
+                  </db:entry>
+                </xsl:if>
+                <db:entry>
+                  <xsl:call-template name="process-text">
+                    <xsl:with-param name="surrounding-elm" select="xpref:description"/>
+                  </xsl:call-template>
+                </db:entry>
+              </db:row>
+            </xsl:for-each>
+          </db:tbody>
+        </db:tgroup>
+      </db:table>
+    </xsl:if>
 
   </xsl:template>
 
