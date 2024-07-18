@@ -113,6 +113,7 @@
       <!-- This will attempt to keep the whitespace (empty lines!). The effect is, unfortunately, also that any 
         existing xml:space="preserve" element is removed... -->
     </xsl:param>
+    <xsl:param name="keep-namespace-prefixes" as="xs:string*" required="false" select="()"/>
 
     <xsl:variable name="contents" as="xs:string">
       <xsl:choose>
@@ -127,7 +128,7 @@
             </xsl:for-each>
           </xsl:variable>
           <xsl:sequence
-            select="serialize(xpref:remove-unused-namespaces($root-elm-whitespace-preserve), $xpref:standard-serialization) => replace('\s+xml:space=[&quot;'']preserve[&quot;'']\s+', ' ')"
+            select="serialize(xpref:remove-unused-namespaces($root-elm-whitespace-preserve, $keep-namespace-prefixes), $xpref:standard-serialization) => replace('\s+xml:space=[&quot;'']preserve[&quot;'']\s+', ' ')"
           />
         </xsl:when>
         <xsl:otherwise>
@@ -143,13 +144,34 @@
 
   <xsl:function name="xpref:remove-unused-namespaces" as="element()">
     <xsl:param name="in" as="element()"/>
-    <xsl:apply-templates select="$in" mode="local:mode-remove-unused-namespaces"/>
+    <xsl:param name="keep-namespace-prefixes" as="xs:string*"/>
+    <xsl:apply-templates select="$in" mode="local:mode-remove-unused-namespaces">
+      <xsl:with-param name="keep-namespace-prefixes" as="xs:string*" select="$keep-namespace-prefixes" tunnel="true"/>
+    </xsl:apply-templates>
+  </xsl:function>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:function name="xpref:remove-unused-namespaces" as="element()">
+    <xsl:param name="in" as="element()"/>
+    <xsl:sequence select="xpref:remove-unused-namespaces($in, ())"/>
   </xsl:function>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="*" mode="local:mode-remove-unused-namespaces">
+    <xsl:param name="keep-namespace-prefixes" as="xs:string*" required="true" tunnel="true"/>
+
+    <xsl:variable name="elm" as="element()" select="."/>
     <xsl:copy copy-namespaces="false">
+      <!-- Re-add the namespaces we have to keep (if any): -->
+      <xsl:for-each select="$keep-namespace-prefixes">
+        <xsl:variable name="namespace-prefix" as="xs:string" select="."/>
+        <xsl:variable name="namespace" as="xs:string?" select="xs:string(namespace-uri-for-prefix($namespace-prefix, $elm))"/>
+        <xsl:if test="exists($namespace)">
+          <xsl:namespace name="{$namespace-prefix}" select="$namespace"/>
+        </xsl:if>
+      </xsl:for-each>
       <xsl:apply-templates select="@* | node()" mode="#current"/>
     </xsl:copy>
   </xsl:template>

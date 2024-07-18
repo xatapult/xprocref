@@ -1,64 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="namespace-delete"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] namespace-delete short description"
-      required="true"
-      publish="false"
-      href-specification="{$BASELINK-STANDARD-STEPS}#c.namespace-delete"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <signature>
-      <input port="source"
-             content-types="xml html"
-             primary="true"
-             sequence="true">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <output port="result"
-              content-types="xml html"
-              primary="true"
-              sequence="true">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-      <option name="prefixes"
-              required="true"
-              as="xs:string">
-         <description>
-            <para>[EDIT] option prefixes</para>
-         </description>
-      </option>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para>The <tag>p:namespace-delete</tag> step deletes all of the namespaces identified by the specified prefixes from the document appearing on port <port>source</port>.</para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>The value of option <option>prefixes</option> is taken as a space separated list of prefixes. <emphasis role="bold">[ERROR <step-error-ref code="XC0108"/>]</emphasis>
-      </para>
-      <para>For any prefix the associated namespace is removed from the elements and attributes in the document appearing on port <port>source</port>. The respective elements or attributes in the document appearing on port <port>result</port> will be in no namespace.</para>
-      <para>
-         <emphasis role="bold">[ERROR <step-error-ref code="XC0109"/>]</emphasis>
-      </para>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="namespace-delete-preserves-all">All document properties are preserved.</para>
-   </description>
-   <step-errors>
-      <step-error code="XC0108">
-         <description>
-            <para>It is a dynamic error if any prefix is not in-scope at the point where the <code>p:namespace-delete</code> occurs.</para>
-         </description>
-      </step-error>
-      <step-error code="XC0109">
-         <description>
-            <para>It is a dynamic error if a namespace is to be removed from an attribute and the element already has an attribute with the resulting name.</para>
-         </description>
-      </step-error>
-   </step-errors>
+<step name="namespace-delete" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation namespaces"
+  short-description="Deletes namespaces from documents" required="true" publish="true"
+  href-specification="{$BASELINK-STANDARD-STEPS}#c.namespace-delete" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+    <input port="source" content-types="xml html" primary="true" sequence="true">
+      <description>
+        <para>The document(s) to delete the namespaces from.</para>
+      </description>
+    </input>
+    <output port="result" content-types="xml html" primary="true" sequence="true">
+      <description>
+        <para>The resulting document(s)</para>
+      </description>
+    </output>
+    <option name="prefixes" required="true" as="xs:string">
+      <description>
+        <para>A whitespace-separated list of namespace-prefixes. These prefixes must be defined in your pipeline. The namespaces associated with the
+          prefixes are removed.</para>
+      </description>
+    </option>
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step deletes namespaces, for which the prefixes are listed in the <option>prefixes</option> option, from elements and attributes
+      in the document(s) appearing on the <port>source</port>. The resulting document(s) appear on the <port>result</port> port.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+    <para>The <step/> step takes the value of its <option>prefixes</option> option, which must be a whitespace separated list of namespace-prefixes,
+      and finds out which namespaces are associated with these prefixes. These namespace prefixes must be defined in the pipeline. It then uses this
+      list to delete these namespaces from elements and attributes in the document(s) appearing on the <port>source</port> port. Elements and
+      attributes that were in one of these namespaces are now in the no-namespace. The resulting document(s) appear on the <port>result</port>
+      port.</para>
+    <para>Note that the matching is done on namespace <emphasis>name</emphasis>, not on <emphasis>namespace-prefix</emphasis>. This means that the
+      prefix as used in the <option>prefixes</option> option might be different from the one used in the document to delete the namespace from. See
+      the <example-ref idref="different-prefixes"/> example.</para>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+    <para>The following example deletes the <code>#myconfig</code> namespace, associated with the prefix <code>con</code>, from the source
+      document.</para>
+    <xproc-example href="examples/namespace-delete/namespace-delete-01.xpl" keep-namespace-prefixes="con"/>
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Basic usage with different namespace-prefixes" id="different-prefixes">
+    <para>The following example again deletes the <code>#myconfig</code> namespace. However, the namespace-prefix used in the pipeline is different
+      from the one used in the source document.</para>
+    <xproc-example href="examples/namespace-delete/namespace-delete-02.xpl" keep-namespace-prefixes="con ns1"/>
+  </example>
+
+  <!-- ======================================================================= -->
+
+  <step-errors>
+    <step-error code="XC0108"/>
+    <step-error code="XC0109"/>
+  </step-errors>
+
 </step>
