@@ -29,6 +29,8 @@
 
   <xsl:variable name="fixup-pipeline-input" as="xs:boolean" select="xtlc:str2bln($xproc-example-elm/@fixup-pipeline-input, true())"/>
 
+  <xsl:variable name="keep-namespace-prefixes" as="xs:string*" select="xtlc:str2seq($xproc-example-elm/@keep-namespace-prefixes)"/>
+
   <!-- ======================================================================= -->
 
   <xsl:template match="db:xproc-example">
@@ -83,6 +85,8 @@
 
       <xsl:call-template name="xpref:list-document">
         <xsl:with-param name="root-elm" select="$source-document-root-elm"/>
+        <xsl:with-param name="keep-namespace-prefixes" select="$keep-namespace-prefixes"/>
+
       </xsl:call-template>
     </xsl:if>
 
@@ -95,6 +99,7 @@
       <xsl:call-template name="xpref:list-document">
         <xsl:with-param name="root-elm" select="local:prepare-pipeline-for-display($example-pipeline/*)"/>
         <xsl:with-param name="preserve-space" select="true()"/>
+        <xsl:with-param name="keep-namespace-prefixes" select="distinct-values(($keep-namespace-prefixes, 'xs'))"/>
       </xsl:call-template>
     </xsl:if>
 
@@ -106,6 +111,7 @@
       </xsl:call-template>
       <xsl:call-template name="xpref:list-document">
         <xsl:with-param name="root-elm" select="_RESULT/*[1]"/>
+        <xsl:with-param name="keep-namespace-prefixes" select="$keep-namespace-prefixes"/>
       </xsl:call-template>
     </xsl:if>
 

@@ -1,76 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="unwrap"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] unwrap short description"
-      required="true"
-      publish="false"
-      href-specification="{$BASELINK-STANDARD-STEPS}#c.unwrap"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <signature>
-      <input port="source"
-             content-types="xml html"
-             primary="true"
-             sequence="true">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <output port="result"
-              content-types="text xml html"
-              primary="true"
-              sequence="true">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-      <option name="match"
-              as="xs:string"
-              select="'/*'"
-              subtype="XSLTSelectionPattern"
-              required="false">
-         <description>
-            <para>[EDIT] option match</para>
-         </description>
-      </option>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para>The <tag>p:unwrap</tag> step replaces matched elements with their children.</para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="XC0023"/>]</emphasis>
-      </para>
-      <para>Every element in the <port>source</port> document that matches the specified <option>match</option> pattern is replaced by its children, effectively “unwrapping” the children from their parent. Non-element nodes and unmatched elements are passed through unchanged.</para>
-      <note xml:id="note-match-doc">
-         <para>The matching applies to the entire document, not just the “top-most” matches. A pattern of the form <literal>h:div</literal> will replace <emphasis>all</emphasis>
-            <tag>h:div</tag> elements, not just the top-most ones.</para>
-      </note>
-      <para>This step produces a single document. Special cases:</para>
-      <itemizedlist>
-         <listitem>
-            <para>If the document element is unwrapped, the result might not be well-formed XML.</para>
-            <para>For instance unwrapping the root element of <code>&lt;!-- COMMENT --&gt;&lt;root-element/&gt;</code> will result in a document node with a single comment node child, which is not well-formed.</para>
-         </listitem>
-         <listitem>
-            <para>If a document consisting of only an empty root element is unwrapped, the result will be a document node without children. The result document’s content type will not change.</para>
-         </listitem>
-         <listitem>
-            <para>If a document consisting of a root element containing only text is unwrapped, the result will be a document node with a single text node child. The result document’s content type will become “<literal>text/plain</literal>”.</para>
-         </listitem>
-      </itemizedlist>
-      <para>As specified in the core language specification: if the content type changes, the <code>serialization</code> document property, if present, will be removed.</para>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="unwrap-preserves-partially">If the resulting document contains exactly one text node, the <literal>content-type</literal> property is changed to <literal>text/plain</literal> and the <literal>serialization</literal> property is removed, while all other document properties are preserved. In all other cases, all document properties are preserved.</para>
-   </description>
-   <step-errors>
-      <step-error code="XC0023">
-         <description>
-            <para>It is a dynamic error if that pattern matches anything other than the document node or element nodes.</para>
-         </description>
-      </step-error>
-   </step-errors>
+<step name="unwrap" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation" short-description="Unwraps elements in documents"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS}#c.unwrap"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" content-types="xml html" primary="true" sequence="true">
+      <description>
+        <para>The document(s) to unwrap the matched elements in.</para>
+      </description>
+    </input>
+
+    <output port="result" content-types="text xml html" primary="true" sequence="true">
+      <description>
+        <para>The resulting document(s).</para>
+      </description>
+    </output>
+
+    <option name="match" as="xs:string" select="'/*'" subtype="XSLTSelectionPattern" required="false">
+      <description>
+        <para>The XSLT match pattern for the nodes to delete, as a string. This must match element nodes (or the document-node). If any other kind of
+          node is matched error <step-error-ref code="XC0023"/> is raised.</para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step unwraps element nodes, specified by an XSLT selection pattern, from the document(s) appearing on its <code>source</code>
+      port. Unwrapping means: remove the matched element (including any attributes), but keep all its children. The resulting document(s) appears on
+      the <port>result</port> port.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+
+    <para>The <step/> step takes the XSLT match pattern in the <option>match</option> option and holds this against the document(s) appearing on its
+        <port>source</port> port. This pattern must match element nodes (or the document-node). Matching elements are unwrapped: removed (including
+      any attributes) but their child nodes remain. The resulting document(s) appear on the <port>result</port> port.</para>
+
+    <para>If you want to remove an element including child nodes you need <step-ref name="p:delete"/>.</para>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>In most cases, <step/> preserves all document-properties of the document(s) appearing on its <port>source</port> port.</para>
+  </detail>
+
+  <detail>
+    <para>For documents consisting of just a root-element containing text: if this root-element is unwrapped, the result is a document-node with a
+      single text node child. This changes the result document&#x2019;s content-type (its <property>content-type</property> property) to
+        <code>text/plain</code>. The <property>serialization</property> document-property, if present, is removed.</para>
+  </detail>
+
+  <detail>
+    <para>If a document consisting of only an empty root-element is unwrapped, the result will be a document-node without any children. The result
+      document&#x2019;s content type does not change if you do this.</para>
+  </detail>
+
+  <detail>
+    <para>If you unwrap the document-node (set the <property>match</property> property to <code>/</code>) nothing will happen.</para>
+  </detail>
+
+  <detail>
+    <para>It&#x2019;s possible to produce non well-formed XML using this step. Unwrapping the root-element from the following document (<tag>p:unwrap
+        match="/*"/</tag> or simply <tag>p:unwrap/</tag>) produces a result with just a single comment node, which is not well-formed:</para>
+    <programlisting xml:space="preserve"><![CDATA[<!-- Some comment -->
+<root/>]]></programlisting>
+    <para>XProc does not care about this, it keeps calm and carries on. However, writing this result to disk might not be what you expect.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+    <para>The following example unwraps all <tag>name</tag> elements. Note that nested <tag>name</tag> elements are also unwrapped.</para>
+    <xproc-example href="examples/unwrap/unwrap-01.xpl"/>
+  </example>
+
+  <!-- ======================================================================= -->
+
+  <step-errors>
+    <step-error code="XC0023"/>
+  </step-errors>
+
 </step>

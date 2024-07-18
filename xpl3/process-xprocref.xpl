@@ -253,7 +253,6 @@
     </p:xslt>
     <p:wrap match="/*" wrapper="_RESULT" name="wrapped-pipeline-result"/>
 
-
     <p:insert match="/*" position="last-child">
       <p:with-input port="source" pipe="current@process-xproc-example"/>
       <p:with-input port="insertion" pipe="result@wrapped-pipeline-result"/>
@@ -268,7 +267,6 @@
     <p:store href="file:///C:/xdata/x.xml">
       <p:with-input pipe="@create-examples"/>
     </p:store>
-
 
   </p:viewport>
 

@@ -381,14 +381,14 @@
   <error code="XC0108">
     <!-- == p:namespace-delete == -->
     <description>
-      <para>It is a dynamic error if any prefix is not in-scope at the point where the <code>p:namespace-delete</code> occurs.</para>
+      <para>It is a dynamic error if any prefix is not in-scope at the point where the <step/> occurs.</para>
     </description>
   </error>
   <error code="XC0109">
     <!-- == p:namespace-delete == -->
     <description>
       <para>It is a dynamic error if a namespace is to be removed from an attribute and the element already has an attribute with the resulting
-        name.</para>
+        name. For instance, removing the namespace with the <code>ns1</code> prefix will raise this error when applied to <tag>something ns1:status="ok" status="bad"/</tag>.</para>
     </description>
   </error>
   <error code="XC0110">
