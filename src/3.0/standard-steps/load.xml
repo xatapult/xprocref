@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="load"
+      version-idref="v30"
+      category-idrefs="standard-steps"
+      short-description="[EDIT] load short description"
+      required="true"
+      publish="false"
+      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.load"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.xtpxlib.nl/ns/xprocref">
+   <signature>
+      <output port="result"
+              content-types="any"
+              primary="true"
+              sequence="true">
+         <description>
+            <para>[EDIT] output result</para>
+         </description>
+      </output>
+      <option name="href"
+              required="true"
+              as="xs:anyURI">
+         <description>
+            <para>[EDIT] option href</para>
+         </description>
+      </option>
+      <option name="parameters"
+              as="map(xs:QName,item()*)?"
+              required="false">
+         <description>
+            <para>[EDIT] option parameters</para>
+         </description>
+      </option>
+      <option name="content-type"
+              as="xs:string?"
+              required="false">
+         <description>
+            <para>[EDIT] option content-type</para>
+         </description>
+      </option>
+      <option name="document-properties"
+              as="map(xs:QName, item()*)?"
+              required="false">
+         <description>
+            <para>[EDIT] option document-properties</para>
+         </description>
+      </option>
+   </signature>
+   <summary>
+      <para>[EDIT]</para>
+      <para>The <code>p:load</code> step has no inputs but produces as its result a document specified by an IRI.</para>
+   </summary>
+   <description>
+      <para>[EDIT]</para>
+      <para>If the option is relative, it is made absolute against the base URI of the element on which it is specified (<tag>p:with-option</tag> or the step in case of a syntactic shortcut value). If the <option>href</option> is relative, it is made absolute against the base URI of the element on which it is specified (<tag>p:with-option</tag> or <tag>p:load</tag> in the case of a syntactic shortcut value). <emphasis role="bold">[ERROR <step-error-ref code="XD0064"/>]</emphasis>
+      </para>
+      <para>The document identified by the <option>href</option> URI is loaded and returned. If the URI protocol supports redirection, then redirects must be followed.</para>
+      <para>
+         <emphasis role="bold">[ERROR <step-error-ref code="XD0011"/>]</emphasis>
+      </para>
+      <para>The behavior of this step depends on the content type of the document loaded. The content type of a document is determined as follows:</para>
+      <orderedlist>
+         <listitem>
+            <para>If a <property>content-type</property> property is specified in <option>document-properties</option> or <option>content-type</option> is present, then the document must be interpreted according to that content type. <emphasis role="bold">[ERROR <step-error-ref code="XD0079"/>]</emphasis>
+               <emphasis role="bold">[ERROR <step-error-ref code="XD0062"/>]</emphasis>
+            </para>
+         </listitem>
+         <listitem>
+            <para>If the document is retrieved with a URI protocol that specifies a content type (for example, <literal>http:</literal>), then the document must be interpreted according to that content type. </para>
+         </listitem>
+         <listitem>
+            <para>In the absence of an explicit type, the content type is implementation-defined.</para>
+         </listitem>
+      </orderedlist>
+      <para>The <option>parameters</option> map contains additional, optional parameters that may influence the way that content is loaded. The interpretation of this map varies according to the content type. Parameter names that are in no namespace are treated as strings using only the local-name where appropriate.</para>
+      <para>Broadly speaking, there are five categories of data that might be loaded: <link linkend="c.load.xml">XML</link>, <link linkend="c.load.text">text</link>, <link linkend="c.load.json">JSON</link>, <link linkend="c.load.html">HTML</link>, and “other” <link linkend="c.load.binary">binary</link> data.</para>
+      <sect2 xml:id="c.load.xml">
+         <title>Loading XML data</title>
+         <para>For an XML media type, the content is loaded and parsed as XML.</para>
+         <para>
+            <emphasis role="bold">[ERROR <step-error-ref code="XD0049"/>]</emphasis>
+         </para>
+         <para>If the <option>dtd-validate</option> parameter is <literal>true</literal>, then DTD validation must be performed when parsing the document. <emphasis role="bold">[ERROR <step-error-ref code="XD0023"/>]</emphasis>
+            <emphasis role="bold">[ERROR <step-error-ref code="XD0043"/>]</emphasis>
+         </para>
+         <para>Additional XML parameters are implementation-defined. </para>
+      </sect2>
+      <sect2 xml:id="c.load.text">
+         <title>Loading text data</title>
+         <para>For a text media type, the content is loaded as a text document. (A text document is an XPath data model document consisting of a single text node.)</para>
+         <para>
+            <emphasis role="bold">[ERROR <step-error-ref code="XD0060"/>]</emphasis>
+         </para>
+         <para>Text parameters are implementation-defined. </para>
+      </sect2>
+      <sect2 xml:id="c.load.json">
+         <title>Loading JSON data</title>
+         <para>For a JSON media type, the content is loaded and parsed as JSON.</para>
+         <para>The parameters specified for the <code>fn:parse-json</code> function in <link xlink:href="https://www.w3.org/TR/xpath-functions-31/"
+                  role="newpage"
+                  xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1 functions</link> must be supported. Additional JSON parameters are implementation-defined. </para>
+         <para>
+            <emphasis role="bold">[ERROR <step-error-ref code="XD0057"/>]</emphasis>
+         </para>
+         <para>
+            <emphasis role="bold">[ERROR <step-error-ref code="XD0058"/>]</emphasis>
+         </para>
+         <para>
+            <emphasis role="bold">[ERROR <step-error-ref code="XD0059"/>]</emphasis>
+         </para>
+      </sect2>
+      <sect2 xml:id="c.load.html">
+         <title>Loading HTML data</title>
+         <para>For an HTML media type, the content is loaded and parsed into an XPath data model document that contains a tree of elements, attributes, and other nodes.</para>
+         <para>The precise way in which HTML documents are parsed into the XPath data model is implementation-defined. </para>
+         <para>
+            <emphasis role="bold">[ERROR <step-error-ref code="XD0078"/>]</emphasis>
+         </para>
+         <para>HTML parameters are implementation-defined. </para>
+      </sect2>
+      <sect2 xml:id="c.load.binary">
+         <title>Loading binary data</title>
+         <para>An XProc processor may load other, arbitrary data types. How a processor interprets other media types is implementation-defined. </para>
+         <para>Parameters for other media types are implementation-defined. </para>
+      </sect2>
+      <bridgehead>Document properties</bridgehead>
+      <para>The properties specified in <option>document-properties</option> are applied. If the properties do not specify a <property>base-uri</property>, the <property>base-uri</property> property will reflect the base URI of the loaded document. </para>
+   </description>
+   <step-errors>
+      <step-error code="XD0064">
+         <description>
+            <para>It is a dynamic error if the base URI is not both absolute and valid according to <link xlink:href="https://www.rfc-editor.org/info/rfc3986"
+                     role="newpage"
+                     xmlns:xlink="http://www.w3.org/1999/xlink">RFC 3986</link> .</para>
+         </description>
+      </step-error>
+      <step-error code="XD0011">
+         <description>
+            <para>It is a dynamic error if the resource referenced by a <code>p:load</code> element does not exist or cannot be accessed.</para>
+         </description>
+      </step-error>
+      <step-error code="XD0079">
+         <description>
+            <para>It is a dynamic error if a supplied content-type is not a valid media type of the form “<literal>
+                  <replaceable>type</replaceable>/<replaceable>subtype</replaceable>+<replaceable>ext</replaceable>
+               </literal>” or “<literal>
+                  <replaceable>type</replaceable>/<replaceable>subtype</replaceable>
+               </literal>”.</para>
+         </description>
+      </step-error>
+      <step-error code="XD0062">
+         <description>
+            <para>It is a dynamic error if the <tag class="attribute">content-type</tag> is specified and the document-properties has a “<code>content-type</code>” that is not the same.</para>
+         </description>
+      </step-error>
+      <step-error code="XD0049">
+         <description>
+            <para>It is a dynamic error if the loaded content is not a well-formed XML document.</para>
+         </description>
+      </step-error>
+      <step-error code="XD0023">
+         <description>
+            <para>It is a dynamic error if a DTD validation is performed and either the document is not valid or no DTD is found.</para>
+         </description>
+      </step-error>
+      <step-error code="XD0043">
+         <description>
+            <para>It is a dynamic error if the <option>dtd-validate</option> parameter is <literal>true</literal> and the processor does not support DTD validation.</para>
+         </description>
+      </step-error>
+      <step-error code="XD0060">
+         <description>
+            <para>It is a dynamic error if the <option>content-type</option> specifies an encoding, which is not supported by the processor.</para>
+         </description>
+      </step-error>
+      <step-error code="XD0057">
+         <description>
+            <para>It is a dynamic error if the loaded content does not conform to the JSON grammar, unless the parameter <option>liberal</option> is <literal>true</literal> and the processor chooses to accept the deviation.</para>
+         </description>
+      </step-error>
+      <step-error code="XD0058">
+         <description>
+            <para>It is a dynamic error if the parameter <option>duplicates</option> is <literal>reject</literal> and the value of loaded content contains a JSON object with duplicate keys.</para>
+         </description>
+      </step-error>
+      <step-error code="XD0059">
+         <description>
+            <para>It is a dynamic error if the parameter map contains an entry whose key is defined in the specification of <code>fn:parse-json</code> and whose value is not valid for that key, or if it contains an entry with the key fallback when the parameter <option>escape</option> with <literal>true()</literal> is also present.</para>
+         </description>
+      </step-error>
+      <step-error code="XD0078">
+         <description>
+            <para>It is a dynamic error if the loaded document cannot be represented as an HTML document in the XPath data model.</para>
+         </description>
+      </step-error>
+   </step-errors>
+</step>

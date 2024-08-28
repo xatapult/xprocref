@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step-identity version-idref="v31"
+               name="text-replace"
+               href-specification="{$BASELINK-STANDARD-STEPS-V31}#c.text-replace"
+               base-version-idref="v30"
+               xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://www.xtpxlib.nl/ns/xprocref"/>

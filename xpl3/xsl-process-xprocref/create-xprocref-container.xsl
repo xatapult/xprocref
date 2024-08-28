@@ -132,7 +132,7 @@
         select="$specification/*/xpref:namespaces/xpref:namespace[xtlc:str2bln(@error-namespace, false())]"/>
       <xsl:call-template name="create-docbook-article">
         <xsl:with-param name="href-target" select="local:href-result-file($xpref:name-error-codes-overview-page)"/>
-        <xsl:with-param name="title" select="'Error codes'"/>
+        <xsl:with-param name="title" select="'Error codes (all versions)'"/>
         <xsl:with-param name="content">
           <db:para role="break-after">All errors are in the <db:code>{$error-namespace-elm/@uri}</db:code> namespace (recommended prefix:
               <db:code>{$error-namespace-elm/@prefix}</db:code>).</db:para>
@@ -178,7 +178,7 @@
       <!-- Namespaces page: -->
       <xsl:call-template name="create-docbook-article">
         <xsl:with-param name="href-target" select="local:href-result-file($xpref:name-namespaces-overview-page)"/>
-        <xsl:with-param name="title" select="'Namespaces used'"/>
+        <xsl:with-param name="title" select="'Namespaces used (all versions)'"/>
         <xsl:with-param name="content">
           <db:itemizedlist>
             <xsl:for-each select="$specification/*/xpref:namespaces/xpref:namespace">
@@ -225,7 +225,7 @@
     <xsl:variable name="version-elm" as="element(xpref:version)" select="$version-id-to-elm($version-id)"/>
     <xsl:variable name="version-name" as="xs:string" select="xs:string($version-elm/@name)"/>
 
-    <xsl:comment> == PAGES VERSION {$version-name} == </xsl:comment>
+    <xsl:comment> == PAGES FOR VERSION {$version-name} == </xsl:comment>
 
     <!-- Home page for version. Do not produce this for the latest version. We use the home page for this. -->
     <xsl:if test="$version-id ne $last-version-id">
@@ -238,7 +238,7 @@
     <!-- Categories overview page for version: -->
     <xsl:call-template name="create-docbook-article">
       <xsl:with-param name="href-target" select="local:href-result-file($version-id, $xpref:name-categories-overview-page)"/>
-      <xsl:with-param name="title" select="'Categories' || (if ($version-id ne $last-version-id) then ' (' || $version-name || ')' else ())"/>
+      <xsl:with-param name="title" select="'Categories (' || $version-name || ')'"/>
       <xsl:with-param name="content">
         <db:itemizedlist role="category-list">
           <xsl:for-each select="$versionref-elm/xpref:categoryref">
@@ -268,7 +268,7 @@
       <xsl:variable name="category-name" as="xs:string" select="normalize-space($category-elm/@name)"/>
       <xsl:call-template name="create-docbook-article">
         <xsl:with-param name="href-target" select="local:href-result-file($version-id, local:category-page-name($category-id))"/>
-        <xsl:with-param name="title" select="'Category: ' || $category-name"/>
+        <xsl:with-param name="title" select="'Category: ' || $category-name || ' (' || $version-name || ')'"/>
         <xsl:with-param name="prev-next" select="local:get-prev-next($categoryref-elm)"/>
         <xsl:with-param name="content">
           <xsl:call-template name="process-text">
@@ -306,7 +306,7 @@
 
     <xsl:call-template name="create-docbook-article">
       <xsl:with-param name="href-target" select="$href-target"/>
-      <xsl:with-param name="title" select="'XProc steps' || (if ($version-id ne $last-version-id) then ' (' || $version-name || ')' else ())"/>
+      <xsl:with-param name="title" select="'XProc steps (' || $version-name || ')'"/>
       <xsl:with-param name="content">
         <db:para>All steps for XProc version {$version-name}. You can also view these steps <db:link
             xlink:href="{local:href-result-file($version-id-for-links, $xpref:name-categories-overview-page)}">by category</db:link>.</db:para>
@@ -338,8 +338,8 @@
     <xsl:call-template name="create-docbook-article">
       <xsl:with-param name="href-target" select="local:href-result-file($version-id, local:step-page-name($step-id))"/>
       <xsl:with-param name="prev-next" select="local:get-prev-next($stepref-elm)"/>
-      <xsl:with-param name="title" select="$step-full-name || (if ($version-id ne $last-version-id) then ' (' || $version-name || ')' else ())"/>
-      <xsl:with-param name="test-version-remark" select="'published: ' || xtlc:str2bln($step-elm/@publish, false())"/>
+      <xsl:with-param name="title" select="$step-full-name || ' (' || $version-name || ')'"/>
+      <xsl:with-param name="test-version-remark" select="'step published: ' || xtlc:str2bln($step-elm/@publish, false())"/>
       <xsl:with-param name="content">
         <!-- The short description to start with: -->
         <db:para>{local:description($step-elm/@short-description)}</db:para>

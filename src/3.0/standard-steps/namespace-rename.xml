@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="namespace-rename"
+      version-idref="v30"
+      category-idrefs="standard-steps"
+      short-description="[EDIT] namespace-rename short description"
+      required="true"
+      publish="false"
+      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.namespace-rename"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.xtpxlib.nl/ns/xprocref">
+   <signature>
+      <input port="source"
+             content-types="xml html"
+             primary="true"
+             sequence="true">
+         <description>
+            <para>[EDIT] input source</para>
+         </description>
+      </input>
+      <output port="result"
+              content-types="xml html"
+              primary="true"
+              sequence="true">
+         <description>
+            <para>[EDIT] output result</para>
+         </description>
+      </output>
+      <option name="from"
+              as="xs:anyURI?"
+              required="false">
+         <description>
+            <para>[EDIT] option from</para>
+         </description>
+      </option>
+      <option name="to"
+              as="xs:anyURI?"
+              required="false">
+         <description>
+            <para>[EDIT] option to</para>
+         </description>
+      </option>
+      <option name="apply-to"
+              select="'all'"
+              values="('all','elements','attributes')"
+              required="false"
+              as="item()*">
+         <description>
+            <para>[EDIT] option apply-to</para>
+         </description>
+      </option>
+   </signature>
+   <summary>
+      <para>[EDIT]</para>
+      <para>The <code>p:namespace-rename</code> step renames any namespace declaration or use of a namespace in a document to a new IRI value.</para>
+   </summary>
+   <description>
+      <para>[EDIT]</para>
+      <para>The value of the <option>from</option> option must be an <type>anyURI</type>. It should be either empty or absolute, but will not be resolved in any case.</para>
+      <para>The value of the <option>to</option> option must be an <type>anyURI</type>. It should be empty or absolute, but will not be resolved in any case.</para>
+      <para>The value of the <option>apply-to</option> option must be one of “<literal>all</literal>”, “<literal>elements</literal>”, or “<literal>attributes</literal>”. If the value is “<literal>elements</literal>”, only elements will be renamed, if the value is “<literal>attributes</literal>”, only attributes will be renamed, if the value is “<literal>all</literal>”, both elements and attributes will be renamed.</para>
+      <para>
+         <emphasis role="bold">[ERROR <step-error-ref code="XC0014"/>]</emphasis>
+      </para>
+      <para>If the value of the <option>from</option> option is the same as the value of the <option>to</option> option, the input is reproduced unchanged on the output. Otherwise, namespace bindings, namespace attributes and element and attribute names are changed as follows:</para>
+      <itemizedlist>
+         <listitem>
+            <para>Namespace bindings: If the <option>from</option> option is present and its value is not the empty string, then every binding of a prefix (or the default namespace) in the input document whose value is the same as the value of the <option>from</option> option is</para>
+            <itemizedlist>
+               <listitem>
+                  <para>replaced in the output with a binding to the value of the <option>to</option> option, provided it is present and not the empty string;</para>
+               </listitem>
+               <listitem>
+                  <para>otherwise (the <option>to</option> option is not specified or has an empty string as its value) absent from the output.</para>
+               </listitem>
+            </itemizedlist>
+            <para>If the <option>from</option> option is absent, or its value is the empty string, then no bindings are changed or removed.</para>
+         </listitem>
+         <listitem>
+            <para>Elements and attributes: If the <option>from</option> option is present and its value is not the empty string, for every element and attribute, as appropriate, in the input whose namespace name is the same as the value of the <option>from</option> option, in the output its namespace name is</para>
+            <itemizedlist>
+               <listitem>
+                  <para>replaced with the value of the <option>to</option> option, provided it is present and not the empty string;</para>
+               </listitem>
+               <listitem>
+                  <para>otherwise (the <option>to</option> option is not specified or has an empty string as its value) changed to have no value.</para>
+               </listitem>
+            </itemizedlist>
+            <para>If the <option>from</option> option is absent, or its value is the empty string, then for every element and attribute, as appropriate, whose namespace name has no value, in the output its namespace name is set to the value of the <option>to</option> option.</para>
+            <para>
+               <emphasis role="bold">[ERROR <step-error-ref code="XC0092"/>]</emphasis>
+            </para>
+         </listitem>
+         <listitem>
+            <para>Namespace attributes: If the <option>from</option> option is present and its value is not the empty string, for every namespace attribute in the input whose value is the same as the value of the <option>from</option> option, in the output</para>
+            <itemizedlist>
+               <listitem>
+                  <para>the namespace attribute's value is replaced with the value of the <option>to</option> option, provided it is present and not the empty string;</para>
+               </listitem>
+               <listitem>
+                  <para>otherwise (the <option>to</option> option is not specified or has an empty string as its value) the namespace attribute is absent.</para>
+               </listitem>
+            </itemizedlist>
+         </listitem>
+      </itemizedlist>
+      <note xml:id="note-apply-to">
+         <para>The <option>apply-to</option> option is primarily intended to make it possible to avoid renaming attributes when the <option>from</option> option specifies no namespace, since many attributes are in no namespace.</para>
+         <para>Care should be taken when specifying no namespace with the <option>to</option> option. Prefixed names in content, for example QNames and XPath expressions, may end up with no appropriate namespace binding.</para>
+      </note>
+      <bridgehead>Document properties</bridgehead>
+      <para feature="namespace-rename-preserves-all">All document properties are preserved.</para>
+   </description>
+   <step-errors>
+      <step-error code="XC0014">
+         <description>
+            <para>It is a dynamic error if the XML namespace (<uri>http://www.w3.org/XML/1998/namespace</uri>) or the XMLNS namespace (<uri>http://www.w3.org/2000/xmlns/</uri>) is the value of either the <option>from</option> option or the <option>to</option> option.</para>
+         </description>
+      </step-error>
+      <step-error code="XC0092">
+         <description>
+            <para>It is a dynamic error if as a consequence of changing or removing the namespace of an attribute the attribute's name is not unique on the respective element.</para>
+         </description>
+      </step-error>
+   </step-errors>
+</step>

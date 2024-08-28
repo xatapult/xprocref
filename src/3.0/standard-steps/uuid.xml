@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="uuid"
+      version-idref="v30"
+      category-idrefs="standard-steps"
+      short-description="[EDIT] uuid short description"
+      required="true"
+      publish="false"
+      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.uuid"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.xtpxlib.nl/ns/xprocref">
+   <signature>
+      <input port="source"
+             primary="true"
+             content-types="xml html"
+             sequence="true">
+         <description>
+            <para>[EDIT] input source</para>
+         </description>
+      </input>
+      <output port="result"
+              content-types="text xml html"
+              primary="true"
+              sequence="true">
+         <description>
+            <para>[EDIT] output result</para>
+         </description>
+      </output>
+      <option name="match"
+              as="xs:string"
+              select="'/*'"
+              subtype="XSLTSelectionPattern"
+              required="false">
+         <description>
+            <para>[EDIT] option match</para>
+         </description>
+      </option>
+      <option name="version"
+              as="xs:integer?"
+              required="false">
+         <description>
+            <para>[EDIT] option version</para>
+         </description>
+      </option>
+   </signature>
+   <summary>
+      <para>[EDIT]</para>
+      <para>The <tag>p:uuid</tag> step generates a <link xlink:href="https://www.itu.int/ITU-T/studygroups/com17/oid.html"
+               role="newpage"
+               xmlns:xlink="http://www.w3.org/1999/xlink">UUID</link> and injects it into the <port>source</port> document.</para>
+   </summary>
+   <description>
+      <para>[EDIT]</para>
+      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. The value of the <option>version</option> option must be an integer.</para>
+      <para>If the <option>version</option> is specified, that version of UUID must be computed. <emphasis role="bold">[ERROR <step-error-ref code="XC0060"/>]</emphasis> If the <option>version</option> is not specified, the version of UUID computed is implementation-defined.</para>
+      <para>Implementations must support version 4 UUIDs. Support for other versions of UUID, and the mechanism by which the necessary inputs are made available for computing other versions, is implementation-defined. </para>
+      <para>The matched nodes are specified with the selection pattern in the <option>match</option> option. For each matching node, the generated UUID is used in the output (if more than one node matches, the <emphasis>same</emphasis> UUID is used in each match). Nodes that do not match are copied without change.</para>
+      <para>If the expression given in the <option>match</option> option matches an <emphasis>attribute</emphasis>, the UUID is used as the new value of the attribute in the output. If the attribute is named “<tag class="attribute">xml:base</tag>”, the base URI of the element must also be amended accordingly.</para>
+      <para>If the document node is matched, the entire document is replaced by a text node with the UUID. What appears on port <port>result</port> is a text document with the text node wrapped in a document node.</para>
+      <para>If the expression matches any other kind of node, the entire node (and <emphasis>not</emphasis> just its contents) is replaced by the UUID.</para>
+      <bridgehead>Document properties</bridgehead>
+      <para feature="uuid-preserves-partially">If the resulting document contains exactly one text node, the <literal>content-type</literal> property is changed to <literal>text/plain</literal> and the <literal>serialization</literal> property is removed, while all other document properties are preserved. For other document types, all document properties are preserved.</para>
+   </description>
+   <step-errors>
+      <step-error code="XC0060">
+         <description>
+            <para>It is a dynamic error if the processor does not support the specified <option>version</option> of the UUID algorithm.</para>
+         </description>
+      </step-error>
+   </step-errors>
+</step>

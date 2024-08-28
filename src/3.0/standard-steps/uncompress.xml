@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="uncompress"
+      version-idref="v30"
+      category-idrefs="standard-steps"
+      short-description="[EDIT] uncompress short description"
+      required="true"
+      publish="false"
+      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.uncompress"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.xtpxlib.nl/ns/xprocref">
+   <signature>
+      <input port="source"
+             primary="true"
+             content-types="any"
+             sequence="false">
+         <description>
+            <para>[EDIT] input source</para>
+         </description>
+      </input>
+      <output port="result"
+              primary="true"
+              content-types="any"
+              sequence="false">
+         <description>
+            <para>[EDIT] output result</para>
+         </description>
+      </output>
+      <option name="format"
+              as="xs:QName?"
+              required="false">
+         <description>
+            <para>[EDIT] option format</para>
+         </description>
+      </option>
+      <option name="parameters"
+              as="map(xs:QName,item()*)?"
+              required="false">
+         <description>
+            <para>[EDIT] option parameters</para>
+         </description>
+      </option>
+      <option name="content-type"
+              as="xs:string"
+              select="'application/octet-stream'"
+              required="false">
+         <description>
+            <para>[EDIT] option content-type</para>
+         </description>
+      </option>
+   </signature>
+   <summary>
+      <para>[EDIT]</para>
+      <para>The <tag>p:uncompress</tag> step expects on its <port>source</port> port a compressed document. It outputs an uncompressed version of this on its <port>result</port> port.</para>
+   </summary>
+   <description>
+      <para>[EDIT]</para>
+      <para>The compression format of the document appearing on the <port>source</port> port is determined as follows:</para>
+      <itemizedlist>
+         <listitem>
+            <para>If the <option>format</option> option is specified, this determines the compression format. Implementations must support the <link xlink:href="https://datatracker.ietf.org/doc/html/rfc1952"
+                     role="newpage"
+                     xmlns:xlink="http://www.w3.org/1999/xlink">GZIP</link> format, specified with the value <code>gzip</code>. It is implementation-defined what other formats are supported. <emphasis role="bold">[ERROR <step-error-ref code="XC0202"/>]</emphasis>
+            </para>
+         </listitem>
+         <listitem>
+            <para>If no <option>format</option> option is specified or its value is the empty sequence, the compression format will be determined by the step, using the <code>content-type</code> document-property of the document on the <port>source</port> port and/or by inspecting its contents. It is implementation-defined how the step determines the compression format. Implementations should recognize archives in <link xlink:href="https://datatracker.ietf.org/doc/html/rfc1952"
+                     role="newpage"
+                     xmlns:xlink="http://www.w3.org/1999/xlink">GZIP</link> format. </para>
+         </listitem>
+      </itemizedlist>
+      <para>The <option>parameters</option> option can be used to supply parameters to control the uncompression. The semantics of the keys and the allowed values for these keys are implementation-defined. <emphasis role="bold">[ERROR <step-error-ref code="XC0079"/>]</emphasis>
+      </para>
+      <para>Identification of the uncompressed document's content-type is done as follows:</para>
+      <orderedlist>
+         <listitem>
+            <para>If the <option>content-type</option> option is specified, the uncompressed document must be interpreted according to that content-type. <emphasis role="bold">[ERROR <step-error-ref code="XD0079"/>]</emphasis>
+               <emphasis role="bold">[ERROR <step-error-ref code="XC0201"/>]</emphasis>
+            </para>
+         </listitem>
+         <listitem>
+            <para>In the absence of an explicit type, the content will be interpreted as content type <code>application/octet-stream</code>.</para>
+         </listitem>
+      </orderedlist>
+      <bridgehead>Document properties</bridgehead>
+      <para feature="uncompress-preserves-some">All document properties are preserved, except for the <code>content-type</code> property which is updated accordingly.</para>
+   </description>
+   <step-errors>
+      <step-error code="XC0202">
+         <description>
+            <para>It is a dynamic error if the compression format cannot be understood, determined and/or processed.</para>
+         </description>
+      </step-error>
+      <step-error code="XC0079">
+         <description>
+            <para>It is a dynamic error if the map <option>parameters</option> contains an entry whose key is defined by the implementation and whose value is not valid for that key.</para>
+         </description>
+      </step-error>
+      <step-error code="XD0079">
+         <description>
+            <para>It is a dynamic error if a supplied content-type is not a valid media type of the form “<literal>
+                  <replaceable>type</replaceable>/<replaceable>subtype</replaceable>+<replaceable>ext</replaceable>
+               </literal>” or “<literal>
+                  <replaceable>type</replaceable>/<replaceable>subtype</replaceable>
+               </literal>”.</para>
+         </description>
+      </step-error>
+      <step-error code="XC0201">
+         <description>
+            <para>It is a dynamic error if the <tag>p:uncompress</tag> step cannot perform the requested content-type cast.</para>
+         </description>
+      </step-error>
+   </step-errors>
+</step>

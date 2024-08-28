@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="../sch/xprocref.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <xprocref xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../xsd/xprocref.xsd">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../xsd/xprocref.xsd">
 
   <!-- ======================================================================= -->
   <!-- MACRODEFS: -->
 
   <macrodefs>
     <!-- Baselinks to the standard: -->
-    <macrodef name="BASELINK-STANDARD-STEPS" value="https://spec.xproc.org/master/head/steps/"/>
+    <macrodef name="BASELINK-V30" value="https://spec.xproc.org/3.0/"/>
+    <macrodef name="BASELINK-STANDARD-STEPS-V30" value="{$BASELINK-V30}steps/"/>
+    <macrodef name="BASELINK-V31" value="https://spec.xproc.org/lastcall-2024-08/head/"/>
+    <macrodef name="BASELINK-STANDARD-STEPS-V31" value="{$BASELINK-V31}steps/"/>
   </macrodefs>
 
   <!-- ======================================================================= -->
@@ -27,7 +30,8 @@
     </namespace>
     <namespace prefix="err" uri="http://www.w3.org/ns/xproc-error" error-namespace="true">
       <description>
-        <para>This namespace is used for XProc errors.</para></description>
+        <para>This namespace is used for XProc errors.</para>
+      </description>
     </namespace>
     <namespace prefix="xs" uri="http://www.w3.org/2001/XMLSchema">
       <description>
@@ -40,9 +44,17 @@
   <!-- VERSIONS: -->
 
   <versions>
+    <!-- Latest version first! -->
+    <version id="v31" name="3.1">
+      <description>
+        <para>This is an update of the 3.0 specification, released August 2024. Its core specification can be found <link
+            xlink:href="{$BASELINK-V31}xproc/" role="newpage">here</link>.</para>
+      </description>
+    </version>
     <version id="v30" name="3.0">
       <description>
-        <para>This is the official final XProc specification (12 September 2022).</para>
+        <para>This is the first official XProc 3.0 specification (12 September 2022). Its core specification can be found <link
+            xlink:href="{$BASELINK-V30}xproc/" role="newpage">here</link>.</para>
       </description>
     </version>
   </versions>
@@ -50,7 +62,7 @@
   <!-- ======================================================================= -->
   <!-- ERRORS: -->
 
-  <xi:include href="step-errors.xml"/> 
+  <xi:include href="step-errors.xml"/>
 
   <!-- ======================================================================= -->
   <!-- CATEGORIES: -->
@@ -62,7 +74,11 @@
 
   <steps>
 
-    <xi:include href="standard-steps/standard-steps.stepgroup.xml"/>
+    <!-- 3.0: -->
+    <xi:include href="3.0/standard-steps.stepgroup.xml"/>
+
+    <!-- 3.1: -->
+    <xi:include href="3.1/standard-steps.stepgroup.xml"/>
 
   </steps>
 

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="add-xml-base" version-idref="v30" category-idrefs="standard-steps xml-base-related"
+  short-description="Add explicit xml:base attributes to a document" required="true" publish="true"
+  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.add-xml-base" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <signature>
+    <input port="source" content-types="xml html" primary="true" sequence="false">
+      <description>
+        <para>The document to add the <code>xml:base</code> attributes to.</para>
+      </description>
+    </input>
+    <output port="result" content-types="xml html" primary="true" sequence="false">
+      <description>
+        <para>The resulting document.</para>
+      </description>
+    </output>
+    <option name="all" as="xs:boolean" select="false()" required="false">
+      <description>
+        <para>Whether to add the <code>xml:base</code> attributes to <emphasis>all</emphasis> elements.</para>
+      </description>
+    </option>
+    <option name="relative" as="xs:boolean" select="true()" required="false">
+      <description>
+        <para>Whether to make the value of the <code>xml:base</code> attributes on child elements of the root relative instead of absolute.</para>
+      </description>
+    </option>
+  </signature>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <summary>
+    <para>The <step/> step adds explicit <code>xml:base</code> attributes to the source document. An <code>xml:base</code> attribute annotates an
+      element with a &#x201c;base URI&#x201d; value, which is usually the URI this element came from.</para>
+  </summary>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <description>
+    <para>Nodes (elements, attributes, etc.) in XML documents &#x201c;remember&#x201d; where they came from: they have a so-called &#x201c;base
+      URI&#x201d; attached. This is usually the URI this node came from: the path (for instance on disk) to the document where it belonged to. In most
+      cases the base URI is invisible. The <step/> step exposes this by adding (or adapting) <code>xml:base</code> attributes.</para>
+    <para>The operation of the <step/> step depends on the values of the <option>all</option> and <option>relative</option> options:</para>
+    <table role="nonumber">
+      <title/>
+      <tgroup cols="3">
+        <thead>
+          <row>
+            <entry>
+              <para>all</para>
+            </entry>
+            <entry>
+              <para>relative</para>
+            </entry>
+            <entry>
+              <para>Operation</para>
+            </entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry><para><code>false</code></para></entry>
+            <entry><para><code>false</code></para></entry>
+            <entry>
+              <itemizedlist>
+                <listitem>
+                  <para>The root element of the document gets an <code>xml:base</code> attribute with an <emphasis>absolute</emphasis> URI. An
+                    existing <code>xml:base</code> attribute is updated.</para>
+                </listitem>
+                <listitem>
+                  <para>Child elements where the base URI differs from its parent get an <code>xml:base</code> attribute with an
+                      <emphasis>absolute</emphasis> URI. An existing <code>xml:base</code> attribute is updated.</para>
+                </listitem>
+                <listitem>
+                  <para>Any other <code>xml:base</code> attributes are removed.</para>
+                </listitem>
+              </itemizedlist>
+            </entry>
+          </row>
+          <row>
+            <entry><para><code>false</code></para></entry>
+            <entry><para><code>true</code></para></entry>
+            <entry>
+              <para>These are the default values for these options.</para>
+              <itemizedlist>
+                <listitem>
+                  <para>The root element of the document gets an <code>xml:base</code> attribute with an <emphasis>absolute</emphasis> URI. An
+                    existing <code>xml:base</code> attribute is updated.</para>
+                </listitem>
+                <listitem>
+                  <para>Child elements where the base URI differs from its parent get an <code>xml:base</code> attribute with an
+                      <emphasis>relative</emphasis> URI. An existing <code>xml:base</code> attribute is updated.</para>
+                </listitem>
+                <listitem>
+                  <para>Any other <code>xml:base</code> attributes are removed.</para>
+                </listitem>
+              </itemizedlist>
+            </entry>
+          </row>
+          <row>
+            <entry><para><code>true</code></para></entry>
+            <entry><para><code>false</code></para></entry>
+            <entry>
+              <itemizedlist>
+                <listitem>
+                  <para>The root element of the document gets an <code>xml:base</code> attribute with an <emphasis>absolute</emphasis> URI. An
+                    existing <code>xml:base</code> attribute is updated.</para>
+                </listitem>
+                <listitem>
+                  <para><emphasis>All</emphasis> child elements get an <code>xml:base</code> attribute with an <emphasis>absolute</emphasis> URI. An existing
+                      <code>xml:base</code> attribute is updated.</para>
+                </listitem>
+              </itemizedlist>
+            </entry>
+          </row>
+          <row>
+            <entry><para><code>true</code></para></entry>
+            <entry><para><code>true</code></para></entry>
+            <entry><para>This is not allowed. Error <step-error-ref code="XC0058"/> is raised.</para></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+  </description>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+  <detail>
+    <para>The <code>xml</code> namespace prefix as used here is bound to the namespace <code>http://www.w3.org/XML/1998/namespace</code>. In most
+      cases you <emphasis>don&#x2019;t</emphasis> have to bind this prefix explicitly (by adding
+        <code>xmlns:xml="http://www.w3.org/XML/1998/namespace"</code>). This namespace binding is part of the XML language.</para>
+  </detail>
+  <detail>
+    <para>A formal definition of base URIs and <code>xml:base</code> attributes can be found <link xlink:href="https://www.w3.org/TR/xmlbase/"
+        role="newpage">here</link>.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Straight step usage" id="ex01">
+    <para>The following example shows what happens if we use <step/> straight out of the box:</para>
+    <xproc-example href="../../examples/add-xml-base/add-xml-base-01.xpl">
+      <source-header>
+        <para>Assume the following source document called <code>in1.xml</code>:</para>
+      </source-header>
+    </xproc-example>
+    <para>We can create an <code>xml:base</code> attribute on <emphasis>every</emphasis> element by setting the <option>all</option> option to
+        <code>true</code>. Because the default value for the <option>relative</option> option is <code>true</code> and both options can&#x2019;t both
+      be <code>true</code>, we have to set the <option>relative</option> option to <code>false</code> explicitly.</para>
+    <xproc-example href="../../examples/add-xml-base/add-xml-base-02.xpl" show-source="false">
+      <pipeline-header/>
+    </xproc-example>
+  </example>
+
+  <example title="Multiple base URIs" id="ex02">
+    <para>The following example shows what happens if you combine two documents. For this, we&#x2019;re going to use another XML document called
+        <code>in2.xml</code>:</para>
+    <example-doc href="../../examples/add-xml-base/in2.xml"/>
+    <para>The following pipeline first creates a combined document by inserting this into the same source document we used in the previous example
+        <example-ref idref="ex01"/>:</para>
+    <xproc-example href="../../examples/add-xml-base/add-xml-base-03.xpl" show-source="false">
+      <pipeline-header/>
+      <result-header>
+        <para>The result document has a relative <code>xml:base</code> value on the inserted document because the default value for the
+            <option>relative</option> option is <code>true</code>:</para>
+      </result-header>
+    </xproc-example>
+    <para>But we could also ask for absolute base URI values:</para>
+    <xproc-example href="../../examples/add-xml-base/add-xml-base-04.xpl" show-source="false">
+      <pipeline-header/>
+    </xproc-example>
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <step-errors>
+    <step-error code="XC0058"/>
+  </step-errors>
+</step>

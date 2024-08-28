@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="sink" version-idref="v30" category-idrefs="standard-steps misc" short-description="Discard all source documents" required="true"
+  publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.sink" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" content-types="any" sequence="true" primary="true">
+      <description>
+        <para>The document(s) to discard.</para>
+      </description>
+    </input>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step discards all documents that appear on its <port>source</port> port.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+    <para>The <step/> step eats all documents that appear on its <port>source</port> port and makes them disappear.</para>
+    <para>This step is a bit of a left-over from bygone days. In XProc&#160;1.0, primary output ports had to be connected to something. So if you
+      didn&#x2019;t need the output of some step you had to discard its results by using <step/>. Starting XProc&#160;3.0 this is no longer the case:
+      primary output ports that are not connected discard their outputs automatically. The only reason to use <step/> nowadays is to make this more
+      explicit.</para>
+  </description>
+
+</step>

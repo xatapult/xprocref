@@ -233,7 +233,8 @@
 
 
   <!-- Do the XProc example stuff: -->
-  <p:viewport match="db:xproc-example" name="process-xproc-example" message="  * Handling examples">
+  <p:variable name="example-count" as="xs:integer" select="count(//db:xproc-example)"/>
+  <p:viewport match="db:xproc-example" name="process-xproc-example" message="  * Handling {$example-count} examples">
     <p:variable name="xproc-example-elm" as="element(db:xproc-example)" select="/*"/>
 
     <!-- Run the pipeline and add the result, wrapped in <_RESULT>: -->
