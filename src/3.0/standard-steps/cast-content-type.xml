@@ -1,70 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="cast-content-type" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] cast-content-type short description"
+<step name="cast-content-type" version-idref="v30" category-idrefs="standard-steps misc" short-description="Changes the media type of documents"
   required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.cast-content-type"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <input port="source" content-types="any" primary="true" sequence="true">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The document(s) to change the media type of.</para>
       </description>
     </input>
+
     <output port="result" content-types="any" primary="true" sequence="true">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting document(s)</para>
       </description>
     </output>
+
     <option name="content-type" required="true" as="xs:string">
       <description>
-        <para>[EDIT] option content-type</para>
+        <para>The media type of the resulting document(s).</para>
+        <para>This must be a valid media type (either <code>type/subtype</code> or <code>type/subtype+ext</code>). If not, error <step-error-ref
+            code="XD0079"/> is raised.</para>
       </description>
     </option>
+
     <option name="parameters" as="map(xs:QName,item()*)?" required="false" select="()">
       <description>
-        <para>[EDIT] option parameters</para>
+        <para>Parameters controlling the casting/transformation of the document(s). Keys, values and their semantics depend on the XProc processor
+          used.</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:cast-content-type</tag> step creates a new document by changing the media type of its input. If the value of the
-        <option>content-type</option> option and the current media type of the document on <port>source</port> port are the same, this document will
-      appear unchanged on <port>result</port> port.</para>
+    <para>The <step/> step takes the document(s) appearing on its <port>source</port> port and changes their media type according to the value of the
+        <option>content-type</option> option, transforming the document(s) if necessary.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The input document is transformed from one media type to another. <emphasis role="bold">[ERROR <step-error-ref code="XD0079"/>]</emphasis>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0071"/>]</emphasis>
-    </para>
-    <para>The <option>parameters</option> can be used to supply parameters to control casting. The semantics of the keys and the allowed values for
-      these keys are implementation-defined. <emphasis role="bold">[ERROR <step-error-ref code="XC0079"/>]</emphasis>
-    </para>
-    <sect2 xml:id="casting-from-xml">
-      <title>Casting from an XML media type</title>
+    <para>The <step/> step takes the documents appearing on its <port>source</port> port and changes/casts their media type according to the value of
+      the <option>content-type</option> option. Sometimes this is a (very) simple operation: for instance, changing one XML media type to another
+      simply changes the <property>content-type</property> document-property accordingly. However, you can also request more complex changes, like
+      converting an XML document into JSON. </para>
+
+    <para>TBD what for? </para>
+
+    <para>Of course, not every document can be changed into every media type. The following sections describe what you can (and cannot) do. If you
+      request an impossible cast, error <step-error-ref code="XC0071"/> is raised.</para>
+
+    <para>A summary of what media types are and how XProc treats them can be found in the <xref linkend="cct-media-type-summary"/> section
+      below.</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section>
+      <title>Converting XML documents</title>
+
+      <para>When the input document is an XML document (has an XML media type), the following casts are supported:</para>
+
       <itemizedlist>
+
         <listitem>
-          <para>Casting from one XML media type to another simply changes the “<literal>content-type</literal>” document property. </para>
+          <para>Casting to another XML media type simply changes the <property>content-type</property> document-property.</para>
         </listitem>
+
         <listitem>
-          <para>Casting from an XML media type to an HTML media type changes the “<literal>content-type</literal>” document property and removes any
-            serialization property. </para>
+          <para>Casting to an HTML media type changes the <property>content-type</property> document-property and removes any
+              <property>serialization</property> document-property. </para>
         </listitem>
+
         <listitem>
-          <para>Casting from an XML media type to a JSON media type converts the XML into JSON. The precise nature of the conversion from XML to JSON
-            is implementation-defined. If the input document is an XML representation of JSON as defined in <link
-              xlink:href="https://www.w3.org/TR/xpath-functions-31/" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1
-              functions</link> , implementations must produce the same result as <literal>fn:parse-json(fn:xml-to-json())</literal> by default. If the
-            input document has a <tag>c:param-set</tag> document element, an instance of <literal>map(xs:QName, xs:string)</literal> must be returned
-            that represents the document's <tag>c:param</tag> elements. The serialization property is removed. </para>
+          <para>Casting to a JSON media type converts the XML into JSON. The precise nature of the conversion from XML to JSON is depends on the XProc
+            processor used. There are, however, some special cases:</para>
+          <itemizedlist>
+            <listitem>
+              <para>If the input document is an XML representation of JSON as defined in <link xlink:href="https://www.w3.org/TR/xpath-functions-31/"
+                  role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1 functions</link>, implementations must produce the same
+                result as <code>fn:parse-json(fn:xml-to-json())</code>. TBD EXAMPLE</para>
+            </listitem>
+            <listitem>
+              <para>TBD EXAMPLE If the input document has a <tag>c:param-set</tag> document element, an instance of <literal>map(xs:QName,
+                  xs:string)</literal> must be returned that represents the document's <tag>c:param</tag> elements.</para>
+            </listitem>
+          </itemizedlist>
+          <para>A <property>serialization</property> document-property is removed.</para>
         </listitem>
+
         <listitem>
-          <para>Casting from an XML media type to a text media type serializes the XML document by calling <function>fn:serialize($doc,
-              $param)</function> where <literal>$doc</literal> is the document on the <port>source</port> port and <literal>$param</literal> is the
-            serialization property of this document. The resulting string is wrapped by a document node and returned on the <port>result</port> port.
-            The serialization property is removed.</para>
+          <para>Casting to a text media type serializes the XML document by calling <code>fn:serialize($doc,&#160;$param)</code>, where
+              <literal>$doc</literal> is the document on the <port>source</port> port and <code>$param</code> is the serialization document-property
+            of this document.</para>
+          <para>A <property>serialization</property> document-property is removed.</para>
         </listitem>
+
         <listitem>
-          <para>Casting from an XML media type to any other media type must support the case where the input document is a <tag>c:data</tag> document.
+          <para>Casting to any other media type must support the case where the input document is a <tag>c:data</tag> document.
             The resulting document will have the specified media type and a representation that is the content of the <tag>c:data</tag> element after
             decoding the base64 encoded content The serialization property is removed.</para>
           <para>
@@ -79,17 +118,23 @@
           <para>Casting from an XML media type to any other media type when the input document is not a <tag>c:data</tag> document is
             implementation-defined.</para>
         </listitem>
+
       </itemizedlist>
-    </sect2>
-    <sect2 xml:id="casting-from-html">
-      <title>Casting from an HTML media type</title>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section>
+      <title>Converting HTML documents</title>
+
       <itemizedlist>
         <listitem>
-          <para>Casting from an HTML media type to an XML media type changes “<literal>content-type</literal>” document property and removes any
+          <para>Casting from an HTML media type to an XML media type changes “<literal>content-type</literal>” document-property and removes any
             serialization property. </para>
         </listitem>
         <listitem>
-          <para>Casting from an HTML media type to another HTML media type changes “<literal>content-type</literal>” document property.</para>
+          <para>Casting from an HTML media type to another HTML media type changes “<literal>content-type</literal>” document-property.</para>
         </listitem>
         <listitem>
           <para>Casting from an HTML media type to a JSON media type is implementation-defined.</para>
@@ -104,9 +149,14 @@
           <para>Casting from an HTML media type to any other media type is implementation-defined.</para>
         </listitem>
       </itemizedlist>
-    </sect2>
-    <sect2 xml:id="casting-from-json">
-      <title>Casting from a JSON media type</title>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section>
+      <title>Converting JSON documents</title>
+
       <itemizedlist>
         <listitem>
           <para>Casting from a JSON media type to an XML media type converts the JSON into XML. An implementation must support the format specified in
@@ -118,7 +168,7 @@
           <para>Casting from a JSON media type to an HTML media type is implementation-defined.</para>
         </listitem>
         <listitem>
-          <para>Casting from a JSON media type to another JSON media type changes “<literal>content-type</literal>” document property.</para>
+          <para>Casting from a JSON media type to another JSON media type changes “<literal>content-type</literal>” document-property.</para>
         </listitem>
         <listitem>
           <para>Casting from a JSON media type to a text media type serializes the JSON document by calling <function>fn:serialize($doc,
@@ -130,9 +180,14 @@
           <para>Casting from a JSON media type to any other media type is implementation-defined.</para>
         </listitem>
       </itemizedlist>
-    </sect2>
-    <sect2 xml:id="casting-from-text">
-      <title>Casting from a text media type</title>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section>
+      <title>Converting text documents</title>
+
       <itemizedlist>
         <listitem>
           <para>Casting from a text media type to an XML media type parses the text value of the document on <port>source</port> port by calling
@@ -153,15 +208,20 @@
             <emphasis role="bold">[ERROR <step-error-ref code="XD0059"/>]</emphasis> The serialization property is removed. </para>
         </listitem>
         <listitem>
-          <para>Casting from a text media type to another text media type changes “<literal>content-type</literal>” document property.</para>
+          <para>Casting from a text media type to another text media type changes “<literal>content-type</literal>” document-property.</para>
         </listitem>
         <listitem>
           <para>Casting from a text media type to any other media type is implementation-defined.</para>
         </listitem>
       </itemizedlist>
-    </sect2>
-    <sect2 xml:id="casting-from-other">
-      <title>Casting from any other media type</title>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section>
+      <title>Converting other media types</title>
+
       <itemizedlist>
         <listitem xml:id="c.data">
           <para>Casting from a non-XML media type to an XML media type produces an XML document with a <tag>c:data</tag> document element. The
@@ -179,75 +239,46 @@
           <para>Casting from any other media type to any other media type is implementation-defined.</para>
         </listitem>
       </itemizedlist>
-    </sect2>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="cast-content-type-preserves-some">All document properties are preserved except the <code>content-type</code> property which is
-      updated accordingly and the <code>serialization</code> property which is removed by some casting methods.</para>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="cct-media-type-summary">
+      <title>Media type summary</title>
+
+      <para>TBD</para>
+    </section>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>If the value of the <option>content-type</option> option and the media type of a document are the same, the document will appear unchanged
+      on the <port>result</port> port.</para>
+  </detail>
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+    <para>Exceptions are the <property>content-type</property> document-property which is updated accordingly and the
+        <property>serialization</property> document-property which is sometimes removed.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
-    <step-error code="XD0079">
-      <description>
-        <para>It is a dynamic error if a supplied content-type is not a valid media type of the form “<literal>
-            <replaceable>type</replaceable>/<replaceable>subtype</replaceable>+<replaceable>ext</replaceable>
-          </literal>” or “<literal>
-            <replaceable>type</replaceable>/<replaceable>subtype</replaceable>
-          </literal>”.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0071">
-      <description>
-        <para>It is a dynamic error if the <tag>p:cast-content-type</tag> step cannot perform the requested cast.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0079">
-      <description>
-        <para>It is a dynamic error if the map <option>parameters</option> contains an entry whose key is defined by the implementation and whose
-          value is not valid for that key.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0072">
-      <description>
-        <para>It is a dynamic error if the <tag>c:data</tag> contains content is not a valid base64 string.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0073">
-      <description>
-        <para>It is a dynamic error if the <tag>c:data</tag> element does not have a <tag class="attribute">content-type</tag> attribute.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0074">
-      <description>
-        <para>It is a dynamic error if the <option>content-type</option> is supplied and is not the same as the <tag class="attribute"
-            >content-type</tag> specified on the <tag>c:data</tag> element.</para>
-      </description>
-    </step-error>
-    <step-error code="XD0049">
-      <description>
-        <para>It is a dynamic error if the text value is not a well-formed XML document</para>
-      </description>
-    </step-error>
-    <step-error code="XD0060">
-      <description>
-        <para>It is a dynamic error if the text document can not be converted into the XPath data model</para>
-      </description>
-    </step-error>
-    <step-error code="XD0057">
-      <description>
-        <para>It is a dynamic error if the text document does not conform to the JSON grammar, unless the parameter liberal is true and the processor
-          chooses to accept the deviation.</para>
-      </description>
-    </step-error>
-    <step-error code="XD0058">
-      <description>
-        <para>It is a dynamic error if the parameter duplicates is reject and the text document contains a JSON object with duplicate keys.</para>
-      </description>
-    </step-error>
-    <step-error code="XD0059">
-      <description>
-        <para>It is a dynamic error if the parameter map contains an entry whose key is defined in the specification of
-            <function>fn:parse-json</function> and whose value is not valid for that key, or if it contains an entry with the key fallback when the
-          parameter <literal>escape</literal> with <literal>true()</literal> is also present.</para>
-      </description>
-    </step-error>
+    <step-error code="XD0079"/>
+    <step-error code="XC0071"/>
+    <step-error code="XC0079"/>
+    <step-error code="XC0072"/>
+    <step-error code="XC0073"/>
+    <step-error code="XC0074"/>
+    <step-error code="XD0049"/>
+    <step-error code="XD0060"/>
+    <step-error code="XD0057"/>
+    <step-error code="XD0058"/>
+    <step-error code="XD0059"/>
   </step-errors>
+
 </step>
