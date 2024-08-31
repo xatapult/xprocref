@@ -2,7 +2,7 @@
 <step name="cast-content-type" version-idref="v30" category-idrefs="standard-steps misc" short-description="Changes the media type of documents"
   required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.cast-content-type"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
   <!-- ======================================================================= -->
 
@@ -30,7 +30,7 @@
 
     <option name="parameters" as="map(xs:QName,item()*)?" required="false" select="()">
       <description>
-        <para>Parameters controlling the casting/transformation of the document(s). Keys, values and their semantics depend on the XProc processor
+        <para>Parameters controlling the casting/transformation of the document(s). Keys, values and their meaning depend on the XProc processor
           used.</para>
       </description>
     </option>
@@ -79,20 +79,33 @@
         </listitem>
 
         <listitem>
-          <para>Casting to a JSON media type converts the XML into JSON. The precise nature of the conversion from XML to JSON is depends on the XProc
-            processor used. There are, however, some special cases:</para>
+          <para>Casting to a JSON media type converts the XML into JSON:</para>
           <itemizedlist>
             <listitem>
-              <para>If the input document is an XML representation of JSON as defined in <link xlink:href="https://www.w3.org/TR/xpath-functions-31/"
-                  role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1 functions</link>, implementations must produce the same
-                result as <code>fn:parse-json(fn:xml-to-json())</code>. TBD EXAMPLE</para>
+              <para>The <link xlink:href="https://www.w3.org/TR/xpath-functions-31">XPath and XQuery Functions and Operators 3.1</link> standard
+                defines an <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping">XML format for the representation of JSON
+                  data</link>. The XPath&#160;3.1 function <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-xml-to-json"
+                    ><code>fn:xml-to-json()</code></link> converts this format into a JSON conformant string (and for further processing, <link
+                  xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-parse-json"><code>fn:parse-json()</code></link> turns this string into a
+                map/array).</para>
+              <para>If an input document of <step/> is conformant to this <link
+                  xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping">XML format for the representation of JSON data</link>,
+                it&#x2019;s converted into its JSON equivalent (like calling <code>fn:parse-json(fn:xml-to-json())</code>). See <example-ref
+                  idref="converting-json-xml"/> for an example.</para>
             </listitem>
             <listitem>
-              <para>TBD EXAMPLE If the input document has a <tag>c:param-set</tag> document element, an instance of <literal>map(xs:QName,
-                  xs:string)</literal> must be returned that represents the document's <tag>c:param</tag> elements.</para>
+              <para>If the input document has a <tag>c:param-set</tag> root element and <tag>c:param name=…" value=…"/</tag> child elements (the
+                  <code>c</code> prefix here is bound to the <code>http://www.w3.org/ns/xproc-step</code> namespace), it will turn this into a JSON
+                map with the values of the <code>name</code> attributes as keys. See the <example-ref idref="converting-param-sets"/> example.</para>
+              <para>Param-sets are an XProc&#160;1.0 construct used for passing parameters (there were no maps in those days). Unless you&#160;re
+                converting XProc&#160;1.0 steps into 3.x, it&#x2019;s unlikely you need this feature.</para>
+            </listitem>
+            <listitem>
+              <para>In all other cases it&#x2019;s up to the XProc processor what happens. It could turn your XML into some kind of JSON but it could
+                just as well raise an error.</para>
             </listitem>
           </itemizedlist>
-          <para>A <property>serialization</property> document-property is removed.</para>
+          <para>A <property>serialization</property> document-property is removed when converting to JSON.</para>
         </listitem>
 
         <listitem>
@@ -103,9 +116,9 @@
         </listitem>
 
         <listitem>
-          <para>Casting to any other media type must support the case where the input document is a <tag>c:data</tag> document.
-            The resulting document will have the specified media type and a representation that is the content of the <tag>c:data</tag> element after
-            decoding the base64 encoded content The serialization property is removed.</para>
+          <para>Casting to any other media type must support the case where the input document is a <tag>c:data</tag> document. The resulting document
+            will have the specified media type and a representation that is the content of the <tag>c:data</tag> element after decoding the base64
+            encoded content The serialization property is removed.</para>
           <para>
             <emphasis role="bold">[ERROR <step-error-ref code="XC0072"/>]</emphasis>
           </para>
@@ -264,6 +277,52 @@
     <para>Exceptions are the <property>content-type</property> document-property which is updated accordingly and the
         <property>serialization</property> document-property which is sometimes removed.</para>
   </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Converting the XML representation of JSON" id="converting-json-xml">
+
+    <para>If an input document of <step/> is conformant to the XPath&#160;3.1 <link
+        xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping">XML format for the representation of JSON data</link> and the
+        <option>content-type</option> option is a JSON media type, <step/> converts this into its JSON equivalent.</para>
+
+    <xproc-example href="../../examples/cast-content-type/cast-content-type-02.xpl" output-is-text="true">
+      <source-header>
+        <para>The following source document is a shortened version of the example in the description of the <link
+            xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping">XML format for the representation of JSON data</link>: </para>
+      </source-header>
+      <result-header>
+        <para>The resulting JSON map:</para>
+      </result-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Converting param-sets" id="converting-param-sets">
+
+    <para>Param-sets are constructs used in the XProc&#160;1.0 days for passing sets of parameters, for instance to XSLT stylesheets. The current
+      version uses maps for this. To enable converting param-sets into maps, <step/> contains support for this. In XProc, a map is JSON data, so the
+        <option>content-type</option> option must be a JSON media type.</para>
+
+    <xproc-example href="../../examples/cast-content-type/cast-content-type-01.xpl" output-is-text="true">
+      <source-header>
+        <para>The source param-set document:</para>
+      </source-header>
+      <result-header>
+        <para>The resulting JSON map:</para>
+      </result-header>
+    </xproc-example>
+
+    <para>JSON maps are passed around as XPath maps, so it&#x2019;very easy to store such a map in a variable and use it later. Just add the following
+      variable declaration directly after the <step/> invocation:</para>
+    <programlisting xml:space="preserve"><![CDATA[<p:variable name="param-set-map" as="map(*)" select="."/>]]></programlisting>
+
+    <para>Unless you&#x2019;re converting XProc&#160;1.0 code into a newer version. it&#160;s unlikely you need this param-set conversion
+      feature.</para>
+
+  </example>
 
   <!-- ======================================================================= -->
 

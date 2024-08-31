@@ -239,6 +239,7 @@
 
     <!-- Run the pipeline and add the result, wrapped in <_RESULT>: -->
     <p:variable name="href-pipeline" as="xs:string" select="xs:string(/*/@href)"/>
+    <p:variable name="output-is-text" as="xs:boolean" select="xs:boolean((/*/@output-is-text, false())[1])"/>
     <p:run>
       <p:with-input href="{$href-pipeline}"/>
       <p:run-input port="source">
@@ -248,6 +249,10 @@
       </p:run-input>
       <p:output port="result" primary="true"/>
     </p:run>
+    <p:if test="$output-is-text">
+      <!-- Make sure that when we want to handle the output as text, it is text (e.g. for JSON results). -->
+      <p:cast-content-type content-type="text/plain"/>
+    </p:if>
     <p:xslt>
       <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-example-results.xsl"/>
       <p:with-option name="parameters" select="map{'xproc-example-elm': $xproc-example-elm}"/>

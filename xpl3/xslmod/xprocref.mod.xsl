@@ -117,6 +117,10 @@
 
     <xsl:variable name="contents" as="xs:string">
       <xsl:choose>
+        <xsl:when test="exists($root-elm/self::xpref:TEXT)">
+          <!-- This is text contents -->
+          <xsl:sequence select="string($root-elm)"/>
+        </xsl:when>
         <xsl:when test="$preserve-space">
           <!-- When preserving space, we add an xml:space="preserve" attribute and remove it later, as a string! -->
           <xsl:variable name="root-elm-whitespace-preserve" as="element()">

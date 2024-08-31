@@ -53,6 +53,11 @@
     </description>
     <type name="List of xs:string"/>
   </attribute>
+  <attribute name="output-is-text" default="false">
+    <description>
+      <para>Whether to treat the step&#x2019;s output as text and not as XML.</para>
+    </description>
+  </attribute>
 
   <element name="source-header" occurs="?">
     <description>

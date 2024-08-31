@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:map="http://www.w3.org/2005/xpath-functions/map"
-  xmlns:array="http://www.w3.org/2005/xpath-functions/array" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:local="#local.ltf_d4h_ybc"
+  xmlns:array="http://www.w3.org/2005/xpath-functions/array" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:local="#local.ltf_d4h_ybc" xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref"
   xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:db="http://docbook.org/ns/docbook" exclude-result-prefixes="#all" expand-text="true">
   <!-- ================================================================== -->
   <!-- 
@@ -26,11 +26,28 @@
   <!-- GLOBAL DECLARATIONS: -->
 
   <xsl:variable name="fixup-uris" as="xs:boolean" select="xtlc:str2bln($xproc-example-elm/@fixup-uris, true())"/>
+  <xsl:variable name="output-is-text" as="xs:boolean" select="xtlc:str2bln($xproc-example-elm/@output-is-text, true())"/>
   <xsl:variable name="keep-from" as="xs:string?" select="xs:string($xproc-example-elm/@keep-from)"/>
-  
+
   <xsl:variable name="bogus-file-prefix" as="xs:string" select="'file:/…/…/'"/>
 
   <!-- ================================================================== -->
+
+  <xsl:template match="/">
+    <xsl:choose>
+      <xsl:when test="$output-is-text">
+        <!-- When it's text it wraps the text value of the document int an <xpref:TEXT> element. This will be detected and removed later on... -->
+        <xpref:TEXT>
+          <xsl:value-of select="."/>
+        </xpref:TEXT>
+      </xsl:when>
+      <xsl:otherwise> 
+        <xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="@*[starts-with(., 'file:/')]">
     <xsl:variable name="attribute-contents" as="xs:string" select="xs:string(.)"/>
