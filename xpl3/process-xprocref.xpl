@@ -251,7 +251,18 @@
     </p:run>
     <p:if test="$output-is-text">
       <!-- Make sure that when we want to handle the output as text, it is text (e.g. for JSON results). -->
-      <p:cast-content-type content-type="text/plain"/>
+      <p:identity name="run-output"></p:identity>
+      <p:try>
+        <p:cast-content-type content-type="text/plain"/>
+        <p:catch>
+          <p:variable name="contents" as="xs:string" select="string(.)" pipe="@run-output"/>
+          <p:identity>
+            <p:with-input>
+              <p:inline content-type="text/plain" xml:space="preserve">{$contents}</p:inline>
+            </p:with-input>
+          </p:identity>
+        </p:catch>
+      </p:try>
     </p:if>
     <p:xslt>
       <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-example-results.xsl"/>

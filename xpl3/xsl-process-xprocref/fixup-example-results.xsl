@@ -26,7 +26,7 @@
   <!-- GLOBAL DECLARATIONS: -->
 
   <xsl:variable name="fixup-uris" as="xs:boolean" select="xtlc:str2bln($xproc-example-elm/@fixup-uris, true())"/>
-  <xsl:variable name="output-is-text" as="xs:boolean" select="xtlc:str2bln($xproc-example-elm/@output-is-text, true())"/>
+  <xsl:variable name="output-is-text" as="xs:boolean" select="xtlc:str2bln($xproc-example-elm/@output-is-text, false())"/>
   <xsl:variable name="keep-from" as="xs:string?" select="xs:string($xproc-example-elm/@keep-from)"/>
 
   <xsl:variable name="bogus-file-prefix" as="xs:string" select="'file:/…/…/'"/>

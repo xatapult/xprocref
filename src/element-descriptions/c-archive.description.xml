@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <element-description xmlns="http://www.xtpxlib.nl/ns/xdoc" xmlns:db="http://docbook.org/ns/docbook"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xdoc
-  ../../../../../xatapult/xtpxlib-xdoc/xsd/element-description.xsd" name="c:archive" sort-attributes="false">
+  ../../../../xatapult/xtpxlib-xdoc/xsd/element-description.xsd" name="c:archive" sort-attributes="false">
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 

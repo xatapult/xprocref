@@ -2,7 +2,8 @@
 <step name="cast-content-type" version-idref="v30" category-idrefs="standard-steps misc" short-description="Changes the media type of documents"
   required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.cast-content-type"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
   <!-- ======================================================================= -->
 
@@ -82,16 +83,16 @@
           <para>Casting to a JSON media type converts the XML into JSON:</para>
           <itemizedlist>
             <listitem>
-              <para>The <link xlink:href="https://www.w3.org/TR/xpath-functions-31">XPath and XQuery Functions and Operators 3.1</link> standard
-                defines an <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping">XML format for the representation of JSON
-                  data</link>. The XPath&#160;3.1 function <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-xml-to-json"
-                    ><code>fn:xml-to-json()</code></link> converts this format into a JSON conformant string (and for further processing, <link
-                  xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-parse-json"><code>fn:parse-json()</code></link> turns this string into a
-                map/array).</para>
+              <para>The <link xlink:href="https://www.w3.org/TR/xpath-functions-31" role="newpage">XPath and XQuery Functions and Operators 3.1</link>
+                standard defines an <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping" role="newpage">XML format for the
+                  representation of JSON data</link>. The XPath function <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-xml-to-json"
+                  role="newpage"><code>fn:xml-to-json()</code></link> converts this format into a JSON conformant string (and for further processing,
+                  <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-parse-json"><code>fn:parse-json()</code></link> turns this string
+                into a map/array).</para>
               <para>If an input document of <step/> is conformant to this <link
-                  xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping">XML format for the representation of JSON data</link>,
-                it&#x2019;s converted into its JSON equivalent (like calling <code>fn:parse-json(fn:xml-to-json())</code>). See <example-ref
-                  idref="converting-json-xml"/> for an example.</para>
+                  xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping" role="newpage">XML format for the representation of JSON
+                  data</link>, it&#x2019;s converted into its JSON equivalent (like calling <code>fn:parse-json(fn:xml-to-json())</code>). See
+                  <example-ref idref="converting-json-xml"/> for an example.</para>
             </listitem>
             <listitem>
               <para>If the input document has a <tag>c:param-set</tag> root element and <tag>c:param name=…" value=…"/</tag> child elements (the
@@ -108,28 +109,27 @@
           <para>A <property>serialization</property> document-property is removed when converting to JSON.</para>
         </listitem>
 
-        <listitem>
-          <para>Casting to a text media type serializes the XML document by calling <code>fn:serialize($doc,&#160;$param)</code>, where
-              <literal>$doc</literal> is the document on the <port>source</port> port and <code>$param</code> is the serialization document-property
-            of this document.</para>
+        <listitem xml:id="casting-xml-to-text" xreflabel="casting XML to text">
+          <para>Casting to a text media type converts the XML into text. The incoming XML comes out as text, as a string, complete with tags,
+            attributes, etc.</para>
+          <para>The result of this conversion is the same as calling the XPath <link
+              xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-serialize" role="newpage"><code>fn:serialize($doc, $param)</code></link>
+            function, where <code>$doc</code> is the document to convert and <code>$param</code> is its <property>serialization</property>
+            document-property. See the <example-ref idref="converting-xml-to-text"/> example.</para>
           <para>A <property>serialization</property> document-property is removed.</para>
         </listitem>
 
         <listitem>
-          <para>Casting to any other media type must support the case where the input document is a <tag>c:data</tag> document. The resulting document
-            will have the specified media type and a representation that is the content of the <tag>c:data</tag> element after decoding the base64
-            encoded content The serialization property is removed.</para>
-          <para>
-            <emphasis role="bold">[ERROR <step-error-ref code="XC0072"/>]</emphasis>
-          </para>
-          <para>
-            <emphasis role="bold">[ERROR <step-error-ref code="XC0073"/>]</emphasis>
-          </para>
-          <para>
-            <emphasis role="bold">[ERROR <step-error-ref code="XC0074"/>]</emphasis>
-          </para>
-          <para>Casting from an XML media type to any other media type when the input document is not a <tag>c:data</tag> document is
-            implementation-defined.</para>
+          <para>Casting to any other media type where the input document is a <tag>c:data</tag> document (see <xref linkend="c-data"/>) results in a
+            document with the specified media type and a representation that is the content of the <tag>c:data</tag> element after decoding it. The
+            value of the <code>c:data/@content-type</code> attribute and the value of the <option>content-type</option> option of <step/> must be the
+            same!</para>
+          <para>A <property>serialization</property> document-property is removed.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to any other media type where the input is not a valid <tag>c:data</tag> document is implementation-defined and therefore
+            depends on the XProc processor used.</para>
         </listitem>
 
       </itemizedlist>
@@ -141,26 +141,32 @@
     <section>
       <title>Converting HTML documents</title>
 
+      <para>When the input document is an HTML document (has an HTML media type), the following casts are supported:</para>
+
       <itemizedlist>
+
         <listitem>
-          <para>Casting from an HTML media type to an XML media type changes “<literal>content-type</literal>” document-property and removes any
-            serialization property. </para>
+          <para>Casting to another HTML media type simply changes the <property>content-type</property> document-property.</para>
         </listitem>
+
         <listitem>
-          <para>Casting from an HTML media type to another HTML media type changes “<literal>content-type</literal>” document-property.</para>
+          <para>Casting to an XML media type changes <property>content-type</property> document-property and removes any serialization property.
+          </para>
         </listitem>
+
         <listitem>
-          <para>Casting from an HTML media type to a JSON media type is implementation-defined.</para>
+          <para>Casting to a JSON media type is implementation-defined and therefore depends on the XProc processor used.</para>
         </listitem>
+
         <listitem>
-          <para>Casting an an HTML media type to a text media type serializes the HTML document by calling <function>fn:serialize($doc,
-              $param)</function> where <literal>$doc</literal> is the document on the <port>source</port> port and <literal>$param</literal> is the
-            serialization property of this document. The resulting string is wrapped by a document node and returned on the <port>result</port> port.
-            The serialization property is removed.</para>
+          <para>Casting to a text media type works the same as casting an XML media type to text. See <xref linkend="casting-xml-to-text"/>
+            above.</para>
         </listitem>
+
         <listitem>
-          <para>Casting from an HTML media type to any other media type is implementation-defined.</para>
+          <para>Casting to any other media type is implementation-defined and therefore depends on the XProc processor used.</para>
         </listitem>
+
       </itemizedlist>
 
     </section>
@@ -170,28 +176,38 @@
     <section>
       <title>Converting JSON documents</title>
 
+      <para>When the input document is an JSON document (has an JSON media type), the following casts are supported:</para>
+
       <itemizedlist>
+
         <listitem>
-          <para>Casting from a JSON media type to an XML media type converts the JSON into XML. An implementation must support the format specified in
-            section “XML Representation of JSON” of <link xlink:href="https://www.w3.org/TR/xpath-functions-31/" role="newpage"
-              xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1 functions</link> as default for the resulting XML. It is implementation-defined
-            whether other result formats are supported. The serialization property is removed.</para>
+          <para>Casting to another JSON media type simply changes the <property>content-type</property> document-property.</para>
         </listitem>
+
         <listitem>
-          <para>Casting from a JSON media type to an HTML media type is implementation-defined.</para>
+          <para>Casting to an HTML media type is implementation-defined and therefore depends on the XProc processor used.</para>
         </listitem>
+
         <listitem>
-          <para>Casting from a JSON media type to another JSON media type changes “<literal>content-type</literal>” document-property.</para>
+          <para>Casting to an XML media type converts the JSON into XML according to the rules specified in the XPath <link
+              xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping" role="newpage">XML format for the representation of JSON
+              data</link>. See the <example-ref idref="converting-json-to-xml"/> example.</para>
+          <para>A <property>serialization</property> document-property is removed.</para>
         </listitem>
+
         <listitem>
-          <para>Casting from a JSON media type to a text media type serializes the JSON document by calling <function>fn:serialize($doc,
-              $param)</function> where <literal>$doc</literal> is the document on the <port>source</port> port and <literal>$param</literal> is the
-            serialization property of this document. The resulting string is wrapped by a document node and returned on the <port>result</port> port.
-            The serialization property is removed.</para>
+          <para>Casting to a text media type converts the JSON into text. The incoming JSON comes out as text, as a string.</para>
+          <para>The result of this conversion is the same as calling the XPath <link
+              xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-serialize" role="newpage"><code>fn:serialize($doc, $param)</code></link>
+            function, where <code>$doc</code> is the document to convert and <code>$param</code> is its <property>serialization</property>
+            document-property.</para>
+          <para>A <property>serialization</property> document-property is removed.</para>
         </listitem>
+
         <listitem>
-          <para>Casting from a JSON media type to any other media type is implementation-defined.</para>
+          <para>Casting to any other media type is implementation-defined and therefore depends on the XProc processor used.</para>
         </listitem>
+
       </itemizedlist>
 
     </section>
@@ -201,31 +217,38 @@
     <section>
       <title>Converting text documents</title>
 
+      <para>When the input document is an text document (has a text media type), the following casts are supported:</para>
+
       <itemizedlist>
+
         <listitem>
-          <para>Casting from a text media type to an XML media type parses the text value of the document on <port>source</port> port by calling
-              <function>fn:parse-xml</function>. <emphasis role="bold">[ERROR <step-error-ref code="XD0049"/>]</emphasis>. The serialization property
-            is removed.</para>
+          <para>Casting to another text media type simply changes the <property>content-type</property> document-property.</para>
         </listitem>
+
         <listitem>
-          <para>Casting from a text media type to an HTML media type parses the text value of the document on <port>source</port> port into an XPath
-            data model document that contains a tree of elements, attributes, and other nodes. The precise way in which text documents are parsed into
-            the XPath data model is implementation-defined. <emphasis role="bold">[ERROR <step-error-ref code="XD0060"/>]</emphasis>. The
-            serialization property is removed.</para>
+          <para>Casting to an XML media type parses the text value of the document by calling the XPath <link
+              xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-parse-xml" role="newpage"><code>fn:parse-xml()</code></link> function. This
+            assumes of course that the text is a well-formed XML document. If not, error <step-error-ref code="XD0049"/> is raised.</para>
         </listitem>
+
         <listitem>
-          <para>Casting from a text media type to a JSON media type parses the text value of the document on <port>source</port> port by calling
-              <function>fn:parse-json($doc, $par)</function> where <literal>$doc</literal> is the text document and <literal>$par</literal> is the
-              <option>parameter</option> option. <emphasis role="bold">[ERROR <step-error-ref code="XD0057"/>]</emphasis>
-            <emphasis role="bold">[ERROR <step-error-ref code="XD0058"/>]</emphasis>
-            <emphasis role="bold">[ERROR <step-error-ref code="XD0059"/>]</emphasis> The serialization property is removed. </para>
+          <para>Casting to an HTML media type parses the document into an HTML document. How this is done is implementation-defined and therefore
+            depends on the XProc processor used. If unsuccessful, error <step-error-ref code="XD0060"/> is raised.</para>
         </listitem>
+
         <listitem>
-          <para>Casting from a text media type to another text media type changes “<literal>content-type</literal>” document-property.</para>
+          <para>Casting to a JSON media type parses the document by calling the XPath <link
+              xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-parse-json" role="newpage"><code>fn:parse-json($doc, $param)</code></link>
+            function, where <code>$doc</code> is the document to convert and <code>$param</code> is its <property>serialization</property>
+            document-property. <function>fn:parse-json($doc, $par)</function> where <literal>$doc</literal> is the text document and
+              <literal>$par</literal> is the <option>parameter</option> option.</para>
+          <para>A <property>serialization</property> document-property is removed.</para>
         </listitem>
+
         <listitem>
-          <para>Casting from a text media type to any other media type is implementation-defined.</para>
+          <para>Casting to any other media type is implementation-defined and therefore depends on the XProc processor used.</para>
         </listitem>
+
       </itemizedlist>
 
     </section>
@@ -236,22 +259,33 @@
       <title>Converting other media types</title>
 
       <itemizedlist>
-        <listitem xml:id="c.data">
-          <para>Casting from a non-XML media type to an XML media type produces an XML document with a <tag>c:data</tag> document element. The
-            original media type will be preserved in the <tag class="attribute">content-type</tag> attribute on the <tag>c:data</tag> element.</para>
-          <para>
-            <emphasis role="bold">[RNG Pattern VocabData]</emphasis>
-          </para>
-          <para>The content of the <tag>c:data</tag> element is the base64 encoded representation of the non-XML content. The serialization property
-            is removed.</para>
-        </listitem>
         <listitem>
-          <para>Casting from any other media type to a HTML media type, a JSON media type or a text document is implementation-defined.</para>
+          <para>Casting from an unrecognized media type to an XML media type produces a <tag>c:data</tag> document (see <xref linkend="c-data"/>). The
+              <tag>c:data/@content-type</tag> attribute is the document&#x2019;s content type. The content of the <code>c:data</code> element is the
+            base64 encoded representation of the document. See the <example-ref idref="converting-weird-to-xml"/> example.</para>
+          <para>A <property>serialization</property> document-property is removed.</para>
         </listitem>
+
         <listitem>
-          <para>Casting from any other media type to any other media type is implementation-defined.</para>
+          <para>Casting from an unrecognized media type to a HTML, JSON , text or unrecognized media type is implementation-defined and therefore
+            depends on the XProc processor used.</para>
         </listitem>
+
       </itemizedlist>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="c-data">
+      <title><tag>c:data</tag> documents</title>
+
+      <para>The <step/> step uses <tag>c:data</tag> documents to convert XML from and into media types it does not recognize (the <code>c</code>
+        prefix here is bound to the <code>http://www.w3.org/ns/xproc-step</code> namespace):</para>
+
+      <xdoc:transform href="$xdoc/xml-description.xpl">
+        <xi:include href="../../element-descriptions/c-data.description.xml"/>
+      </xdoc:transform>
 
     </section>
 
@@ -282,9 +316,9 @@
 
   <example title="Converting the XML representation of JSON" id="converting-json-xml">
 
-    <para>If an input document of <step/> is conformant to the XPath&#160;3.1 <link
-        xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping">XML format for the representation of JSON data</link> and the
-        <option>content-type</option> option is a JSON media type, <step/> converts this into its JSON equivalent.</para>
+    <para>If an input document of <step/> is conformant to the XPath <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping"
+        >XML format for the representation of JSON data</link> and the <option>content-type</option> option is a JSON media type, <step/> converts
+      this into its JSON equivalent.</para>
 
     <xproc-example href="../../examples/cast-content-type/cast-content-type-02.xpl" output-is-text="true">
       <source-header>
@@ -324,6 +358,78 @@
 
   </example>
 
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Converting XML to text" id="converting-xml-to-text">
+
+    <xproc-example href="../../examples/cast-content-type/cast-content-type-03.xpl" output-is-text="true">
+      <source-header>
+        <para>Let&#x2019;s convert this simple XML document into text:</para>
+      </source-header>
+      <result-header>
+        <para>The resulting <emphasis>text</emphasis> (it looks like its another XML document, but it is text):</para>
+      </result-header>
+    </xproc-example>
+
+    <para>Now assume we need this text representation without the XML header (the <code>&lt;?xml … ?&gt;</code> part at the top). The <step/> step
+      uses the document&#x2019;s <property>serialization</property> document-property to guide the conversions. This document-property is a map
+      containing the required <link xlink:href="https://www.w3.org/TR/xslt-xquery-serialization-31/">serialization properties</link>. For this
+      example: <code>map{'omit-xml-declaration': true()}</code>.</para>
+    <para>Document-properties can be specified using the <step-ref name="p:set-properties"/> step. The value of the <option>properties</option> option
+      of <step>p:set-properties</step> is itself a map, with the document-property names as keys. Therefore, its value is a map within a map:
+        <code>map{'serialization': map{'omit-xml-declaration': true()}}</code>.</para>
+
+    <xproc-example href="../../examples/cast-content-type/cast-content-type-04.xpl" output-is-text="true" show-source="false">
+      <pipeline-header>
+        <para>The following code (using the same input document as above) does the trick: </para>
+      </pipeline-header>
+      <result-document>
+        <para>Result document (text):</para>
+      </result-document>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Converting JSON into XML" id="converting-json-to-xml">
+
+    <para>Converting JSON into XML means <step/> produces XML according to the XPath <link
+        xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping" role="newpage">XML format for the representation of JSON
+        data</link> specification. Here we do the inverse of what is done in the <example-ref idref="converting-json-xml"/> example.</para>
+
+    <xproc-example href="../../examples/cast-content-type/cast-content-type-05.xpl"/>
+
+  </example>
+
+
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Converting an unrecognized media type into XML" id="converting-weird-to-xml">
+
+    <xproc-example href="../../examples/cast-content-type/cast-content-type-07.xpl" fixup-pipeline-input="false" show-source="false">
+      <pipeline-header>
+        <para>This example transforms a piece of text that has been given the (bogus) media type of <code>x/x</code> into XML. The result is its
+            <code>base64</code> encoded value, wrapped in a <tag>c:data</tag> element.</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Converting a &lt;c:data&gt; document into an unrecognized media type" id="converting-xml-to-weird">
+
+    <xproc-example href="../../examples/cast-content-type/cast-content-type-08.xpl" output-is-text="true">
+      <pipeline-header>
+        <para>This example is the inverse of the <example-ref idref="converting-weird-to-xml"/> example. It converts the <tag>c:data</tag> document
+          into a document with the bogus media type <code>x/x</code>. Notice that the <code>c:data/@content-type</code> attribute and the value of the
+            <option>content-type</option> option of <step/> are the same.</para>
+      </pipeline-header>
+    </xproc-example>
+    
+  </example>
   <!-- ======================================================================= -->
 
   <step-errors>

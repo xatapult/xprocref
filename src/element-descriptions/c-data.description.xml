@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element-description xmlns="http://www.xtpxlib.nl/ns/xdoc" xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xdoc 
+  ../../../../xatapult/xtpxlib-xdoc/xsd/element-description.xsd" name="c:data" sort-attributes="false">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <attribute name="content-type" required="true">
+    <description>
+      <para>The MIME type of the content.</para>
+    </description>
+    <type name="xs:string"/>
+  </attribute>
+
+  <attribute name="charset">
+    <description>
+      <para>The character set of the content, for instance <code>UTF-8</code> or <code>ASCII</code>. For an explanation of character encodings see
+          <link xlink:href="https://en.wikipedia.org/wiki/Character_encoding" role="newpage">Wikipedia</link>.</para>
+    </description>
+    <type name="xs:string"/>
+  </attribute>
+
+  <attribute name="encoding">
+    <description>
+      <para>The encoding of the content. The most used encoding is <code>base64</code> (see <link xlink:href="https://en.wikipedia.org/wiki/Base64"
+          role="newpage">Wikipedia</link>).</para>
+    </description>
+    <type name="xs:string"/>
+  </attribute>
+
+</element-description>
