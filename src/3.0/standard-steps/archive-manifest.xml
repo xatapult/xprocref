@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="archive-manifest" version-idref="v30" category-idrefs="standard-steps archive compress"
+  short-description="Create an XML manifest document describing the contents of an archive file" required="true" publish="true"
+  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.archive-manifest" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" primary="true" content-types="any" sequence="false">
+      <description>
+        <para>The archive file to create the manifest for.</para>
+      </description>
+    </input>
+
+    <output port="result" primary="true" content-types="application/xml" sequence="false">
+      <description>
+        <para>The created XML manifest document. See the <step-ref name="p:archive"/> step for a description of its format.</para>
+      </description>
+    </output>
+
+    <option name="format" as="xs:QName?" required="false" select="()">
+      <description>
+        <xi:include href="../../text-fragments/archive-format-option.xml"/>
+      </description>
+    </option>
+
+    <option name="parameters" as="map(xs:QName, item()*)?" required="false" select="()">
+      <description>
+        <para>Parameters used to control the XML manifest document generation. The XProc specification does not define any parameters for this option.
+          A specific XProc processor might define its own.</para>
+      </description>
+    </option>
+
+    <option name="relative-to" as="xs:anyURI?" required="false" select="()">
+      <description>
+        <para>This option can be used to set/override the base URI of the archive. If you don&#x2019;t specify it, it is, as expected, the base URI of
+          the document appearing on the <port>source</port> port. The use of this option is rare, but you might need it when:</para>
+        <itemizedlist>
+          <listitem>
+            <para>The archive on the <port>source</port> port has no <property>base-uri</property> document-property. This would raise error
+                <step-error-ref code="XC0120"/>.</para>
+          </listitem>
+          <listitem>
+            <para>You use this manifest as a base for creating a new one with <step-ref name="p:archive"/>. The base URI plays an important role here
+              and setting it to specific value is sometimes useful.</para>
+          </listitem>
+        </itemizedlist>
+      </description>
+    </option>
+
+    <option name="override-content-types" as="array(array(xs:string))?" required="false" select="()">
+      <description>
+        <para>Use this to override the content-type determination of the files in the archive (see <xref linkend="override-content-type"/>).</para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step creates an XML manifest document describing the contents of the archive file appearing on its <port>source</port> port (for
+      instance a ZIP file).</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+
+    <para>The <step/> step takes an archive file (for instance a ZIP file) on its <port>source</port> port and returns on its <port>result</port> port
+      an XML document describing the contents of the archive: the <emphasis>archive&#160;manifest</emphasis>. The archive manifest format is described
+      in the <step-ref name="p:archive"/> step.</para>
+    <para>Archive manifests can be used in several ways. Some examples:</para>
+    <itemizedlist>
+      <listitem>
+        <para>To inspect which files are present in an archive, for instance to check whether what you&#x2019;ve got is complete.</para>
+      </listitem>
+      <listitem>
+        <para>As an input manifest for <step-ref name="p:archive"/>. This step takes, on its <port>manifest</port> port, a manifest like the one
+          produced by <step/> and uses this to create a new archive or update an existing one. You could for instance first get a manifest using
+          <step/>, change it to reflect the changes you need and then feed it to <step-ref name="p:archive"/> to produce a new archive.</para>
+      </listitem>
+    </itemizedlist>
+
+    <xi:include href="../../text-fragments/zip-remark.xml"/>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="override-content-type">
+      <title>Overriding content-types</title>
+
+      <para>One of the things the <step/> step does is determining the content-type (MIME type) of the archive entries. This is usually done based on
+        the filename/extension. It is recorded in the manifest <code>c:entry/@content-type</code> attribute.</para>
+
+      <para>Sometimes it is useful to override this mechanism and assign specific content-types to some of the entries. For instance, the files
+        Microsoft Office produces (<code>.docx</code>, <code>.xlsx</code>, etc.) are archives with a lot of XML documents inside. Some of these
+        documents have the extension <code>.rels</code> and would therefore not be recognized as XML documents. The
+          <option>override-content-types</option> option makes it possible to adjust this behavior.</para>
+
+      <para>The value of the <option>override-content-types</option> option must be an array of arrays. The inner arrays must have exactly two
+        members:</para>
+      <itemizedlist>
+        <listitem>
+          <para>The first member must be an XPath regular expression.</para>
+        </listitem>
+        <listitem>
+          <para>The second member must be a valid a MIME content-type.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>Determining an archive entry&#x2019;s content-type is now as follows:</para>
+      <itemizedlist>
+        <listitem>
+          <para>The inner arrays of the <option>override-content-types</option> option value are processed in order of appearance (so order is
+            significant).</para>
+        </listitem>
+        <listitem>
+          <para>The XPath regular expression (in the first member of the inner array) is matched against the full path of an entry
+              <emphasis>in</emphasis> the archive (as in <code>matches($path-in-archive, $regular-expression)</code>).</para>
+        </listitem>
+        <listitem>
+          <para>If a match is found, the content-type (the second member of the inner array) is used as the entry&#x2019;s content-type.</para>
+        </listitem>
+        <listitem>
+          <para>If no match was found for all the inner arrays, the normal mechanism for determining the content-type is used.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>For example: setting the <option>override-content-types</option> option to <code>[&#160;['.rels$',&#160;'application/xml'],
+          ['^special/',&#160;'application/octet-stream']&#160;]</code> means that all files ending with <code>.rels</code> will get the content-type
+          <code>application/xml</code>. All files in the archive&#x2019;s <code>special</code> directory (including sub-directories) will get the
+        content-type <code>application/octet-stream</code>. See also the <example-ref idref="overriding-content-types"/> example.</para>
+
+    </section>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>The only document-property for the document appearing on the <port>result</port> is <property>content-type</property>, with value
+        <code>application/xml</code>. Note it has no <property>base-uri</property> document-property and no document-properties from the document on
+      the <port>source</port> port survive.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="../../text-fragments/relative-to-detail.xml"/>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="../../text-fragments/zip-detail.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="basic-usage">
+    <para>Assume we have a simple ZIP archive with two entries:</para>
+    <itemizedlist>
+      <listitem>
+        <para>An XML file in the root called <code>reference.xml</code></para>
+      </listitem>
+      <listitem>
+        <para>An image in an <code>images/</code> sub-directory called <code>logo.png</code>.</para>
+      </listitem>
+    </itemizedlist>
+
+    <xproc-example href="../../examples/archive-manifest/archive-manifest-01.xpl" show-source="false" keep-from="test.zip">
+      <pipeline-header>
+        <para>The following pipeline creates an archive manifest for this ZIP file:</para>
+      </pipeline-header>
+      <result-header>
+        <para>Resulting archive manifest:</para>
+      </result-header>
+    </xproc-example>
+
+    <para>As you can see, the XProc processor I&#x2019;m using to process this example (MorganaXProc-III) adds a few extra attributes to the
+        <tag>c:entry</tag> elements: <code>size</code>, <code>compressed-size</code> and <code>time</code>.</para>
+    <para>Also note the contents of the <code>c:entry/@href</code> attributes: they are a combination of the full path/filename of the archive and the
+      path of the entry within the archive (as in the <code>c:entry/@name</code> attribute). The <code>c:entry/@href</code> attribute plays an
+      important role when creating archives using <step-ref name="p:archive"/>.</para>
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Overriding content types" id="overriding-content-types">
+    <para>This example uses the same ZIP archive as in <example-ref idref="basic-usage"/>. The following pipeline explicitly sets the content type for
+        <code>.png</code> files to <code>application/octet-stream</code>:</para>
+
+    <xproc-example href="../../examples/archive-manifest/archive-manifest-02.xpl" show-source="false" keep-from="test.zip">
+      <result-header>
+        <para>Resulting archive manifest:</para>
+      </result-header>
+    </xproc-example>
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Using the relative-to option" id="relative-to-option">
+    <para>This example uses the same ZIP archive as in <example-ref idref="basic-usage"/>. It sets the <option>relative-to</option> to
+        <code>file:///test/</code>. This is reflected in the <code>c:entry/@href</code> attributes:</para>
+
+    <xproc-example href="../../examples/archive-manifest/archive-manifest-03.xpl" show-source="false" fixup-uris="false">
+      <result-header>
+        <para>Resulting archive manifest:</para>
+      </result-header>
+    </xproc-example>
+  </example>
+
+  <!-- ======================================================================= -->
+
+  <step-errors>
+    <step-error code="XC0085"/>
+    <step-error code="XC0079"/>
+    <step-error code="XD0064"/>
+    <step-error code="XC0120"/>
+    <step-error code="XC0147"/>
+    <step-error code="XD0079"/>
+    <step-error code="XC0146"/>
+  </step-errors>
+
+</step>

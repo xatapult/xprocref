@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="cast-content-type" version-idref="v30" category-idrefs="standard-steps misc" short-description="Changes the media type of documents"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.cast-content-type"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" content-types="any" primary="true" sequence="true">
+      <description>
+        <para>The document(s) to change the media type of.</para>
+      </description>
+    </input>
+
+    <output port="result" content-types="any" primary="true" sequence="true">
+      <description>
+        <para>The resulting document(s)</para>
+      </description>
+    </output>
+
+    <option name="content-type" required="true" as="xs:string">
+      <description>
+        <para>The media type of the resulting document(s).</para>
+        <para>This must be a valid media type (either <code>type/subtype</code> or <code>type/subtype+ext</code>). If not, error <step-error-ref
+            code="XD0079"/> is raised.</para>
+      </description>
+    </option>
+
+    <option name="parameters" as="map(xs:QName,item()*)?" required="false" select="()">
+      <description>
+        <para>Parameters controlling the casting/transformation of the document(s). Keys, values and their meaning depend on the XProc processor
+          used.</para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step takes the document(s) appearing on its <port>source</port> port and changes their media type according to the value of the
+        <option>content-type</option> option, transforming the document(s) if necessary.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+    <para>À document flowing through an XProc pipeline has a <emphasis>media type</emphasis>, which tells the XProc processor what kind of document it
+      is dealing with. The media type of a document is recorded in its <property>content-type</property> document-property. Example values are
+        <code>text/xml</code> for XML documents, <code>application/json</code> for JSON documents, etc. For more information about media types see for
+      example <link xlink:href="https://en.wikipedia.org/wiki/Media_type" role="newpage">Wikipedia</link>.</para>
+
+    <para>The <step/> step has a required <option>content-type</option> option and tries to cast (change) the media types of the documents appearing
+      on its <port>source</port> port according to the value of this option. Sometimes this is a (very) simple operation: for instance, changing one
+      XML media type to another just changes the value of the <property>content-type</property> document-property. However, you can also request more
+      complex changes, like converting an XML document into JSON or vice versa.</para>
+
+    <para>Of course, not every media type can be cast into every other media type. The following sections describe what you can (and cannot) do. If
+      you request an impossible cast, error <step-error-ref code="XC0071"/> is raised.</para>
+
+    <para>A brief explanation of media types and how XProc treats them can be found in the <xref linkend="cct-media-type-summary"/> section
+      below.</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section>
+      <title>Converting XML documents</title>
+
+      <para>When the input document is an XML document (has an XML media type), the following casts are supported:</para>
+
+      <itemizedlist>
+
+        <listitem>
+          <para>Casting to another XML media type simply changes the <property>content-type</property> document-property.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to an HTML media type changes the <property>content-type</property> document-property and removes any
+              <property>serialization</property> document-property. </para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to a JSON media type converts the XML into JSON:</para>
+          <itemizedlist>
+            <listitem>
+              <para>The <link xlink:href="https://www.w3.org/TR/xpath-functions-31" role="newpage">XPath and XQuery Functions and Operators 3.1</link>
+                standard defines an <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping" role="newpage">XML format for the
+                  representation of JSON data</link>. The XPath function <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-xml-to-json"
+                  role="newpage"><code>fn:xml-to-json()</code></link> converts this format into a JSON conformant string (and for further processing,
+                  <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-parse-json"><code>fn:parse-json()</code></link> turns this string
+                into a map/array).</para>
+              <para>If an input document of <step/> is conformant to this <link
+                  xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping" role="newpage">XML format for the representation of JSON
+                  data</link>, it&#x2019;s converted into its JSON equivalent (like calling <code>fn:parse-json(fn:xml-to-json())</code>). See
+                  <example-ref idref="converting-json-xml"/> for an example.</para>
+            </listitem>
+            <listitem>
+              <para>If the input document has a <tag>c:param-set</tag> root element and <tag>c:param name="…" value="…"/</tag> child elements (the
+                  <code>c</code> prefix here is bound to the <code>http://www.w3.org/ns/xproc-step</code> namespace), it will turn this into a JSON
+                map with the values of the <code>name</code> attributes as keys. See the <example-ref idref="converting-param-sets"/> example.</para>
+              <para>Param-sets are an XProc&#160;1.0 construct, used for passing parameters (there were no maps in those days). Unless you&#x2019;re
+                converting XProc&#160;1.0 steps into 3.x, it&#x2019;s unlikely you&#x2019;ll need this feature.</para>
+            </listitem>
+            <listitem>
+              <para>In all other cases it&#x2019;s up to the XProc processor what happens. It could turn your XML into some kind of JSON, but it could
+                just as well raise an error.</para>
+            </listitem>
+          </itemizedlist>
+          <para>A <property>serialization</property> document-property is removed when converting to JSON.</para>
+        </listitem>
+
+        <listitem xml:id="casting-xml-to-text" xreflabel="casting XML to text">
+          <para>Casting to a text media type converts the XML into text. The incoming XML comes out as text, as a string, complete with tags,
+            attributes, etc.</para>
+          <para>The result of this conversion is the same as calling the XPath <link
+              xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-serialize" role="newpage"><code>fn:serialize($doc, $param)</code></link>
+            function, where <code>$doc</code> is the document to convert and <code>$param</code> is its <property>serialization</property>
+            document-property. See the <example-ref idref="converting-xml-to-text"/> example.</para>
+          <para>A <property>serialization</property> document-property is removed.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to any other media type where the input document is a <tag>c:data</tag> document (see <xref linkend="c-data"/>) results in a
+            document with the specified media type and a representation that is the content of the <tag>c:data</tag> element after decoding it. The
+            value of the <code>c:data/@content-type</code> attribute and the value of the <option>content-type</option> option of <step/> must be the
+            same!</para>
+          <para>A <property>serialization</property> document-property is removed.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to any other media type where the input is not a valid <tag>c:data</tag> document is implementation-defined and therefore
+            depends on the XProc processor used.</para>
+        </listitem>
+
+      </itemizedlist>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section>
+      <title>Converting HTML documents</title>
+
+      <para>When the input document is an HTML document (has an HTML media type), the following casts are supported:</para>
+
+      <itemizedlist>
+
+        <listitem>
+          <para>Casting to another HTML media type simply changes the <property>content-type</property> document-property.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to an XML media type changes the <property>content-type</property> document-property and removes a
+              <property>serialization</property> document-property. </para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to a JSON media type is implementation-defined and therefore depends on the XProc processor used.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to a text media type works the same as casting an XML media type to text. See <xref linkend="casting-xml-to-text"/>
+            above.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to any other media type is implementation-defined and therefore depends on the XProc processor used.</para>
+        </listitem>
+
+      </itemizedlist>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section>
+      <title>Converting JSON documents</title>
+
+      <para>When the input document is a JSON document (has a JSON media type), the following casts are supported:</para>
+
+      <itemizedlist>
+
+        <listitem>
+          <para>Casting to another JSON media type simply changes the <property>content-type</property> document-property.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to an HTML media type is implementation-defined and therefore depends on the XProc processor used.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to an XML media type converts the JSON into XML according to the rules specified in the XPath <link
+              xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping" role="newpage">XML format for the representation of JSON
+              data</link>. See the <example-ref idref="converting-json-to-xml"/> example.</para>
+          <para>A <property>serialization</property> document-property is removed.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to a text media type converts the JSON into text. The incoming JSON (which in XProc consists of maps/arrays) comes out as
+            text, as a string.</para>
+          <para>The result of this conversion is the same as calling the XPath <link
+              xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-serialize" role="newpage"><code>fn:serialize($doc, $param)</code></link>
+            function, where <code>$doc</code> is the document to convert and <code>$param</code> is its <property>serialization</property>
+            document-property.</para>
+          <para>A <property>serialization</property> document-property is removed.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to any other media type is implementation-defined and therefore depends on the XProc processor used.</para>
+        </listitem>
+
+      </itemizedlist>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section>
+      <title>Converting text documents</title>
+
+      <para>When the input document is an text document (has a text media type), the following casts are supported:</para>
+
+      <itemizedlist>
+
+        <listitem>
+          <para>Casting to another text media type simply changes the <property>content-type</property> document-property.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to an XML media type parses the text value of the document by calling the XPath <link
+              xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-parse-xml" role="newpage"><code>fn:parse-xml()</code></link> function. This
+            assumes of course that the text is a well-formed XML document. If not, error <step-error-ref code="XD0049"/> is raised.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to an HTML media type parses the document into an HTML document. How this is done is implementation-defined and therefore
+            depends on the XProc processor used. If unsuccessful, error <step-error-ref code="XD0060"/> is raised.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to a JSON media type parses the document by calling the XPath <link
+              xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-parse-json" role="newpage"><code>fn:parse-json($doc, $param)</code></link>
+            function, where <code>$doc</code> is the document to convert and <code>$param</code> is its <property>serialization</property>
+            document-property. </para>
+          <para>A <property>serialization</property> document-property is removed.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting to any other media type is implementation-defined and therefore depends on the XProc processor used.</para>
+        </listitem>
+
+      </itemizedlist>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section>
+      <title>Converting other media types</title>
+
+      <para>When the input document has any other media type (meaning XProc treats it as a binary document), the following casts are supported:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Casting from an unrecognized media type to an XML media type produces a <tag>c:data</tag> document (see <xref linkend="c-data"/>). The
+              <tag>c:data/@content-type</tag> attribute is the document&#x2019;s content type. The content of the <code>c:data</code> element is the
+            base64 encoded representation of the document. See the <example-ref idref="converting-weird-to-xml"/> example.</para>
+          <para>A <property>serialization</property> document-property is removed.</para>
+        </listitem>
+
+        <listitem>
+          <para>Casting from an unrecognized media type to a HTML, JSON, text or other unrecognized media type is implementation-defined and therefore
+            depends on the XProc processor used.</para>
+        </listitem>
+
+      </itemizedlist>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="c-data">
+      <title><tag>c:data</tag> documents</title>
+
+      <para>The <step/> step uses <tag>c:data</tag> documents to convert XML from and into binary media types (the <code>c</code> prefix here is bound
+        to the <code>http://www.w3.org/ns/xproc-step</code> namespace):</para>
+
+      <xdoc:transform href="$xdoc/xml-description.xpl">
+        <xi:include href="../../element-descriptions/c-data.description.xml"/>
+      </xdoc:transform>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="cct-media-type-summary">
+      <title>XProc media type usage</title>
+
+      <para>A document <emphasis>media type</emphasis> (in XProc passed around in the <property>content-type</property> document-property) tells XProc
+        (and your code if it needs to know this) what kind of document we&#x2019;re dealing with: the <emphasis>document type</emphasis>. XProc
+        recognizes and handles five document types: XML, HTML, JSON, text and binary. </para>
+      <para>The relation between document type and media type is as follows:</para>
+
+      <table role="nonumber">
+        <title/>
+        <tgroup cols="3">
+          <colspec colname="c1" colnum="1"/>
+          <colspec colname="c2" colnum="2"/>
+          <colspec colname="c3" colnum="3"/>
+          <thead>
+            <row>
+              <entry>Document type</entry>
+              <entry>Media types</entry>
+              <entry>Examples</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>XML</entry>
+              <entry>
+                <para>
+                  <code>*/xml</code>
+                </para>
+                <para>
+                  <code>*/*+xml</code> except <code>application/xhtml+xml</code>
+                </para>
+              </entry>
+              <entry>
+                <para>
+                  <code>text/xml</code>
+                </para>
+                <para>
+                  <code>application/xml</code>
+                </para>
+                <para>
+                  <code>image/svg+xml</code>
+                </para>
+              </entry>
+            </row>
+            <row>
+              <entry>HTML</entry>
+              <entry>
+                <para>
+                  <code>text/html</code>
+                </para>
+                <para>
+                  <code>application/xhtml+xml</code>
+                </para>
+              </entry>
+              <entry>
+                <para>
+                  <code>text/html</code>
+                </para>
+                <para>
+                  <code>application/xhtml+xml</code>
+                </para>
+              </entry>
+            </row>
+            <row>
+              <entry>JSON</entry>
+              <entry>
+                <para>
+                  <code>application/json</code>
+                </para>
+              </entry>
+              <entry>
+                <para>
+                  <code>application/json</code>
+                </para>
+              </entry>
+            </row>
+            <row>
+              <entry>Text</entry>
+              <entry>
+                <para>
+                  <code>text/*</code>
+                </para>
+                <para>(not matching one of the XML or HTML media types)</para>
+              </entry>
+              <entry>
+                <para>
+                  <code>text/plain</code>
+                </para>
+                <para>
+                  <code>text/csv</code>
+                </para>
+              </entry>
+            </row>
+            <row>
+              <entry>Binary</entry>
+              <entry>Anything else</entry>
+              <entry>
+                <para>
+                  <code>image/jpeg</code>
+                </para>
+                <para>
+                  <code>application/octet-stream</code>
+                </para>
+                <para>
+                  <code>application/zip</code>
+                </para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>If the value of the <option>content-type</option> option and the media type of a document are the same, the document will appear unchanged
+      on the <port>result</port> port.</para>
+  </detail>
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+    <para>Exceptions are the <property>content-type</property> document-property which is updated accordingly and the
+        <property>serialization</property> document-property which is sometimes removed.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Converting the XML representation of JSON" id="converting-json-xml">
+
+    <para>If an input document of <step/> is conformant to the XPath <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping"
+        >XML format for the representation of JSON data</link> and the <option>content-type</option> option is a JSON media type, <step/> converts
+      this into its JSON equivalent.</para>
+
+    <xproc-example href="../../examples/cast-content-type/cast-content-type-02.xpl" output-is-text="true">
+      <source-header>
+        <para>The following source document is a shortened version of the example in the XPath standard: </para>
+      </source-header>
+      <result-header>
+        <para>The resulting JSON map:</para>
+      </result-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Converting param-sets" id="converting-param-sets">
+
+    <para>Param-sets are constructs used in the XProc&#160;1.0 days for passing sets of parameters, for instance to XSLT stylesheets. The current
+      version uses maps for this. To enable converting param-sets into maps, <step/> contains support for this. In XProc, a map is JSON data, so the
+        <option>content-type</option> option must be a JSON media type.</para>
+
+    <xproc-example href="../../examples/cast-content-type/cast-content-type-01.xpl" output-is-text="true">
+      <source-header>
+        <para>The source param-set document:</para>
+      </source-header>
+      <result-header>
+        <para>The resulting JSON map:</para>
+      </result-header>
+    </xproc-example>
+
+    <para>JSON maps are passed around as XPath maps, so it&#x2019;s easy to store such a map in a variable and use it later. Just add the following
+      variable declaration directly after the <step/> invocation:</para>
+    <programlisting xml:space="preserve"><![CDATA[<p:variable name="param-set-map" as="map(*)" select="."/>]]></programlisting>
+
+    <para>Unless you&#x2019;re converting XProc&#160;1.0 code into a newer version, i&#x2019;s unlikely you&#x2019;ll need this param-set conversion
+      feature.</para>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Converting XML to text" id="converting-xml-to-text">
+
+    <xproc-example href="../../examples/cast-content-type/cast-content-type-03.xpl" output-is-text="true">
+      <source-header>
+        <para>Let&#x2019;s convert this simple XML document into text:</para>
+      </source-header>
+      <result-header>
+        <para>The resulting <emphasis>text</emphasis> (it looks like it is another XML document, but it is just text):</para>
+      </result-header>
+    </xproc-example>
+
+    <para>Now assume we need this text representation without the XML header (the <code>&lt;?xml … ?&gt;</code> part at the top). The <step/> step
+      uses the document <property>serialization</property> document-property to guide the conversions. This document-property is a map containing the
+      required <link xlink:href="https://www.w3.org/TR/xslt-xquery-serialization-31/">serialization properties</link>. For this example:
+        <code>map{'omit-xml-declaration': true()}</code>.</para>
+    <para>Document-properties can be specified using the <step-ref name="p:set-properties"/> step. The value of the <option>properties</option> option
+      of <step>p:set-properties</step> is itself a map, with the document-property names as keys. Therefore, its value becomes a map within a map:
+        <code>map{'serialization': map{'omit-xml-declaration': true()}}</code>.</para>
+
+    <xproc-example href="../../examples/cast-content-type/cast-content-type-04.xpl" output-is-text="true" show-source="false">
+      <pipeline-header>
+        <para>The following code (using the same input document as above) does the trick: </para>
+      </pipeline-header>
+      <result-document>
+        <para>Result document (text):</para>
+      </result-document>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Converting JSON into XML" id="converting-json-to-xml">
+
+    <para>Converting JSON into XML means <step/> produces XML according to the XPath <link
+        xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping" role="newpage">XML format for the representation of JSON
+        data</link> specification. Here we do the inverse of what is done in the <example-ref idref="converting-json-xml"/> example.</para>
+
+    <xproc-example href="../../examples/cast-content-type/cast-content-type-05.xpl"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Converting a binary media type into XML" id="converting-weird-to-xml">
+
+    <xproc-example href="../../examples/cast-content-type/cast-content-type-07.xpl" fixup-pipeline-input="false" show-source="false">
+      <pipeline-header>
+        <para>This example transforms a piece of text that has been given the (bogus) media type of <code>x/x</code> into XML. Because XProc does not
+          recognize this media type, it treats the document as binary. The result of the <step/> step is the document&#x2019;s <code>base64</code>
+          encoded contents, wrapped in a <tag>c:data</tag> element.</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
+  <step-errors>
+    <step-error code="XD0079"/>
+    <step-error code="XC0071"/>
+    <step-error code="XC0079"/>
+    <step-error code="XC0072"/>
+    <step-error code="XC0073"/>
+    <step-error code="XC0074"/>
+    <step-error code="XD0049"/>
+    <step-error code="XD0060"/>
+    <step-error code="XD0057"/>
+    <step-error code="XD0058"/>
+    <step-error code="XD0059"/>
+  </step-errors>
+
+</step>

@@ -64,8 +64,14 @@
             <xsl:variable name="href-full" as="xs:string" select="resolve-uri($href-input, base-uri($source-port-elm))"/>
             <xsl:sequence select="doc($href-full)/*"/>
           </xsl:when>
-          <xsl:when test="exists($source-port-elm/p:inline)">
+          <xsl:when test="exists($source-port-elm/p:inline/*)">
             <xsl:sequence select="$source-port-elm/p:inline/*[1]"/>
+          </xsl:when>
+          <xsl:when test="exists($source-port-elm/p:inline)">
+            <!-- Text or JSON content: -->
+            <xpref:TEXT>
+              <xsl:value-of select="$source-port-elm/p:inline"/>
+            </xpref:TEXT>
           </xsl:when>
           <xsl:when test="exists($source-port-elm/*)">
             <xsl:sequence select="$source-port-elm/*[1]"/>

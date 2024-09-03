@@ -233,11 +233,16 @@
 
 
   <!-- Do the XProc example stuff: -->
-  <p:viewport match="db:xproc-example" name="process-xproc-example" message="  * Handling examples">
+  <p:variable name="example-count" as="xs:integer" select="count(//db:xproc-example)"/>
+  <p:viewport match="db:xproc-example" name="process-xproc-example" message="  * Handling {$example-count} examples">
+    <p:if test="(p:iteration-position() mod 10) eq 0">
+      <p:identity message="    * Example {p:iteration-position()}/{$example-count}"/>
+    </p:if>
     <p:variable name="xproc-example-elm" as="element(db:xproc-example)" select="/*"/>
 
     <!-- Run the pipeline and add the result, wrapped in <_RESULT>: -->
     <p:variable name="href-pipeline" as="xs:string" select="xs:string(/*/@href)"/>
+    <p:variable name="output-is-text" as="xs:boolean" select="xs:boolean((/*/@output-is-text, false())[1])"/>
     <p:run>
       <p:with-input href="{$href-pipeline}"/>
       <p:run-input port="source">
@@ -247,6 +252,9 @@
       </p:run-input>
       <p:output port="result" primary="true"/>
     </p:run>
+    <p:if test="$output-is-text">
+      <p:cast-content-type content-type="text/plain"/>
+    </p:if>
     <p:xslt>
       <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-example-results.xsl"/>
       <p:with-option name="parameters" select="map{'xproc-example-elm': $xproc-example-elm}"/>
@@ -283,6 +291,9 @@
   <!-- Process the resulting DocBook/xdoc into XHTML: -->
   <p:variable name="html-page-count" as="xs:integer" select="count(/*/xtlcon:document[exists(db:article)])"/>
   <p:viewport match="xtlcon:document[exists(db:article)]" message="  * Converting {$html-page-count} pages to HTML">
+    <p:if test="(p:iteration-position() mod 10) eq 0">
+      <p:identity message="    * Page {p:iteration-position()}/{$html-page-count}"/>
+    </p:if>
     <p:variable name="href-target" as="xs:string" select="xs:string(/*/@href-target)"/>
     <p:viewport match="db:article[1]">
       <xdoc:xdoc-to-xhtml add-numbering="false" add-identifiers="false" create-header="false"/>

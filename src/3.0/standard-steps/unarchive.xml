@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="unarchive" version-idref="v30" category-idrefs="standard-steps archive compress"
+  short-description="Extracts documents from an archive file" required="true" publish="true"
+  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.unarchive" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" primary="true" content-types="any" sequence="false">
+      <description>
+        <para>The archive to extract the documents from.</para>
+      </description>
+    </input>
+
+    <output port="result" primary="true" content-types="any" sequence="true">
+      <description>
+        <para>The extracted documents.</para>
+      </description>
+    </output>
+
+    <option name="include-filter" as="xs:string*" subtype="RegularExpression" required="false">
+      <description>
+        <para>A sequence of XPath regular expressions (as strings) that determine which files in the archive are extracted. See <xref
+            linkend="determining-extracted-files"/>.</para>
+      </description>
+    </option>
+
+    <option name="exclude-filter" as="xs:string*" subtype="RegularExpression" required="false">
+      <description>
+        <para>A sequence of XPath regular expressions (as strings) that determine which files in the archive are <emphasis>not</emphasis> extracted.
+          See <xref linkend="determining-extracted-files"/>.</para>
+      </description>
+    </option>
+
+    <option name="format" as="xs:QName?" required="false" select="()">
+      <description>
+        <xi:include href="../../text-fragments/archive-format-option.xml"/>
+      </description>
+    </option>
+
+    <option name="parameters" as="map(xs:QName, item()*)?" required="false" select="()">
+      <description>
+        <para>Parameters used to control the document extraction. The XProc specification does not define any parameters for this option. A specific
+          XProc processor might define its own.</para>
+      </description>
+    </option>
+
+    <option name="relative-to" as="xs:anyURI?" required="false">
+      <description>
+        <para>This option can be used to explicitly set the <property>base-uri</property> document-property of the extracted documents. See <xref
+            linkend="determining-base-uri"/></para>
+      </description>
+    </option>
+
+    <option name="override-content-types" as="array(array(xs:string))?" required="false">
+      <description>
+        <para>Use this to override the content-type determination for the extracted files (the value of their <property>content-type</property>
+          document-property). This mechanism works the same as for the <step-ref name="p:archive-manifest"/> step. See <example-ref
+            idref="example-override-content-type"/> for an example.</para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> extracts document from an archive file (for instance a ZIP file) and returns these on its <port>result</port> port.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+    <para>The <step/> step allows you to extract one or more documents from an archive (for instance a ZIP file). The result will be a sequence of the
+      extracted documents on the <port>result</port> port.</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>You can specify exactly which documents to extract or not to extract using the <option>include-filter</option> and
+            <option>exclude-filter</option> options. See <xref linkend="determining-extracted-files"/>.</para>
+      </listitem>
+      <listitem>
+        <para>Sometimes it is important to specify the exact base URI of the extracted documents for subsequent steps. You can do this using the
+            <option>relative-to</option> option. See <xref linkend="determining-base-uri"/>. </para>
+      </listitem>
+      <listitem>
+        <para>Although probably rare, it is also possible to control the content type (MIME type) of the extracted documents, using the
+            <option>override-content-types</option> option. See <example-ref idref="example-override-content-type"/> for an example.</para>
+      </listitem>
+
+    </itemizedlist>
+    
+    <xi:include href="../../text-fragments/zip-remark.xml"/>
+
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="determining-extracted-files">
+      <title>Determining which files to extract</title>
+
+      <para>The <option>include-filter</option> and <option>exclude-filter</option> options determine which documents to extract. Both option must be
+        a sequence of zero or more XPath regular expressions, as strings. For an example see <example-ref idref="excluding"/>. Basic operation:</para>
+      <itemizedlist>
+        <listitem>
+          <para>The paths of the documents <emphasis>in</emphasis> the archive are matched against the regular expressions.</para>
+        </listitem>
+        <listitem>
+          <para>A document must be included and not excluded.</para>
+        </listitem>
+        <listitem>
+          <para>An empty <option>include-filter</option> option means: <emphasis>all</emphasis> documents are included. An empty
+              <option>exclude-filter</option> option means: <emphasis>no</emphasis> documents are excluded.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>In more detail:</para>
+      <itemizedlist>
+        <listitem>
+          <para>First, the <option>include-filter</option> option is processed:</para>
+          <itemizedlist>
+            <listitem>
+              <para>If it is empty (its value is the empty sequence <code>()</code>), <emphasis>all</emphasis> documents in the archive are
+                included.</para>
+            </listitem>
+            <listitem>
+              <para>Otherwise, the path of every document <emphasis>in</emphasis> the archive is matched against the list of regular expressions in
+                the <option>include-filter</option> option (like in <code>matches($path-in-archive, $regular-expression)</code>). If one of the
+                regular expression matches, the document is included, otherwise it is excluded.</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>Now the <option>exclude-filter</option> option is processed against the resulting list of entries:</para>
+          <itemizedlist>
+            <listitem>
+              <para>If it is empty (its value is the empty sequence <code>()</code>), <emphasis>no</emphasis> further documents excluded.</para>
+            </listitem>
+            <listitem>
+              <para>Otherwise, the path of every document <emphasis>in</emphasis> the archive is matched against the list of regular expressions in
+                the <option>exclude-filter</option> option (like in <code>matches($path-in-archive, $regular-expression)</code>). If one of the
+                regular expression matches, the document is excluded, otherwise it is included.</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
+
+      <para>If the value for one of these options is a sequence with just a single values, you can set this by attribute:</para>
+      <programlisting><![CDATA[<p:unarchive exlude-filter="\.xml$"/>]]></programlisting>
+      <para>However, if more than one value is involved you <emphasis>must</emphasis> use <tag>p:with-option</tag> (providing a sequence with multiple
+        values by attribute is not possible):</para>
+      <programlisting xml:space="preserve"><![CDATA[<p:unarchive>
+  <p:with-option name="exclude-filter" select="('\.xml$', '\.jpg$')"/>
+</p:unarchive>]]></programlisting>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="determining-base-uri">
+      <title>The base URI of the extracted files</title>
+
+      <para>The <option>relative-to</option> option can be used to specify the <property>base-uri</property> document-property of the extracted
+        documents:</para>
+      <itemizedlist>
+        <listitem>
+          <para>If the <option>relative-to</option> option is <emphasis>not</emphasis> specified, the <option>base-uri</option> document-property of
+            an extracted document is the full URI of the archive followed by the path of the document <emphasis>in</emphasis> the archive. For
+            instance: <code>file:///path/to/archive/archive.zip/path/in/archive/test.xml</code>.</para>
+        </listitem>
+        <listitem>
+          <para>If a <option>relative-to</option> option is specified, it must be a valid URI. The <option>base-uri</option> document-property of an
+            extracted document is this URI followed by the path of the document <emphasis>in</emphasis> the archive. For instance, assume we&#x2019;ve
+            set the <option>relative-to</option> option to <code>file:///my/documents/</code>:
+              <code>file:///my/documents/path/in/archive/test.xml</code>.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>The <example-ref idref="basic-usage"/> and most other examples show what happens if you don&#x2019;t specify a
+          <option>relative-to</option> option. The <example-ref idref="example-relative-to"/> example shows what happens if you do.</para>
+
+    </section>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>No document-properties from the document on the <port>source</port> port survive.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="../../text-fragments/relative-to-detail.xml"/>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>Paths in an archive are always relative. However, depending on how archives are constructed, a path in an archive can be with or without a
+      leading <code>/</code>. Usually it will be without. For archives constructed by <step-ref name="p:archive"/> no leading slash will be
+      present.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="../../text-fragments/zip-detail.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="basic-usage">
+
+    <para>Assume we have a simple ZIP archive with two entries:</para>
+    <itemizedlist>
+      <listitem>
+        <para>An XML file in the root called <code>reference.xml</code></para>
+      </listitem>
+      <listitem>
+        <para>An image in an <code>images/</code> sub-directory called <code>logo.png</code>.</para>
+      </listitem>
+    </itemizedlist>
+
+    <xproc-example href="../../examples/unarchive/unarchive-01.xpl" show-source="false" keep-from="test.zip">
+      <pipeline-header>
+        <para>The following pipeline uses <step/> to extract its contents. The <tag>p:for-each</tag> construction after the <step/> creates an
+          overview of what was extracted. The actual extracted files are discarded.</para>
+      </pipeline-header>
+      <result-header>
+        <para>Resulting overview of the extracted files:</para>
+      </result-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Excluding documents" id="excluding">
+
+    <para>This example uses the same ZIP archive as <example-ref idref="basic-usage"/>. The <option>exclude-filter</option> option excludes the
+      entries ending with <code>.xml</code>:</para>
+    <xproc-example href="../../examples/unarchive/unarchive-02.xpl" show-source="false" keep-from="test.zip">
+      <pipeline-header/>
+      <result-header>
+        <para>Resulting overview of the extracted files:</para>
+      </result-header>
+    </xproc-example>
+
+    <para>The following example excludes all documents from the <code>images</code> sub-directory:</para>
+    <xproc-example href="../../examples/unarchive/unarchive-03.xpl" show-source="false" keep-from="test.zip">
+      <pipeline-header/>
+      <result-header>
+        <para>Resulting overview of the extracted files:</para>
+      </result-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Using relative-to" id="example-relative-to">
+
+    <para>This example uses the same ZIP archive as <example-ref idref="basic-usage"/>. The following pipeline explicitly sets the base part of the
+      URIs for the extracted documents to <code>file:///my/documents/</code>:</para>
+    <xproc-example href="../../examples/unarchive/unarchive-04.xpl" show-source="false" fixup-uris="false">
+      <pipeline-header/>
+      <result-header>
+        <para>Resulting overview of the extracted files:</para>
+      </result-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Overriding content types" id="example-override-content-type">
+
+    <para>This example uses the same ZIP archive as <example-ref idref="basic-usage"/>. The following pipeline explicitly sets the content type for
+        <code>.png</code> files to <code>application/octet-stream</code>:</para>
+    <xproc-example href="../../examples/unarchive/unarchive-05.xpl" show-source="false" keep-from="test.zip">
+      <pipeline-header/>
+      <result-header>
+        <para>Resulting overview of the extracted files:</para>
+      </result-header>
+    </xproc-example>
+
+    <para>More information about how this mechanism works can be found in the description of the <step-ref name="p:archive-manifest"/> step.</para>
+  </example>
+
+  <!-- ======================================================================= -->
+
+  <step-errors>
+    <step-error code="XC0085"/>
+    <step-error code="XC0079"/>
+    <step-error code="XC0147"/>
+    <step-error code="XC0120"/>
+  </step-errors>
+
+</step>

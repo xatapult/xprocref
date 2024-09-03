@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="set-attributes" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation xml-base-related"
+  short-description="Add (or replace) attributes on a set of elements" required="true" publish="true"
+  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.set-attributes" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <signature>
+
+    <input port="source" content-types="xml html" primary="true" sequence="true">
+      <description>
+        <para>The document(s) to add (or replace) the attributes on.</para>
+      </description>
+    </input>
+    <output port="result" content-types="xml html" primary="true" sequence="true">
+      <description>
+        <para>The resulting document(s).</para>
+      </description>
+    </output>
+
+    <option name="match" as="xs:string" select="'/*'" subtype="XSLTSelectionPattern" required="false">
+      <description>
+        <para>The XSLT match pattern that selects the element(s) to add (or replace) the attributes on. If not specified, the root element is
+          used.</para>
+        <para>This must be an XSLT match pattern that matches an element. If it matches any other kind of node, error <step-error-ref code="XC0023"/>
+          is raised.</para>
+      </description>
+    </option>
+    <option name="attributes" required="true" as="map(xs:QName, xs:anyAtomicType)">
+      <description>
+        <para>A map with entries (attribute name, attribute value).</para>
+        <para>If this map is empty, nothing will happen and the step acts as a <step-ref name="p:identity"/> step.</para>
+      </description>
+    </option>
+  </signature>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <summary>
+    <para>The <step>p:set-attributes</step> step adds (or replaces) attributes as specified in the <option>attributes</option> option map. This is
+      done for the element(s) matched by the <option>match</option> option.</para>
+  </summary>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <description>
+    <para>The <step>p:set-attribute</step> step:</para>
+    <itemizedlist>
+      <listitem>
+        <para>Takes the document(s) appearing on its <port>source</port> port.</para>
+      </listitem>
+      <listitem>
+        <para>Processes the elements that match the pattern in the <option>match</option> option:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If a selected element does <emphasis>not</emphasis> contain an attribute with a name that is a key in the
+                <option>attributes</option> option map, an attribute with this name and a value as associated in the map is added to it.</para>
+          </listitem>
+          <listitem><para>If a selected element already has such an attribute, its value is replaced with the value as associated in the map.</para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>The resulting document(s) appear on its <port>result</port> port.</para>
+      </listitem>
+    </itemizedlist>
+    <para>If you just want to set a single attribute, you can also use the <step-ref name="p:add-attribute"/> step.</para>
+  </description>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+  <detail>
+    <xi:include href="../../text-fragments/set-xml-base-changes-base-uri.xml"/>
+  </detail>
+  <detail>
+    <para>You cannot use this step to add or change a namespace declaration. Attempting to do so will result in error <step-error-ref code="XC0059"
+      />.</para>
+    <para>Note, however, that it is possible to add an attribute whose namespace is not in scope on the element it is added to. The XProc namespace
+      fixup mechanism will take care of handling this and add the appropriate namespace declarations. </para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Adding/replacing multiple attributes">
+    <para>This example adds the <code>type="special"</code> and a <code>level="2"</code> attributes to all <tag>text</tag> elements. One of the input
+        <tag>text</tag> elements already has a <code>type</code> attribute, but with a different value. This existing attribute is replaced.</para>
+    <xproc-example href="../../examples/set-attributes/set-attributes-01.xpl"/>
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <step-errors>
+    <step-error code="XC0023">
+      <description>
+        <para>It is a dynamic error if that pattern matches anything other than element nodes.</para>
+      </description>
+    </step-error>
+    <step-error code="XC0059"/>
+  </step-errors>
+</step>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="text-join"
+      version-idref="v30"
+      category-idrefs="standard-steps"
+      short-description="[EDIT] text-join short description"
+      required="true"
+      publish="false"
+      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.text-join"
+      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.xtpxlib.nl/ns/xprocref">
+   <signature>
+      <input port="source"
+             sequence="true"
+             content-types="text"
+             primary="true">
+         <description>
+            <para>[EDIT] input source</para>
+         </description>
+      </input>
+      <output port="result"
+              content-types="text"
+              primary="true"
+              sequence="true">
+         <description>
+            <para>[EDIT] output result</para>
+         </description>
+      </output>
+      <option name="separator"
+              as="xs:string?"
+              required="false">
+         <description>
+            <para>[EDIT] option separator</para>
+         </description>
+      </option>
+      <option name="prefix"
+              as="xs:string?"
+              required="false">
+         <description>
+            <para>[EDIT] option prefix</para>
+         </description>
+      </option>
+      <option name="suffix"
+              as="xs:string?"
+              required="false">
+         <description>
+            <para>[EDIT] option suffix</para>
+         </description>
+      </option>
+      <option name="override-content-type"
+              as="xs:string?"
+              required="false">
+         <description>
+            <para>[EDIT] option override-content-type</para>
+         </description>
+      </option>
+   </signature>
+   <summary>
+      <para>[EDIT]</para>
+      <para>The <code>p:text-join</code> step concatenates text documents.</para>
+   </summary>
+   <description>
+      <para>[EDIT]</para>
+      <para>The <code>p:text-join</code> step concatenates the text documents appearing on its <port>source</port> port into a single document on its <port>result</port> port. The documents will be concatenated in order of appearance. </para>
+      <itemizedlist>
+         <listitem>
+            <para>When the <option>separator</option> option is specified, its value will be inserted in between adjacent documents.</para>
+         </listitem>
+         <listitem>
+            <para>When the <option>prefix</option> option is specified, the document appearing on the <port>result</port> port will always start with its value (also when there are no documents on the <port>source</port> port).</para>
+         </listitem>
+         <listitem>
+            <para>When the <option>suffix</option> option is specified, the document appearing on the <port>result</port> port will always end with its value (also when there are no documents on the <port>source</port> port).</para>
+         </listitem>
+      </itemizedlist>
+      <para>When the <option>override-content-type</option> option is specified, the document appearing on the port <port>result</port> will have this media type as part of its document properties. <emphasis role="bold">[ERROR <step-error-ref code="XD0079"/>]</emphasis>
+         <emphasis role="bold">[ERROR <step-error-ref code="XC0001"/>]</emphasis>
+      </para>
+      <para>Concatenating text documents does not require identifying individual lines in each document, consequently no special end-of-line handling is performed.</para>
+      <bridgehead>Document properties</bridgehead>
+      <para feature="text-join-preserves-none">No document properties are preserved. The joined document has no <property>base-uri</property> property. </para>
+   </description>
+   <step-errors>
+      <step-error code="XD0079">
+         <description>
+            <para>It is a dynamic error if a supplied content-type is not a valid media type of the form “<literal>
+                  <replaceable>type</replaceable>/<replaceable>subtype</replaceable>+<replaceable>ext</replaceable>
+               </literal>” or “<literal>
+                  <replaceable>type</replaceable>/<replaceable>subtype</replaceable>
+               </literal>”.</para>
+         </description>
+      </step-error>
+      <step-error code="XC0001">
+         <description>
+            <para>It is a dynamic error if the value of option <option>override-content-type</option> is not a text media type.</para>
+         </description>
+      </step-error>
+   </step-errors>
+</step>
