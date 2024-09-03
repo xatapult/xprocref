@@ -32,6 +32,7 @@
   <xi:include href="standard-steps/set-attributes.xml"/>
   <xi:include href="standard-steps/set-properties.xml"/>
   <xi:include href="standard-steps/sink.xml"/>
+  <xi:include href="standard-steps/sleep.xml"/>
   <xi:include href="standard-steps/split-sequence.xml"/>
   <xi:include href="standard-steps/store.xml"/>
   <xi:include href="standard-steps/string-replace.xml"/>

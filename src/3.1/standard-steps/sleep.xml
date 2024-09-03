@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="sleep" version-idref="v31" category-idrefs="standard-steps misc" short-description="Delays the execution of the pipeline" required="true"
+  publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.sink" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" sequence="true" content-types="any" primary="true">
+      <description>
+        <para>The source document(s)</para>
+      </description>
+    </input>
+
+    <output port="result" sequence="true" content-types="any" primary="true">
+      <description>
+        <para>The resulting document(s). These will be exactly the same as what appeared on the <port>source</port> port.</para>
+      </description>
+    </output>
+
+    <option name="duration" required="true" as="xs:nonNegativeInteger">
+      <description>
+        <para>The duration of the delay, expressed in milliseconds.</para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step delays the execution of the pipeline for a specified number of milliseconds. Source documents are passed unchanged (like in
+      a <step-ref name="p:identity"/> step).</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+    <para>Sometimes it is useful to stop executing a pipeline for a little while, for instance when interacting with remote web servers. The <step/>
+      step does exactly this: it just stops executing the pipeline for the number of milliseconds specified in the <option>duration</option>
+      option.</para>
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>Some XProc processors will execute steps in parallel when the flow of documents in the pipeline makes this possible (multi-threaded
+      implementations). The <step/> step is guaranteed to delay the execution of the steps that depend on its output only. Whatever happens to other
+      steps (steps that run in parallel and do not depend on the output of the <step/> invocation) is implementation-defined and therefore depends on
+      the XProc processor used. </para>
+  </detail>
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+
+</step>

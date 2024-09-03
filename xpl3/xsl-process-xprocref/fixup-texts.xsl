@@ -155,7 +155,8 @@
       <xsl:variable name="referred-example-id" as="xs:string" select="xs:string(@idref)"/>
       <xsl:variable name="in-own-step" as="xs:boolean" select="$referred-step-name eq $current-step-name"/>
       <xsl:variable name="referred-container-document-elm" as="element(xtlcon:document)"
-        select="if ($in-own-step) then $current-container-document-elm else /*/xtlcon:document[@type eq $xpref:type-step][@name eq $referred-step-name][1]"/>
+        select="if ($in-own-step) then $current-container-document-elm else /*/xtlcon:document
+        [@type eq $xpref:type-step][@name eq $referred-step-name][@version-id eq $current-version-id][1]"/>
       <xsl:variable name="referred-anchor" as="xs:string"
         select="xpref:example-anchor($referred-step-name, $current-version-id, $referred-example-id)"/>
       <xsl:variable name="referred-example-section" as="element()" select="$referred-container-document-elm//db:*[@xml:id eq $referred-anchor]"/>

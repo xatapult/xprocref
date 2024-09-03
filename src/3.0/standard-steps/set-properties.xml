@@ -1,85 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="set-properties"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] set-properties short description"
-      required="true"
-      publish="false"
-      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.set-properties"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <signature>
-      <input port="source"
-             content-types="any"
-             primary="true"
-             sequence="true">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <output port="result"
-              content-types="any"
-              primary="true"
-              sequence="true">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-      <option name="properties"
-              required="true"
-              as="map(xs:QName,item()*)">
-         <description>
-            <para>[EDIT] option properties</para>
-         </description>
-      </option>
-      <option name="merge"
-              select="true()"
-              as="xs:boolean"
-              required="false">
-         <description>
-            <para>[EDIT] option merge</para>
-         </description>
-      </option>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para>The <tag>p:set-properties</tag> step sets document properties on the source document.</para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>The document properties of the document on the <port>source</port> port are augmented with the values specified in the <option>properties</option> option. The document produced on the <port>result</port> port has the same representation but the adjusted property values.</para>
-      <para feature="p-set-properties-merge">If the <option>merge</option> option is true, then the supplied properties are added to the existing properties, overwriting already existing values for a given key. If it is false, the document’s properties are replaced by the new set.</para>
-      <para>
-         <emphasis role="bold">[ERROR <step-error-ref code="XD0070"/>]</emphasis>
-      </para>
-      <para>
-         <emphasis role="bold">[ERROR <step-error-ref code="XC0069"/>]</emphasis>
-      </para>
-      <para>If the <option>properties</option> map contains a key equal to the string “<literal>base-uri</literal>” the associated value is taken as the new base URI of the resulting document. <emphasis role="bold">[ERROR <step-error-ref code="XD0064"/>]</emphasis>
-      </para>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="set-properties-preserves-some">If <option>merge</option> is true, document properties not overridden by settings in the <option>properties</option> map are preserved, otherwise the resulting document has only the <literal>content-type</literal> property and the properties specified in the <option>properties</option> map. In particular, if <option>merge</option> is false, the <literal>base-uri</literal> property will not be preserved. This means that the resulting document will not have a base URI if the <option>properties</option> map does not contain a <literal>base-uri</literal> entry. </para>
-   </description>
-   <step-errors>
-      <step-error code="XD0070">
-         <description>
-            <para>It is a dynamic error if a value is assigned to the <code>serialization</code> document property that cannot be converted into <code>map(xs:QName, item()*)</code> according to the rules in section “QName handling” of <link xlink:href="https://xproc.org/"
-                     role="newpage"
-                     xmlns:xlink="http://www.w3.org/1999/xlink">XProc 3.0</link> .</para>
-         </description>
-      </step-error>
-      <step-error code="XC0069">
-         <description>
-            <para>It is a dynamic error if the <option>properties</option> map contains a key equal to the string “<literal>content-type</literal>”.</para>
-         </description>
-      </step-error>
-      <step-error code="XD0064">
-         <description>
-            <para>It is a dynamic error if the base URI is not both absolute and valid according to <link xlink:href="https://www.rfc-editor.org/info/rfc3986"
-                     role="newpage"
-                     xmlns:xlink="http://www.w3.org/1999/xlink">RFC 3986</link> .</para>
-         </description>
-      </step-error>
-   </step-errors>
+<step name="set-properties" version-idref="v30" category-idrefs="standard-steps misc xml-base-related"
+  short-description="Sets or changes document-properties" required="true" publish="true"
+  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.set-properties" xmlns:xlink="http://www.w3.org/1999/xlink"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" content-types="any" primary="true" sequence="true">
+      <description>
+        <para>The document(s) to adjust the document-properties of.</para>
+      </description>
+    </input>
+
+    <output port="result" content-types="any" primary="true" sequence="true">
+      <description>
+        <para>The resulting document(s).</para>
+      </description>
+    </output>
+
+    <option name="properties" required="true" as="map(xs:QName,item()*)">
+      <description>
+        <para>A map containing the document-properties to adjust. The keys are the document-property names, the values their values.</para>
+      </description>
+    </option>
+
+    <option name="merge" select="true()" as="xs:boolean" required="false">
+      <description>
+        <para>If <code>true</code> (default), the supplied properties in the <option>properties</option> option are merged with the existing
+          document-properties, replacing/overwriting existing ones. If <code>false</code>, the existing document-properties are replaced.</para>
+      </description>
+    </option>
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step sets or changes document-properties of the source document(s).</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+    <para>A document flowing through an XProc pipeline carries a set of <emphasis>document-properties</emphasis> with it. Document-properties are
+      key/value pairs, where the key is a QName (which, in most cases, you can treat as just a string) and the values can be anything. Getting the
+      value(s) of document-properties can be done using the XProc functions <link
+        xlink:href="https://spec.xproc.org/master/head/xproc/#f.document-properties" role="newpage"><code>p:document-properties()</code></link> and
+        <link xlink:href="https://spec.xproc.org/master/head/xproc/#f.document-property" role="newpage"
+      ><code>p:document-property()</code></link>.</para>
+
+    <para>XProc reserves three document-property names for its own usage: <property>content-type</property>, <property>base-uri</property> and
+        <property>serialization</property> (see <link xlink:href="https://spec.xproc.org/master/head/xproc/#document-properties">here</link> for more
+      information). However, you can also add your own and use them in any way you like.</para>
+
+    <para>The <step/> step can be used to change (most) document-properties. For an example of using <step/> see <example-ref
+        idref="converting-xml-to-text" step-name="p:cast-content-type"/>.</para>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>The <step/> step can <emphasis>not</emphasis> change a document media type by altering the <property>content-type</property>
+      document-property. Any attempt to do this will result in error <step-error-ref code="XC0069"/>. To change a document media type use <step-ref
+        name="p:cast-content-type"/>.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>The value of the <property>serialization</property> document-property must be a map of type <code>map(xs:QName,&#160;item()*)</code>. If not
+      error <step-error-ref code="XD0070"/> is raised.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>Setting a document-property called <property>base-uri</property> changes the document&#x2019;s base URI accordingly. See also category
+        <category-ref idref="xml-base-related"/>.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <step-errors>
+    <step-error code="XD0070"/>
+    <step-error code="XC0069"/>
+    <step-error code="XD0064"/>
+  </step-errors>
+
 </step>

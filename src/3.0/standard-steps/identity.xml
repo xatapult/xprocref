@@ -7,16 +7,19 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <signature>
+    
     <input port="source" sequence="true" content-types="any" primary="true">
       <description>
         <para>The source document(s)</para>
       </description>
     </input>
+    
     <output port="result" sequence="true" content-types="any" primary="true">
       <description>
         <para>The resulting document(s). These will be exactly the same as what appeared on the <port>source</port> port.</para>
       </description>
     </output>
+    
   </signature>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

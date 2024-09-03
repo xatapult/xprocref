@@ -235,6 +235,9 @@
   <!-- Do the XProc example stuff: -->
   <p:variable name="example-count" as="xs:integer" select="count(//db:xproc-example)"/>
   <p:viewport match="db:xproc-example" name="process-xproc-example" message="  * Handling {$example-count} examples">
+    <p:if test="(p:iteration-position() mod 10) eq 0">
+      <p:identity message="    * Example {p:iteration-position()}/{$example-count}"/>
+    </p:if>
     <p:variable name="xproc-example-elm" as="element(db:xproc-example)" select="/*"/>
 
     <!-- Run the pipeline and add the result, wrapped in <_RESULT>: -->
@@ -250,19 +253,7 @@
       <p:output port="result" primary="true"/>
     </p:run>
     <p:if test="$output-is-text">
-      <!-- Make sure that when we want to handle the output as text, it is text (e.g. for JSON results). -->
-      <p:identity name="run-output"></p:identity>
-      <p:try>
-        <p:cast-content-type content-type="text/plain"/>
-        <p:catch>
-          <p:variable name="contents" as="xs:string" select="string(.)" pipe="@run-output"/>
-          <p:identity>
-            <p:with-input>
-              <p:inline content-type="text/plain" xml:space="preserve">{$contents}</p:inline>
-            </p:with-input>
-          </p:identity>
-        </p:catch>
-      </p:try>
+      <p:cast-content-type content-type="text/plain"/>
     </p:if>
     <p:xslt>
       <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-example-results.xsl"/>
@@ -300,6 +291,9 @@
   <!-- Process the resulting DocBook/xdoc into XHTML: -->
   <p:variable name="html-page-count" as="xs:integer" select="count(/*/xtlcon:document[exists(db:article)])"/>
   <p:viewport match="xtlcon:document[exists(db:article)]" message="  * Converting {$html-page-count} pages to HTML">
+    <p:if test="(p:iteration-position() mod 10) eq 0">
+      <p:identity message="    * Page {p:iteration-position()}/{$html-page-count}"/>
+    </p:if>
     <p:variable name="href-target" as="xs:string" select="xs:string(/*/@href-target)"/>
     <p:viewport match="db:article[1]">
       <xdoc:xdoc-to-xhtml add-numbering="false" add-identifiers="false" create-header="false"/>
