@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="cast-content-type" version-idref="v30" category-idrefs="standard-steps misc" short-description="Changes the media type of documents"
+<step name="cast-content-type" version-idref="v30" category-idrefs="standard-steps misc" short-description="Changes the media type of a document"
   required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.cast-content-type"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -9,21 +9,21 @@
 
   <signature>
 
-    <input port="source" content-types="any" primary="true" sequence="true">
+    <input port="source" content-types="any" primary="true" sequence="false">
       <description>
-        <para>The document(s) to change the media type of.</para>
+        <para>The document to change the media type of.</para>
       </description>
     </input>
 
-    <output port="result" content-types="any" primary="true" sequence="true">
+    <output port="result" content-types="any" primary="true" sequence="false">
       <description>
-        <para>The resulting document(s)</para>
+        <para>The resulting document.</para>
       </description>
     </output>
 
     <option name="content-type" required="true" as="xs:string">
       <description>
-        <para>The media type of the resulting document(s).</para>
+        <para>The media type of the resulting document.</para>
         <para>This must be a valid media type (either <code>type/subtype</code> or <code>type/subtype+ext</code>). If not, error <step-error-ref
             code="XD0079"/> is raised.</para>
       </description>
@@ -31,7 +31,7 @@
 
     <option name="parameters" as="map(xs:QName,item()*)?" required="false" select="()">
       <description>
-        <para>Parameters controlling the casting/transformation of the document(s). Keys, values and their meaning depend on the XProc processor
+        <para>Parameters controlling the casting/transformation of the document. Keys, values and their meaning depend on the XProc processor
           used.</para>
       </description>
     </option>
@@ -41,19 +41,19 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>The <step/> step takes the document(s) appearing on its <port>source</port> port and changes their media type according to the value of the
-        <option>content-type</option> option, transforming the document(s) if necessary.</para>
+    <para>The <step/> step takes the document appearing on its <port>source</port> port and changes its media type according to the value of the
+        <option>content-type</option> option, transforming the document if necessary.</para>
   </summary>
 
   <!-- ======================================================================= -->
 
   <description>
-    <para>À document flowing through an XProc pipeline has a <emphasis>media type</emphasis>, which tells the XProc processor what kind of document it
+    <para>A document flowing through an XProc pipeline has a <emphasis>media type</emphasis>, which tells the XProc processor what kind of document it
       is dealing with. The media type of a document is recorded in its <property>content-type</property> document-property. Example values are
         <code>text/xml</code> for XML documents, <code>application/json</code> for JSON documents, etc. For more information about media types see for
       example <link xlink:href="https://en.wikipedia.org/wiki/Media_type" role="newpage">Wikipedia</link>.</para>
 
-    <para>The <step/> step has a required <option>content-type</option> option and tries to cast (change) the media types of the documents appearing
+    <para>The <step/> step has a required <option>content-type</option> option and tries to cast (change) the media types of the document appearing
       on its <port>source</port> port according to the value of this option. Sometimes this is a (very) simple operation: for instance, changing one
       XML media type to another just changes the value of the <property>content-type</property> document-property. However, you can also request more
       complex changes, like converting an XML document into JSON or vice versa.</para>

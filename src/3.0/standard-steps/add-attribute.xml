@@ -8,14 +8,14 @@
 
   <signature>
 
-    <input port="source" content-types="xml html" primary="true" sequence="true">
+    <input port="source" content-types="xml html" primary="true" sequence="false">
       <description>
-        <para>The document(s) to add (or replace) the attribute on.</para>
+        <para>The document to add (or replace) the attribute on.</para>
       </description>
     </input>
-    <output port="result" content-types="xml html" primary="true" sequence="true">
+    <output port="result" content-types="xml html" primary="true" sequence="false">
       <description>
-        <para>The resulting document(s).</para>
+        <para>The resulting document.</para>
       </description>
     </output>
 
@@ -53,7 +53,7 @@
     <para>The <step>p:add-attribute</step> step:</para>
     <itemizedlist>
       <listitem>
-        <para>Takes the document(s) appearing on its <port>source</port> port.</para>
+        <para>Takes the document appearing on its <port>source</port> port.</para>
       </listitem>
       <listitem>
         <para>Processes the elements that match the pattern in the <option>match</option> option:</para>
@@ -68,7 +68,7 @@
         </itemizedlist>
       </listitem>
       <listitem>
-        <para>The resulting document(s) appear on its <port>result</port> port.</para>
+        <para>The resulting document appears on its <port>result</port> port.</para>
       </listitem>
     </itemizedlist>
     <para>The <step>p:add-attribute</step> step can only set a <emphasis>single</emphasis> attribute. The <step-ref name="p:set-attributes"/> step can

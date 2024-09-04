@@ -9,15 +9,15 @@
 
   <signature>
 
-    <input port="source" content-types="any" primary="true" sequence="true">
+    <input port="source" content-types="any" primary="true" sequence="false">
       <description>
-        <para>The document(s) to adjust the document-properties of.</para>
+        <para>The document to adjust the document-properties of.</para>
       </description>
     </input>
 
-    <output port="result" content-types="any" primary="true" sequence="true">
+    <output port="result" content-types="any" primary="true" sequence="false">
       <description>
-        <para>The resulting document(s).</para>
+        <para>The resulting document.</para>
       </description>
     </output>
 
@@ -38,14 +38,14 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>The <step/> step sets or changes document-properties of the source document(s).</para>
+    <para>The <step/> step sets or changes document-properties of the source document.</para>
   </summary>
 
   <!-- ======================================================================= -->
 
   <description>
     <para>A document flowing through an XProc pipeline carries a set of <emphasis>document-properties</emphasis> with it. Document-properties are
-      key/value pairs, where the key is a QName (which, in most cases, you can treat as just a string) and the values can be anything. Getting the
+      key/value pairs, where the key is a QName (which, in most cases, you can treat as just a string). Their values can be anything. Getting the
       value(s) of document-properties can be done using the XProc functions <link
         xlink:href="https://spec.xproc.org/master/head/xproc/#f.document-properties" role="newpage"><code>p:document-properties()</code></link> and
         <link xlink:href="https://spec.xproc.org/master/head/xproc/#f.document-property" role="newpage"
