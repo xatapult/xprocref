@@ -8,15 +8,15 @@
 
   <signature>
 
-    <input port="source" content-types="xml html" primary="true" sequence="true">
+    <input port="source" content-types="xml html" primary="true" sequence="false">
       <description>
-        <para>The document(s) to delete the nodes from.</para>
+        <para>The document to delete the nodes from.</para>
       </description>
     </input>
 
-    <output port="result" content-types="text xml html" primary="true" sequence="true">
+    <output port="result" content-types="text xml html" primary="true" sequence="false">
       <description>
-        <para>The resulting document(s).</para>
+        <para>The resulting document.</para>
       </description>
     </output>
 
@@ -31,20 +31,19 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>The <step/> step deletes nodes, specified by an XSLT selection pattern, from the document(s) appearing on its <code>source</code> port. The
-      resulting document(s) appears on the <port>result</port> port.</para>
+    <para>The <step/> step deletes nodes, specified by an XSLT selection pattern, from the document appearing on its <code>source</code> port.</para>
   </summary>
 
   <!-- ======================================================================= -->
 
   <description>
 
-    <para>The <step/> step takes the XSLT match pattern in the <option>match</option> option and holds this against the document(s) appearing on its
-        <port>source</port> port. Any matching nodes are deleted (including child nodes, if any). The resulting document(s) appear on the
+    <para>The <step/> step takes the XSLT match pattern in the <option>match</option> option and holds this against the document appearing on its
+        <port>source</port> port. Any matching nodes are deleted (including child nodes, if any). The resulting document appears on the
         <port>result</port> port.</para>
 
     <para>Note that deleting an element means that the entire element, including child elements, gets deleted. If you just want to delete the element
-      but keep the child elements, you need <step-ref name="p:unwrap"/>.</para>
+      but keep its child elements, you need <step-ref name="p:unwrap"/>.</para>
 
   </description>
 

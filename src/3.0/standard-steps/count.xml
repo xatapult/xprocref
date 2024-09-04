@@ -14,7 +14,7 @@
       </description>
     </input>
 
-    <output port="result" content-types="application/xml" primary="true" sequence="true">
+    <output port="result" content-types="application/xml" primary="true" sequence="false">
       <description>
         <para>An XML document consisting of a single <tag>c:result</tag> element containing the number of documents on the <port>source</port> port
           (or the limit set by the <option>limit</option> option).</para>
