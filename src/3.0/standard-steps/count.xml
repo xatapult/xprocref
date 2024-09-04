@@ -16,9 +16,10 @@
 
     <output port="result" content-types="application/xml" primary="true" sequence="false">
       <description>
-        <para>An XML document consisting of a single <tag>c:result</tag> element containing the number of documents on the <port>source</port> port
-          (or the limit set by the <option>limit</option> option).</para>
-        <para>Example: <code><![CDATA[<c:result>3</c:result>]]></code></para>
+        <para>An XML document consisting of a single <tag>c:result</tag> element (the <code>c</code> prefix here is bound to the
+            <code>http://www.w3.org/ns/xproc-step</code> namespace) containing the number of documents on the <port>source</port> port (or the limit
+          set by the <option>limit</option> option).</para>
+        <para>Example: <code><![CDATA[<c:result xmlns:c="http://www.w3.org/ns/xproc-step">3</c:result>]]></code></para>
       </description>
     </output>
 
@@ -45,12 +46,12 @@
   <description>
     <para>The <step/> step simply counts the number of documents appearing on its <port>source</port> port. It emits a very simple document on its
         <port>result</port> port containing this number, wrapped in a <tag>c:result</tag> element (the <code>c</code> prefix here is bound to the
-      <code>http://www.w3.org/ns/xproc-step</code> namespace). For example: <code><![CDATA[<c:result>3</c:result>]]></code>.</para>
+        <code>http://www.w3.org/ns/xproc-step</code> namespace). For example: <code><![CDATA[<c:result>3</c:result>]]></code>.</para>
     <para>Using this step you can find out how many documents are flowing through your pipeline and make decision based on that number. For instance:
       stop processing if there are too many.</para>
     <para>There is another way of doing this, see the <example-ref idref="alternative"/> example. This is probably easier, because the required count
-      is directly in a variable and the flow of documents in the pipeline is not interrupted. Which method (<step/> or a count variable) is faster
-      is hard to say and probably depends on the XProc processor used. If this matters to you, you&#x2019;ll have to do some experiments.</para>
+      is directly in a variable and the flow of documents in the pipeline is not interrupted. Which method (<step/> or a count variable) is faster is
+      hard to say and probably depends on the XProc processor used. If this matters to you, you&#x2019;ll have to do some experiments.</para>
   </description>
 
   <!-- ======================================================================= -->
