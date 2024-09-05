@@ -122,7 +122,7 @@
           <xsl:sequence select="string($root-elm)"/>
         </xsl:when>
         <xsl:when test="$preserve-space">
-          <!-- When preserving space, we add an xml:space="preserve" attribute and remove it later, as a string! -->
+          <!-- When preserving space, we add an xml:space="preserve" attribute and remove it later, as a string :( -->
           <xsl:variable name="root-elm-whitespace-preserve" as="element()">
             <xsl:for-each select="$root-elm">
               <xsl:copy>
@@ -136,7 +136,7 @@
           />
         </xsl:when>
         <xsl:otherwise>
-          <xsl:sequence select="serialize(xpref:remove-unused-namespaces($root-elm), $xpref:standard-serialization)"/>
+          <xsl:sequence select="serialize(xpref:remove-unused-namespaces($root-elm, $keep-namespace-prefixes), $xpref:standard-serialization)"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>

@@ -308,7 +308,7 @@
       <xsl:with-param name="href-target" select="$href-target"/>
       <xsl:with-param name="title" select="'XProc steps (' || $version-name || ')'"/>
       <xsl:with-param name="content">
-        <db:para>All steps for XProc version {$version-name}. You can also view these steps <db:link
+        <db:para>Steps for XProc version {$version-name}. You can also view these steps <db:link
             xlink:href="{local:href-result-file($version-id-for-links, $xpref:name-categories-overview-page)}">by category</db:link>.</db:para>
         <db:para/>
         <!-- List all the steps for this version: -->

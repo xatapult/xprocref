@@ -585,12 +585,15 @@
     </xs:sequence>
   </xs:group>
   <xs:complexType name="ct-step-group">
-    <xs:choice maxOccurs="unbounded">
-      <xs:element ref="xpref:step"/>
-      <xs:element ref="xpref:step-identity"/>
-      <xs:element ref="xpref:step-group"/>
-      <xs:element ref="xi:include"/>
-    </xs:choice>
+    <xs:sequence>
+      <xs:group minOccurs="0" ref="xpref:g-macrodefs"/>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="xpref:step"/>
+        <xs:element ref="xpref:step-identity"/>
+        <xs:element ref="xpref:step-group"/>
+        <xs:element ref="xi:include"/>
+      </xs:choice>
+    </xs:sequence>
   </xs:complexType>
   <xs:complexType mixed="true" name="ct-text">
     <xs:annotation>

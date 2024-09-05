@@ -75,10 +75,10 @@
   <steps>
 
     <!-- 3.0: -->
-    <xi:include href="3.0/standard-steps.stepgroup.xml"/>
+    <xi:include href="3.0/standard-steps.3.0.stepgroup.xml"/>
 
     <!-- 3.1: -->
-    <xi:include href="3.1/standard-steps.stepgroup.xml"/>
+    <xi:include href="3.1/standard-steps.3.1.stepgroup.xml"/>
 
   </steps>
 

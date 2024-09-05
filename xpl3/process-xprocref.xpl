@@ -137,11 +137,8 @@
   <p:namespace-delete prefixes="xsi"/>
   <p:delete match="processing-instruction(xml-model)"/>
 
-  <!-- Expand any macros: -->
-  <xtlc:expand-macro-definitions/>
-
   <!-- Validate: -->
-  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-before-validation-1.xml"/>
+  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/10-xprocref-after-xinclude.xml"/>
   <xtlc:validate simplify-error-messages="true" p:message="  * Validating primary source">
     <p:with-option name="href-schema" select="$href-xprocref-schema"/>
     <p:with-option name="href-schematron" select="$href-xprocref-schematron"/>
@@ -152,14 +149,18 @@
     <p:xslt message="  * Handling step identities">
       <p:with-input port="stylesheet" href="xsl-process-xprocref/handle-step-identities.xsl"/>
     </p:xslt>
-    <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-before-validation-2.xml"/>
-    <!-- Just to be sure, re-validate -->
-    <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-before-validation-1.xml"/>
-    <xtlc:validate simplify-error-messages="true">
-      <p:with-option name="href-schema" select="$href-xprocref-schema"/>
-      <p:with-option name="href-schematron" select="$href-xprocref-schematron"/>
-    </xtlc:validate>
+    <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/20-xprocref-after-step-identities.xml"/>
   </p:if>
+
+  <!-- Expand any macros: -->
+  <xtlc:expand-macro-definitions/>
+  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/30-xprocref-after-expand-macro-definitions.xml"/>
+
+  <!-- Just to be sure, re-validate -->
+  <xtlc:validate simplify-error-messages="true">
+    <p:with-option name="href-schema" select="$href-xprocref-schema"/>
+    <p:with-option name="href-schematron" select="$href-xprocref-schematron"/>
+  </xtlc:validate>
 
   <!-- Prepare some attributes and unwrap the step-groups: -->
   <p:unwrap match="xpref:step-group"/>
@@ -185,7 +186,7 @@
       </p:with-input>
     </p:error>
   </p:if>
-  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-prepared.xml"/>
+  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/40-xprocref-prepared.xml"/>
   <p:identity name="prepared-xprocref-specification" message="  * Step count: {$step-count-2}/{$step-count-1}"/>
 
   <!-- Clean the result directory: -->
@@ -213,7 +214,7 @@
     <p:with-input pipe="@prepared-xprocref-specification"/>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/create-xprocref-index.xsl"/>
   </p:xslt>
-  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-index.xml"/>
+  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/50-xprocref-index.xml"/>
   <p:variable name="xprocref-index" as="document-node()" select="."/>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -225,12 +226,10 @@
     <p:with-input port="stylesheet" href="xsl-process-xprocref/create-xprocref-container.xsl"/>
     <p:with-option name="parameters" select="map{'xprocref-index': $xprocref-index, 'production-version': $production-version, 'wip': $wip}"/>
   </p:xslt>
-  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-raw-container-X.xml"/>
 
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-texts.xsl"/>
   </p:xslt>
-
 
   <!-- Do the XProc example stuff: -->
   <p:variable name="example-count" as="xs:integer" select="count(//db:xproc-example)"/>
@@ -247,7 +246,7 @@
       <p:with-input href="{$href-pipeline}"/>
       <p:run-input port="source">
         <!-- Remark: The pipelines we use for the examples are self-sufficient in providing their own input by default. 
-          Therefore we supply empty on the source port. -->
+             Therefore we supply empty on the source port. -->
         <p:empty/>
       </p:run-input>
       <p:output port="result" primary="true"/>
@@ -286,7 +285,7 @@
     <p:with-input port="stylesheet" href="xsl-process-xprocref/add-toc-to-steps.xsl"/>
   </p:xslt>
 
-  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-raw-container.xml"/>
+  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/60-xprocref-raw-container-docbook.xml"/>
 
   <!-- Process the resulting DocBook/xdoc into XHTML: -->
   <p:variable name="html-page-count" as="xs:integer" select="count(/*/xtlcon:document[exists(db:article)])"/>
@@ -307,7 +306,7 @@
       </p:xslt>
     </p:viewport>
   </p:viewport>
-  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/xprocref-final-container.xml"/>
+  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/70-xprocref-final-container-html.xml"/>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Finishing: -->
