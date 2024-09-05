@@ -49,7 +49,25 @@
   </attribute>
   <attribute name="keep-namespace-prefixes">
     <description>
-      <para>A whitespace separated list of namespace-prefixes to keep.</para>
+      <para>A whitespace separated list of namespace-prefixes to keep, for all documents.</para>
+    </description>
+    <type name="List of xs:string"/>
+  </attribute>
+  <attribute name="keep-namespace-prefixes-source">
+    <description>
+      <para>A whitespace separated list of namespace-prefixes to keep for the source document.</para>
+    </description>
+    <type name="List of xs:string"/>
+  </attribute>
+  <attribute name="keep-namespace-prefixes-pipeline">
+    <description>
+      <para>A whitespace separated list of namespace-prefixes to keep for the pipeline document.</para>
+    </description>
+    <type name="List of xs:string"/>
+  </attribute>
+  <attribute name="keep-namespace-prefixes-result">
+    <description>
+      <para>A whitespace separated list of namespace-prefixes to keep for the result document.</para>
     </description>
     <type name="List of xs:string"/>
   </attribute>

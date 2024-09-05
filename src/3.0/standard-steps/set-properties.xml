@@ -47,12 +47,12 @@
     <para>A document flowing through an XProc pipeline carries a set of <emphasis>document-properties</emphasis> with it. Document-properties are
       key/value pairs, where the key is a QName (which, in most cases, you can treat as just a string). Their values can be anything. Getting the
       value(s) of document-properties can be done using the XProc functions <link
-        xlink:href="https://spec.xproc.org/master/head/xproc/#f.document-properties" role="newpage"><code>p:document-properties()</code></link> and
-        <link xlink:href="https://spec.xproc.org/master/head/xproc/#f.document-property" role="newpage"
+        xlink:href="{$BASELINK-CURRENT}xproc/#f.document-properties" role="newpage"><code>p:document-properties()</code></link> and
+        <link xlink:href="{$BASELINK-CURRENT}xproc/#f.document-property" role="newpage"
       ><code>p:document-property()</code></link>.</para>
 
     <para>XProc reserves three document-property names for its own usage: <property>content-type</property>, <property>base-uri</property> and
-        <property>serialization</property> (see <link xlink:href="https://spec.xproc.org/master/head/xproc/#document-properties">here</link> for more
+        <property>serialization</property> (see <link xlink:href="{$BASELINK-CURRENT}xproc/#document-properties">here</link> for more
       information). However, you can also add your own and use them in any way you like.</para>
 
     <para>The <step/> step can be used to change (most) document-properties. For an example of using <step/> see <example-ref

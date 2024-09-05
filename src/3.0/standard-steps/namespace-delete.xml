@@ -66,7 +66,7 @@
   <example title="Basic usage with different namespace-prefixes" id="different-prefixes">
     <para>The following example again deletes the <code>#myconfig</code> namespace. However, the namespace-prefix used in the pipeline is different
       from the one used in the source document.</para>
-    <xproc-example href="../../examples/namespace-delete/namespace-delete-02.xpl" keep-namespace-prefixes="con ns1"/>
+    <xproc-example href="../../examples/namespace-delete/namespace-delete-02.xpl" keep-namespace-prefixes-source="con" keep-namespace-prefixes-pipeline="ns1"/>
   </example>
 
   <!-- ======================================================================= -->

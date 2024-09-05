@@ -484,7 +484,7 @@
 
     <para>Now assume we need this text representation without the XML header (the <code>&lt;?xml … ?&gt;</code> part at the top). The <step/> step
       uses the document <property>serialization</property> document-property to guide the conversions. This document-property is a map containing the
-      required <link xlink:href="https://www.w3.org/TR/xslt-xquery-serialization-31/">serialization properties</link>. For this example:
+      required <link xlink:href="https://www.w3.org/TR/xslt-xquery-serialization-31/" role="newpage">serialization properties</link>. For this example:
         <code>map{'omit-xml-declaration': true()}</code>.</para>
     <para>Document-properties can be specified using the <step-ref name="p:set-properties"/> step. The value of the <option>properties</option> option
       of <step>p:set-properties</step> is itself a map, with the document-property names as keys. Therefore, its value becomes a map within a map:

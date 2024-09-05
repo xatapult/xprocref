@@ -1,92 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="compare" version-idref="v30" category-idrefs="standard-steps" short-description="COmpares two documents for equality" required="true"
-  publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.compare"
+<step name="compare" version-idref="v30" category-idrefs="standard-steps misc" short-description="Compares documents for equality" required="true"
+  publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.compare"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
-  
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
   <!-- ======================================================================= -->
-  
+
   <signature>
-    
-    <input port="source" primary="true" content-types="any" sequence="true">
+
+    <input port="source" primary="true" content-types="any" sequence="false">
       <description>
-        <para>Source document(s) to compare.</para>
+        <para>Source document to compare.</para>
       </description>
     </input>
-    
-    <input port="alternate" content-types="any" primary="false" sequence="true">
+
+    <input port="alternate" content-types="any" primary="false" sequence="false">
       <description>
-        <para>Source document(s) to compare.</para>
+        <para>Source document to compare.</para>
       </description>
     </input>
-    
-    <output port="result" content-types="application/xml" primary="true" sequence="true">
+
+    <output port="result" content-types="application/xml" primary="true" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>An XML document consisting of a single <tag>c:result</tag> element (the <code>c</code> prefix here is bound to the
+            <code>http://www.w3.org/ns/xproc-step</code> namespace) containing <code>true</code> when the documents compare as equal or
+            <code>false</code> when differences were found.</para>
+        <para>Example: <code><![CDATA[<c:result xmlns:c="http://www.w3.org/ns/xproc-step">true</c:result>]]></code></para>
       </description>
     </output>
-    
+
     <output port="differences" content-types="any" sequence="true" primary="false">
       <description>
-        <para>[EDIT] output differences</para>
+        <para>If the <option>fail-if-not-equal</option> option is <code>false</code> and differences were found, this port <emphasis>may</emphasis>
+          submit a summary of the differences. The existence and format of this summary document is implementation-defined and therefore depends on
+          the XProc processor used.</para>
       </description>
     </output>
-    
+
     <option name="parameters" as="map(xs:QName,item()*)?" required="false" select="()">
       <description>
-        <para>[EDIT] option parameters</para>
+        <para>Parameters controlling the comparison. Keys, values and their meaning depend on the value of the <option>method</option> option and the
+          XProc processor used.</para>
       </description>
     </option>
-    
+
     <option name="method" as="xs:QName?" required="false" select="()">
       <description>
-        <para>[EDIT] option method</para>
+        <para>Specifies the comparison method used. If the value of this option is the empty sequence (default) or <code>deep-equal</code>, <step/>
+          must do the same as the XPath <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-deep-equal" role="newpage"
+              ><code>fn:deep-equal()</code></link> function.</para>
+        <para>Support for any other comparison method is implementation-defined and therefore depends on the XProc processor used.</para>
       </description>
     </option>
-    
+
     <option name="fail-if-not-equal" as="xs:boolean" select="false()" required="false">
       <description>
-        <para>[EDIT] option fail-if-not-equal</para>
+        <para>If this option is <code>true</code> and the documents do not compare as equal, the step raises error <step-error-ref code="XC0019"
+          />.</para>
       </description>
     </option>
-    
+
   </signature>
-  
+
   <!-- ======================================================================= -->
-  
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <code>p:compare</code> step compares two documents for equality.</para>
+    <para>The <step/> step compares the documents appearing on its <port>source</port> and <port>alternate</port> for equality. It returns a simple
+      XML document containing the boolean result of the comparison.</para>
   </summary>
-  
+
   <!-- ======================================================================= -->
-  
+
   <description>
-    <para>[EDIT]</para>
-    <para>This step takes single documents on each of two ports and compares them. If <option>method</option> is not specified, or if
-        <code>deep-equal</code> is specified, the comparison uses <function>fn:deep-equal</function> (as defined in <link
-        xlink:href="https://www.w3.org/TR/xpath-functions-31/" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1
-        functions</link> ). Implementations of <tag>p:compare</tag> must support the <code>deep-equal</code>
-      <option>method</option>; other supported methods are implementation-defined. <emphasis role="bold">[ERROR <step-error-ref code="XC0076"
-        />]</emphasis>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0077"/>]</emphasis>
-    </para>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0019"/>]</emphasis> If the documents are equal, or if the value of the
-        <option>fail-if-not-equal</option> option is <literal>false</literal>, a <tag>c:result</tag> document is produced with contents
-        <literal>true</literal> if the documents are equal, otherwise <literal>false</literal>.</para>
-    <para>If <option>fail-if-not-equal</option> is <code>false</code>, and the documents differ, an implementation-defined summary of the differences
-      between the two documents may appear on the <port>differences</port> port.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="compare-preserves-none">No document properties are preserved. The comparison document has no <property>base-uri</property>.</para>
+    <para>The <step/> step takes the documents appearing on its <port>source</port> and <port>alternate</port> ports and tests whether these are
+      equal. Now testing XML documents for equality is not as easy as it sounds: what to do with whitespace, comments, order of attributes, etc. The
+      default behavior of <step/> is the same as that of the XPath <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-deep-equal"
+        role="newpage"><code>fn:deep-equal()</code></link> function. Whether other comparison methods are supported is implementation-defined and
+      therefore depends on the XProc processor used.</para>
+    <para>If the <option>fail-if-not-equal</option> option is <code>false</code> (default), the step emits a simple XML document on its
+        <port>result</port> port, saying <code>true</code> (equal) or <code>false</code> (not equal). If the <option>fail-if-not-equal</option> option
+      is <code>true</code> and the documents are not equal, error <step-error-ref code="XC0019"/> is raised.</para>
   </description>
-  
+
   <!-- ======================================================================= -->
-  
+
+  <detail>
+    <para>No document-properties from the documents on the <port>source</port> and/or <port>alternate</port> ports survive. The resulting document has
+      a <property>content-type</property> document-property set to <code>application/xml</code> and no <property>base-uri</property>
+      document-property.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Comparing two documents" id="compare-2">
+
+    <xproc-example href="../../examples/compare/compare-01.xpl">
+      <source-header>
+        <para>The following document is compared against what we supply on the <port>alternate</port> port. In this example the comparison checks out
+          and <step/> returns <code>true</code>.</para>
+      </source-header>
+    </xproc-example>
+    
+  </example>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
     <step-error code="XC0076"/>
     <step-error code="XC0077"/>
     <step-error code="XC0019"/>
   </step-errors>
-  
+
 </step>
