@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="filter" version-idref="v30" category-idrefs="standard-steps" short-description="Selects parts of a document" required="true"
+<step name="filter" version-idref="v30" category-idrefs="standard-steps misc" short-description="Selects parts of a document" required="true"
   publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.filter"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
