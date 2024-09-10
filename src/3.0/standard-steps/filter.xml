@@ -1,48 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="filter"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] filter short description"
-      required="true"
-      publish="false"
-      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.filter"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <signature>
-      <input port="source"
-             content-types="xml html"
-             primary="true"
-             sequence="true">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <output port="result"
-              sequence="true"
-              content-types="text xml html"
-              primary="true">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-      <option name="select"
-              required="true"
-              as="xs:string"
-              subtype="XPathExpression">
-         <description>
-            <para>[EDIT] option select</para>
-         </description>
-      </option>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para>The <code>p:filter</code> step selects portions of the source document based on a (possibly dynamically constructed) XPath select expression.</para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>This step behaves just like an <tag>p:input</tag> with a <tag class="attribute">select</tag> expression except that the select expression is computed dynamically.</para>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="filter-preserves-none">No document properties are preserved. The <property>base-uri</property> property of each document will reflect the base URI of the selected node(s). </para>
-   </description>
+<step name="filter" version-idref="v30" category-idrefs="standard-steps" short-description="Selects parts of a document" required="true"
+  publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.filter"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" content-types="xml html" primary="true" sequence="false">
+      <description>
+        <para>The source document to select the parts from.</para>
+      </description>
+    </input>
+
+    <output port="result" sequence="true" content-types="text xml html" primary="true">
+      <description>
+        <para>The selected parts, as separate documents.</para>
+      </description>
+    </output>
+
+    <option name="select" required="true" as="xs:string" subtype="XPathExpression">
+      <description>
+        <para>The XPath expression that selects the parts.</para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step selects parts of the source document based on a (possibly dynamically constructed) XPath select expression.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+
+    <para>The <step/> step takes the XPath select expression in its <option>select</option> option, and with this select parts of the document
+      appearing on the <port>source</port> port. The resulting document(s) (which might be zero, one or more) appear on the step&#x2019;s
+        <port>result</port> port.</para>
+
+    <para>This step behaves just like adding a <code>select</code> attribute to an input port <tag>p:with-input</tag> element. What the <step/> step
+      adds is the ability to construct the XPath expression dynamically. See <example-ref idref="filter-dynamic"/> for an example of this.</para>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>No document-properties from the source document survive.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>The <property>base-uri</property> document-property of the documents appearing on the <port>result</port> port are the same as the base URI
+      of their root element in the source document.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="filter-basic-usage">
+
+    <xproc-example href="../../examples/filter/filter-01.xpl">
+      <source-header>
+        <para>The following example turns the single source document into a sequence of documents with information about bolts and pipes only.</para>
+      </source-header>
+    </xproc-example>
+
+    <para>Since the XPath expression for the <option>select</option> option is not dynamic, you don&#x2019;t actually need the <step/> step for this.
+      The exact same result is achieved using a <code>select</code> attribute on a <tag>p:with-input</tag> element. For instance like below, using the
+        <step-ref name="p:identity"/> step:</para>
+
+    <xproc-example href="../../examples/filter/filter-01a.xpl" show-source="false" show-result="false">
+      <source-header/>
+      <pipeline-header/>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Using a dynamic select expression" id="filter-dynamic">
+
+    <xproc-example href="../../examples/filter/filter-02.xpl" show-source="false">
+      <pipeline-header>
+        <para>Assume you are only interested in parts with a certain diameter. This diameter is passed to the pipeline using an option (in the
+          example: <option>required-diameter</option>). The following pipeline dynamically constructs an XPath expression for this in the <step/> step
+            <option>select</option> option. The input is the same as for the <example-ref idref="filter-basic-usage"/> example.</para>
+      </pipeline-header>
+    </xproc-example>
+
+    <para>Remark: The <code>exclude-inline-prefixes="#all"</code> attribute on the pipeline root element is only there to prevent the <code>xs</code>
+      namespace declaration showing up on the output documents. A superfluous namespace declaration doesn&#x2019;t matter but is unnecessary and looks
+      sloppy.</para>
+
+  </example>
+
 </step>

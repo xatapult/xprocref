@@ -54,6 +54,13 @@
 
   <!-- ======================================================================= -->
 
+  <detail>
+    <para>If more than one document appears on the <port>source</port> port of <step/>, all source documents become children of a single
+        <tag>p:error</tag> element.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
   <example title="Basic usage" id="error-basic">
 
     <para>The following example raises an error using <step/>. Please notice that we use a namespace for the error code (which is recommended but not
@@ -70,7 +77,8 @@
       </result-header>
     </xproc-example>
 
-    <xproc-example href="../../examples/error/error-02.xpl" keep-namespace-prefixes-pipeline="my" keep-namespace-prefixes-result="my" show-source="false">
+    <xproc-example href="../../examples/error/error-02.xpl" keep-namespace-prefixes-pipeline="my" keep-namespace-prefixes-result="my"
+      show-source="false">
       <pipeline-header>
         <para>Notice that in the example above the error message is inside a <tag>message</tag> element. Usually however, error messages are just
           text, strings. This can be accomplished by providing the error message on the <step/>&#160;<port>source</port> port as a text

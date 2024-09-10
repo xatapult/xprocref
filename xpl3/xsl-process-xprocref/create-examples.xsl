@@ -116,6 +116,7 @@
       <xsl:call-template name="process-header">
         <xsl:with-param name="header-elm" select="db:result-header"/>
         <xsl:with-param name="document-type" select="'result'"/>
+        <xsl:with-param name="multiple-documents" select="count(_RESULT) gt 1"/>
       </xsl:call-template>
       <xsl:call-template name="xpref:list-document">
         <xsl:with-param name="root-elm" select="_RESULT/*[1]"/>
@@ -160,11 +161,12 @@
       <!-- The *-header element from the input, if any. -->
     </xsl:param>
     <xsl:param name="document-type" as="xs:string" required="true"/>
+    <xsl:param name="multiple-documents" as="xs:boolean" required="false" select="false()"/>
 
     <xsl:choose>
       <xsl:when test="empty($header-elm)">
         <!-- Create a default text: -->
-        <db:para role="keep-with-next">{xtlc:capitalize($document-type)} document:</db:para>
+        <db:para role="keep-with-next">{xtlc:capitalize($document-type)} document{if ($multiple-documents) then 's' else ()}:</db:para>
       </xsl:when>
       <xsl:when test="$header-elm/*">
         <xsl:copy-of select="$header-elm/*"/>
