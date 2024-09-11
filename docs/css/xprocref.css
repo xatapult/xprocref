@@ -83,6 +83,10 @@ code {
   color: black;
 }
 
+th code {
+  color: white;
+}
+
 /* Emphasis styles: */
 span.italic {
   font-style: italic;
@@ -106,6 +110,8 @@ th {
   padding: 0.1rem !important;
   font-weight: normal;
 }
+
+
 
 td {
   padding: 0.1rem !important;

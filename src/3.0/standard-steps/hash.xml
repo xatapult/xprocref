@@ -1,97 +1,208 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="hash"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] hash short description"
-      required="true"
-      publish="false"
-      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.hash"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <signature>
-      <input port="source"
-             primary="true"
-             content-types="xml html"
-             sequence="true">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <output port="result"
-              content-types="text xml html"
-              primary="true"
-              sequence="true">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-      <option name="parameters"
-              as="map(xs:QName,item()*)?"
-              required="false">
-         <description>
-            <para>[EDIT] option parameters</para>
-         </description>
-      </option>
-      <option name="value"
-              required="true"
-              as="xs:string">
-         <description>
-            <para>[EDIT] option value</para>
-         </description>
-      </option>
-      <option name="algorithm"
-              required="true"
-              as="xs:QName">
-         <description>
-            <para>[EDIT] option algorithm</para>
-         </description>
-      </option>
-      <option name="match"
-              as="xs:string"
-              select="'/*/node()'"
-              subtype="XSLTSelectionPattern"
-              required="false">
-         <description>
-            <para>[EDIT] option match</para>
-         </description>
-      </option>
-      <option name="version"
-              as="xs:string?"
-              required="false">
-         <description>
-            <para>[EDIT] option version</para>
-         </description>
-      </option>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para>The <tag>p:hash</tag> step generates a hash, or digital “fingerprint”, for some value and injects it into the <port>source</port> document.</para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>The value of the <option>algorithm</option> option must be a QName. If it does not have a prefix, then it must be one of the following values: “crc”, “md”, or “sha”.</para>
-      <para>If a <tag class="attribute">version</tag> is not specified, the default version is algorithm-defined. For “<literal>crc</literal>” it is 32, for “<literal>md</literal>” it is 5, for “<literal>sha</literal>” it is 1.</para>
-      <para>A hash is constructed from the string specified in the <option>value</option> option using the specified algorithm and version. Implementations must support CRC32, <link xlink:href="https://www.rfc-editor.org/info/rfc1321"
-               role="newpage"
-               xmlns:xlink="http://www.w3.org/1999/xlink">MD5</link> , and <link xlink:href="https://csrc.nist.gov/pubs/fips/180-1/final"
-               role="newpage"
-               xmlns:xlink="http://www.w3.org/1999/xlink">SHA1</link> hashes. It is implementation-defined what other algorithms are supported. The resulting hash should be returned as a string of hexadecimal characters. </para>
-      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern.</para>
-      <para>The hash of the specified value is computed using the algorithm and parameters specified. <emphasis role="bold">[ERROR <step-error-ref code="XC0036"/>]</emphasis>
-      </para>
-      <para>The matched nodes are specified with the selection pattern in the <option>match</option> option. For each matching node, the string value of the computed hash is used in the output (if more than one node matches, the <emphasis>same</emphasis> hash value is used in each match). Nodes that do not match are copied without change.</para>
-      <para>If the expression given in the <option>match</option> option matches an <emphasis>attribute</emphasis>, the hash is used as the new value of the attribute in the output. If the attribute is named “<tag class="attribute">xml:base</tag>”, the base URI of the element must also be amended accordingly.</para>
-      <para>If the document node is matched, the entire document is replaced by a text node with the hash. What appears on port <port>result</port> is a text document with the text node wrapped in a document node.</para>
-      <para>If the expression matches any other kind of node, the entire node (and <emphasis>not</emphasis> just its contents) is replaced by the hash.</para>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="hash-preserves-partially">If the resulting document contains exactly one text node, the <literal>content-type</literal> property is changed to <literal>text/plain</literal> and the <literal>serialization</literal> property is removed, while all other document properties are preserved. For other document types, all document properties are preserved.</para>
-   </description>
-   <step-errors>
-      <step-error code="XC0036">
-         <description>
-            <para>It is a dynamic error if the requested hash algorithm is not one that the processor understands or if the value or parameters are not appropriate for that algorithm.</para>
-         </description>
-      </step-error>
-   </step-errors>
+<step name="hash" version-idref="v30" category-idrefs="standard-steps misc" short-description="Computes a hash code for a value"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.hash"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" primary="true" content-types="xml html" sequence="false">
+      <description>
+        <para>The source document to record the computed hash code <emphasis>in</emphasis>.</para>
+      </description>
+    </input>
+
+    <output port="result" content-types="text xml html" primary="true" sequence="false">
+      <description>
+        <para>Result document, derived from the source document, intended to contain the hash code. See the <option>match</option> option and the
+          description below.</para>
+      </description>
+    </output>
+
+    <option name="parameters" as="map(xs:QName,item()*)?" required="false">
+      <description>
+        <para>Parameters controlling the hash code computation. Keys, values and their meaning depend on the XProc processor used.</para>
+      </description>
+    </option>
+
+    <option name="value" required="true" as="xs:string">
+      <description>
+        <para>The string value to calculate the hash code from.</para>
+      </description>
+    </option>
+
+    <option name="algorithm" required="true" as="xs:QName">
+      <description>
+        <para>The hash computation algorithm to use. See the description below.</para>
+      </description>
+    </option>
+
+    <option name="match" as="xs:string" select="'/*/node()'" subtype="XSLTSelectionPattern" required="false">
+      <description>
+        <para>An XSLT selection pattern that tells <step/> where to insert the hash code in the source document. All node(s) matched are replaced with
+          the computed hash code (the nodes themselves, not just their contents).</para>
+        <para>If this option matches an attribute, the value of the attribute is changed.</para>
+        <para>If this option matches the document-node <code>/</code>, the entire document is replaced with the computed hash code. The result will be
+          a text document.</para>
+      </description>
+    </option>
+
+    <option name="version" as="xs:string?" required="false">
+      <description>
+        <para>Specifies the version of the hash computation algorithm used. If not specified, a default version is used, which depends on the value of
+          the <option>algorithm</option> option. See the description below. </para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step generates a hash code for some value and injects this into the document appearing on the <port>source</port> port.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+    <para>A hash code in the digital world is a, relatively simple, value computed from some, possibly lengthy, input data. The same input data always
+      results in the same hash code. Hash codes are also called hash values, (hash) digests, (digital) fingerprints, or simply hashes. Hash codes are
+      used for various purposes, see for instance <link xlink:href="https://en.wikipedia.org/wiki/Hash_function" role="newpage"
+      >Wikipedia</link>.</para>
+    <para>The <step/> step computes the hash code of the string value of the <option>value</option> option and inserts this into the document
+      appearing on the <port>source</port> port. The result appears on the <port>result</port> port.</para>
+    <para>The algorithm used for computing the hash code <emphasis>must</emphasis> be specified using the <option>algorithm</option> option. There are
+      3&#160;predefined values, that must be supported by all XProc processors:</para>
+    <table role="nonumber">
+      <title/>
+      <tgroup cols="3">
+        <thead>
+          <row>
+            <entry>
+              <para><option>algorithm</option> option value</para>
+            </entry>
+            <entry>
+              <para>Default version</para>
+            </entry>
+            <entry>
+              <para>Algorithm used</para>
+            </entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>
+              <para>
+                <code>crc</code>
+              </para>
+            </entry>
+            <entry>
+              <para>32</para>
+            </entry>
+            <entry>
+              <para>
+                <link xlink:href="https://en.wikipedia.org/wiki/Cyclic_redundancy_check" role="newpage">Cyclic Redundancy Check</link>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <code>md</code>
+              </para>
+            </entry>
+            <entry>
+              <para>5</para>
+            </entry>
+            <entry>
+              <para>
+                <link xlink:href="https://en.wikipedia.org/wiki/MD5" role="newpage">Message-digest</link>
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <code>sha</code>
+              </para>
+            </entry>
+            <entry>
+              <para>1</para>
+            </entry>
+            <entry>
+              <para>
+                <link xlink:href="https://en.wikipedia.org/wiki/SHA-1" role="newpage">Secure Hash Algorithm</link>
+              </para>
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+
+    <para>You can specify the algorithm version using the <option>version</option> option. If you don&#x2019;t specify this option and use one of the
+      predefined <option>algorithm</option> option values, the default version from the table above is used. </para>
+
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+    <para>The exception is when the <option>match</option> option matches the document-node <code>/</code>. In that case the resulting document will
+      be of type text, the <property>content-type</property> document-property will become <code>text/plain</code> and a
+        <property>serialization</property> document-property is removed. Any other document-property is preserved. </para>
+  </detail>
+
+  <detail>
+    <para>If an XProc processor supports any other algorithm, its code (as supplied to the <option>algorithm</option> option) will be in a
+      namespace.</para>
+  </detail>
+
+  <detail>
+    <para>If the <option>match</option> option matches an attribute called <code>xml:base</code>, the base URI of this attribute&#x2019;s parent
+      element is amended accordingly. This is a side-effect of changing an attribute with a pre-defined meaning (and in this case probably never
+      useful).</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <para>The following example illustrates what happens when we compute a hash value and use the default value for the <option>match</option> option
+        (<code>/*/node()</code>): all child nodes of the root element (in this example just the <tag>hash</tag> element) are replaced with the
+      computed hash value.</para>
+
+    <xproc-example href="../../examples/hash/hash-01.xpl"/>
+
+    <para>The following example shows the different values computed using the different standard algorithms. These are placed in attribute
+      values.</para>
+
+    <xproc-example href="../../examples/hash/hash-02.xpl"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Hash code as text" id="hash-as-text">
+
+    <para>If the <option>match</option> option matches the document-node <code>/</code>, the resulting document will be a text document containing the
+      computed hash code only. Notice that in this case the input document doesn&#x2019;t matter.</para>
+
+    <xproc-example href="../../examples/hash/hash-03.xpl" output-is-text="true">
+      <result-header>
+        <para>Result text document:</para>
+      </result-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
+  <step-errors>
+    <step-error code="XC0036"/>
+  </step-errors>
+
 </step>

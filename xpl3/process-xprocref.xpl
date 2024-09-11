@@ -249,7 +249,7 @@
              Therefore we supply empty on the source port. -->
         <p:empty/>
       </p:run-input>
-      <p:output port="result" primary="true"/>
+      <p:output port="result" primary="true" sequence="true"/>
     </p:run>
     <p:if test="$output-is-text">
       <p:cast-content-type content-type="text/plain"/>
