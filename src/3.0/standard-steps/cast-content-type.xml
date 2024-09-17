@@ -53,7 +53,7 @@
         <code>text/xml</code> for XML documents, <code>application/json</code> for JSON documents, etc. For more information about media types see for
       example <link xlink:href="https://en.wikipedia.org/wiki/Media_type" role="newpage">Wikipedia</link>.</para>
 
-    <para>The <step/> step has a required <option>content-type</option> option and tries to cast (change) the media types of the document appearing
+    <para>The <step/> step has a required <option>content-type</option> option and tries to cast (change) the media type of the document appearing
       on its <port>source</port> port according to the value of this option. Sometimes this is a (very) simple operation: for instance, changing one
       XML media type to another just changes the value of the <property>content-type</property> document-property. However, you can also request more
       complex changes, like converting an XML document into JSON or vice versa.</para>
