@@ -10,7 +10,7 @@
 
     <input port="source" content-types="any" sequence="true" primary="true">
       <description>
-        <para>Document(s) to construct a request body from.</para>
+        <para>Document(s) used in constructing the request body.</para>
         <para>By default, source documents are used for HTTP methods that require a body (for instance <code>POST</code>) only. If the HTTP method
           does not specify a body (for instance <code>GET</code>), any documents appearing on the <port>source</port> port are ignored. You can
           control this behaviour with the <code>send-body-anyway</code> parameter (see <xref linkend="request-parameters"/>).</para>
@@ -88,24 +88,100 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>The <step/> step allows authors to interact with resources (for instance websites) over HTTP or related protocols.</para>
+    <para>The <step/> step allows pipelines to interact with resources (for instance websites) over HTTP or related protocols.</para>
   </summary>
 
   <!-- ======================================================================= -->
 
   <description>
 
-    <para>TBD</para>
+    <para>The <step/> allows you to send requests to some server and receive their response. You could use this, for instance, to access REST or other
+      services on the web. Another use case is to have your pipeline play &#x201c;web browser&#x201d;: get the contents of a web page and interpret
+      this or fill in some page with a form in the background. Although the step is generic, it will probably be used most (exclusively?) using the
+      HTTP(S) protocol, so we&#x2019;ll concentrate on this. </para>
+
+    <para>The HTTP(s) protocol is rather complex and, to support this, <step/> is also complex. As a result of this, the description of <step/> is
+      long and may appear intimidating to users who are not familiar with the finer details of the HTTP(S) protocol. Luckily, simple interactions,
+      like just requesting a single web page, are easy (see <example-ref idref="basic-usage"/>) Let&#x2019;s take it step by step (if there are parts
+      you don't understand, chances are you don't need them). The HTTP(S) protocol itself is not explained, if you need more information about this, a
+      good place to start would be on <link xlink:href="https://en.wikipedia.org/wiki/HTTP" role="newpage">Wikipedia</link>.</para>
+
+    <orderedlist>
+      <listitem>
+        <para>The <step/> step first constructs a request:</para>
+        <itemizedlist>
+          <listitem>
+            <para>An HTTP(S) request is always to some URI (like <link xlink:href="https://xprocref.org/" role="newpage"
+                  ><code>https://xprocref.org/</code></link>). You must specify this URI using the mandatory <option>href</option> option.</para>
+          </listitem>
+          <listitem>
+            <para>An HTTP(S) request has a method. Usual values are <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>, and
+                <code>HEAD</code>. You can specify this using the <option>method</option> option. Its default value is <code>GET</code>.</para>
+          </listitem>
+          <listitem>
+            <para>An HTTP(S) request has request headers: name/value pairs that contain additional information for the server. The main source for
+              specifying request headers is the <option>headers</option> option. Some special handling applies, see <xref
+                linkend="request-header-specification"/>.</para>
+          </listitem>
+          <listitem>
+            <para>Once the request headers are known, some of this information is used by <step/> for additional purposes, like determining the
+              transfer encoding. See <xref linkend="request-header-usage"/> for more information.</para>
+          </listitem>
+          <listitem>
+            <para>Any documents that must accompany the request can be supplied on the <port>source</port> port.</para>
+          </listitem>
+          <listitem>
+            <para>Some interactions require authorization (&#x201c;logging in&#x201d;). This is usually specified with the <option>auth</option>
+              option. See <xref linkend="request-athentication"/> for more information.</para>
+          </listitem>
+          <listitem>
+            <para>It is possible to construct multipart request: requests where multiple documents are sent at once. See <xref linkend="multipart"/>
+              for more information.</para>
+          </listitem>
+          <listitem>
+            <para>Further fine-tuning of the request is done using parameters specified in the <option>parameters</option> option. See <xref
+                linkend="request-parameters"/> for more information.</para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>The request is sent to the server and <step/> waits for a response. How long the step will wait before giving up can be specified using
+          parameters specified in the <option>parameters</option> option. See <xref linkend="request-parameters"/> for more information. </para>
+      </listitem>
+      <listitem>
+        <para>A response is received an interpreted:</para>
+        <itemizedlist>
+          <listitem>
+            <para>Whether a response is considered successful can be specified using the <option>assert</option> option. If not, error <step-error-ref
+                code="XC0126"/> is raised. See <xref linkend="assert-request-fails"/> for more information.</para>
+          </listitem>
+          <listitem>
+            <para>Further fine-tuning of the interpretation of the response is done using parameters specified in the <option>parameters</option>
+              option. See <xref linkend="request-parameters"/> for more information.</para>
+          </listitem>
+          <listitem>
+            <para>Any documents contained in the response appear on the <port>result</port> port.</para>
+          </listitem>
+          <listitem>
+            <para>Additional information about the response (its response headers, status code, etc.) appears on the <port>report</port> port, as a
+              map. See <xref linkend="http-report"/> for more information.</para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+
+    </orderedlist>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <section xml:id="request-header-specification">
       <title>Specifying request headers</title>
 
-      <para>The main source for constructing the HTTP request headers is the <option>headers</option> option. However, if a
-          <emphasis>single</emphasis> document appears on the <port>source</port> port, its document-properties may also be used for this. This does
-        not happen when multiple documents appear on the <port>source</port> port, in that case all document-properties of all source documents are
-        ignored. </para>
+      <para>An HTTP request has <emphasis>request headers</emphasis>: name/value pairs containing additional information for the server. See for
+        instance <link xlink:href="https://en.wikipedia.org/wiki/List_of_HTTP_header_fields" role="newpage">Wikipedia</link> for an overview.</para>
+
+      <para>The main source for <step/> for constructing HTTP request headers is its <option>headers</option> option. However, if a
+          <emphasis>single</emphasis> document appears on the <port>source</port> port and we&#x2019;re <emphasis>not</emphasis> constructing a
+        multipart message, special rules apply:</para>
 
       <itemizedlist>
 
@@ -137,6 +213,9 @@
 
       </itemizedlist>
 
+      <para>When constructing a multipart message, not only the request itself but also its separate documents can have request headers. For more
+        information on how this can be specified see <xref linkend="multipart"/>.</para>
+
     </section>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -150,25 +229,15 @@
       <itemizedlist>
 
         <listitem>
-          <para>If:</para>
-          <itemizedlist>
-            <listitem>
-              <para>a single document appears on the <port>source</port> port,</para>
-            </listitem>
-            <listitem>
-              <para><emphasis>and</emphasis> a <code>content-type</code> request header is present,</para>
-            </listitem>
-            <listitem>
-              <para><emphasis>and</emphasis> the <code>content-type</code> does <emphasis>not</emphasis> start with <code>multipart/</code>,</para>
-            </listitem>
-          </itemizedlist>
-          <para>the value of the <code>content-type</code> request header overrides the value of the <property>content-type</property>
-            document-property.</para>
+          <para>If the value of the <code>content-type</code> request header starts with <code>multipart/</code>, a multipart request is constructed.
+            (regardless of the number of documents appearing on the <port>source</port> port). See <xref linkend="multipart"/>.</para>
         </listitem>
 
         <listitem>
-          <para>If the value of the <code>content-type</code> request header starts with <code>multipart/</code>, a multipart request is constructed.
-            (regardless of the number of documents appearing on the <port>source</port> port). See <xref linkend="multipart"/>.</para>
+          <para>For non multipart messages, it is possible to override the media type (<property>content-type</property> document-property) of the
+            body document. If a single document appears on the <port>source</port> port, we&#x2019;re not constructing a multipart message and a
+              <code>content-type</code> request header is specified, the value of the <code>content-type</code> request header overrides the value of
+            the <property>content-type</property> document-property.</para>
         </listitem>
 
         <listitem>
@@ -178,8 +247,10 @@
         </listitem>
 
         <listitem>
-          <para>If the <option>auth</option> option is specified, an <code>authorization</code> request header is ignored. Instead, the value of the
-              <code>authorization</code> request header is determined exclusively by the value of the <option>auth</option> option.</para>
+          <para>How authorization (&#x201c;logging in&#x201d;) is done, is specified using the <code>authorization</code> request header. However, the
+            <step/> step also has an <option>auth</option> option for specifying this (see <xref linkend="request-athentication"/>). If this option is
+            specified, the <code>authorization</code> request header, if present, is ignored. Instead, the value of the <code>authorization</code>
+            request header is determined exclusively by the value of the <option>auth</option> option.</para>
         </listitem>
 
       </itemizedlist>
@@ -190,6 +261,13 @@
 
     <section xml:id="request-athentication">
       <title>Request authentication</title>
+
+      <para>Information about the authorization of a request (&#x201c;logging in&#x201d;) is sent to the server with the <code>authorization</code>
+        request header. Experienced users could construct this request header themselves and add it to the step <option>headers</option> option (or
+        use a document-property). However, in most cases, it is easier to pass the authorization information using the <option>auth</option> option
+        and have <step/> construct the <code>authorization</code> request header for you. If you use the <option>auth</option> option, any
+          <code>authorization</code> request header passed in some other way is ignored.</para>
+
       <para>The <option>auth</option> option contains the credentials (username, password, etc.) of the client and specifies what authentication
         method is used. It must be a map with string (<code>xs:string</code>) type keys. The following standard keys are defined:</para>
 
@@ -576,13 +654,12 @@
     <section xml:id="http-report">
       <title>The response result and report</title>
 
-      <para>When an answer is received from the server, document(s) in the response body will appear as separate document(s) on the
-          <port>result</port> port. Each document will be parsed according to its content-type. You can override this behaviour using the
-          <code>override-content-type</code> parameter (see <xref linkend="request-parameters"/>).</para>
-      
-      <para>In case of a multipart response, each part will become a separate document appearing on the <port>result</port> port. Any
-         response headers associated with a specific part are added to the document-properties of the resulting
-        document.</para>
+      <para>When an answer is received from the server, document(s) in the response body will appear as document(s) on the <port>result</port> port.
+        Each document will be parsed according to its content-type. You can override this behaviour using the <code>override-content-type</code>
+        parameter (see <xref linkend="request-parameters"/>).</para>
+
+      <para>In case of a multipart response, each part will become a separate document appearing on the <port>result</port> port. Any response headers
+        associated with a specific part are added to the document-properties of the resulting document.</para>
 
       <para>The <port>report</port> port always returns a map with the following keys/entries:</para>
 
@@ -659,7 +736,7 @@
         </tgroup>
       </table>
 
-      
+
 
     </section>
 
@@ -668,7 +745,7 @@
     <section xml:id="assert-request-fails">
       <title>Asserting the request status</title>
       <para>Any request can fail, but what exactly failure is depends on the expectations of the receiver. The <code>assert</code> option of <step/>
-        takes an XPath expression that  inspects the request results:</para>
+        takes an XPath expression that inspects the request results:</para>
       <itemizedlist>
         <listitem>
           <para>It must contain a valid (boolean) XPath expression.</para>
@@ -681,26 +758,71 @@
               linkend="http-report"/>).</para>
         </listitem>
         <listitem>
-          <para>If the expression evaluates to <code>false</code>, error <step-error-ref code="XC0126"/> is raised.</para>
+          <para>If the expression evaluates to <code>false</code>, the request is considered failed and error <step-error-ref code="XC0126"/> is
+            raised.</para>
         </listitem>
         <listitem>
-          <para>If the expression evaluates to <code>true</code>, no error is raised.</para>
+          <para>If the expression evaluates to <code>true</code>, the request is considered successful. No error is raised.</para>
         </listitem>
       </itemizedlist>
-      
+
       <para>The default value for the <option>assert</option> option is <code>.?status-code lt 400</code>. Since the context item is the map on the
-          <port>report</port> port, <code>.</code> here refers to this map. The <code>.?status-code</code> part is one of the ways to access a map entry.
-        (another way to write this is <code>.('status-code')</code>). The referred map entry contains the received (integer) HTTP status code. According to its default value, when this
-        is less than <code>400</code>, the response is considered a success. If it&#x2019;s greater than <code>400</code>, it is considered a failure and
-          error <step-error-ref code="XC0126"/> is raised.</para>
-      
+          <port>report</port> port, the dot operator <code>.</code> here refers to this map. The <code>.?status-code</code> part is one of the ways to
+        access a map entry (another way to write this is <code>.('status-code')</code>). The referred map entry contains the received (integer) HTTP
+        status code. According to its default interpretation, when less than <code>400</code>, the response is considered a success. If it&#x2019;s
+        greater than or equal to <code>400</code>, it is considered a failure and error <step-error-ref code="XC0126"/> is raised.</para>
+
     </section>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <section xml:id="multipart">
-      <title>Construction of a multipart request</title>
-      <para>TBD</para>
+      <title>Multipart requests</title>
+
+      <para>Multipart requests combine one or more sets of data into a single HTTP request. You use this for file uploads and/or transferring data of
+        several types in one go. For instance, a web page that allows you to upload several images could use a single multipart request to sent all
+        these images to the server. For more information, see for instance <link xlink:href="https://en.wikipedia.org/wiki/MIME#Multipart_messages"
+          role="newpage">Wikipedia</link> or the <link xlink:href="https://www.w3.org/Protocols/rfc1341/7_2_Multipart.html" role="newpage">W3C
+          multipart protocol description</link>.</para>
+
+      <para>The <step/> step constructs a multipart request if one or both of the following conditions is met:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Multiple documents appear on the <port>source</port> port.</para>
+        </listitem>
+        <listitem>
+          <para>The <code>content-type</code> request header (see <xref linkend="request-header-specification"/>) starts with <code>multipart/</code>.
+          </para>
+        </listitem>
+      </itemizedlist>
+
+      <para>If no specific <code>content-type</code> request header is specified and the <port>source</port> receives multiple documents, the content
+        type is set to <code>multipart/mixed</code>.</para>
+
+      <para>Multipart request must have a <emphasis>boundary marker</emphasis>: a string of characters that is inserted in between the message parts.
+        This is critical, because this marker must <emphasis>not</emphasis> appear anywhere in the data itself. If it does, the request is considered
+        malformed. The boundary marker as used by <step/> is constructed as follows:</para>
+      <itemizedlist>
+        <listitem>
+          <para>If the <code>content-type</code> request header contains a boundary parameter, this is used.</para>
+          <para>For instance, by setting the <code>content-type</code> to <code>multipart/mixed; boundary=gc0p4Jq0M2Yt08jU534c0p</code>, the boundary
+            marker becomes <code>--gc0p4Jq0M2Yt08jU534c0p</code> (the two hyphens in front are prescribed by the protocol).</para>
+        </listitem>
+        <listitem>
+          <para>If this is not the case, the boundary marker is implementation-defined and therefore depends on the XProc processor used.
+            Unfortunately, there is no guarantee this boundary marker does not appear in the data itself (which would make the request
+            malformed).</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>When constructing the multipart message, each document on the <port>source</port> port is serialized (as if written to disk). If a
+        document has a <property>serialization</property> document-property, this is used to determine the serialization format.</para>
+
+      <para>The separate documents in a multipart message can have request headers on their own. Examples of often used headers are <code>id</code>,
+          <code>description</code> and <code>disposition</code>. Document-properties of documents on the <port>source</port> port that are in the
+          <code>http://www.w3.org/ns/xproc-http</code> namespace will be used to construct request headers for that particular document, using their
+        local name (their name without namespace) as the request header name.</para>
+
     </section>
 
   </description>
@@ -719,7 +841,36 @@
         <step-error-ref code="XC0127"/> is raised.</para>
   </detail>
 
+  <detail>
+    <para>When constructing multipart requests (see <xref linkend="multipart"/>): multiple documents on the <port>source</port> port combined with a
+        <code>content-type</code> header that does <emphasis>not</emphasis> start with <code>multipart/</code> raises error <step-error-ref
+        code="XC0133"/>.</para>
+  </detail>
+
   <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="basic-usage">
+
+    <para>The following example:</para>
+    <itemizedlist>
+      <listitem>
+        <para>Uses <step/> to ask for the home page of the <link xlink:href="https://xprocref.org" role="newpage">https://xprocref.org</link> website,
+          just like a web browser. This fires an HTTPS <code>GET</code> request and waits for the answer.</para>
+        <para>Notice that we have to supply a value for the <port>source</port> port, even if we don&#x2019;t need it. In this case we simply set it
+          to <tag>p:empty</tag>.</para>
+      </listitem>
+      <listitem>
+        <para>We strip the resulting HTML page to just its <tag>head</tag> (otherwise the result would be too big to display).</para>
+      </listitem>
+    </itemizedlist>
+
+    <xproc-example href="../../examples/http-request/http-request-01.xpl">
+      <result-header>
+        <para>Resulting HTML fragment:</para>
+      </result-header>
+    </xproc-example>
+
+  </example>
 
 
   <step-errors>

@@ -38,6 +38,11 @@
         <para>This namespace is used for data types, such as <code>xs:string</code> and <code>xs:boolean</code>.</para>
       </description>
     </namespace>
+    <namespace prefix="rh" uri="http://www.w3.org/ns/xproc-http">
+      <description>
+        <para>The namespace used for specifying request headers in document-properties in the <step>p:http-request</step> step.</para>
+      </description>
+    </namespace>
   </namespaces>
 
   <!-- ======================================================================= -->
