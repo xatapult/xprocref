@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="http-request" version-idref="v30" category-idrefs="standard-steps" short-description="Interact using HTTP (or related protocols)"
-  required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.http-request"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.http-request"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
@@ -179,10 +179,11 @@
       <para>An HTTP request has <emphasis>request headers</emphasis>: name/value pairs containing additional information for the server. See for
         instance <link xlink:href="https://en.wikipedia.org/wiki/List_of_HTTP_header_fields" role="newpage">Wikipedia</link> for an overview.</para>
 
-      <para>The main source for <step/> for constructing HTTP request headers is its <option>headers</option> option. However, if a
-          <emphasis>single</emphasis> document appears on the <port>source</port> port and we&#x2019;re <emphasis>not</emphasis> constructing a
+      <para>The main source for <step/> for constructing HTTP request headers is its <option>headers</option> option (see <example-ref
+          idref="viewing-rh"/>). </para>
+      
+      <para>If a <emphasis>single</emphasis> document appears on the <port>source</port> port and we&#x2019;re <emphasis>not</emphasis> constructing a
         multipart message, special rules apply:</para>
-
       <itemizedlist>
 
         <listitem>
@@ -872,6 +873,83 @@
 
   </example>
 
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Viewing the request headers" id="viewing-rh">
+
+    <para>When we want to see what <step/> sends as request headers, we need some developer website that tells us what the request headers are. There
+      is such a server by <link xlink:href="https://beeceptor.com/" role="newpage">Beeceptor</link>: send some HTTP request to <link
+        xlink:href="https://echo.free.beeceptor.com" role="newpage"><code>https://echo.free.beeceptor.com</code></link> and what you receive is a JSON
+      message containing information about your request.</para>
+
+    <para>Sending a simple <code>GET</code> request to this URI returns (results vary depending on your IP, operating system, browser, etc.): </para>
+    <example-doc href="../../examples/http-request/http-request-02-output.json"/>
+
+    <para>The following example sends a simple HTTPS request to this server and uses the resulting JSON to construct an XML document showing the HTTP
+      request headers sent:</para>
+    <itemizedlist>
+      <listitem>
+        <para>The invocation of <step/> just sends a <code>GET</code> request to <link xlink:href="https://echo.free.beeceptor.com" role="newpage"
+              ><code>https://echo.free.beeceptor.com</code></link>. </para>
+      </listitem>
+      <listitem>
+        <para>The result is a JSON message that the XProc processor turns into a map. This is now our context item, accessible with the dot operator
+            <code>.</code></para>
+      </listitem>
+      <listitem>
+        <para>A sub-map in this map called <code>headers</code> contains the header information we&#x2019;re interested in. We extract this part into
+          a variable <code>$headers</code>.</para>
+      </listitem>
+      <listitem>
+        <para>The <tag>p:for-each</tag> loops over all keys in the <code>$headers</code> sub-map.</para>
+      </listitem>
+      <listitem>
+        <para>A <step-ref name="p:identity"/> step is used to construct a (single element) XML document, containing the request header name and value:
+            <tag>request-header name="…" value="…"/</tag></para>
+      </listitem>
+      <listitem>
+        <para>The <tag>p:for-each</tag> loop now emits a sequence of documents, one for each request header. A <step-ref name="p:wrap-sequence"/> step
+          wraps this into an <tag>http-request-headers</tag> root element to produce a well-formed XML document.</para>
+      </listitem>
+    </itemizedlist>
+
+    <xproc-example href="../../examples/http-request/http-request-02.xpl" keep-namespace-prefixes-pipeline="map">
+      <pipeline-header/>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Adding a request header" id="adding-rh">
+
+    <xproc-example href="../../examples/http-request/http-request-03.xpl" keep-namespace-prefixes-pipeline="map">
+      <pipeline-header>
+        <para>The <option>headers</option> option can be used for additional request headers. In this example we add the bogus request header called
+            <code>xyz</code> and set it to the value <code>123</code>. The code to view the request headers is identical to that of <example-ref
+            idref="viewing-rh"/>:</para>
+      </pipeline-header>
+    </xproc-example>
+
+    <para>Notice that the name of the request header is capitalized into <code>Xyz</code>. Request header names are case-insensitive, but it is custom
+      to capitalize them (start with an upper-case character).</para>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Viewing the response headers" id="viewing-response-h">
+
+    <xproc-example href="../../examples/http-request/http-request-04.xpl" keep-namespace-prefixes-pipeline="map">
+      <pipeline-header>
+        <para>Inspecting the response headers can be done by using the map returned on the <port>report</port> port (see <xref linkend="http-report"
+          />). The code to view the response headers is almost identical to that of <example-ref idref="viewing-rh"/>:</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- ======================================================================= -->
 
   <step-errors>
     <step-error code="XC0128"/>
