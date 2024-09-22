@@ -24,6 +24,10 @@
   <xsl:param name="xproc-example-elm" as="element(db:xproc-example)" required="true">
     <!-- This is the element that triggered the example processing. We need it because we process some of its attributes. -->
   </xsl:param>
+  
+  <xsl:param name="has-source-port" as="xs:boolean" required="true">
+    <!-- True when the example has a source port. -->
+  </xsl:param>
 
   <!-- ======================================================================= -->
 
@@ -46,7 +50,7 @@
     <xsl:variable name="example-pipeline" as="document-node()" select="doc($href-pipeline)"/>
 
     <!-- Source document: -->
-    <xsl:if test="$show-source">
+    <xsl:if test="$show-source and $has-source-port">
       <xsl:variable name="source-port-elm" as="element(p:input)" select="$example-pipeline/*/p:input[@port eq 'source']"/>
       <xsl:variable name="href-input" as="xs:string?">
         <xsl:choose>

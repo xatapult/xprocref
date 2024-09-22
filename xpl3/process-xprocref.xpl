@@ -237,20 +237,35 @@
     <p:if test="(p:iteration-position() mod 10) eq 0">
       <p:identity message="    * Example {p:iteration-position()}/{$example-count}"/>
     </p:if>
+
     <p:variable name="xproc-example-elm" as="element(db:xproc-example)" select="/*"/>
+    <p:variable name="output-is-text" as="xs:boolean" select="xs:boolean((/*/@output-is-text, false())[1])"/>
+
+    <!-- Load the pipeline source and find out whether it has a source port: -->
+    <p:variable name="href-pipeline" as="xs:string" select="xs:string(/*/@href)"/>
+    <p:load href="{$href-pipeline}" name="example-pipeline"/>
+    <p:variable name="has-source-port" as="xs:boolean" select="exists(/*/p:input[@port eq'source'])"/>
 
     <!-- Run the pipeline and add the result, wrapped in <_RESULT>: -->
-    <p:variable name="href-pipeline" as="xs:string" select="xs:string(/*/@href)"/>
-    <p:variable name="output-is-text" as="xs:boolean" select="xs:boolean((/*/@output-is-text, false())[1])"/>
-    <p:run>
-      <p:with-input href="{$href-pipeline}"/>
-      <p:run-input port="source">
-        <!-- Remark: The pipelines we use for the examples are self-sufficient in providing their own input by default. 
+    <p:choose>
+      <p:when test="$has-source-port">
+        <p:run >
+          <p:with-input pipe="@example-pipeline"/>
+          <p:run-input port="source">
+            <!-- Remark: The pipelines we use for the examples are self-sufficient in providing their own input by default. 
              Therefore we supply empty on the source port. -->
-        <p:empty/>
-      </p:run-input>
-      <p:output port="result" primary="true" sequence="true"/>
-    </p:run>
+            <p:empty/>
+          </p:run-input>
+          <p:output port="result" primary="true" sequence="true"/>
+        </p:run>
+      </p:when>
+      <p:otherwise>
+        <p:run>
+          <p:with-input pipe="@example-pipeline"/>
+          <p:output port="result" primary="true" sequence="true"/>
+        </p:run>
+      </p:otherwise>
+    </p:choose>
     <p:if test="$output-is-text">
       <p:cast-content-type content-type="text/plain"/>
     </p:if>
@@ -268,7 +283,7 @@
     <!-- Use the now enhanced xproc-example element to create the final output for the examples: -->
     <p:xslt name="create-examples">
       <p:with-input port="stylesheet" href="xsl-process-xprocref/create-examples.xsl"/>
-      <p:with-option name="parameters" select="map{'xproc-example-elm': $xproc-example-elm}"/>
+      <p:with-option name="parameters" select="map{'xproc-example-elm': $xproc-example-elm, 'has-source-port': $has-source-port}"/>
     </p:xslt>
 
     <p:store href="file:///C:/xdata/x.xml">

@@ -1,57 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="wrap-sequence"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] wrap-sequence short description"
-      required="true"
-      publish="false"
-      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.wrap-sequence"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <signature>
-      <input port="source"
-             content-types="text xml html"
-             sequence="true"
-             primary="true">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <output port="result"
-              sequence="true"
-              content-types="application/xml"
-              primary="true">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-      <option name="wrapper"
-              required="true"
-              as="xs:QName">
-         <description>
-            <para>[EDIT] option wrapper</para>
-         </description>
-      </option>
-      <option name="group-adjacent"
-              as="xs:string?"
-              subtype="XPathExpression"
-              required="false">
-         <description>
-            <para>[EDIT] option group-adjacent</para>
-         </description>
-      </option>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para>The <tag>p:wrap-sequence</tag> step accepts a sequence of documents and produces either a single document or a new sequence of documents.</para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>The value of the <option>group-adjacent</option> option must be an XPathExpression.</para>
-      <para>In its simplest form, <tag>p:wrap-sequence</tag> takes a sequence of documents and produces a single, new document by placing each document in the <port>source</port> sequence inside a new document element as sequential siblings. The name of the document element is the value specified in the <option>wrapper</option> option.</para>
-      <para>The <option>group-adjacent</option> option can be used to group adjacent documents. The XPath context for the <option>group-adjacent</option> option changes over time. For each document that appears on the <code>source</code> port, the expression is evaluated with that document as the context document. The context position (<code>position()</code>) is the position of that document within the sequence and the context size (<code>last()</code>) is the total number of documents in the sequence. Whenever two or more sequentially adjacent documents have the same “group adjacent” value, they are wrapped together in a single wrapper element. Two “group adjacent” values are the same if the standard XPath function <code>deep-equal()</code> returns true for them.</para>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="wrap-sequence-preserves-none">No document properties are preserved. The document produced has no <property>base-uri</property> property. </para>
-   </description>
+<step name="wrap-sequence" version-idref="v30" category-idrefs="standard-steps misc" short-description="Wraps a sequence of documents in an element."
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.wrap-sequence"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" content-types="text xml html" sequence="true" primary="true">
+      <description>
+        <para>The document(s) to wrap.</para>
+      </description>
+    </input>
+
+    <output port="result" sequence="true" content-types="application/xml" primary="true">
+      <description>
+        <para>The resulting wrapped document(s)</para>
+      </description>
+    </output>
+
+    <option name="wrapper" required="true" as="xs:QName">
+      <description>
+        <para>The element to wrap the document(s) in.</para>
+      </description>
+    </option>
+
+    <option name="group-adjacent" as="xs:string?" subtype="XPathExpression" required="false">
+      <description>
+        <para>An XPath expression to use for grouping the wrapped elements.</para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step takes a sequence of documents on its <port>source</port> port and wraps these in a wrapper element. The result appears on
+      the <port>result</port> port. It can also group the source document(s) before wrapping, based on an XPath expression.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+
+    <para>Basic usage of the <step/> step is to wrap an element around a sequence of text, XML or HTML documents. This action turns the sequence into
+      a single XML document. See <example-ref idref="ws-basic-usage"/> for how this works. This example is however not very useful. A much more common
+      scenario, wrapping the results of a <code>p:for-each</code> loop, is shown in the <example-ref idref="ws-usecase-1"/> example.</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section>
+      <title>Grouping</title>
+
+      <para>The <option>group-adjacent</option> option of <step/> allows you to group documents together and wrap each group in the same wrapper
+        element. The value of this option must a valid XPath expression. It is evaluated for every document in the input sequence. Documents with an
+        equal result value are bundled together, resulting in a sequence of documents on the <port>result</port> port.</para>
+
+      <para>For all documents appearing on the <port>source</port> port:</para>
+      <itemizedlist>
+        <listitem>
+          <para>The document becomes the context item (accessible with the dot <code>.</code> operator).</para>
+        </listitem>
+        <listitem>
+          <para>The expression in the <option>group-adjacent</option> option is evaluated.</para>
+          <para>During this evaluation, the <code>position()</code> and <code>last()</code> functions are available to get the position of the document
+            in the sequence and the size of the sequence.</para>
+        </listitem>
+        <listitem>
+          <para>Two values computed by the XPath expression are considered equal if the XPath function <link
+              xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-deep-equal" role="newpage"><code>fn:deep-equal()</code></link> returns
+              <code>true</code> for them. In most cases this simply means that values are equal when you intuitively expect them to be.</para>
+        </listitem>
+        <listitem>
+          <para>All documents with equal values for the XPath expression, that are adjacent in the sequence, are wrapped in an element named by the
+              <option>wrapper</option> option.</para>
+        </listitem>
+      </itemizedlist>
+      <para>For an example see <example-ref idref="ws-grouping"/>.</para>
+    </section>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>No document-properties of the source document(s) survive.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>The resulting document(s) have no <property>base-uri</property> property.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="ws-basic-usage">
+
+    <para>The <port>source</port> port here receives a sequence of 4 <tag>fruit</tag> documents, by default. <step/> wraps this into a
+        <tag>fruits</tag> element, turning the four separate documents into a single one.</para>
+
+    <xproc-example href="../../examples/wrap-sequence/wrap-sequence-01.xpl" fixup-pipeline-input="false" show-source="false">
+      <pipeline-header/>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Wrapping the results of a for-each loop" id="ws-usecase-1">
+
+    <para>A very common scenario in which <step/> is used, is in wrapping the results of a <code>p:for-each</code> loop. Such a loop usually results
+      in a sequence of documents (one for each iteration). It&#x2019;s often easier to turn this (back) into a single document before continuing. The
+      following example shows this. It has a <code>p:for-each</code> loop over all yellow fruit elements that adds an attribute
+        <code>delivery="special"</code>. The resulting documents are wrapped in a <tag>yellow-fruits</tag> element, resulting in a single result
+      document.</para>
+
+    <xproc-example href="../../examples/wrap-sequence/wrap-sequence-03.xpl"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Grouping and wrapping" id="ws-grouping">
+
+    <para>Like <example-ref idref="ws-basic-usage"/>, the <port>source</port> port here receives a sequence of 4 <tag>fruit</tag> documents. The first
+      <step/> step groups these, using the <code>color</code> attribute, and wraps these groups in a <tag>fruits-by-color</tag> element. This results
+      in a sequence of 3 documents, which is wrapped again, to enable showing it as a single document.</para>
+
+    <xproc-example href="../../examples/wrap-sequence/wrap-sequence-02.xpl" fixup-pipeline-input="false" show-source="false">
+      <pipeline-header/>
+    </xproc-example>
+
+    <para>You might have expected that the result would group all fruits together by color, resulting in two documents: one for
+        <code>banana</code>+<code>lemon</code> and one for <code>orange</code>+<code>carrot</code>. But <step/> groups documents that are
+        <emphasis>adjacent</emphasis> to each other only. It does <emphasis>not</emphasis> do what would be called &#x201c;group by&#x201d;: all
+      documents with the same value for the XPath expression together in a single group. If you need this, yo&#x2019;ll have to sort the documents
+      first. But unfortunately, XProc does not have anything on board for that. For more complex grouping, the advice is to use XSLT or XQuery.</para>
+
+  </example>
+
+
 </step>

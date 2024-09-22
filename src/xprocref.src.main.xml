@@ -38,25 +38,32 @@
         <para>This namespace is used for data types, such as <code>xs:string</code> and <code>xs:boolean</code>.</para>
       </description>
     </namespace>
+    <namespace prefix="rh" uri="http://www.w3.org/ns/xproc-http">
+      <description>
+        <para>The namespace used for specifying request headers in document-properties in the <step>p:http-request</step> step.</para>
+      </description>
+    </namespace>
   </namespaces>
 
   <!-- ======================================================================= -->
   <!-- VERSIONS: -->
 
   <versions>
-    <!-- Latest version first! -->
-    <version id="v31" name="3.1">
-      <description>
-        <para>This is an update of the 3.0 specification, released August 2024. Its core specification can be found <link
-            xlink:href="{$BASELINK-V31}xproc/" role="newpage">here</link>.</para>
-      </description>
-    </version>
+    
     <version id="v30" name="3.0">
       <description>
         <para>This is the first official XProc 3.0 specification (12 September 2022). Its core specification can be found <link
-            xlink:href="{$BASELINK-V30}xproc/" role="newpage">here</link>.</para>
+          xlink:href="{$BASELINK-V30}xproc/" role="newpage">here</link>.</para>
       </description>
     </version>
+    
+    <version id="v31" name="3.1">
+      <description>
+        <para>This is an update of the 3.0 specification, still under construction. Its core specification can be found <link
+            xlink:href="{$BASELINK-V31}xproc/" role="newpage">here</link>.</para>
+      </description>
+    </version>
+    
   </versions>
 
   <!-- ======================================================================= -->

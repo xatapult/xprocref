@@ -424,5 +424,6 @@
         <folder path="../../xtpxlib-xdoc/"/>
         <folder path="../../../xproc-3/3.0-steps/"/>
         <folder path="../../../../../../xdata/"/>
+        <file name="../../../xproc-3/xproc-wikipedia.txt"/>
     </projectTree>
 </project>

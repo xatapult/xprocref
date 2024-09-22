@@ -560,6 +560,7 @@
       </xsl:for-each>
       <!-- Options: -->
       <xsl:for-each select="$signature-elm/xpref:option">
+        <xsl:sort select="string(@required)" order="descending"/>
         <xsl:sort select="xs:string(@name)"/>
         <xsl:sequence select="local:declare-step-sub-element-to-string(., (@name, @as, @required, @select), (@subtype))"/>
       </xsl:for-each>
@@ -701,6 +702,7 @@
           <db:tbody>
             
             <xsl:for-each select="$option-elms">
+              <xsl:sort select="string(@required)" order="descending"/>
               <xsl:sort select="xs:string(@name)"/>
               <db:row>
                 <db:entry>
