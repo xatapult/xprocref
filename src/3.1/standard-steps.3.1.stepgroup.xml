@@ -21,7 +21,6 @@
   <xi:include href="standard-steps/hash.xml"/>
   <xi:include href="standard-steps/http-request.xml"/>
   <xi:include href="standard-steps/identity.xml"/>
-  <xi:include href="standard-steps/in-scope-names.xml"/>
   <xi:include href="standard-steps/insert.xml"/>
   <xi:include href="standard-steps/json-join.xml"/>
   <xi:include href="standard-steps/json-merge.xml"/>
