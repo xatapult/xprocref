@@ -72,7 +72,14 @@
     <rule context="xpref:step-error-ref">
       <let name="error-code" value="xs:string(@code)"/>
       <let name="defined-step-error-codes" value="ancestor::xpref:step/xpref:step-errors/xpref:step-error/@code/string()"/>
-      <assert test="exists(ancestor::xpref:step)">A <value-of select="local-name(.)"/> element can only be used within a step.</assert>
+      <assert test="exists(ancestor::xpref:step) or exists(ancestor::xpref:step-identity) ">A <value-of select="local-name(.)"/> element can only be used within a step.</assert>
+    </rule>
+  </pattern>
+  
+  <pattern>
+    <rule context="xpref:step-error-ref[exists(ancestor::xpref:step)]">
+      <let name="error-code" value="xs:string(@code)"/>
+      <let name="defined-step-error-codes" value="ancestor::xpref:step/xpref:step-errors/xpref:step-error/@code/string()"/>
       <assert test="$error-code = $defined-step-error-codes">The error code "<value-of select="$error-code"/>" is not defined for this step.</assert>
     </rule>
   </pattern>

@@ -700,7 +700,7 @@
             </db:row>
           </db:thead>
           <db:tbody>
-            
+
             <xsl:for-each select="$option-elms">
               <xsl:sort select="string(@required)" order="descending"/>
               <xsl:sort select="xs:string(@name)"/>
@@ -735,7 +735,7 @@
                   <db:entry>
                     <db:para>
                       <db:code>
-                        <xsl:value-of select="(@select, '&#160;')[1]"/>
+                        <xsl:value-of select="(local:polish-default-option-value(@select), '&#160;')[1]"/>
                       </db:code>
                     </db:para>
                   </db:entry>
@@ -1154,6 +1154,34 @@
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:function>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:function name="local:polish-default-option-value" as="xs:string?">
+    <!-- Takes a default option value and polishes it: Removes starting/trailing single quotes, 
+      removes the brackets on true() and false(), etc. -->
+    <xsl:param name="value" as="xs:string?"/>
+
+    <xsl:variable name="value-1" as="xs:string" select="normalize-space($value)"/>
+    <xsl:choose>
+      <xsl:when test="empty($value)">
+        <xsl:sequence select="()"/>
+      </xsl:when>
+      <xsl:when test="starts-with($value-1, '''') and ends-with($value-1, '''')">
+        <xsl:sequence select="substring($value-1, 2, string-length($value-1) - 2)"/>
+      </xsl:when>
+      <xsl:when test="$value-1 eq 'true()'">
+        <xsl:sequence select="'true'"/>
+      </xsl:when>
+      <xsl:when test="$value-1 eq 'false()'">
+        <xsl:sequence select="'false'"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="$value-1"/>
+      </xsl:otherwise>
+    </xsl:choose>
+
   </xsl:function>
 
 </xsl:stylesheet>

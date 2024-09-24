@@ -8,9 +8,9 @@
       </texts>
     </p:inline>
   </p:input>
-  <p:output port="result"/>
+  <p:output port="result" pipe="result@comparing"/>
 
-  <p:compare>
+  <p:compare name="comparing">
     <p:with-input port="alternate">
       <texts>
         <text>Hi there!</text>

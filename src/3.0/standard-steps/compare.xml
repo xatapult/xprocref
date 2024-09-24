@@ -20,12 +20,14 @@
       </description>
     </input>
 
-    <output port="result" content-types="application/xml" primary="true" sequence="false">
+    <output port="result" content-types="application/xml" primary="false" sequence="false">
       <description>
         <para>An XML document consisting of a single <tag>c:result</tag> element (the <code>c</code> prefix here is bound to the
             <code>http://www.w3.org/ns/xproc-step</code> namespace) containing <code>true</code> when the documents compare as equal or
             <code>false</code> when differences were found.</para>
         <para>Example: <code><![CDATA[<c:result xmlns:c="http://www.w3.org/ns/xproc-step">true</c:result>]]></code></para>
+        <para>Notice that for XProc 3.0 this port is <emphasis>not</emphasis> primary (as would be expected). This was an oversight and amended in
+          <step-ref name="p:compare" version-id="v31"/> in version&#160;3.1.</para>
       </description>
     </output>
 
@@ -100,7 +102,12 @@
           and <step/> returns <code>true</code>.</para>
       </source-header>
     </xproc-example>
-    
+
+    <para>Notice that for XProc 3.0 we have to bind the step&#x2019;s <port>result</port> port explicitly to the result port of <step/> (using the
+        <code>pipe="result@comparing"</code> attribute on <tag>p:output</tag>). This is because in XProc&#160;3.0, the <port>result</port> port of
+      <step/> is <emphasis>not</emphasis> primary. This was an oversight and amended in <step-ref name="p:compare" version-id="v31"/> in
+      version&#160;3.1.</para>
+
   </example>
 
   <!-- ======================================================================= -->

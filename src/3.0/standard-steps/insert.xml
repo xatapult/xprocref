@@ -1,103 +1,200 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="insert"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] insert short description"
-      required="true"
-      publish="false"
-      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.insert"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <signature>
-      <input port="source"
-             primary="true"
-             content-types="xml html"
-             sequence="true">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <input port="insertion"
-             sequence="true"
-             content-types="xml html"
-             primary="false">
-         <description>
-            <para>[EDIT] input insertion</para>
-         </description>
-      </input>
-      <output port="result"
-              content-types="xml html"
-              primary="true"
-              sequence="true">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-      <option name="match"
-              as="xs:string"
-              select="'/*'"
-              subtype="XSLTSelectionPattern"
-              required="false">
-         <description>
-            <para>[EDIT] option match</para>
-         </description>
-      </option>
-      <option name="position"
-              values="('first-child','last-child','before','after')"
-              select="'after'"
-              required="false"
-              as="item()*">
-         <description>
-            <para>[EDIT] option position</para>
-         </description>
-      </option>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para>The <code>p:insert</code> step inserts the <code>insertion</code> port's document into the <port>source</port> port's document relative to the matching elements in the <code>source</code> port's document.</para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="XC0023"/>]</emphasis> Multiple matches are allowed, in which case multiple copies of the <port>insertion</port> documents will occur. If no elements match, then the document is unchanged.</para>
-      <para>The value of the <option>position</option> option must be an NMTOKEN in the following list: </para>
-      <itemizedlist>
-         <listitem>
-            <para>“<literal>first-child</literal>” - the insertion is made as the first child of the match;</para>
-         </listitem>
-         <listitem>
-            <para>“<literal>last-child</literal>” - the insertion is made as the last child of the match;</para>
-         </listitem>
-         <listitem>
-            <para>“<literal>before</literal>” - the insertion is made as the immediate preceding sibling of the match;</para>
-         </listitem>
-         <listitem>
-            <para>“<literal>after</literal>” - the insertion is made as the immediate following sibling of the match.</para>
-         </listitem>
-      </itemizedlist>
-      <para>
-         <emphasis role="bold">[ERROR <step-error-ref code="XC0025"/>]</emphasis>
-         <emphasis role="bold">[ERROR <step-error-ref code="XC0024"/>]</emphasis>
-      </para>
-      <para>As the inserted elements are part of the output of the step they are not considered in determining matching elements. If an empty sequence appears on the <port>insertion</port> port, the result will be the same as the source.</para>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="insert-preserves-all">All document properties on the <port>source</port> port are preserved. The document properties on the <port>insertion</port> port are not preserved or present in the result document.</para>
-   </description>
-   <step-errors>
-      <step-error code="XC0023">
-         <description>
-            <para>It is a dynamic error if that pattern matches an attribute or a namespace node.</para>
-         </description>
-      </step-error>
-      <step-error code="XC0025">
-         <description>
-            <para>It is a dynamic error if the selection pattern matches anything other than an element or a document node and the value of the <option>position</option> option is “<literal>first-child</literal>” or “<literal>last-child</literal>”.</para>
-         </description>
-      </step-error>
-      <step-error code="XC0024">
-         <description>
-            <para>It is a dynamic error if the selection pattern matches a document node and the value of the <option>position</option> is “<literal>before</literal>” or “<literal>after</literal>”.</para>
-         </description>
-      </step-error>
-   </step-errors>
+<step name="insert" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation" short-description="Inserts one document into another"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.insert"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+    <input port="source" primary="true" content-types="xml html" sequence="false">
+      <description>
+        <para>The base document to insert <emphasis>in</emphasis>.</para>
+      </description>
+    </input>
+
+    <input port="insertion" sequence="true" content-types="xml html" primary="false">
+      <description>
+        <para>The document(s) to insert.</para>
+      </description>
+    </input>
+
+    <output port="result" content-types="xml html" primary="true" sequence="false">
+      <description>
+        <para>The resulting document</para>
+      </description>
+    </output>
+
+    <option name="match" as="xs:string" select="'/*'" subtype="XSLTSelectionPattern" required="false">
+      <description>
+        <para>The XSLT match pattern that indicates where to insert.</para>
+      </description>
+    </option>
+
+    <option name="position" values="('first-child','last-child','before','after')" select="'after'" required="false" as="xs:string">
+      <description>
+        <para>Where to insert, relative to what was matched by the <option>match</option> option. See <xref linkend="position-option"/>.</para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step inserts the document(s) appearing on the <code>insertion</code> port into the document appearing on the <port>source</port>
+      port.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+
+    <para>The <step/> step can be used to insert one or more documents into another. It searches the document appearing on its <port>source</port>
+      port for matches as indicated by the <option>match</option> option. It then inserts the document(s) appearing on its <port>insertion</port>
+      port, as indicated by the <option>position</option> option. The result of the merge is emitted on the <port>result</port> port.</para>
+
+    <section xml:id="position-option">
+      <title>The <option>position</option> option</title>
+
+      <para>The <option>position</option> option tells <step/> where to insert the document(s) in the <port>insertion</port> port, relative to what
+        was matched by the <option>match</option> option. There are 4 possible values:</para>
+
+      <table role="nonumber">
+        <title/>
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>
+                <para>Value</para>
+              </entry>
+              <entry>
+                <para>Description</para>
+              </entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>
+                <para>
+                  <code>
+                    <code>first-child</code>
+                  </code>
+                </para>
+              </entry>
+              <entry>
+                <para>The insertion is made as the <emphasis>first child</emphasis> of what was matched. </para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>
+                  <code>
+                    <code>last-child</code>
+                  </code>
+                </para>
+              </entry>
+              <entry>
+                <para>The insertion is made as the <emphasis>last child</emphasis> of what was matched.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>
+                  <code>
+                    <code>before</code>
+                  </code>
+                </para>
+              </entry>
+              <entry>
+                <para>The insertion is made directly <emphasis>before</emphasis> what was matched. In other words: the insertion becomes the immediate
+                  preceding sibling of the match.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>
+                  <code>
+                    <code>after</code>
+                  </code>
+                </para>
+              </entry>
+              <entry>
+                <para>The insertion is made directly <emphasis>after</emphasis> what was matched. In other words: the insertion becomes the immediate
+                  following sibling of the match.</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+    </section>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>It must be possible to insert the document(s) at the indicated location(s). For instance, the <option>match</option> option cannot match an
+      attribute and you cannot insert something before or after the document node. If this happens, an appropriate error is raised.</para>
+  </detail>
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+    <para>The document-properties of the document(s) appearing on its <port>insertion</port> port are not used/preserved.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>If the <option>match</option> option matches multiple times, multiple instances of the document(s) on the <port>insertion</port> port are
+      inserted. See <example-ref idref="multiple-inserts"/>.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>If the <port>insertion</port> port receives no document(s), nothing happens. The step will act as a <step-ref name="p:identity"/>
+      step.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="basic-usage">
+
+    <para>This simple example shows how to insert a (for the example, fixed) document into another, as a first child of a match:</para>
+    <xproc-example href="../../examples/insert/insert-01.xpl"/>
+
+    <xproc-example href="../../examples/insert/insert-02.xpl" show-source="false">
+      <pipeline-header>
+        <para>Or, using the same source document, as the its last child:</para>
+      </pipeline-header>
+    </xproc-example>
+
+    <xproc-example href="../../examples/insert/insert-03.xpl" show-source="false">
+      <pipeline-header>
+        <para>The following example, again using the same source document, inserts a new thing using the <code>before</code> value of the
+            <option>position</option> option:</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Inserting multiple times" id="multiple-inserts">
+
+    <para>The following example shows that when the <option>match</option> option matches multiple times, the insertion occurs multiple times:</para>
+    <xproc-example href="../../examples/insert/insert-04.xpl"/>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
+  <step-errors>
+    <step-error code="XC0023"/>
+    <step-error code="XC0025"/>
+    <step-error code="XC0024"/>
+  </step-errors>
+
 </step>

@@ -107,12 +107,14 @@ table {
 th {
   background-color: grey !important;
   color: white;
-  padding: 0.1rem !important;
+  padding-left: 0.3rem !important;
+  padding-right: 0.3rem !important;
   font-weight: normal;
 }
 
-
-
 td {
-  padding: 0.1rem !important;
+  padding-left: 0.3rem !important;
+  padding-right: 0.3rem !important;
+  border-left: thin solid lightgrey;
+  border-right: thin solid lightgrey;
 }
