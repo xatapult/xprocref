@@ -1,88 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="label-elements"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] label-elements short description"
-      required="true"
-      publish="false"
-      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.label-elements"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <signature>
-      <input port="source"
-             content-types="xml html"
-             primary="true"
-             sequence="true">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <output port="result"
-              content-types="xml html"
-              primary="true"
-              sequence="true">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-      <option name="attribute"
-              as="xs:QName"
-              select="'xml:id'"
-              required="false">
-         <description>
-            <para>[EDIT] option attribute</para>
-         </description>
-      </option>
-      <option name="label"
-              as="xs:string"
-              select="'concat(&#34;_&#34;,$p:index)'"
-              subtype="XPathExpression"
-              required="false">
-         <description>
-            <para>[EDIT] option label</para>
-         </description>
-      </option>
-      <option name="match"
-              as="xs:string"
-              select="'*'"
-              subtype="XSLTSelectionPattern"
-              required="false">
-         <description>
-            <para>[EDIT] option match</para>
-         </description>
-      </option>
-      <option name="replace"
-              as="xs:boolean"
-              select="true()"
-              required="false">
-         <description>
-            <para>[EDIT] option replace</para>
-         </description>
-      </option>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para>The <code>p:label-elements</code> step generates a label for each matched element and stores that label in the specified attribute.</para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>The value of the <option>label</option> option is an XPath expression used to generate the value of the attribute label.</para>
-      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="XC0023"/>]</emphasis>
-      </para>
-      <para>The value of the <option>replace</option> must be a boolean value and is used to indicate whether existing attribute values are replaced.</para>
-      <para>This step operates by generating attribute labels for each element matched. For every matched element, the expression is evaluated with the context node set to the matched element. An attribute is added to the matched element using the attribute name is specified the <option>attribute</option> option and the string value of result of evaluating the expression. If the attribute already exists on the matched element, the value is replaced with the string value only if the <option>replace</option> option has the value of <literal>true</literal>.</para>
-      <para>If this step is used to add or change the value of an attribute named “<literal>xml:base</literal>”, the base URI of the element must also be amended accordingly.</para>
-      <para>An implementation must bind the variable “<literal>p:index</literal>” in the static context of each evaluation of the XPath expression to the position of the element in the sequence of matched elements. In other words, the first element (in document order) matched gets the value “<literal>1</literal>”, the second gets the value “<literal>2</literal>”, the third, “<literal>3</literal>”, etc.</para>
-      <para>The result of the p:label-elements step is the input document with the attribute labels associated with matched elements. All other non-matching content remains the same.</para>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="label-elements-preserves-all">All document properties are preserved.</para>
-   </description>
-   <step-errors>
-      <step-error code="XC0023">
-         <description>
-            <para>It is a dynamic error if that expression matches anything other than element nodes.</para>
-         </description>
-      </step-error>
-   </step-errors>
+<step name="label-elements" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation"
+  short-description="Labels elements by adding an attribute" required="true" publish="true"
+  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.label-elements"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" content-types="xml html" primary="true" sequence="false">
+      <description>
+        <para>The document to label.</para>
+      </description>
+    </input>
+
+    <output port="result" content-types="xml html" primary="true" sequence="true">
+      <description>
+        <para>The resulting document.</para>
+      </description>
+    </output>
+
+    <option name="attribute" as="xs:QName" select="'xml:id'" required="false">
+      <description>
+        <para>The name of the attribute that contains the label</para>
+      </description>
+    </option>
+
+    <option name="label" as="xs:string" select="'concat(&#34;_&#34;,$p:index)'" subtype="XPathExpression" required="false">
+      <description>
+        <para>An XPath expression that computes the value for the label.</para>
+        <para>This expression is evaluated with a matched element as context item. A variable <code>$p:index</code> is available that holds the index
+          (sequence number) of the match.</para>
+      </description>
+    </option>
+
+    <option name="match" as="xs:string" select="'*'" subtype="XSLTSelectionPattern" required="false">
+      <description>
+        <para>An XSLT match expression that matches the elements to label.</para>
+      </description>
+    </option>
+
+    <option name="replace" as="xs:boolean" select="true()" required="false">
+      <description>
+        <para>Whether to replace existing attributes. If this value is <code>false</code>, existing attributes with the same name as mentioned in the
+            <option>attribute</option> option are left in peace. If <code>true</code> (default), they are replaced.</para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step generates a label for each matched element and stores that label in the specified attribute.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+
+    <para>The <step/> step performs the following actions:</para>
+    <itemizedlist>
+      <listitem>
+        <para>It takes the document appearing on its <port>source</port> port and finds all the elements matched by the expression in the
+            <option>match</option> option.</para>
+      </listitem>
+      <listitem>
+        <para>For every matched element, it evaluates the expression in the <option>label</option> option. This is done with the matched element as
+          context item (so accessible using the dot <code>.</code> operator). An additional variable <code>$p:index</code> is available that holds the
+          index (sequence number) of the match.</para>
+      </listitem>
+      <listitem>
+        <para>If the <option>replace</option> option is <code>true</code> (default), an attribute is added/replaced on the matched element. The name
+          of this attribute is in the <option>attribute</option> option. Its value comes from the evaluation of the expression in the
+            <option>label</option> option.</para>
+        <para>If the <option>replace</option> is <code>false</code>, an existing attribute with the same name is not replaced.</para>
+      </listitem>
+      <listitem>
+        <para>After all matches are handled, the resulting document appears on the <port>result</port> port.</para>
+      </listitem>
+    </itemizedlist>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="basic-usage">
+
+    <para>The following example uses all the default values of the options of <step/>. This means an attribute called <code>xml:id</code> is added to
+      every element. Values become an underscore followed by the index of the element. Existing <code>xml:id</code> attributes are replaced.</para>
+
+    <xproc-example href="../../examples/label-elements/label-elements-01.xpl"/>
+
+
+    <para>To make this a little more interesting, let&#x2019;s label the <tag>movie</tag> elements only and compute their label based on a generated
+      identifier (using <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-generate-id" role="newpage"
+        ><code>fn:generate-id()</code></link>) and the movie&#x2019;s name (replacing whitespace using <link
+        xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-replace" role="newpage"><code>fn:replace()</code></link>). We keep existing
+        <code>xml:id</code> attributes. The source document is the same as in the previous example.</para>
+    <xproc-example href="../../examples/label-elements/label-elements-02.xpl" show-source="false"/>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
+  <step-errors>
+    <step-error code="XC0023"/>
+  </step-errors>
+
 </step>

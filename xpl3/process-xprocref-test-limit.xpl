@@ -21,7 +21,7 @@
 
   <!-- ================================================================== -->
 
-  <p:variable name="limit-to-steps" as="xs:string*" select="('compare')"/>
+  <p:variable name="limit-to-steps" as="xs:string*" select="('label-elements')"/>
 
   <xpref:process-xprocref production-version="false" wip="false">
     <p:with-option name="limit-to-steps" select="$limit-to-steps"/>
