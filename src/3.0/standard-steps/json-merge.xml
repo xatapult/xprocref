@@ -1,91 +1,224 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="json-merge"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] json-merge short description"
-      required="true"
-      publish="false"
-      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.json-merge"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <signature>
-      <input port="source"
-             sequence="true"
-             content-types="any"
-             primary="true">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <output port="result"
-              content-types="application/json"
-              primary="true"
-              sequence="true">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-      <option name="duplicates"
-              values="('reject', 'use-first', 'use-last', 'use-any', 'combine')"
-              select="'use-first'"
-              required="false"
-              as="item()*">
-         <description>
-            <para>[EDIT] option duplicates</para>
-         </description>
-      </option>
-      <option name="key"
-              as="xs:string"
-              select="'concat(&#34;_&#34;,$p:index)'"
-              subtype="XPathExpression"
-              required="false">
-         <description>
-            <para>[EDIT] option key</para>
-         </description>
-      </option>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para>The <tag>p:json-merge</tag> step merges the sequence of appearing on port <port>source</port> into a single JSON object appearing on port <port>result</port>. If the sequence on port <port>source</port> is empty, the empty sequence is returned on port <port>result</port>.</para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>The step inspects the documents on port <port>source</port> in turn to create the resulting map:</para>
-      <itemizedlist>
-         <listitem>
-            <para>If the document under inspection is a JSON document representing a map, all key-value pairs are copied into the result map unless this map already contains an entry with the given key. In this case the value of option <option>duplicates</option> determines the policy for handling duplicate keys as specified for function <code>map:merge</code> in <link xlink:href="https://www.w3.org/TR/xpath-functions-31/"
-                     role="newpage"
-                     xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1 functions</link> . <emphasis role="bold">[ERROR <step-error-ref code="XC0106"/>]</emphasis>
-            </para>
-         </listitem>
-         <listitem>
-            <para>For every other type of JSON document, for XML documents, HTML documents, or text documents a new key-value pair is created and put into the resulting map. The key is created by evaluating the XPath expression in option <option>key</option> with the inspected document as context item. If the evaluation result is a single atomic value, it is taken as key. If the evaluation result is a node, its string value is taken as key. <emphasis role="bold">[ERROR <step-error-ref code="XC0110"/>]</emphasis> Duplicate keys are handled as described above. The XDM representation of the inspected document is taken as value of the key-value pair.</para>
-         </listitem>
-         <listitem>
-            <para>It is implementation defined if <code>p:json-merge</code> is able to process document types not mentioned yet, i.e. types of binary documents. If a processor supports a given type of documents, the key-value pair is created as described above. <emphasis role="bold">[ERROR <step-error-ref code="XC0107"/>]</emphasis>
-            </para>
-         </listitem>
-      </itemizedlist>
-      <para>An implementation must bind the variable “<code>p:index</code>” in the static context of each evaluation of the XPath expression to the position of the document in the sequence of documents on port <port>source</port>, starting with “<literal>1</literal>”. </para>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="json-merge-preserves-none">No document properties are preserved. The merged document has no <property>base-uri</property>. </para>
-   </description>
-   <step-errors>
-      <step-error code="XC0106">
-         <description>
-            <para>It is a dynamic error if duplicate keys are encountered and option <option>duplicates</option> has value “<literal>reject</literal>”.</para>
-         </description>
-      </step-error>
-      <step-error code="XC0110">
-         <description>
-            <para>It is a dynamic error if the evaluation of the XPath expression in option <option>key</option> for a given item returns either a sequence, an array, a map, or a function.</para>
-         </description>
-      </step-error>
-      <step-error code="XC0107">
-         <description>
-            <para> It is a dynamic error if a document of a not supported document type appears on port <port>source</port> of <code>p:json-merge</code>.</para>
-         </description>
-      </step-error>
-   </step-errors>
+<step name="json-merge" version-idref="v30" category-idrefs="standard-steps json" short-description="Joins documents into a JSON map document"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.json-merge"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+    <input port="source" sequence="true" content-types="any" primary="true">
+      <description>
+        <para>The documents to join.</para>
+      </description>
+    </input>
+
+    <output port="result" content-types="application/json" primary="true" sequence="false">
+      <description>
+        <para>The resulting JSON map document containing the source documents.</para>
+      </description>
+    </output>
+
+    <option name="duplicates" values="('reject', 'use-first', 'use-last', 'use-any', 'combine')" select="'use-first'" required="false" as="item()*">
+      <description>
+        <para>Specifies what to do with duplicate keys in the resulting map. See <xref linkend="duplicates"/>.</para>
+      </description>
+    </option>
+
+    <option name="key" as="xs:string" select="'concat(&#34;_&#34;,$p:index)'" subtype="XPathExpression" required="false">
+      <description>
+        <para>An XPath expression that computes the value for the key of an entry in the resulting map.</para>
+        <para>This expression is evaluated with the document it is applied to as context item. A variable <code>$p:index</code> is available that
+          holds the index (sequence number) of the document on the <port>source</port> port.</para>
+        <para>See <example-ref idref="diffkey"/> for an example of how to use this option.</para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+  <summary>
+    <para>The <step/> step merges the document(s) appearing on the <port>source</port> port into a JSON map. This map is returned as a single JSON
+      document on the <port>result</port> port.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+
+    <para>The <step/> step takes the document(s) appearing on its <port>source</port> port and joins them into a JSON map (also know as JSON object).
+      How the source documents end up in the resulting map depends on their type:</para>
+    <itemizedlist>
+      <listitem>
+        <para>For a JSON source document that is a map, all key/value pairs are copied into the result map.</para>
+      </listitem>
+      <listitem>
+        <para>For JSON documents that are not a map, XML, HTML and text documents, a new key/value pair is created. The key is computed using the
+          XPath expression in the <option>key</option> option. Regarding their value:</para>
+        <itemizedlist>
+          <listitem>
+            <para>A JSON document is used as is.</para>
+          </listitem>
+          <listitem>
+            <para>An XML, HTML or text document is first serialized (as if written to disk) and then added as a string to the resulting array.</para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>Whether <step/> can handle any other media types is implementation-defined and therefore depends on the XProc processor used.</para>
+      </listitem>
+    </itemizedlist>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="duplicates">
+      <title>Handling duplicates</title>
+
+      <para>While filling up the result map, it can happen that a key is already present. Duplicate keys are not allowed. What happens in case of a
+        duplicate key depends on the value of the <option>duplicates</option> option:</para>
+
+      <table role="nonumber">
+        <title/>
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>
+                <para>Value</para>
+              </entry>
+              <entry>
+                <para>Description</para>
+              </entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>
+                <para>
+                  <code>
+                    <code>reject</code>
+                  </code>
+                </para>
+              </entry>
+              <entry>
+                <para>When a duplicate key is detected, error <step-error-ref code="XC0106"/> is raised</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>
+                  <code>use-first</code> (default) </para>
+              </entry>
+              <entry>
+                <para>When a duplicate key is detected, the already present entry is used and the duplicate one is discarded.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>
+                  <code>use-last</code>
+                </para>
+              </entry>
+              <entry>
+                <para>When a duplicate key is detected, the already present entry is discarded and the duplicate one is used.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>
+                  <code>use-any</code>
+                </para>
+              </entry>
+              <entry>
+                <para>When a duplicate key is detected, it is implementation-defined which one is retained.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>
+                  <code>combine</code>
+                </para>
+              </entry>
+              <entry>
+                <para>When a duplicate key is detected, the values for both keys are concatenated.</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <para>See <example-ref idref="duplicates"/> for an example.</para>
+
+    </section>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>No document-properties of the source document(s) survive.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>The resulting document has no <property>base-uri</property> property.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>If there are no documents appearing on the <port>source</port> port, the <port>result</port> port returns the empty sequence.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <xproc-example href="../../examples/json-merge/json-merge-01.xpl" output-is-text="true" fixup-pipeline-input="false" show-source="false">
+      <pipeline-header>
+        <para>The following pipeline produces a sequence of 3 documents on the <port>source</port> port of <step/>: An XML, a JSON map and a text
+          document. This is merrily joined into a single map. Notice that the key/value pairs of the JSON map source document are now part of the
+          resulting map.</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Computing a different key" id="diffkey">
+
+    <xproc-example href="../../examples/json-merge/json-merge-02.xpl" output-is-text="true" fixup-pipeline-input="false" show-source="false">
+      <pipeline-header>
+        <para>The following pipeline produces a sequence of 3 documents on the <port>source</port> port of <step/>: An XML, a JSON map and another XML
+          document. With the <option>key</option> option we set the key for the result map to the local name of the root elements:
+            <code>local-name(/*)</code>. Notice that what happens with the keys for the second source document, which is itself a map, is not
+          affected.</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Handling duplicates" id="duplicates">
+
+    <xproc-example href="../../examples/json-merge/json-merge-03.xpl" output-is-text="true" fixup-pipeline-input="false" show-source="false">
+      <pipeline-header>
+        <para>The following pipeline produces a sequence of 2 JSON map documents on the <port>source</port> port of <step/>. Both maps contain an
+          entry with the key <code>dupkey</code>. With <code>duplicates="use-last"</code> we specify that the last one must be used.</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+
+  <!-- ======================================================================= -->
+
+  <step-errors>
+    <step-error code="XC0106"/>
+    <step-error code="XC0110"/>
+    <step-error code="XC0107"/>
+  </step-errors>
+
 </step>

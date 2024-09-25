@@ -128,8 +128,8 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Preparations: -->
 
-  <!-- Process any XIncludes and record the original base URI on the root: -->
-  <p:xinclude fixup-xml-base="true"/>
+  <!-- Process any XIncludes and record the original base URIs: -->
+  <p:xinclude/>
   <p:add-xml-base relative="false"/>
 
   <!-- Delete schema references (annoying, since they are no longer valid): -->
@@ -249,7 +249,7 @@
     <!-- Run the pipeline and add the result, wrapped in <_RESULT>: -->
     <p:choose>
       <p:when test="$has-source-port">
-        <p:run >
+        <p:run>
           <p:with-input pipe="@example-pipeline"/>
           <p:run-input port="source">
             <!-- Remark: The pipelines we use for the examples are self-sufficient in providing their own input by default. 

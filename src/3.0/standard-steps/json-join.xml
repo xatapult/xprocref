@@ -1,73 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="json-join"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] json-join short description"
-      required="true"
-      publish="false"
-      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.json-join"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <signature>
-      <input port="source"
-             sequence="true"
-             content-types="any"
-             primary="true">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <output port="result"
-              content-types="application/json"
-              primary="true"
-              sequence="true">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-      <option name="flatten-to-depth"
-              as="xs:string?"
-              select="'0'"
-              required="false">
-         <description>
-            <para>[EDIT] option flatten-to-depth</para>
-         </description>
-      </option>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para>The <code>p:json-join</code> step joins the sequence of documents on port <port>source</port> into a single JSON document (an array) appearing on port <port>result</port>. If the sequence on port <code>source</code> is empty, the empty sequence is returned on port <code>result</code>.</para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>The step inspects the documents on port <port>source</port> in turn to create the resulting array:</para>
+<step name="json-join" version-idref="v30" category-idrefs="standard-steps json" short-description="Joins documents into a JSON array document"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.json-join"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" sequence="true" content-types="any" primary="true">
+      <description>
+        <para>The documents to join.</para>
+      </description>
+    </input>
+
+    <output port="result" content-types="application/json" primary="true" sequence="false">
+      <description>
+        <para>The resulting JSON array document containing the source documents.</para>
+      </description>
+    </output>
+
+    <option name="flatten-to-depth" as="xs:string?" select="'0'" required="false">
+      <description>
+        <para>Specifies whether and to which depth JSON source documents that are arrays must be &#x201c;flattened&#x201d;. See <xref
+            linkend="flattening"/>.</para>
+        <para>Please notice that the data type of this option is <code>xs:string</code> (and not <code>xs:integer</code> as you might expect). This is
+          because it can also take the value <code>unbounded</code>. </para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step joins the document(s) appearing on the <port>source</port> port into a JSON array. This array is returned as a
+      single JSON document on the <port>result</port> port.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+
+    <para>The <step/> step takes the document(s) appearing on its <port>source</port> port and joins them into a JSON array. How the source documents
+      end up in the resulting array depends on their  type:</para>
+    <itemizedlist>
+      <listitem>
+        <para>A JSON source document that is <emphasis>not</emphasis> an array is added to the result as a member of the resulting array.</para>
+      </listitem>
+      <listitem>
+        <para>A JSON source document that is itself an array is also added to the resulting array. However, depending on the value of the
+            <option>flatten-to-depth</option> option, additional &#x201c;flattening&#x201d; can happen. See <xref linkend="flattening"/>.</para>
+      </listitem>
+      <listitem>
+        <para>An XML, HTML or text document is first serialized (as if written to disk) and then added as a string to the resulting array.</para>
+      </listitem>
+      <listitem>
+        <para>Whether <step/> can handle any other media types is implementation-defined and therefore depends on the XProc processor used.</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>The resulting array is emitted as a single JSON document on the <port>result</port> port.</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="flattening">
+      <title>Flattening arrays</title>
+
+      <para>Depending on the value of the <option>flatten-to-depth</option> option, &#x201d;flattening&#x201d; of the resulting array takes place.
+        Flattening here means that if there are members of the resulting array that are itself arrays, their members will appear as individual members
+        in the final result. For instance, flattening <code>["a",&#160;"b",&#160;["c",&#160;"d"]&#160;]</code> results in
+          <code>["a",&#160;"b",&#160;"c",&#160;"d"]</code>.</para>
+
+      <para>What happens exactly depends on the value of the <option>flatten-to-depth</option> option:</para>
       <itemizedlist>
-         <listitem>
-            <para>If the document under inspection is a JSON document representing an array, the array is copied to the resulting array according to the setting of option <option>flatten-to-depth</option>.</para>
-         </listitem>
-         <listitem>
-            <para>For every other type of JSON document, for XML documents, HTML documents, or text documents, their XDM representation is appended to the resulting array.</para>
-         </listitem>
-         <listitem>
-            <para>It is implementation defined if <code>p:json-join</code> is able to process document types not mentioned yet, i.e. types of binary documents. If a processor supports a given type of documents, an entry is created as described above. <emphasis role="bold">[ERROR <step-error-ref code="XC0111"/>]</emphasis>
-            </para>
-         </listitem>
+        <listitem>
+          <para>If <code>0</code> (default), no flattening takes place.</para>
+        </listitem>
+        <listitem>
+          <para>If <code>1</code>, any array on the <port>source</port> port is flattened into the final result.</para>
+        </listitem>
+        <listitem>
+          <para>If greater than <code>1</code>, flattening is applied recursively to arrays in arrays, up to the given depth. </para>
+        </listitem>
+        <listitem>
+          <para>If <code>unbounded</code>, all arrays are flattened.</para>
+        </listitem>
       </itemizedlist>
-      <para>The option <option>flatten-to-depth</option> controls whether and to which depth members of an array appearing on port <port>source</port> are flattened. <emphasis role="bold">[ERROR <step-error-ref code="XC0119"/>]</emphasis> An integer value of <literal>0</literal>, which is the default, means that no flattening takes place, so the array appearing on port <port>source</port> will be contained as an array in the resulting array. An integer value of <literal>1</literal> means that an array on port <port>source</port> is flattened, i.e. the members of that array will appear as individual members in the resulting array. Any value greater than <literal>1</literal> means that the flattening is applied recursively to arrays in arrays up to the given depth. A value of “<literal>unbounded</literal>” means that all arrays in arrays will be flattened. As a consequence, the resulting array appearing on port <port>result</port> will not have any arrays as members. </para>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="json-join-preserves-none">No document properties are preserved. The joined document has no <property>base-uri</property>. </para>
-   </description>
-   <step-errors>
-      <step-error code="XC0111">
-         <description>
-            <para> It is a dynamic error if a document of an unsupported document type appears on port <port>source</port> of <code>p:json-join</code>.</para>
-         </description>
-      </step-error>
-      <step-error code="XC0119">
-         <description>
-            <para>It is a dynamic error if <option>flatten</option> is neither “<literal>unbounded</literal>”, nor a string that may be cast to a non-negative integer.</para>
-         </description>
-      </step-error>
-   </step-errors>
+
+      <para>See <example-ref idref="flattening-example"/> for an example.</para>
+
+    </section>
+
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>No document-properties of the source document(s) survive.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>The resulting document has no <property>base-uri</property> property.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>If there are no documents appearing on the <port>source</port> port, the <port>result</port> port returns the empty sequence.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <xproc-example href="../../examples/json-join/json-join-01.xpl" output-is-text="true" fixup-pipeline-input="false" show-source="false">
+      <pipeline-header>
+        <para>The following pipeline produces a sequence of 3 documents on the <port>source</port> port of <step/>: An XML, a text and a JSON
+          document. This is merrily joined into a single array:</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Flattening arrays" id="flattening-example">
+
+    <xproc-example href="../../examples/json-join/json-join-02.xpl" output-is-text="true" fixup-pipeline-input="false" show-source="false">
+      <pipeline-header>
+        <para>The following pipeline produces a sequence of 2 documents on the <port>source</port> port of <step/>: A JSON text and a JSON array. If
+          we do <emphasis>not</emphasis> flatten it, the source array will simply appear as a member of the resulting array:</para>
+      </pipeline-header>
+    </xproc-example>
+
+    <xproc-example href="../../examples/json-join/json-join-03.xpl" output-is-text="true" fixup-pipeline-input="false" show-source="false">
+      <pipeline-header>
+        <para>By setting the <option>flatten-to-depth</option> option to <code>1</code>, the source array is flattened:</para>
+      </pipeline-header>
+    </xproc-example>
+
+    <xproc-example href="../../examples/json-join/json-join-04.xpl" output-is-text="true" fixup-pipeline-input="false" show-source="false">
+      <pipeline-header>
+        <para>If we increase the <option>flatten-to-depth</option> option to <code>2</code>, the inner array is also flattened. A value
+            <code>unbounded</code> would have had the same effect here.</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
+  <step-errors>
+    <step-error code="XC0111"/>
+    <step-error code="XC0119"/>
+  </step-errors>
+
 </step>
