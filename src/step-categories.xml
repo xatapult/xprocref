@@ -57,5 +57,11 @@
       <para>Steps that interact with environment of the pipeline, for instance communication over HTTP(S) or working with directories and files.</para>
     </description>
   </category>
-
+  
+  <category id="json" name="JSON related steps">
+    <description>
+      <para>Steps for handling JSON documents.</para>
+    </description>
+  </category>
+  
 </categories>

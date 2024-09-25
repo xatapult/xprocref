@@ -292,9 +292,7 @@
             <row>
               <entry>
                 <para>
-                  <code>
                     <code>username</code>
-                  </code>
                 </para>
               </entry>
               <entry>
@@ -309,9 +307,7 @@
             <row>
               <entry>
                 <para>
-                  <code>
                     <code>password</code>
-                  </code>
                 </para>
               </entry>
               <entry>
@@ -326,9 +322,7 @@
             <row>
               <entry>
                 <para>
-                  <code>
                     <code>auth-method</code>
-                  </code>
                 </para>
               </entry>
               <entry>
@@ -346,9 +340,7 @@
             <row>
               <entry>
                 <para>
-                  <code>
                     <code>send-authorization</code>
-                  </code>
                 </para>
               </entry>
               <entry>
