@@ -181,7 +181,7 @@
 
       <para>The main source for <step/> for constructing HTTP request headers is its <option>headers</option> option (see <example-ref
           idref="viewing-rh"/>). </para>
-      
+
       <para>If a <emphasis>single</emphasis> document appears on the <port>source</port> port and we&#x2019;re <emphasis>not</emphasis> constructing a
         multipart message, special rules apply:</para>
       <itemizedlist>
@@ -292,7 +292,7 @@
             <row>
               <entry>
                 <para>
-                    <code>username</code>
+                  <code>username</code>
                 </para>
               </entry>
               <entry>
@@ -307,7 +307,7 @@
             <row>
               <entry>
                 <para>
-                    <code>password</code>
+                  <code>password</code>
                 </para>
               </entry>
               <entry>
@@ -322,7 +322,7 @@
             <row>
               <entry>
                 <para>
-                    <code>auth-method</code>
+                  <code>auth-method</code>
                 </para>
               </entry>
               <entry>
@@ -340,7 +340,7 @@
             <row>
               <entry>
                 <para>
-                    <code>send-authorization</code>
+                  <code>send-authorization</code>
                 </para>
               </entry>
               <entry>
