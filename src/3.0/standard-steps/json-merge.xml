@@ -139,7 +139,10 @@
                 </para>
               </entry>
               <entry>
-                <para>When a duplicate key is detected, the values for both keys are concatenated.</para>
+                <para>When a duplicate key is detected, the values for both keys are turned into a sequence.</para>
+                <para>Watch out: A sequence of data as value in a map is perfectly fine in the general XPath data model. This means that you can use a
+                  result with combined values in your pipeline without problems. However, it is not allowed in JSON, so when you try to serialize such
+                  a map as a JSON document, an error will occur. </para>
               </entry>
             </row>
           </tbody>
