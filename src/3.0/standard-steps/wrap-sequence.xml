@@ -65,8 +65,8 @@
         </listitem>
         <listitem>
           <para>The expression in the <option>group-adjacent</option> option is evaluated.</para>
-          <para>During this evaluation, the <code>position()</code> and <code>last()</code> functions are available to get the position of the document
-            in the sequence and the size of the sequence.</para>
+          <para>During this evaluation, the <code>position()</code> and <code>last()</code> functions are available to get the position of the
+            document in the sequence and the size of the sequence.</para>
         </listitem>
         <listitem>
           <para>Two values computed by the XPath expression are considered equal if the XPath function <link

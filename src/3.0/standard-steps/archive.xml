@@ -50,8 +50,8 @@
             <para>If its value is <code>zip</code> (the default), the <step/> step expects a ZIP archive on the <port>source</port> port.</para>
           </listitem>
           <listitem>
-            <para>Whether any other archive formats can be handled and what their names (values for this option) are depends on the XProc processor
-              used.</para>
+            <para>Whether any other archive formats can be handled and what their names (values for this option) are is implementation-defined and
+              therefore dependent on the XProc processor used.</para>
           </listitem>
         </itemizedlist>
       </description>
@@ -173,8 +173,8 @@
         </listitem>
       </itemizedlist>
       <para>The result of all this is that we now have a manifest that has entries (<tag>c:entry</tag> elements) for all documents appearing on the
-          <port>source</port> port. It can also have entries for documents that are <emphasis>not</emphasis> on the source port: because
-        such an entry was present in the initial manifest and no matching document on the <port>source</port> port was found for it.</para>
+          <port>source</port> port. It can also have entries for documents that are <emphasis>not</emphasis> on the source port: because such an entry
+        was present in the initial manifest and no matching document on the <port>source</port> port was found for it.</para>
 
       <bridgehead>2 - Process the manifest</bridgehead>
       <para>The now completed manifest is processed. For every entry (<tag>c:entry</tag> element):</para>
@@ -193,7 +193,7 @@
         </listitem>
       </itemizedlist>
       <para>In both cases, the value of the <code>c:entry/@name</code> attribute becomes the name/path of the entry in the archive. The values of the
-        other attributes of the <tag>c:entry</tag> element might also get used, but this depends on the XProc processor used and/or the
+        other attributes of the <tag>c:entry</tag> element might also get used, but this is dependent on the XProc processor used and/or the
         archive&#x2019;s format.</para>
 
       <para>The <step/> step is supposed to retain the order of the <tag>c:entry</tag> elements. This is, for instance, important when constructing an
@@ -468,8 +468,8 @@
 
     <xproc-example href="../../examples/archive/archive-02.xpl" show-source="false" fixup-pipeline-input="false" keep-from="test"/>
 
-    <para>Note that the information in the manifest is less than what <step-ref name="p:archive-manifest"/> produces. What exactly happens here
-      depends on the XProc processor used.</para>
+    <para>Note that the information in the manifest is less than what <step-ref name="p:archive-manifest"/> produces. What exactly happens here is
+      implementation-defined and therefore dependent on the XProc processor used.</para>
 
   </example>
 

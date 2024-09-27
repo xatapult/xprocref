@@ -62,7 +62,8 @@
             <para>If a selected element does <emphasis>not</emphasis> contain an attribute with the name given in the <option>attribute-name</option>
               option, an attribute with this name and a value as given in the <option>attribute-value</option> option is added to it.</para>
           </listitem>
-          <listitem><para>If a selected element already has such an attribute, its value is replaced with the value given in the
+          <listitem>
+            <para>If a selected element already has such an attribute, its value is replaced with the value given in the
                 <option>attribute-value</option> option.</para>
           </listitem>
         </itemizedlist>

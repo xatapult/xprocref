@@ -51,7 +51,7 @@
       stop processing if there are too many.</para>
     <para>There is another way of doing this, see the <example-ref idref="alternative"/> example. This is probably easier, because the required count
       is directly in a variable and the flow of documents in the pipeline is not interrupted. Which method (<step/> or a count variable) is faster is
-      hard to say and probably depends on the XProc processor used. If this matters to you, you&#x2019;ll have to do some experiments.</para>
+      hard to say and probably dependent on the XProc processor used. If this matters to you, you&#x2019;ll have to do some experiments.</para>
   </description>
 
   <!-- ======================================================================= -->

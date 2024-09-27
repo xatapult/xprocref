@@ -39,8 +39,8 @@
       <description>
         <para>The HTTP request method to use for the request. Its value is converted to upper-case.</para>
         <para>Any implementations must support the HTTP methods <code>GET</code> (default), <code>POST</code>, <code>PUT</code>, <code>DELETE</code>,
-          and <code>HEAD</code>. Whether any other methods are supported is implementation-defined and therefore depends on the XProc processor used.
-        </para>
+          and <code>HEAD</code>. Whether any other methods are supported is implementation-defined and therefore dependent on the XProc processor
+          used. </para>
       </description>
     </option>
 
@@ -333,8 +333,8 @@
               <entry>
                 <para>Specifies the authentication method to use. Standard values are <code>Basic</code> or <code>Digest</code> (see <link
                     xlink:href="https://www.rfc-editor.org/info/rfc2617" role="newpage">here</link> for further information). Whether other
-                  authorization methods are supported and how to specify these is implementation-defined and therefore depends on the XProc processor
-                  used.</para>
+                  authorization methods are supported and how to specify these is implementation-defined and therefore dependent on the XProc
+                  processor used.</para>
               </entry>
             </row>
             <row>
@@ -368,8 +368,8 @@
       </table>
 
       <para>If an authorization fails, the request is not retried.</para>
-      <para>Any other key/value pairs for the <option>auth</option> option map are implementation-defined and therefore depend on the XProc processor
-        used.</para>
+      <para>Any other key/value pairs for the <option>auth</option> option map are implementation-defined and therefore dependent on the XProc
+        processor used.</para>
 
     </section>
 
@@ -529,7 +529,7 @@
                   </listitem>
                 </itemizedlist>
                 <para>The default behaviour, when the <code>follow-redirect</code> parameter is not present, is implementation-defined and therefore
-                  depends on the XProc processor used.</para>
+                  dependent on the XProc processor used.</para>
               </entry>
             </row>
             <row>
@@ -572,7 +572,7 @@
                       raised (a generic timeout error).</para>
                     <para>Be careful when you want to use this: whether a processor supports timeouts using the <code>[p:]timeout</code> attribute,
                       and if it does, how precisely and precisely how the execution time of a step is measured, is implementation-defined and
-                      therefore depends on the XProc processor used.</para>
+                      therefore dependent on the XProc processor used.</para>
                   </listitem>
                   <listitem>
                     <para>If <code>fail-on-timeout</code> is <code>true</code> and a timeout happens, error <step-error-ref code="XC0078"/> is
@@ -637,7 +637,7 @@
         </tgroup>
       </table>
 
-      <para>Any other key/value pairs for the <option>parameters</option> option map are implementation-defined and therefore depend on the XProc
+      <para>Any other key/value pairs for the <option>parameters</option> option map are implementation-defined and therefore dependent on the XProc
         processor used.</para>
 
     </section>
@@ -802,7 +802,7 @@
             marker becomes <code>--gc0p4Jq0M2Yt08jU534c0p</code> (the two hyphens in front are prescribed by the protocol).</para>
         </listitem>
         <listitem>
-          <para>If this is not the case, the boundary marker is implementation-defined and therefore depends on the XProc processor used.
+          <para>If this is not the case, the boundary marker is implementation-defined and therefore dependent on the XProc processor used.
             Unfortunately, there is no guarantee this boundary marker does not appear in the data itself (which would make the request
             malformed).</para>
         </listitem>

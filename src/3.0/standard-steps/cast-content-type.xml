@@ -31,7 +31,7 @@
 
     <option name="parameters" as="map(xs:QName,item()*)?" required="false" select="()">
       <description>
-        <para>Parameters controlling the casting/transformation of the document. Keys, values and their meaning depend on the XProc processor
+        <para>Parameters controlling the casting/transformation of the document. Keys, values and their meaning are dependent on the XProc processor
           used.</para>
       </description>
     </option>
@@ -53,9 +53,9 @@
         <code>text/xml</code> for XML documents, <code>application/json</code> for JSON documents, etc. For more information about media types see for
       example <link xlink:href="https://en.wikipedia.org/wiki/Media_type" role="newpage">Wikipedia</link>.</para>
 
-    <para>The <step/> step has a required <option>content-type</option> option and tries to cast (change) the media type of the document appearing
-      on its <port>source</port> port according to the value of this option. Sometimes this is a (very) simple operation: for instance, changing one
-      XML media type to another just changes the value of the <property>content-type</property> document-property. However, you can also request more
+    <para>The <step/> step has a required <option>content-type</option> option and tries to cast (change) the media type of the document appearing on
+      its <port>source</port> port according to the value of this option. Sometimes this is a (very) simple operation: for instance, changing one XML
+      media type to another just changes the value of the <property>content-type</property> document-property. However, you can also request more
       complex changes, like converting an XML document into JSON or vice versa.</para>
 
     <para>Of course, not every media type can be cast into every other media type. The following sections describe what you can (and cannot) do. If
@@ -132,7 +132,7 @@
 
         <listitem>
           <para>Casting to any other media type where the input is not a valid <tag>c:data</tag> document is implementation-defined and therefore
-            depends on the XProc processor used.</para>
+            dependent on the XProc processor used.</para>
         </listitem>
 
       </itemizedlist>
@@ -158,7 +158,7 @@
         </listitem>
 
         <listitem>
-          <para>Casting to a JSON media type is implementation-defined and therefore depends on the XProc processor used.</para>
+          <para>Casting to a JSON media type is implementation-defined and therefore dependent on the XProc processor used.</para>
         </listitem>
 
         <listitem>
@@ -167,7 +167,7 @@
         </listitem>
 
         <listitem>
-          <para>Casting to any other media type is implementation-defined and therefore depends on the XProc processor used.</para>
+          <para>Casting to any other media type is implementation-defined and therefore dependent on the XProc processor used.</para>
         </listitem>
 
       </itemizedlist>
@@ -188,7 +188,7 @@
         </listitem>
 
         <listitem>
-          <para>Casting to an HTML media type is implementation-defined and therefore depends on the XProc processor used.</para>
+          <para>Casting to an HTML media type is implementation-defined and therefore dependent on the XProc processor used.</para>
         </listitem>
 
         <listitem>
@@ -209,7 +209,7 @@
         </listitem>
 
         <listitem>
-          <para>Casting to any other media type is implementation-defined and therefore depends on the XProc processor used.</para>
+          <para>Casting to any other media type is implementation-defined and therefore dependent on the XProc processor used.</para>
         </listitem>
 
       </itemizedlist>
@@ -237,7 +237,7 @@
 
         <listitem>
           <para>Casting to an HTML media type parses the document into an HTML document. How this is done is implementation-defined and therefore
-            depends on the XProc processor used. If unsuccessful, error <step-error-ref code="XD0060"/> is raised.</para>
+            dependent on the XProc processor used. If unsuccessful, error <step-error-ref code="XD0060"/> is raised.</para>
         </listitem>
 
         <listitem>
@@ -249,7 +249,7 @@
         </listitem>
 
         <listitem>
-          <para>Casting to any other media type is implementation-defined and therefore depends on the XProc processor used.</para>
+          <para>Casting to any other media type is implementation-defined and therefore dependent on the XProc processor used.</para>
         </listitem>
 
       </itemizedlist>
@@ -273,7 +273,7 @@
 
         <listitem>
           <para>Casting from an unrecognized media type to a HTML, JSON, text or other unrecognized media type is implementation-defined and therefore
-            depends on the XProc processor used.</para>
+            dependent on the XProc processor used.</para>
         </listitem>
 
       </itemizedlist>
@@ -484,8 +484,8 @@
 
     <para>Now assume we need this text representation without the XML header (the <code>&lt;?xml … ?&gt;</code> part at the top). The <step/> step
       uses the document <property>serialization</property> document-property to guide the conversions. This document-property is a map containing the
-      required <link xlink:href="https://www.w3.org/TR/xslt-xquery-serialization-31/" role="newpage">serialization properties</link>. For this example:
-        <code>map{'omit-xml-declaration': true()}</code>.</para>
+      required <link xlink:href="https://www.w3.org/TR/xslt-xquery-serialization-31/" role="newpage">serialization properties</link>. For this
+      example: <code>map{'omit-xml-declaration': true()}</code>.</para>
     <para>Document-properties can be specified using the <step-ref name="p:set-properties"/> step. The value of the <option>properties</option> option
       of <step>p:set-properties</step> is itself a map, with the document-property names as keys. Therefore, its value becomes a map within a map:
         <code>map{'serialization': map{'omit-xml-declaration': true()}}</code>.</para>

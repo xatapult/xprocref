@@ -27,7 +27,7 @@
           <listitem>
             <para>If its value is the empty sequence (default), <step/> tries to guess this format by inspecting the document&#x2019;s
                 <property>content-type</property> document-property and/or inspecting its contents. How this is done is implementation-defined and
-              therefore depends on the XProc processor used. A <link xlink:href="https://datatracker.ietf.org/doc/html/rfc1952" role="newpage"
+              therefore dependent on the XProc processor used. A <link xlink:href="https://datatracker.ietf.org/doc/html/rfc1952" role="newpage"
                 >GZIP</link> compressed document should be recognized. Whether any other format is recognized is also implementation-defined.</para>
           </listitem>
           <listitem>
@@ -35,7 +35,7 @@
                 xlink:href="https://datatracker.ietf.org/doc/html/rfc1952" role="newpage">GZIP</link> specification.</para>
           </listitem>
           <listitem>
-            <para>Support for any other value is implementation-defined and therefore depends on the XProc processor used.</para>
+            <para>Support for any other value is implementation-defined and therefore dependent on the XProc processor used.</para>
           </listitem>
         </itemizedlist>
       </description>
@@ -71,8 +71,8 @@
   <description>
     <para>The <step/> step uncompresses the document appearing on its <port>source</port> port.</para>
     <para>To do this it first determines the compression format (see the description of the <option>format</option> option). Usually this will be
-        <link xlink:href="https://datatracker.ietf.org/doc/html/rfc1952" role="newpage">GZIP</link>, the only compression format an XProc processor
-      is required to support.</para>
+        <link xlink:href="https://datatracker.ietf.org/doc/html/rfc1952" role="newpage">GZIP</link>, the only compression format an XProc processor is
+      required to support.</para>
     <para>After the uncompression, the result is interpreted according to the value of the step&#x2019;s <option>content-type</option> option. If
       nothing is specified, the resulting document will just flow out as a generic binary document (media type <code>application/octet-stream</code>).
       However, if an explicit media type is specified, for instance <code>text/xml</code>, the result is interpreted as such and cast to this type. Of

@@ -1,59 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="pack"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] pack short description"
-      required="true"
-      publish="false"
-      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.pack"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <signature>
-      <input port="source"
-             content-types="text xml html"
-             sequence="true"
-             primary="true">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <input port="alternate"
-             sequence="true"
-             content-types="text xml html"
-             primary="false">
-         <description>
-            <para>[EDIT] input alternate</para>
-         </description>
-      </input>
-      <output port="result"
-              sequence="true"
-              content-types="application/xml"
-              primary="true">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-      <option name="wrapper"
-              required="true"
-              as="xs:QName">
-         <description>
-            <para>[EDIT] option wrapper</para>
-         </description>
-      </option>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para>The <code>p:pack</code> step merges two document sequences in a pair-wise fashion.</para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>The step takes each pair of documents, in order, one from the <port>source</port> port and one from the <port>alternate</port> port, wraps them with a new element node whose QName is the value specified in the <option>wrapper</option> option, and writes that element to the <port>result</port> port as a document.</para>
-      <para>If the step reaches the end of one input sequence before the other, then it simply wraps each of the remaining documents in the longer sequence.</para>
-      <note xml:id="note-two-docs">
-         <para>In the common case, where the document element of a document in the <port>result</port> sequence has two element children, any comments, processing instructions, or white space text nodes that occur between them may have come from either of the input documents; this step does not attempt to distinguish which one.</para>
-      </note>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="pack-preserves-none">No document properties are preserved. The result documents do not have a <property>base-uri</property> property. </para>
-   </description>
+<step name="pack" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] pack short description" required="true"
+  publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.pack"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  <signature>
+    <input port="source" content-types="text xml html" sequence="true" primary="true">
+      <description>
+        <para>[EDIT] input source</para>
+      </description>
+    </input>
+    <input port="alternate" sequence="true" content-types="text xml html" primary="false">
+      <description>
+        <para>[EDIT] input alternate</para>
+      </description>
+    </input>
+    <output port="result" sequence="true" content-types="application/xml" primary="true">
+      <description>
+        <para>[EDIT] output result</para>
+      </description>
+    </output>
+    <option name="wrapper" required="true" as="xs:QName">
+      <description>
+        <para>[EDIT] option wrapper</para>
+      </description>
+    </option>
+  </signature>
+  <summary>
+    <para>[EDIT]</para>
+    <para>The <code>p:pack</code> step merges two document sequences in a pair-wise fashion.</para>
+  </summary>
+  <description>
+    <para>[EDIT]</para>
+    <para>The step takes each pair of documents, in order, one from the <port>source</port> port and one from the <port>alternate</port> port, wraps
+      them with a new element node whose QName is the value specified in the <option>wrapper</option> option, and writes that element to the
+        <port>result</port> port as a document.</para>
+    <para>If the step reaches the end of one input sequence before the other, then it simply wraps each of the remaining documents in the longer
+      sequence.</para>
+    <note xml:id="note-two-docs">
+      <para>In the common case, where the document element of a document in the <port>result</port> sequence has two element children, any comments,
+        processing instructions, or white space text nodes that occur between them may have come from either of the input documents; this step does
+        not attempt to distinguish which one.</para>
+    </note>
+    <bridgehead>Document properties</bridgehead>
+    <para feature="pack-preserves-none">No document properties are preserved. The result documents do not have a <property>base-uri</property>
+      property. </para>
+  </description>
 </step>

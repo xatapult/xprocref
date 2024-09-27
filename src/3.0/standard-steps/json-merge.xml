@@ -65,7 +65,7 @@
         </itemizedlist>
       </listitem>
       <listitem>
-        <para>Whether <step/> can handle any other media types is implementation-defined and therefore depends on the XProc processor used.</para>
+        <para>Whether <step/> can handle any other media types is implementation-defined and therefore dependent on the XProc processor used.</para>
       </listitem>
     </itemizedlist>
 

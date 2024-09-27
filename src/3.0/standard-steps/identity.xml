@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="identity" version-idref="v30" category-idrefs="standard-steps misc" short-description="Copies the source to the result without modifications"
-  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.identity"
-  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+<step name="identity" version-idref="v30" category-idrefs="standard-steps misc"
+  short-description="Copies the source to the result without modifications" required="true" publish="true"
+  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.identity" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <signature>
-    
+
     <input port="source" sequence="true" content-types="any" primary="true">
       <description>
         <para>The source document(s)</para>
       </description>
     </input>
-    
+
     <output port="result" sequence="true" content-types="any" primary="true">
       <description>
         <para>The resulting document(s). These will be exactly the same as what appeared on the <port>source</port> port.</para>
       </description>
     </output>
-    
+
   </signature>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
