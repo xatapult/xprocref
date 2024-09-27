@@ -21,7 +21,7 @@
 
   <!-- ================================================================== -->
 
-  <p:variable name="limit-to-steps" as="xs:string*" select="('make-absolute-uris')"/>
+  <p:variable name="limit-to-steps" as="xs:string*" select="('namespace-rename', 'namespace-delete', 'identity')"/>
 
   <xpref:process-xprocref production-version="false" wip="false">
     <p:with-option name="limit-to-steps" select="$limit-to-steps"/>
