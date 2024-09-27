@@ -34,8 +34,8 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>The <step/> step joins the document(s) appearing on the <port>source</port> port into a JSON array. This array is returned as a
-      single JSON document on the <port>result</port> port.</para>
+    <para>The <step/> step joins the document(s) appearing on the <port>source</port> port into a JSON array. This array is returned as a single JSON
+      document on the <port>result</port> port.</para>
   </summary>
 
   <!-- ======================================================================= -->
@@ -43,7 +43,7 @@
   <description>
 
     <para>The <step/> step takes the document(s) appearing on its <port>source</port> port and joins them into a JSON array. How the source documents
-      end up in the resulting array depends on their  type:</para>
+      end up in the resulting array depends on their type:</para>
     <itemizedlist>
       <listitem>
         <para>A JSON source document that is <emphasis>not</emphasis> an array is added to the result as a member of the resulting array.</para>
@@ -56,7 +56,7 @@
         <para>An XML, HTML or text document is first serialized (as if written to disk) and then added as a string to the resulting array.</para>
       </listitem>
       <listitem>
-        <para>Whether <step/> can handle any other media types is implementation-defined and therefore depends on the XProc processor used.</para>
+        <para>Whether <step/> can handle any other media types is implementation-defined and therefore dependent on the XProc processor used.</para>
       </listitem>
     </itemizedlist>
 

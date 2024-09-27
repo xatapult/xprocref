@@ -1,42 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="text-count"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] text-count short description"
-      required="true"
-      publish="false"
-      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.text-count"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <signature>
-      <input port="source"
-             primary="true"
-             sequence="false"
-             content-types="text">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <output port="result"
-              primary="true"
-              sequence="false"
-              content-types="application/xml">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para>The <code>p:text-count</code> step counts the number of lines in a text document and returns a single XML document containing that number.</para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>The <tag>p:text-count</tag> step counts the number of lines in the text document appearing on its <port>source</port> port. It returns on its <port>result</port> port an XML document containing a single <tag>c:result</tag> element whose contents is the string representing this count.</para>
-      <para>Lines are identified as described in <link xlink:href="https://www.w3.org/TR/xml/#sec-line-ends"
-               xmlns:xlink="http://www.w3.org/1999/xlink">XML, 2.11 End-of-Line Handling</link>. For the purpose of identifying lines, if the very last character in the text document is a newline (&amp;#10;), that newline is ignored. (It is not a separator between that line and a following line that contains no characters.) </para>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="text-count-preserves-none">No document properties are preserved. The count document does not have a <property>base-uri</property> property. </para>
-   </description>
+<step name="text-count" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] text-count short description" required="true"
+  publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.text-count"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  <signature>
+    <input port="source" primary="true" sequence="false" content-types="text">
+      <description>
+        <para>[EDIT] input source</para>
+      </description>
+    </input>
+    <output port="result" primary="true" sequence="false" content-types="application/xml">
+      <description>
+        <para>[EDIT] output result</para>
+      </description>
+    </output>
+  </signature>
+  <summary>
+    <para>[EDIT]</para>
+    <para>The <code>p:text-count</code> step counts the number of lines in a text document and returns a single XML document containing that
+      number.</para>
+  </summary>
+  <description>
+    <para>[EDIT]</para>
+    <para>The <tag>p:text-count</tag> step counts the number of lines in the text document appearing on its <port>source</port> port. It returns on
+      its <port>result</port> port an XML document containing a single <tag>c:result</tag> element whose contents is the string representing this
+      count.</para>
+    <para>Lines are identified as described in <link xlink:href="https://www.w3.org/TR/xml/#sec-line-ends" xmlns:xlink="http://www.w3.org/1999/xlink"
+        >XML, 2.11 End-of-Line Handling</link>. For the purpose of identifying lines, if the very last character in the text document is a newline
+      (&amp;#10;), that newline is ignored. (It is not a separator between that line and a following line that contains no characters.) </para>
+    <bridgehead>Document properties</bridgehead>
+    <para feature="text-count-preserves-none">No document properties are preserved. The count document does not have a <property>base-uri</property>
+      property. </para>
+  </description>
 </step>

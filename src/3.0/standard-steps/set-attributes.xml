@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="set-attributes" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation xml-base-related"
   short-description="Add (or replace) attributes on a set of elements" required="true" publish="true"
-  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.set-attributes" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.set-attributes"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -57,7 +58,8 @@
             <para>If a selected element does <emphasis>not</emphasis> contain an attribute with a name that is a key in the
                 <option>attributes</option> option map, an attribute with this name and a value as associated in the map is added to it.</para>
           </listitem>
-          <listitem><para>If a selected element already has such an attribute, its value is replaced with the value as associated in the map.</para>
+          <listitem>
+            <para>If a selected element already has such an attribute, its value is replaced with the value as associated in the map.</para>
           </listitem>
         </itemizedlist>
       </listitem>

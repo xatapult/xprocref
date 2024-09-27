@@ -5,7 +5,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink">
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
 
   <signature>
     <input port="source" content-types="xml html" primary="true" sequence="false">
@@ -30,14 +30,14 @@
     </option>
   </signature>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
 
   <summary>
     <para>The <step/> step adds explicit <code>xml:base</code> attributes to the source document. An <code>xml:base</code> attribute annotates an
       element with a &#x201c;base URI&#x201d; value, which is usually the URI this element came from.</para>
   </summary>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
 
   <description>
     <para>Nodes (elements, attributes, etc.) in XML documents &#x201c;remember&#x201d; where they came from: they have a so-called &#x201c;base
@@ -62,8 +62,16 @@
         </thead>
         <tbody>
           <row>
-            <entry><para><code>false</code></para></entry>
-            <entry><para><code>false</code></para></entry>
+            <entry>
+              <para>
+                <code>false</code>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <code>false</code>
+              </para>
+            </entry>
             <entry>
               <itemizedlist>
                 <listitem>
@@ -81,8 +89,16 @@
             </entry>
           </row>
           <row>
-            <entry><para><code>false</code></para></entry>
-            <entry><para><code>true</code></para></entry>
+            <entry>
+              <para>
+                <code>false</code>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <code>true</code>
+              </para>
+            </entry>
             <entry>
               <para>These are the default values for these options.</para>
               <itemizedlist>
@@ -101,8 +117,16 @@
             </entry>
           </row>
           <row>
-            <entry><para><code>true</code></para></entry>
-            <entry><para><code>false</code></para></entry>
+            <entry>
+              <para>
+                <code>true</code>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <code>false</code>
+              </para>
+            </entry>
             <entry>
               <itemizedlist>
                 <listitem>
@@ -110,38 +134,54 @@
                     existing <code>xml:base</code> attribute is updated.</para>
                 </listitem>
                 <listitem>
-                  <para><emphasis>All</emphasis> child elements get an <code>xml:base</code> attribute with an <emphasis>absolute</emphasis> URI. An existing
-                      <code>xml:base</code> attribute is updated.</para>
+                  <para><emphasis>All</emphasis> child elements get an <code>xml:base</code> attribute with an <emphasis>absolute</emphasis> URI. An
+                    existing <code>xml:base</code> attribute is updated.</para>
                 </listitem>
               </itemizedlist>
             </entry>
           </row>
           <row>
-            <entry><para><code>true</code></para></entry>
-            <entry><para><code>true</code></para></entry>
-            <entry><para>This is not allowed. Error <step-error-ref code="XC0058"/> is raised.</para></entry>
+            <entry>
+              <para>
+                <code>true</code>
+              </para>
+            </entry>
+            <entry>
+              <para>
+                <code>true</code>
+              </para>
+            </entry>
+            <entry>
+              <para>This is not allowed. Error <step-error-ref code="XC0058"/> is raised.</para>
+            </entry>
           </row>
         </tbody>
       </tgroup>
     </table>
   </description>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
 
   <detail>
     <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
   </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
   <detail>
     <para>The <code>xml</code> namespace prefix as used here is bound to the namespace <code>http://www.w3.org/XML/1998/namespace</code>. In most
       cases you <emphasis>don&#x2019;t</emphasis> have to bind this prefix explicitly (by adding
         <code>xmlns:xml="http://www.w3.org/XML/1998/namespace"</code>). This namespace binding is part of the XML language.</para>
   </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
   <detail>
     <para>A formal definition of base URIs and <code>xml:base</code> attributes can be found <link xlink:href="https://www.w3.org/TR/xmlbase/"
         role="newpage">here</link>.</para>
   </detail>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
 
   <example title="Straight step usage" id="ex01">
     <para>The following example shows what happens if we use <step/> straight out of the box:</para>
@@ -177,10 +217,10 @@
     </xproc-example>
   </example>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
 
   <step-errors>
     <step-error code="XC0058"/>
   </step-errors>
-  
+
 </step>

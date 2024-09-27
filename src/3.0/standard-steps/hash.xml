@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="hash" version-idref="v30" category-idrefs="standard-steps misc" short-description="Computes a hash code for a value"
-  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.hash"
+<step name="hash" version-idref="v30" category-idrefs="standard-steps misc" short-description="Computes a hash code for a value" required="true"
+  publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.hash"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
@@ -23,7 +23,7 @@
 
     <option name="parameters" as="map(xs:QName,item()*)?" required="false">
       <description>
-        <para>Parameters controlling the hash code computation. Keys, values and their meaning depend on the XProc processor used.</para>
+        <para>Parameters controlling the hash code computation. Keys, values and their meaning are dependent on the XProc processor used.</para>
       </description>
     </option>
 

@@ -27,7 +27,7 @@
             <code>false</code> when differences were found.</para>
         <para>Example: <code><![CDATA[<c:result xmlns:c="http://www.w3.org/ns/xproc-step">true</c:result>]]></code></para>
         <para>Notice that for XProc 3.0 this port is <emphasis>not</emphasis> primary (as would be expected). This was an oversight and amended in
-          <step-ref name="p:compare" version-id="v31"/> in version&#160;3.1.</para>
+            <step-ref name="p:compare" version-id="v31"/> in version&#160;3.1.</para>
       </description>
     </output>
 
@@ -51,7 +51,7 @@
         <para>Specifies the comparison method used. If the value of this option is the empty sequence (default) or <code>deep-equal</code>, <step/>
           must do the same as the XPath <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-deep-equal" role="newpage"
               ><code>fn:deep-equal()</code></link> function.</para>
-        <para>Support for any other comparison method is implementation-defined and therefore depends on the XProc processor used.</para>
+        <para>Support for any other comparison method is implementation-defined and therefore dependent on the XProc processor used.</para>
       </description>
     </option>
 
@@ -78,7 +78,7 @@
       equal. Now testing XML documents for equality is not as easy as it sounds: what to do with whitespace, comments, order of attributes, etc. The
       default behavior of <step/> is the same as that of the XPath <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-deep-equal"
         role="newpage"><code>fn:deep-equal()</code></link> function. Whether other comparison methods are supported is implementation-defined and
-      therefore depends on the XProc processor used.</para>
+      therefore dependent on the XProc processor used.</para>
     <para>If the <option>fail-if-not-equal</option> option is <code>false</code> (default), the step emits a simple XML document on its
         <port>result</port> port, saying <code>true</code> (equal) or <code>false</code> (not equal). If the <option>fail-if-not-equal</option> option
       is <code>true</code> and the documents are not equal, error <step-error-ref code="XC0019"/> is raised.</para>

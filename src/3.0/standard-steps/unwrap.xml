@@ -32,9 +32,9 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>The <step/> step unwraps element nodes, specified by an XSLT selection pattern, from the document appearing on its <code>source</code>
-      port. Unwrapping means: remove the matched element (including any attributes), but keep all its children. The resulting document appears on
-      the <port>result</port> port.</para>
+    <para>The <step/> step unwraps element nodes, specified by an XSLT selection pattern, from the document appearing on its <code>source</code> port.
+      Unwrapping means: remove the matched element (including any attributes), but keep all its children. The resulting document appears on the
+        <port>result</port> port.</para>
   </summary>
 
   <!-- ======================================================================= -->

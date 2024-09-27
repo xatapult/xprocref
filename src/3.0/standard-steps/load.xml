@@ -29,7 +29,7 @@
     <option name="parameters" as="map(xs:QName,item()*)?" required="false">
       <description>
         <para>Parameters controlling the loading of the document. Some keys and values are determined by the type of document loaded (see below). Any
-          additional parameters are implementation-defined and therefore depend on the XProc processor used.</para>
+          additional parameters are implementation-defined and therefore dependent on the XProc processor used.</para>
       </description>
     </option>
 
@@ -81,7 +81,7 @@
       </listitem>
       <listitem>
         <para>For an HTML document-type, the document is loaded and parsed into well-formed XML, even although HTML documents do not have to be
-          well-formed. How this is done exactly is implementation-defined and therefore depend on the XProc processor used.</para>
+          well-formed. How this is done exactly is implementation-defined and therefore dependent on the XProc processor used.</para>
       </listitem>
       <listitem>
         <para>For any other document-type, the document is loaded as a binary document.</para>
@@ -92,8 +92,8 @@
         <tag>p:with-input</tag>, or use its <tag>p:document</tag> child element. The <tag>p:document</tag> element is even
         <emphasis>defined</emphasis> as having the same functionality as <step/>, so there&#x2019;s no difference in functionality.</para>
     <para>Why then <step/>? Its main raison d&#x2019;être is probably as left-over from the XProc&#160;1.0 days. Using a <step/> in XProc&#160;1.0 was
-      the only way to dynamically load a document, for instance when you had computed its filename. In XProc 3.0 (and later), using AVTs, this is no
-      longer a problem: <tag>p:with-input href="{{$filename}"/</tag>. </para>
+      the only way to dynamically load a document, for instance when you had computed its filename. In recent versions, using AVTs, this is no longer
+      a problem: <tag>p:with-input href="{{$filename}"/</tag>. </para>
     <para>The main reason for using <step/> probably comes from software engineering: it makes it very explicit in your code what you&#x2019;re doing,
       an explicit <step/> stands out more than a nested <tag>p:document</tag>. Whether this is reason enough is up to you.</para>
 
@@ -112,11 +112,11 @@
             HTTP(S).</para>
         </listitem>
         <listitem>
-          <para>If no explicit type information was found, determining the content-type is implementation-defined and therefore depend on the XProc
+          <para>If no explicit type information was found, determining the content-type is implementation-defined and therefore dependent on the XProc
             processor used.</para>
           <para>When loading a document from disk (using the <code>file://</code> protocol), in most cases, the XProc processor determines the
             content-type based on the filename extension. So a <code>.xml</code> file will become XML, <code>.txt</code> text, etc. What extensions
-            are mapped to what document-type is, again, implementation-defined. However, you can be reasonably sure the most common extensions are
+            are mapped to what content-type is, again, implementation-defined. However, you can be reasonably sure the most common extensions are
             interpreted correctly.</para>
         </listitem>
       </itemizedlist>

@@ -1,75 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="make-absolute-uris"
-      version-idref="v30"
-      category-idrefs="standard-steps"
-      short-description="[EDIT] make-absolute-uris short description"
-      required="true"
-      publish="false"
-      href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.make-absolute-uris"
-      xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns="http://www.xtpxlib.nl/ns/xprocref">
-   <signature>
-      <input port="source"
-             content-types="xml html"
-             primary="true"
-             sequence="true">
-         <description>
-            <para>[EDIT] input source</para>
-         </description>
-      </input>
-      <output port="result"
-              content-types="xml html"
-              primary="true"
-              sequence="true">
-         <description>
-            <para>[EDIT] output result</para>
-         </description>
-      </output>
-      <option name="match"
-              required="true"
-              as="xs:string"
-              subtype="XSLTSelectionPattern">
-         <description>
-            <para>[EDIT] option match</para>
-         </description>
-      </option>
-      <option name="base-uri"
-              as="xs:anyURI?"
-              required="false">
-         <description>
-            <para>[EDIT] option base-uri</para>
-         </description>
-      </option>
-   </signature>
-   <summary>
-      <para>[EDIT]</para>
-      <para>The <code>p:make-absolute-uris</code> step makes an element or attribute's value in the source document an absolute IRI value in the result document.</para>
-   </summary>
-   <description>
-      <para>[EDIT]</para>
-      <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="XC0023"/>]</emphasis>
-      </para>
-      <para>The value of the <option>base-uri</option> option must be an <type>anyURI</type>. It is interpreted as an IRI reference. If it is relative, it is made absolute against the base URI of the element on which it is specified (<tag>p:with-option</tag> or <tag>p:make-absolute-uris</tag> in the case of a syntactic shortcut value). <emphasis role="bold">[ERROR <step-error-ref code="XD0064"/>]</emphasis>
-      </para>
-      <para>For every element or attribute in the input document which matches the specified pattern, its XPath string-value is resolved against the specified base URI and the resulting absolute IRI is used as the matched node's entire contents in the output.</para>
-      <para>The base URI used for resolution defaults to the matched attribute's element or the matched element's base URI unless the <option>base-uri</option> option is specified. When the <option>base-uri</option> option is specified, the option value is used as the base URI regardless of any contextual base URI value in the document. This option value is resolved against the base URI of the <tag>p:option</tag> element used to set the option.</para>
-      <para>If the IRI reference specified by the <option>base-uri</option> option on <tag>p:make-absolute-uris</tag> is absent and the input document has no base URI, the results are implementation-dependent. </para>
-      <bridgehead>Document properties</bridgehead>
-      <para feature="make-absolute-uris-preserves-all">All document properties are preserved.</para>
-   </description>
-   <step-errors>
-      <step-error code="XC0023">
-         <description>
-            <para>It is a dynamic error if the pattern matches anything other than element or attribute nodes.</para>
-         </description>
-      </step-error>
-      <step-error code="XD0064">
-         <description>
-            <para>It is a dynamic error if the base URI is not both absolute and valid according to <link xlink:href="https://www.rfc-editor.org/info/rfc3986"
-                     role="newpage"
-                     xmlns:xlink="http://www.w3.org/1999/xlink">RFC 3986</link> .</para>
-         </description>
-      </step-error>
-   </step-errors>
+<step name="make-absolute-uris" version-idref="v30" category-idrefs="standard-steps env misc"
+  short-description="Make specific URIs in the document absolute" required="true" publish="true"
+  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.make-absolute-uris" xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" content-types="xml html" primary="true" sequence="false">
+      <description>
+        <para>The document to resolve the URIs in.</para>
+      </description>
+    </input>
+
+    <output port="result" content-types="xml html" primary="true" sequence="false">
+      <description>
+        <para>The resulting document.</para>
+      </description>
+    </output>
+
+    <option name="match" required="true" as="xs:string" subtype="XSLTSelectionPattern">
+      <description>
+        <para>The XSLT match pattern for the attributes and/or elements that hold the URIs to change.</para>
+      </description>
+    </option>
+
+    <option name="base-uri" as="xs:anyURI?" required="false">
+      <description>
+        <para>The base URI to use for making the matched attributes/elements absolute.</para>
+        <para>If this option is not specified, the base URI of the matched element/attribute in the source document is used. In most cases this will
+          be the location (path on disk) where it originated from.</para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step makes element and/or attribute values in the document appearing on the <port>source</port> port absolute by applying a base
+      URI.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+
+    <para>The <step/> step takes the document appearing on its <port>source</port> port and searches for elements and/or attributes as indicated by
+      the <option>match</option> option. The values of these elements/attributes are taken as URIs and, if relative, resolved against a base URI as
+      specified in the <option>base-uri</option> option. If there's no <option>base-uri</option> option, the base URI of the element/attribute is
+      used.</para>
+
+    <para>Why is this useful? URIs in documents that are edited or received from the web are often relative. They point to other documents, for
+      instance images, that are elsewhere on disk or the web, in a location <emphasis>relative</emphasis> to the source document. For instance:
+        <code>images/picture.jpg</code>. This allows for flexibility in the location of the documents. However, when processing these URIs and access
+      the referenced documents, the code needs to know how to resolve them into absolute ones. It is practical to arrange all this URI resolving in
+      advance, and this is what <step/> is for.</para>
+
+    <para>There is an important thing to keep in mind when supplying a value for the <option>base-uri</option> option:</para>
+    <itemizedlist>
+      <listitem>
+        <para>When its value ends with a slash (<code>/</code>), it points to a <emphasis>location</emphasis>. All URIs are resolved against that
+          location. For instance: <code>file:///myapp/images/</code></para>
+      </listitem>
+      <listitem>
+        <para>When its value does <emphasis>not</emphasis> end with a slash, it points to a document. All URIs are resolved against the location of
+          this document. For instance, for a <option>base-uri</option> value <code>file:///myapp/images/logo.svg</code>, the URIs are resolved against the location
+            <code>file:///myapp/images/</code></para>
+      </listitem>
+    </itemizedlist>
+    <para>The <example-ref idref="basic-usage"/> example shows this difference.</para>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>The <option>match</option> option must match attributes or elements. If anything else is matched, error <step-error-ref code="XC0023"/> is
+      raised.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>A relative value for the <option>base-uri</option> option is resolved against the base URI of the element on which this option is specified.
+      In most cases this will be the static base URI of your pipeline (the path where the XProc source containing the <step/> is stored). This is very
+      probably not what you want. </para>
+  </detail>
+
+  <detail>
+    <para>If no <option>base-uri</option> option is specified and an element/attribute matched has no base URI also, the result is
+      implementation-defined and therefore dependent on the XProc processor used.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="basic-usage">
+
+    <para>This example shows what happens to different kinds of URIs when resolved. The <option>base-uri</option> value here points to a
+        <emphasis>location</emphasis> (because it ends with a <code>/</code>).</para>
+
+    <xproc-example href="../../examples/make-absolute-uris/make-absolute-uris-01.xpl"/>
+
+    <para>Just to show you the difference, this is what happens when you omit the final <code>/</code> from the <option>base-uri</option> option. Its
+      value, <code>file:///X/Y/Z</code>, now points to a <emphasis>document</emphasis> called <code>Z</code>. The URIs are resolved against the
+      location of this document.</para>
+
+    <xproc-example href="../../examples/make-absolute-uris/make-absolute-uris-02.xpl" show-source="false"/>
+
+  </example>
+
+
+  <!-- ======================================================================= -->
+
+  <step-errors>
+    <step-error code="XC0023"/>
+    <step-error code="XD0064"/>
+  </step-errors>
+
 </step>

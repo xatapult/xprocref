@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="compress" version-idref="v30" category-idrefs="standard-steps compress" short-description="Compresses a document" required="true" publish="true"
-  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.compress" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+<step name="compress" version-idref="v30" category-idrefs="standard-steps compress" short-description="Compresses a document" required="true"
+  publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.compress"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
   <!-- ======================================================================= -->
 
@@ -22,9 +22,9 @@
 
     <option name="format" as="xs:QName" select="'gzip'" required="false">
       <description>
-        <para>Specifies the  format of the source document. The value <code>gzip</code> (default) results in a document compressed using the <link
+        <para>Specifies the format of the source document. The value <code>gzip</code> (default) results in a document compressed using the <link
             xlink:href="https://datatracker.ietf.org/doc/html/rfc1952" role="newpage">GZIP</link> format. </para>
-        <para>Support for any other compression format is implementation-defined and therefore depends on the XProc processor used.</para>
+        <para>Support for any other compression format is implementation-defined and therefore dependent on the XProc processor used.</para>
       </description>
     </option>
 
@@ -61,7 +61,7 @@
       using the format as specified in the <option>format</option> option. The result, usually a binary document, appears on its <port>result</port>
       port.</para>
     <para>The only compression format that must be supported is <link xlink:href="https://datatracker.ietf.org/doc/html/rfc1952" role="newpage"
-        >GZIP</link>. Support for any other compression format is implementation-defined and therefore depends on the XProc processor used.</para>
+        >GZIP</link>. Support for any other compression format is implementation-defined and therefore dependent on the XProc processor used.</para>
     <para>The reverse uncompress operation is supported by the <step-ref name="p:uncompress"/> step.</para>
   </description>
 
