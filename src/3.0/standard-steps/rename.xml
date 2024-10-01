@@ -1,64 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="rename" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] rename short description" required="true"
-  publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.rename"
+<step name="rename" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation" short-description="Renames nodes in a document"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.rename"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
-    <input port="source" content-types="xml html" primary="true" sequence="true">
+
+    <input port="source" content-types="xml html" primary="true" sequence="false">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The document to rename the nodes in.</para>
       </description>
     </input>
-    <output port="result" content-types="xml html" primary="true" sequence="true">
+    <output port="result" content-types="xml html" primary="true" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting document.</para>
       </description>
     </output>
     <option name="match" as="xs:string" select="'/*'" subtype="XSLTSelectionPattern" required="false">
       <description>
-        <para>[EDIT] option match</para>
+        <para>The XSLT match pattern for the nodes to rename.</para>
       </description>
     </option>
     <option name="new-name" required="true" as="xs:QName">
       <description>
-        <para>[EDIT] option new-name</para>
+        <para>The new name for the matched nodes.</para>
       </description>
     </option>
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <code>p:rename</code> step renames elements, attributes, or processing-instruction targets in a document.</para>
+    <para>The <step/> step renames elements, attributes, or processing-instruction nodes, specified by an XSLT selection pattern, in the document
+      appearing on its <port>source</port> port.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="XC0023"
-        />]</emphasis>
-    </para>
-    <para>Each element, attribute, or processing-instruction in the input matched by the selection pattern specified in the <option>match</option>
-      option is renamed in the output to the name specified by the <option>new-name</option> option.</para>
-    <para>If the <option>match</option> option matches an attribute and if the element on which it occurs already has an attribute whose expanded name
-      is the same as the expanded name of the specified <option>new-name</option>, then the results is as if the current attribute named
-        “<replaceable>new-name</replaceable>” was deleted before renaming the matched attribute.</para>
-    <para>With respect to attributes named “<literal>xml:base</literal>”, the following semantics apply: renaming an <emphasis>from</emphasis>
-        “<literal>xml:base</literal>” <emphasis>to</emphasis> something else has no effect on the underlying base URI of the element; however, if an
-      attribute is renamed <emphasis>from</emphasis> something else <emphasis>to</emphasis> “<literal>xml:base</literal>”, the base URI of the element
-      must also be amended accordingly.</para>
-    <para>If the pattern matches processing instructions, then it is the processing instruction target that is renamed. <emphasis role="bold">[ERROR
-          <step-error-ref code="XC0013"/>]</emphasis>
-    </para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="rename-preserves-all">All document properties are preserved.</para>
+
+    <para>The <step/> step takes the XSLT match pattern in the <option>match</option> option and holds this against the document appearing on its
+        <port>source</port> port. Any matching nodes are renamed to the name provided in the <option>new-name</option> option. Matched nodes must be
+      elements, attributes, or processing-instructions (any other match results in error <step-error-ref code="XC0023"/>).</para>
+    
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <detail>
+    <para>If an attribute is renamed to an attribute that already exists on this element, this existing attribute is deleted. See the <example-ref idref="existing-attribute"/> example.</para>
+  </detail>
+  
+  <!-- ======================================================================= -->
+  
+  <example title="Basic usage">
+    
+    <para>The following example renames an element, an attribute and a processing-instruction in the source document:</para>
+    <xproc-example href="../../examples/rename/rename-01.xpl"/>
+    
+  </example>
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <example title="Renaming to an existing attribute" id="existing-attribute">
+    
+    <para>This example shows that when an attribute is renamed to one that is already present, the existing attribute is deleted:</para>
+    <xproc-example href="../../examples/rename/rename-02.xpl"/>
+    
+  </example>
+  
+  <!-- ======================================================================= -->
+  
   <step-errors>
-    <step-error code="XC0023">
-      <description>
-        <para>It is a dynamic error if the pattern matches anything other than element, attribute or processing instruction nodes.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0013">
-      <description>
-        <para>It is a dynamic error if the pattern matches a processing instruction and the new name has a non-null namespace.</para>
-      </description>
-    </step-error>
+    <step-error code="XC0023"/>
+    <step-error code="XC0013"/>
   </step-errors>
+
 </step>
