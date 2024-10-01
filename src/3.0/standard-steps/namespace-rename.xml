@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="namespace-rename" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation namespaces"
-  short-description="Renames a namespace to a new URI" required="true" publish="false"
+  short-description="Renames a namespace to a new URI" required="true" publish="true"
   href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.namespace-rename"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
@@ -24,7 +24,7 @@
 
     <option name="from" as="xs:anyURI?" required="false">
       <description>
-        <para>The namespace URI to rename.</para>
+        <para>The namespace URI to rename from.</para>
       </description>
     </option>
 

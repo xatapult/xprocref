@@ -1,48 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="pack" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] pack short description" required="true"
-  publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.pack"
+<step name="pack" version-idref="v30" category-idrefs="standard-steps misc" short-description="Merges two document sequences, pair-wise" required="true"
+  publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.pack"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <input port="source" content-types="text xml html" sequence="true" primary="true">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The first document sequence to merge.</para>
       </description>
     </input>
+
     <input port="alternate" sequence="true" content-types="text xml html" primary="false">
       <description>
-        <para>[EDIT] input alternate</para>
+        <para>The second document sequence to merge.</para>
       </description>
     </input>
+
     <output port="result" sequence="true" content-types="application/xml" primary="true">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting merged document sequences.</para>
       </description>
     </output>
+
     <option name="wrapper" required="true" as="xs:QName">
       <description>
-        <para>[EDIT] option wrapper</para>
+        <para>The element to wrap the document pairs in.</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <code>p:pack</code> step merges two document sequences in a pair-wise fashion.</para>
+    <para>The <step/> step takes the document sequences appearing on its <port>source</port> and <port>alternate</port> ports and combines these
+      documents in a pair-wise fashion, wrapping the pairs in a wrapper element.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The step takes each pair of documents, in order, one from the <port>source</port> port and one from the <port>alternate</port> port, wraps
-      them with a new element node whose QName is the value specified in the <option>wrapper</option> option, and writes that element to the
-        <port>result</port> port as a document.</para>
-    <para>If the step reaches the end of one input sequence before the other, then it simply wraps each of the remaining documents in the longer
-      sequence.</para>
-    <note xml:id="note-two-docs">
-      <para>In the common case, where the document element of a document in the <port>result</port> sequence has two element children, any comments,
-        processing instructions, or white space text nodes that occur between them may have come from either of the input documents; this step does
-        not attempt to distinguish which one.</para>
-    </note>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="pack-preserves-none">No document properties are preserved. The result documents do not have a <property>base-uri</property>
-      property. </para>
+
+    <para>The <step/> step takes two document sequences, one on its <port>source</port> and one on its <port>alternate</port> port. It then takes the
+      first document in both sequences, concatenates these and wraps this in a wrapper element as indicated by the <option>wrapper</option> option.
+      The same is done for the second pair, etc. The resulting wrapped document pairs are emitted on the <port>result</port> port.</para>
+
+    <para>If <step/> reaches the end of one input sequence before the other, the remaining documents will be wrapped as single documents.</para>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>No document-properties of the source/alternate documents survive.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>The resulting document(s) have no <property>base-uri</property> property.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <xproc-example href="../../examples/pack/pack-01.xpl" show-source="false">
+      <pipeline-header>
+        <para>The following pipeline provides <step/> with two document sequences. The pairs are wrapped in a <tag>pair-wrapper</tag> element. Since
+          the sequence on the <port>alternate</port> port is one document longer than the one on the <port>source</port> port, the remaining document
+            <tag>alternate-doc-3/</tag> is wrapped as single document.</para>
+        <para>The resulting document sequence here is wrapped using <step-ref name="p:wrap-sequence"/>, just to show the results.</para>
+      </pipeline-header>
+    </xproc-example>
+    
+  </example>
+
 </step>
