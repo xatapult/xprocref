@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="make-absolute-uris" version-idref="v30" category-idrefs="standard-steps env misc"
-  short-description="Make specific URIs in the document absolute" required="true" publish="true"
+  short-description="Make URIs in the document absolute" required="true" publish="true"
   href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.make-absolute-uris" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref">

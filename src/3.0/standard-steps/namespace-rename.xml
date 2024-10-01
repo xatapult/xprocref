@@ -1,124 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="namespace-rename" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] namespace-rename short description"
-  required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.namespace-rename"
+<step name="namespace-rename" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation namespaces"
+  short-description="Renames a namespace to a new URI" required="true" publish="true"
+  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.namespace-rename"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
-    <input port="source" content-types="xml html" primary="true" sequence="true">
+
+    <input port="source" content-types="xml html" primary="true" sequence="false">
+
       <description>
-        <para>[EDIT] input source</para>
+        <para>The document to rename the namespace in.</para>
       </description>
     </input>
-    <output port="result" content-types="xml html" primary="true" sequence="true">
+
+    <output port="result" content-types="xml html" primary="true" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting document.</para>
       </description>
     </output>
+
     <option name="from" as="xs:anyURI?" required="false">
       <description>
-        <para>[EDIT] option from</para>
+        <para>The namespace URI to rename from.</para>
       </description>
     </option>
+
     <option name="to" as="xs:anyURI?" required="false">
       <description>
-        <para>[EDIT] option to</para>
+        <para>The namespace URI to rename to.</para>
       </description>
     </option>
+
     <option name="apply-to" select="'all'" values="('all','elements','attributes')" required="false" as="item()*">
       <description>
-        <para>[EDIT] option apply-to</para>
+        <para>Whether to apply the changes to elements, attributes or both. See <xref linkend="apply-to"/> below.</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <code>p:namespace-rename</code> step renames any namespace declaration or use of a namespace in a document to a new IRI value.</para>
+    <para>The <step/> step renames any namespace declaration or use of a namespace in a document to a new value.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The value of the <option>from</option> option must be an <type>anyURI</type>. It should be either empty or absolute, but will not be
-      resolved in any case.</para>
-    <para>The value of the <option>to</option> option must be an <type>anyURI</type>. It should be empty or absolute, but will not be resolved in any
-      case.</para>
-    <para>The value of the <option>apply-to</option> option must be one of “<literal>all</literal>”, “<literal>elements</literal>”, or
-        “<literal>attributes</literal>”. If the value is “<literal>elements</literal>”, only elements will be renamed, if the value is
-        “<literal>attributes</literal>”, only attributes will be renamed, if the value is “<literal>all</literal>”, both elements and attributes will
-      be renamed.</para>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0014"/>]</emphasis>
-    </para>
-    <para>If the value of the <option>from</option> option is the same as the value of the <option>to</option> option, the input is reproduced
-      unchanged on the output. Otherwise, namespace bindings, namespace attributes and element and attribute names are changed as follows:</para>
-    <itemizedlist>
-      <listitem>
-        <para>Namespace bindings: If the <option>from</option> option is present and its value is not the empty string, then every binding of a prefix
-          (or the default namespace) in the input document whose value is the same as the value of the <option>from</option> option is</para>
-        <itemizedlist>
-          <listitem>
-            <para>replaced in the output with a binding to the value of the <option>to</option> option, provided it is present and not the empty
-              string;</para>
-          </listitem>
-          <listitem>
-            <para>otherwise (the <option>to</option> option is not specified or has an empty string as its value) absent from the output.</para>
-          </listitem>
-        </itemizedlist>
-        <para>If the <option>from</option> option is absent, or its value is the empty string, then no bindings are changed or removed.</para>
-      </listitem>
-      <listitem>
-        <para>Elements and attributes: If the <option>from</option> option is present and its value is not the empty string, for every element and
-          attribute, as appropriate, in the input whose namespace name is the same as the value of the <option>from</option> option, in the output its
-          namespace name is</para>
-        <itemizedlist>
-          <listitem>
-            <para>replaced with the value of the <option>to</option> option, provided it is present and not the empty string;</para>
-          </listitem>
-          <listitem>
-            <para>otherwise (the <option>to</option> option is not specified or has an empty string as its value) changed to have no value.</para>
-          </listitem>
-        </itemizedlist>
-        <para>If the <option>from</option> option is absent, or its value is the empty string, then for every element and attribute, as appropriate,
-          whose namespace name has no value, in the output its namespace name is set to the value of the <option>to</option> option.</para>
-        <para>
-          <emphasis role="bold">[ERROR <step-error-ref code="XC0092"/>]</emphasis>
-        </para>
-      </listitem>
-      <listitem>
-        <para>Namespace attributes: If the <option>from</option> option is present and its value is not the empty string, for every namespace
-          attribute in the input whose value is the same as the value of the <option>from</option> option, in the output</para>
-        <itemizedlist>
-          <listitem>
-            <para>the namespace attribute's value is replaced with the value of the <option>to</option> option, provided it is present and not the
-              empty string;</para>
-          </listitem>
-          <listitem>
-            <para>otherwise (the <option>to</option> option is not specified or has an empty string as its value) the namespace attribute is
-              absent.</para>
-          </listitem>
-        </itemizedlist>
-      </listitem>
-    </itemizedlist>
-    <note xml:id="note-apply-to">
-      <para>The <option>apply-to</option> option is primarily intended to make it possible to avoid renaming attributes when the <option>from</option>
-        option specifies no namespace, since many attributes are in no namespace.</para>
-      <para>Care should be taken when specifying no namespace with the <option>to</option> option. Prefixed names in content, for example QNames and
-        XPath expressions, may end up with no appropriate namespace binding.</para>
-    </note>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="namespace-rename-preserves-all">All document properties are preserved.</para>
+
+    <para>The <step/> step changes a namespace in a document into another namespace. It affects both the namespace bindings and the namespace usage.
+      Usually that's all there is to it, you can rely on the step to take care of all the details (for those that need to know, see <xref
+        linkend="details"/>).</para>
+    <para>If you want to remove a namespace altogether, you need <step-ref name="p:namespace-delete"/>.</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="apply-to">
+      <title>The <option>apply-to</option> option</title>
+
+      <para>The <option>apply-to</option> option can take the following values:</para>
+      <table role="nonumber">
+        <title/>
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>
+                <para>Value</para>
+              </entry>
+              <entry>
+                <para>Description</para>
+              </entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>
+                <para>
+                  <code>all</code> (default) </para>
+              </entry>
+              <entry>
+                <para>Apply the changes to both elements and attributes.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>
+                  <code>attributes</code>
+                </para>
+              </entry>
+              <entry>
+                <para>Apply the changes to attributes only.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>
+                  <code>elements</code>
+                </para>
+              </entry>
+              <entry>
+                <para>Apply the changes to elements only.</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <para>The main reason for having an <option>apply-to</option> option is to avoid renaming attributes when the <option>from</option> option
+        specifies no namespace. This happens when you want to turn a document that is not in a namespace into some namespace. Often however,
+        attributes are never in a namespace. By setting the <option>apply-to</option> option to <code>elements</code>, the attributes are not
+        affected.</para>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="details">
+      <title>Detailed processing</title>
+
+      <para>The step takes the document appearing on its <port>source</port> port and examines it for occurrences of the namespace mentioned in the
+          <option>from</option> option:</para>
+      <itemizedlist>
+        <listitem>
+          <para>A <emphasis>namespace binding</emphasis> with the <option>from</option> value, either defining a prefix (<code>xmlns:…="…"</code>) or
+            a default namespace (<code>xmlns="…"</code>) declaration, gets the value as specified in the <option>to</option> option.</para>
+          <para>If the <option>from</option> option is absent or the empty string, no bindings are changed/removed.</para>
+          <para>If the <option>to</option> option is not specified or the empty string, the binding is removed.</para>
+        </listitem>
+        <listitem>
+          <para>Depending on the value of the <option>apply-to</option> option (see <xref linkend="apply-to"/>), elements and/or attributes that are
+            in the <option>from</option> namespace are turned into the <option>to</option> namespace.</para>
+          <para>If the <option>from</option> option is absent to the empty string, the changes apply to elements/attributes without a namespace (that
+            are in the no-namespace).</para>
+          <para>If the <option>to</option> option is not specified or the empty string, the namespace of the element/attribute is removed (putting it
+            into the no-namespace).</para>
+        </listitem>
+      </itemizedlist>
+
+    </section>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>If the value of the <option>from</option> and <option>to</option> option are the same nothing happens. The step acts like a <step-ref
+        name="p:identity"/> step.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <xproc-example href="../../examples/namespace-rename/namespace-rename-01.xpl"/>
+
+    <xproc-example href="../../examples/namespace-rename/namespace-rename-02.xpl" keep-namespace-prefixes="ns">
+      <source-header>
+        <para>This also works when the source document uses a namespace prefix:</para>
+      </source-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
-    <step-error code="XC0014">
-      <description>
-        <para>It is a dynamic error if the XML namespace (<uri>http://www.w3.org/XML/1998/namespace</uri>) or the XMLNS namespace
-            (<uri>http://www.w3.org/2000/xmlns/</uri>) is the value of either the <option>from</option> option or the <option>to</option>
-          option.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0092">
-      <description>
-        <para>It is a dynamic error if as a consequence of changing or removing the namespace of an attribute the attribute's name is not unique on
-          the respective element.</para>
-      </description>
-    </step-error>
+    <step-error code="XC0014"/>
+    <step-error code="XC0092"/>
   </step-errors>
+
 </step>
