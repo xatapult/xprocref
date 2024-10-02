@@ -11,10 +11,12 @@
   </p:input>
   <p:output port="result"/>
 
-  <p:replace match="thing">
-    <p:with-input port="replacement">
-      <another-thing/>
-    </p:with-input>
-  </p:replace>
+  <p:viewport match="thing">
+    <p:identity>
+      <p:with-input>
+        <another-thing/>
+      </p:with-input>
+    </p:identity>
+  </p:viewport>
 
 </p:declare-step>

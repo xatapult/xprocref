@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="replace" version-idref="v30" category-idrefs="standard-steps" short-description="Replace nodes with a document" required="true"
-  publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.replace"
+  publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.replace"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
@@ -46,7 +46,8 @@
   <description>
 
     <para>The <step/> step takes the XSLT match pattern in the <option>match</option> option and holds this against the document appearing on its
-        <port>source</port> port. Any matching nodes are replaced by the document on the <port>replacement</port> port.</para>
+        <port>source</port> port. Any matching nodes are replaced by the document on the <port>replacement</port> port. The resulting document is
+      emitted on the <port>result</port> port.</para>
 
   </description>
 
@@ -56,14 +57,49 @@
     <para>For obvious reasons, you cannot replace attributes and namespace nodes.</para>
   </detail>
 
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>Replacing by <step/> is not recursive. In other words: there are no replacements in a replacement.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
   <detail>
     <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+    <para>There is one exception: if the resulting document contains only text, the <property>content-type</property> document-property is changed to
+        <code>text/plain</code>.</para>
   </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="basic-usage">
+
+    <para>The following example replaces all <tag>thing</tag> elements with <tag>another-thing/</tag> elements.</para>
+    <xproc-example href="../../examples/replace/replace-01.xpl"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Alternative approach" id="alt">
+
+    <xproc-example href="../../examples/replace/replace-02.xpl" show-source="false">
+      <pipeline-header>
+        <para>What the <step/> step does is similar to what a simple <code>p:viewport</code> instruction does: it takes a matched node and replaces it
+          with something. This pipeline has the same functionality as the one in <example-ref idref="basic-usage"/>:</para>
+      </pipeline-header>
+      <result-header>
+        <para>Result document (using the same input document as in <example-ref idref="basic-usage"/>):</para>
+      </result-header>
+    </xproc-example>
+
+  </example>
 
   <!-- ======================================================================= -->
 
   <step-errors>
     <step-error code="XC0023"/>
   </step-errors>
-  
+
 </step>
