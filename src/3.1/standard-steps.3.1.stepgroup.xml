@@ -30,7 +30,6 @@
   <xi:include href="standard-steps/namespace-delete.xml"/>
   <xi:include href="standard-steps/namespace-rename.xml"/>
   <xi:include href="standard-steps/pack.xml"/>
-  <xi:include href="standard-steps/parameters.xml"/>
   <xi:include href="standard-steps/rename.xml"/>
   <xi:include href="standard-steps/replace.xml"/>
   <xi:include href="standard-steps/set-attributes.xml"/>

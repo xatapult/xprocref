@@ -1,54 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="replace" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] replace short description" required="true"
+<step name="replace" version-idref="v30" category-idrefs="standard-steps" short-description="Replace nodes with a document" required="true"
   publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.replace"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
-    <input port="source" primary="true" content-types="xml html" sequence="true">
+    <input port="source" primary="true" content-types="xml html" sequence="false">
+
       <description>
-        <para>[EDIT] input source</para>
+        <para>The document in which to replace nodes.</para>
       </description>
     </input>
-    <input port="replacement" content-types="text xml html" primary="false" sequence="true">
+
+    <input port="replacement" content-types="text xml html" primary="false" sequence="false">
       <description>
-        <para>[EDIT] input replacement</para>
+        <para>The document to replace the nodes with.</para>
       </description>
     </input>
-    <output port="result" content-types="text xml html" primary="true" sequence="true">
+
+    <output port="result" content-types="text xml html" primary="true" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting document.</para>
       </description>
     </output>
+
     <option name="match" required="true" as="xs:string" subtype="XSLTSelectionPattern">
       <description>
-        <para>[EDIT] option match</para>
+        <para>The XSLT match pattern for the nodes to replace, as a string.</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <code>p:replace</code> step replaces matching nodes in its primary input with the top-level node(s) of the <code>replacement</code>
-      port's document.</para>
+    <para>The <step/> step takes the document appearing on its <port>source</port> port and replaces matching nodes with the document appearing on the
+        <code>replacement</code> port.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="XC0023"
-        />]</emphasis> Multiple matches are allowed, in which case multiple copies of the <port>replacement</port> document will occur.</para>
-    <para>Every node in the primary input matching the specified pattern is replaced in the output by the top-level node(s) of the
-        <port>replacement</port> document. Only non-nested matches are replaced. That is, once a node is replaced, its descendants cannot be
-      matched.</para>
-    <para>If the document node is matched and port <port>replacement</port> contains a text document, the entire document is replaced by the text
-      node. What appears on port <port>result</port> is a text document with the text node wrapped in a document node.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="replace-preserves-partially">If the resulting document contains exactly one text node, the <literal>content-type</literal> property
-      is changed to <literal>text/plain</literal> and the <literal>serialization</literal> property is removed, while all other document properties
-      are preserved. For other document types, all document properties are preserved.</para>
+
+    <para>The <step/> step takes the XSLT match pattern in the <option>match</option> option and holds this against the document appearing on its
+        <port>source</port> port. Any matching nodes are replaced by the document on the <port>replacement</port> port.</para>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>For obvious reasons, you cannot replace attributes and namespace nodes.</para>
+  </detail>
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
-    <step-error code="XC0023">
-      <description>
-        <para>It is a dynamic error if that pattern matches an attribute or a namespace nodes. </para>
-      </description>
-    </step-error>
+    <step-error code="XC0023"/>
   </step-errors>
+  
 </step>
