@@ -20,7 +20,7 @@
     </output>
     <option name="match" as="xs:string" select="'/*'" subtype="XSLTSelectionPattern" required="false">
       <description>
-        <para>The XSLT match pattern for the nodes to rename.</para>
+        <para>The XSLT match pattern for the nodes to rename, as a string.</para>
       </description>
     </option>
     <option name="new-name" required="true" as="xs:QName">
@@ -44,7 +44,7 @@
     <para>The <step/> step takes the XSLT match pattern in the <option>match</option> option and holds this against the document appearing on its
         <port>source</port> port. Any matching nodes are renamed to the name provided in the <option>new-name</option> option. Matched nodes must be
       elements, attributes, or processing-instructions (any other match results in error <step-error-ref code="XC0023"/>).</para>
-    
+
   </description>
 
   <!-- ======================================================================= -->
@@ -52,33 +52,41 @@
   <detail>
     <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
   </detail>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
+
   <detail>
-    <para>If an attribute is renamed to an attribute that already exists on this element, this existing attribute is deleted. See the <example-ref idref="existing-attribute"/> example.</para>
+    <para>If an attribute is renamed to an attribute that already exists on this element, this existing attribute is deleted. See the <example-ref
+        idref="existing-attribute"/> example.</para>
   </detail>
-  
+
+  <detail>
+    <para>If an <code>xml:base</code> attribute is renamed to something else, the underlying base URI of the element is <emphasis>not</emphasis>
+      changed.</para>
+    <para>If an attribute is renamed <emphasis>to</emphasis>&#160;<code>xml:base</code>, the base URI of the underlying element is changed to the
+      value of this attribute.</para>
+  </detail>
+
   <!-- ======================================================================= -->
-  
+
   <example title="Basic usage">
-    
+
     <para>The following example renames an element, an attribute and a processing-instruction in the source document:</para>
     <xproc-example href="../../examples/rename/rename-01.xpl"/>
-    
+
   </example>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
+
   <example title="Renaming to an existing attribute" id="existing-attribute">
-    
+
     <para>This example shows that when an attribute is renamed to one that is already present, the existing attribute is deleted:</para>
     <xproc-example href="../../examples/rename/rename-02.xpl"/>
-    
+
   </example>
-  
+
   <!-- ======================================================================= -->
-  
+
   <step-errors>
     <step-error code="XC0023"/>
     <step-error code="XC0013"/>
