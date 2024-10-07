@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="replace" version-idref="v30" category-idrefs="standard-steps" short-description="Replace nodes with a document" required="true"
+<step name="replace" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation" short-description="Replace nodes with a document" required="true"
   publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.replace"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
@@ -68,7 +68,7 @@
   <detail>
     <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
     <para>There is one exception: if the resulting document contains only text, the <property>content-type</property> document-property is changed to
-        <code>text/plain</code>.</para>
+        <code>text/plain</code> and the <property>serialization</property> document-property is removed.</para>
   </detail>
 
   <!-- ======================================================================= -->

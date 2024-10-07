@@ -1,39 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="split-sequence" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] split-sequence short description"
+<step name="split-sequence" version-idref="v30" category-idrefs="standard-steps misc" short-description="Splits a sequence of documents"
   required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.split-sequence"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <input port="source" content-types="any" sequence="true" primary="true">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The sequence of documents to split.</para>
       </description>
     </input>
+
     <output port="matched" sequence="true" primary="true" content-types="any">
       <description>
-        <para>[EDIT] output matched</para>
+        <para>The documents from the <port>source</port> port that match. </para>
       </description>
     </output>
+
     <output port="not-matched" sequence="true" content-types="any" primary="false">
       <description>
-        <para>[EDIT] output not-matched</para>
+        <para>The documents from the <port>source</port> port that do <code>not</code> match. </para>
       </description>
     </output>
+
     <option name="initial-only" as="xs:boolean" select="false()" required="false">
       <description>
-        <para>[EDIT] option initial-only</para>
+        <para>If <code>false</code> (default), all documents for which the expression in the <option>test</option> option is <code>true</code> are
+          considered matched, all documents for which this is <code>false</code> are considered non-matched.</para>
+        <para>If <code>true</code>, the first document for which the expression in the <option>test</option> option is <code>false</code> splits the
+          sequence in matched/non-matched. See below.</para>
       </description>
     </option>
+
     <option name="test" required="true" as="xs:string" subtype="XPathExpression">
       <description>
-        <para>[EDIT] option test</para>
+        <para>The XPath boolean expression, as a string, that defines matching.</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:split-sequence</tag> step accepts a sequence of documents and divides it into two sequences.</para>
+    <para>The <step/> step takes a sequence of documents on its <port>source</port> port and divides this into two sequences, based on the evaluation
+      expression in the <option>test</option> option.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
     <para>[EDIT]</para>
     <para>The value of the <option>test</option> option must be an XPathExpression.</para>
@@ -59,12 +77,21 @@
     <bridgehead>Document properties</bridgehead>
     <para feature="split-sequence-preserves-all">All document properties are preserved.</para>
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+  
+  <detail>
+    <para>Any PSVI annotations are retained.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
-    <step-error code="XC0150">
-      <description>
-        <para>It is a dynamic error if evaluating the XPath expression in option <option>test</option> on a context document results in an
-          error.</para>
-      </description>
-    </step-error>
+    <step-error code="XC0150"/>
   </step-errors>
+
 </step>

@@ -172,6 +172,24 @@
 
   </example>
 
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Renaming to a namespace">
+
+    <para>If you rename a document from the no-namespace into a namespace, you usually <emphasis>don&#x2019;t</emphasis> want to rename the attributes
+      to that namespace as well. However, if you don&#x2019;t do anything special, this is exactly what will happen:</para>
+
+    <xproc-example href="../../examples/namespace-rename/namespace-rename-03.xpl"/>
+
+    <xproc-example href="../../examples/namespace-rename/namespace-rename-04.xpl" show-source="false">
+      <pipeline-header>
+        <para>The XProc processor invents a namespace prefix, and uses this to put the attribute(s) in the target namespace as well. To avoid this,
+          set the <option>apply-to</option> option to <code>elements:</code></para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
   <!-- ======================================================================= -->
 
   <step-errors>
