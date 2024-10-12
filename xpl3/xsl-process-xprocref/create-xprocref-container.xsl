@@ -240,22 +240,31 @@
       <xsl:with-param name="href-target" select="local:href-result-file($version-id, $xpref:name-categories-overview-page)"/>
       <xsl:with-param name="title" select="'Categories (' || $version-name || ')'"/>
       <xsl:with-param name="content">
-        <db:itemizedlist role="category-list">
+        <!-- Get all category elements: -->
+        <xsl:variable name="category-elms" as="element(xpref:category)*">
           <xsl:for-each select="$versionref-elm/xpref:categoryref">
             <xsl:variable name="categoryref-elm" as="element(xpref:categoryref)" select="."/>
             <xsl:variable name="category-id" as="xs:string" select="xs:string($categoryref-elm/@id)"/>
-            <xsl:variable name="category-elm" as="element(xpref:category)" select="$category-id-to-elm($category-id)"/>
-            <xsl:variable name="category-name" as="xs:string" select="normalize-space($category-elm/@name)"/>
-            <db:listitem>
-              <db:para>
-                <db:link xlink:href="{local:category-page-name($category-id)}">{$category-name}</db:link>
-              </db:para>
-              <xsl:call-template name="process-text">
-                <xsl:with-param name="surrounding-elm" select="$category-elm/xpref:description"/>
-              </xsl:call-template>
-            </db:listitem>
+            <xsl:sequence select="$category-id-to-elm($category-id)"/>
           </xsl:for-each>
-        </db:itemizedlist>
+        </xsl:variable>
+        <!-- Remark: We do *not* sort the categories, We use the order as defined in the XProcRef source. -->
+        <!-- Primary categories: -->
+        <db:section>
+          <db:title>Primary categories</db:title>
+          <db:para>The following categories are defined by the XProc specification itself:</db:para>
+          <xsl:call-template name="create-category-list">
+            <xsl:with-param name="category-elms" as="element(xpref:category)*" select="$category-elms[xtlc:str2bln(@primary, false())]"/>
+          </xsl:call-template>
+        </db:section>
+        <!-- Secondary categories: -->
+        <db:section>
+          <db:title>Other categories</db:title>
+          <db:para>The following categories are defined by XProcRef:</db:para>
+          <xsl:call-template name="create-category-list">
+            <xsl:with-param name="category-elms" as="element(xpref:category)*" select="$category-elms[not(xtlc:str2bln(@primary, false()))]"/>
+          </xsl:call-template>
+        </db:section>
       </xsl:with-param>
       <xsl:with-param name="version-id" select="$version-id"/>
     </xsl:call-template>
@@ -289,6 +298,31 @@
     <xsl:apply-templates select="$versionref-elm/xpref:stepref">
       <xsl:with-param name="version-id" as="xs:string" select="$version-id" tunnel="true"/>
     </xsl:apply-templates>
+
+  </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template name="create-category-list">
+    <xsl:param name="category-elms" as="element(xpref:category)*" required="true"/>
+
+    <xsl:where-populated>
+      <db:itemizedlist role="category-list">
+        <xsl:for-each select="$category-elms">
+          <xsl:variable name="category-elm" as="element(xpref:category)" select="."/>
+          <xsl:variable name="category-name" as="xs:string" select="normalize-space($category-elm/@name)"/>
+          <xsl:variable name="category-id" as="xs:string" select="xs:string($category-elm/@id)"/>
+          <db:listitem>
+            <db:para>
+              <db:link xlink:href="{local:category-page-name($category-id)}">{$category-name}</db:link>
+            </db:para>
+            <xsl:call-template name="process-text">
+              <xsl:with-param name="surrounding-elm" select="$category-elm/xpref:description"/>
+            </xsl:call-template>
+          </db:listitem>
+        </xsl:for-each>
+      </db:itemizedlist>
+    </xsl:where-populated>
 
   </xsl:template>
 
