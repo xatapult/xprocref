@@ -29,7 +29,8 @@
   <xsl:variable name="output-is-text" as="xs:boolean" select="xtlc:str2bln($xproc-example-elm/@output-is-text, false())"/>
   <xsl:variable name="keep-from" as="xs:string?" select="xs:string($xproc-example-elm/@keep-from)"/>
 
-  <xsl:variable name="bogus-file-prefix" as="xs:string" select="'file:/…/…/'"/>
+  <xsl:variable name="file-protocol" as="xs:string" select="'file:/'"/>
+  <xsl:variable name="bogus-file-prefix" as="xs:string" select="$file-protocol || '…/…/'"/>
 
   <!-- ================================================================== -->
 
@@ -49,22 +50,31 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="@*[starts-with(., 'file:/')]">
-    <xsl:variable name="attribute-contents" as="xs:string" select="xs:string(.)"/>
-    <xsl:variable name="new-attribute-contents" as="xs:string">
-      <xsl:choose>
-        <xsl:when test="not($fixup-uris)">
-          <xsl:sequence select="$attribute-contents"/>
-        </xsl:when>
-        <xsl:when test="exists($keep-from) and contains($attribute-contents, $keep-from)">
-          <xsl:sequence select="$bogus-file-prefix || $keep-from || substring-after($attribute-contents, $keep-from)"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:sequence select="$bogus-file-prefix || xtlc:href-name($attribute-contents)"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:attribute name="{node-name(.)}" select="$new-attribute-contents"/>
+  <xsl:template match="@*[starts-with(., $file-protocol)]">
+    <xsl:attribute name="{node-name(.)}" select="local:fixup-uri(string(.))"/>
   </xsl:template>
-
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <xsl:template match="text()[starts-with(., $file-protocol)]">
+    <xsl:value-of select="local:fixup-uri(string(.))"/>
+  </xsl:template>
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <xsl:function name="local:fixup-uri" as="xs:string">
+    <xsl:param name="contents" as="xs:string"/>
+    <xsl:choose>
+      <xsl:when test="not($fixup-uris)">
+        <xsl:sequence select="$contents"/>
+      </xsl:when>
+      <xsl:when test="exists($keep-from) and contains($contents, $keep-from)">
+        <xsl:sequence select="$bogus-file-prefix || $keep-from || substring-after($contents, $keep-from)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="$bogus-file-prefix || xtlc:href-name($contents)"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+  
 </xsl:stylesheet>
