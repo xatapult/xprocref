@@ -1,70 +1,171 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="split-sequence" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] split-sequence short description"
-  required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.split-sequence"
+<step name="split-sequence" version-idref="v30" category-idrefs="standard-steps misc" short-description="Splits a sequence of documents"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.split-sequence"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <input port="source" content-types="any" sequence="true" primary="true">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The incoming sequence of documents to split.</para>
       </description>
     </input>
+
     <output port="matched" sequence="true" primary="true" content-types="any">
       <description>
-        <para>[EDIT] output matched</para>
+        <para>The documents from the <port>source</port> port for which the <option>test</option> option evaluates to <code>true</code>.</para>
+        <para>If the <option>initial-only</option> option is <code>true</code>, special processing applies. See the description below.</para>
       </description>
     </output>
+
     <output port="not-matched" sequence="true" content-types="any" primary="false">
       <description>
-        <para>[EDIT] output not-matched</para>
+        <para>The documents from the <port>source</port> port for which the <option>test</option> option evaluates to <code>false</code>.</para>
+        <para>If the <option>initial-only</option> option is <code>true</code>, special processing applies. See the description below.</para>
       </description>
     </output>
+
     <option name="initial-only" as="xs:boolean" select="false()" required="false">
       <description>
-        <para>[EDIT] option initial-only</para>
+        <para>If <code>false</code> (default), all documents for which the expression in the <option>test</option> option is <code>true</code> are
+          considered matched and appear on the <port>matches</port> port. All documents for which this is <code>false</code> are considered not
+          matched and appear on the <port>not-matched</port> port.</para>
+        <para>If <code>true</code>, special processing applies. See the description below.</para>
       </description>
     </option>
+
     <option name="test" required="true" as="xs:string" subtype="XPathExpression">
       <description>
-        <para>[EDIT] option test</para>
+        <para>The XPath boolean expression, as a string, that defines matching. It is evaluated with the document to test as context item (accessible
+          with the dot operator <code>.</code>).</para>
+        <para>During this evaluation, the <code>position()</code> and <code>last()</code> functions are available to get the position of the document
+          in the sequence and the size of the sequence. See also the <example-ref idref="position-last"/> example.</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:split-sequence</tag> step accepts a sequence of documents and divides it into two sequences.</para>
+    <para>The <step/> step takes a sequence of documents on its <port>source</port> port and divides this into two sequences, based on the evaluation
+      expression in the <option>test</option> option and the value of the <option>initial-only</option> option.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The value of the <option>test</option> option must be an XPathExpression.</para>
-    <para>The XPath expression in the <option>test</option> option is applied to each document in the input sequence. If the effective boolean value
-      of the expression is true, the document is copied to the <port>matched</port> port; otherwise it is copied to the <port>not-matched</port>
-      port.</para>
-    <para>If the <option>initial-only</option> option is true, then when the first document that does not satisfy the test expression is encountered,
-      it <emphasis>and all the documents that follow it</emphasis> are written to the <port>not-matched</port> port. In other words, it only writes
-      the initial series of matched documents (which may be empty) to the <port>matched</port> port. All other documents are written to the
-        <port>not-matched</port> port, irrespective of whether or not they match.</para>
-    <para>The XPath context for the <option>test</option> option changes over time. For each document that appears on the <code>source</code> port,
-      the expression is evaluated with that document as the context document. The context position (<code>position()</code>) is the position of that
-      document within the sequence and the context size (<code>last()</code>) is the total number of documents in the sequence. <emphasis role="bold"
-        >[ERROR <step-error-ref code="XC0150"/>]</emphasis>
-    </para>
-    <note xml:id="note-stream">
-      <para>In principle, this component cannot stream because it must buffer all of the input sequence in order to find the context size. In
-        practice, if the test expression does not use the <function>last()</function> function, the implementation can stream and ignore the context
-        size.</para>
-    </note>
-    <para>If the implementation supports passing PSVI annotations between steps, the <tag>p:split-sequence</tag> step must preserve any annotations
-      that appear in the input.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="split-sequence-preserves-all">All document properties are preserved.</para>
+    <para>The <step/> step works like a switch in a train marshalling yard. A train with document wagons approaches the switch. The switchman has
+      instructions to send a wagon in one direction or the other, depending on the contents of the document. In more technical terms:</para>
+
+    <itemizedlist>
+
+      <listitem>
+        <para>The <step/> step takes a sequence of documents on its <port>source</port> port.</para>
+      </listitem>
+
+      <listitem>
+        <para>For every document, the XPath boolean expression in the <option>test</option> option is evaluated. During this evaluation, the document
+          is the context item (accessible with the dot operator <code>.</code>).</para>
+        <para>The <code>position()</code> and <code>last()</code> functions are available to get the position of the document in the sequence and the
+          size of the sequence (see also the <example-ref idref="position-last"/> example).</para>
+      </listitem>
+
+      <listitem>
+        <para>If the <option>initial-only</option> option is <code>false</code>:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If the result of the <option>test</option> option evaluation is <code>true</code>, the document appears on the <port>matched</port>
+              port.</para>
+          </listitem>
+          <listitem>
+            <para>If the result of the <option>test</option> option evaluation is <code>false</code>, the document appears on the
+                <port>not-matched</port> port.</para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+
+      <listitem>
+        <para>If the <option>initial-only</option> option is <code>true</code>:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If the result of the <option>test</option> option evaluation is <code>true</code>, the document appears on the <port>matched</port>
+              port, <emphasis>until</emphasis> a document appears for which this expression evaluates to <code>false</code>.</para>
+          </listitem>
+          <listitem>
+            <para>The first document for which the <option>test</option> option evaluation is <code>false</code>&#160;<emphasis>and all subsequent
+                documents</emphasis> are sent to the <port>not-matched</port> port.</para>
+          </listitem>
+        </itemizedlist>
+        <para>In other words: it only writes the initial series of matched documents (which may be empty) to the <port>matched</port> port. All other
+          documents are written to the <port>not-matched</port> port, irrespective of the outcome of the <option>test</option> option
+          evaluation.</para>
+      </listitem>
+
+    </itemizedlist>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+
+  <detail>
+    <para>Any PSVI annotations (Post Schema Validation Infoset, optional information added by XML Schema validation) are retained.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="basic-usage">
+
+    <para>This example defines a sequence of <tag>fruit</tag> documents for the <port>source</port> port and splits them based on their
+        <code>color</code> attribute. The final <step-ref name="p:wrap-sequence"/> step is only there to be able to show the result as a single
+      document.</para>
+
+    <xproc-example href="../../examples/split-sequence/split-sequence-01.xpl" show-source="false" fixup-pipeline-input="false"/>
+
+    <xproc-example href="../../examples/split-sequence/split-sequence-02.xpl" show-source="false" fixup-pipeline-input="false">
+      <pipeline-header>
+        <para>All the other source documents appear on the <port>not-matched</port> port, as the following example proofs:</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Using the initial-only option" id="initial-only">
+
+    <para>This example shows what happens to the <example-ref idref="basic-usage"/> example when we set the <option>initial-only</option> option to
+        <code>true</code>. The second source document (about oranges) does <emphasis>not</emphasis> match, so this <emphasis>and</emphasis> all
+      subsequent documents are considered not-matched and sent to the <port>not-matched</port> port. Only the first source document (about bananas)
+      appears on the <port>matched</port> port.</para>
+
+    <xproc-example href="../../examples/split-sequence/split-sequence-04.xpl" show-source="false" fixup-pipeline-input="false"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Using the position() and last() function" id="position-last">
+
+    <para>The following example shows that, during evaluation of the <option>test</option> option, the <code>position()</code> and <code>last()</code>
+      functions are available to get the position of the document in the sequence and the size of the sequence. It uses this to match the last
+      document only.</para>
+
+    <xproc-example href="../../examples/split-sequence/split-sequence-03.xpl" show-source="false" fixup-pipeline-input="false"/>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
-    <step-error code="XC0150">
-      <description>
-        <para>It is a dynamic error if evaluating the XPath expression in option <option>test</option> on a context document results in an
-          error.</para>
-      </description>
-    </step-error>
+    <step-error code="XC0150"/>
   </step-errors>
+
 </step>

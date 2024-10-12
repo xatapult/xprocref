@@ -22,7 +22,7 @@
           components, slashes (<code>/</code>) work fine and are more universal). Using a single slash after <code>file:</code> also works:
             <code>file:/C:/some/path/document.xml</code>.</para>
         <para>If this value is relative, it is resolved against the base URI of the element on which this option is specified. In most cases this will
-          be the static base URI of your pipeline (the path where the XProc source containing the <step/> is stored).</para>
+          be the static base URI of your pipeline (the path where the XProc source containing the <step/> step is stored).</para>
       </description>
     </option>
 

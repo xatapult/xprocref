@@ -4,7 +4,7 @@
   href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.identity" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
 
   <signature>
 
@@ -22,14 +22,14 @@
 
   </signature>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
 
   <summary>
     <para>The <step>p:identity</step> step makes a verbatim copy of what appears on its <port>source</port> port to its <port>result</port>
       port.</para>
   </summary>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
 
   <description>
     <para>The <step/> step does… nothing. It makes a verbatim copy of all documents appearing on its <port>source</port> port to its
@@ -37,13 +37,13 @@
       below show some use cases.</para>
   </description>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
 
   <detail>
     <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
   </detail>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ======================================================================= -->
 
   <example title="Create a fixed document">
     <para>There are many situations where you need to create a fixed document in your pipeline. For instance:</para>
@@ -61,6 +61,8 @@
     </itemizedlist>
   </example>
 
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
   <example title="Create an explicit anchor points in your pipeline">
     <para>Because the <step/> step does&#x2019;t do anything, it can be used to create &#x201c;anchor points&#x201d; in your pipeline. Assume you have
       a complicated pipeline where some version of the document flowing through must be used somewhere else. The <step/> step can be used to mark such
@@ -70,6 +72,8 @@
       However, by using an explicit <step/> step it stands out in the code. Also, when the computations change (and they will), you don’t have to
       remember to keep the <code>name="raw-version"</code> attribute on the <emphasis>last</emphasis> one always.</para>
   </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <example title="Produce a processing message">
     <para>XProc has a <code>message</code> attribute (or <code>p:message</code> on steps not in the XProc namespace) that results in a message when

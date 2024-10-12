@@ -4,6 +4,7 @@
   <p:input port="source">
     <things>
       <thing name="screw" id="A123"/>
+      <thing name="bolt" id="A789"/>
       <?convert debug="true"?>
     </things>
   </p:input>

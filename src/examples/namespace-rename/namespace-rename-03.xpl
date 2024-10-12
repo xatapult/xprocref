@@ -8,6 +8,6 @@
   </p:input>
   <p:output port="result"/>
 
-  <p:namespace-rename apply-to="attributes" to="#some-namespace"/>
+  <p:namespace-rename to="#some-namespace"/>
 
 </p:declare-step>
