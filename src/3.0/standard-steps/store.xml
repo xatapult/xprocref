@@ -45,8 +45,7 @@
       <description>
         <para>This option can supply a map with <link xlink:href="https://www.w3.org/TR/xslt-xquery-serialization-31/" role="newpage">serialization
             properties</link> for storing the document.</para>
-        <para>If the source document has a <property>serialization</property> document-property, the two sets of serialization properties are merged
-          (properties in the <option>serialization</option> option have precedence).</para>
+        <xi:include href="../../text-fragments/merge-serialization-properties.xml"/>
         <para>Example: <code>serialization="map{'indent':&#160;true()}"</code></para>
       </description>
     </option>
