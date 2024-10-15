@@ -33,8 +33,7 @@
         <para>Before the document is compressed, it is first serialized (as if written to disk). This option can supply a map with <link
             xlink:href="https://www.w3.org/TR/xslt-xquery-serialization-31/" role="newpage">serialization properties</link>, controlling this
           serialization.</para>
-        <para>If the source document has a <property>serialization</property> document-property, the two sets of serialization properties are merged
-          (properties in the <option>serialization</option> option have precedence).</para>
+        <xi:include href="../../text-fragments/merge-serialization-properties.xml"/>
       </description>
     </option>
 

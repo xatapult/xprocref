@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fragment>
+  <para>If the source document has a <property>serialization</property> document-property, the two sets of serialization properties are merged
+    (properties in the document-property have precedence).</para>
+</fragment>
