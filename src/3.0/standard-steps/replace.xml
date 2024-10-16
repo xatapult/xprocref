@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="replace" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation" short-description="Replace nodes with a document" required="true"
-  publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.replace"
+<step name="replace" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation" short-description="Replace nodes with a document"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.replace"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
@@ -37,8 +37,8 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>The <step/> step takes the document appearing on its <port>source</port> port and replaces matching nodes with the document appearing on the
-        <code>replacement</code> port.</para>
+    <para>The <step/> step takes the document appearing on its <port>source</port> port and replaces nodes matching the <option>match</option> option
+      with the document appearing on the <code>replacement</code> port.</para>
   </summary>
 
   <!-- ======================================================================= -->
@@ -48,6 +48,9 @@
     <para>The <step/> step takes the XSLT match pattern in the <option>match</option> option and holds this against the document appearing on its
         <port>source</port> port. Any matching nodes are replaced by the document on the <port>replacement</port> port. The resulting document is
       emitted on the <port>result</port> port.</para>
+
+    <para>This step replaces matched nodes with a complete document. If you need to replace matched nodes with (just) strings, have a look at the
+        <step-ref name="p:string-replace"/> step.</para>
 
   </description>
 
@@ -66,9 +69,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <detail>
-    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
-    <para>There is one exception: if the resulting document contains only text, the <property>content-type</property> document-property is changed to
-        <code>text/plain</code> and the <property>serialization</property> document-property is removed.</para>
+    <xi:include href="../../text-fragments/document-properties-preserved-except-text.xml"/>
   </detail>
 
   <!-- ======================================================================= -->

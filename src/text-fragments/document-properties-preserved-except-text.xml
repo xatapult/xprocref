@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fragment xmlns:xi="http://www.w3.org/2001/XInclude">
+  <xi:include href="document-properties-preserved.xml"/>
+  <para>There is one exception: if the resulting document contains only text, the <property>content-type</property> document-property is changed to
+      <code>text/plain</code> and the <property>serialization</property> document-property is removed.</para>
+</fragment>

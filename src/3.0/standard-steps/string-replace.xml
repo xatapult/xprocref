@@ -1,52 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="string-replace" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] string-replace short description"
-  required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.string-replace"
-  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+<step name="string-replace" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation" short-description="Replaces nodes with strings" required="true"
+  publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.string-replace" xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
-    <input port="source" content-types="xml html" primary="true" sequence="true">
+    <input port="source" content-types="xml html" primary="true" sequence="false">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The document to replace the nodes in.</para>
       </description>
     </input>
-    <output port="result" content-types="text xml html" primary="true" sequence="true">
+
+    <output port="result" content-types="text xml html" primary="true" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting document.</para>
       </description>
     </output>
+
     <option name="match" required="true" as="xs:string" subtype="XSLTSelectionPattern">
       <description>
-        <para>[EDIT] option match</para>
+        <para>The XSLT match pattern for the nodes to replace, as a string.</para>
       </description>
     </option>
+
     <option name="replace" required="true" as="xs:string" subtype="XPathExpression">
       <description>
-        <para>[EDIT] option replace</para>
+        <para>An XPath expression whose result will replace the nodes matched by the <option>match</option> option.</para>
+        <para>During the evaluation of this expression, the context item is the matched node (accessible with the dot operator <code>.</code>).</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:string-replace</tag> step matches nodes in the document provided on the <port>source</port> port and replaces them with the
-      string result of evaluating an XPath expression.</para>
+    <para>The <step/> step takes the document appearing on its <port>source</port> port and replaces nodes matching the <option>match</option> option
+      with a string that is computed using the XPath expression in the <option>replace</option> option.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The value of the <option>match</option> option must be an XSLTSelectionPattern.</para>
-    <para>The value of the <option>replace</option> option must be an XPathExpression.</para>
-    <para>The matched nodes are specified with the selection pattern in the <option>match</option> option. For each matching node, the XPath
-      expression provided by the <option>replace</option> option is evaluated with the matching node as the XPath context node. The string value of
-      the result is used in the output. Nodes that do not match are copied without change.</para>
-    <para>If the expression given in the <option>match</option> option matches an <emphasis>attribute</emphasis>, the string value of the
-        <option>replace</option> expression is used as the new value of the attribute in the output. If the attribute is named “<tag class="attribute"
-        >xml:base</tag>”, the base URI of the element must also be amended accordingly.</para>
-    <para>If the document node is matched, the entire document is replaced by the string value of the <option>replace</option> expression. What
-      appears on port <port>result</port> is a text document with the text node wrapped in a document node.</para>
-    <para>If the expression matches any other kind of node, the entire node (and <emphasis>not</emphasis> just its contents) is replaced by the string
-      value of the <option>replace</option> expression.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="string-replace-preserves-all">If the resulting document contains exactly one text node, the <literal>content-type</literal>
-      property is changed to <literal>text/plain</literal> and the <literal>serialization</literal> property is removed, while all other document
-      properties are preserved. For other document types, all document properties are preserved.</para>
+
+    <para>The <step/> step does the following:</para>
+    <itemizedlist>
+      <listitem>
+        <para>It takes the document appearing on its <port>source</port> port and holds the XSLT selection pattern in the <option>match</option>
+          option against this.</para>
+      </listitem>
+      <listitem>
+        <para>For each node matched:</para>
+        <itemizedlist>
+          <listitem>
+            <para>The matched node becomes the context item (accessible with the dot operator <code>.</code>).</para>
+          </listitem>
+          <listitem>
+            <para>The XPath expression in the <option>replace</option> option is evaluated and the result is turned into a string.</para>
+          </listitem>
+          <listitem>
+            <para>If the matched node is an attribute, the <emphasis>value</emphasis> of the attribute is replaced with this string.</para>
+          </listitem>
+          <listitem>
+            <para>If the document-node is matched, the full document will be replaced by the string (and the result will therefore be a text
+              document). </para>
+          </listitem>
+          <listitem>
+            <para>In all other cases, the full node is replaced by the string.</para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+    </itemizedlist>
+
+    <para>So this step replaces the matched node(s) with the result of a <emphasis>dynamically evaluated</emphasis> expression. This doesn&#x2019;t
+      mean this expression can&#x2019;t be a constant: see the <example-ref idref="basic-usage"/> example). However, it allows you to do all kinds of
+      nifty calculations, based on where the match is: see the <example-ref idref="advanced-usage"/> example.</para>
+
+    <para>This step replaces matched nodes with strings. If you need to replace matched nodes with full documents, have a look at the <step-ref
+        name="p:replace"/> step.</para>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved-except-text.xml"/>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>If the value of an <code>xml:base</code> attribute is replaced, the base URI of the element </para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="basic-usage">
+
+    <para>The following example simply replaces the thing&#x2019;s <tag>contents</tag> element with a (constant) description:</para>
+
+    <xproc-example href="../../examples/string-replace/string-replace-01.xpl"/>
+
+    <para>Please notice the single quotes around the value in the <option>replace</option> option. This option must not hold just some value but an
+      XPath <emphasis>expression</emphasis>. This means that if you need a constant string, you need to write it as an XPath string, therefore the
+      single quotes.</para>
+
+    <para role="break-before">If the <option>match</option> option matches an attribute, the <emphasis>value</emphasis> of the attribute is
+      replaced:</para>
+
+    <xproc-example href="../../examples/string-replace/string-replace-02.xpl"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Advanced usage" id="advanced-usage">
+
+    <para>The following example fills empty <code>description</code> attributes with a value based on the index/occurrence of the parent
+        <tag>thing</tag> element and the value of its <code>name</code> attribute:</para>
+
+    <xproc-example href="../../examples/string-replace/string-replace-03.xpl"/>
+
+    <para>Notice that to be able to perform this trick, the <code>description</code> attribute must already be there! A <tag>thing</tag> element
+      without such an attribute will not be changed. So if you have content where this is lacking, you&#x2019;ll need to prepare it. In this case we
+      use the <step-ref name="p:add-attribute"/> step to add a <code>description</code> attribute to any <tag>thing</tag> element that is lacking one
+      first:</para>
+
+    <xproc-example href="../../examples/string-replace/string-replace-03x.xpl"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Using p:with-option for the replace option">
+
+    <para>Options can also be set using the <tag>p:with-option</tag> element. If you use this for the <option>replace</option> option, make sure that
+      you pass the expression in the <option>replace</option> option <emphasis>as a string</emphasis>. If you don&#x2019;t, it will get evaluated by
+      the pipeline, before the invocation of the <step/> step, and that is very probably not what you intend. Here is an example of how to do this
+      right, based on the first example of <example-ref idref="advanced-usage"/>:</para>
+
+    <xproc-example href="../../examples/string-replace/string-replace-04.xpl"/>
+
+    <para>If you accidentally write the <code>p:with-option/@select</code> as the value of the <code>p:string-replace/@replace</code> attribute in
+        <example-ref idref="advanced-usage"/> (an easy and probable mistake to make), the XProc processor will raise an error:</para>
+    <itemizedlist>
+      <listitem>
+        <para>The expression in the <code>p:with-option/@select</code> is executed by the pipeline first and results in:
+            <code>'Thing&#160;1:'</code></para>
+      </listitem>
+      <listitem>
+        <para>This is <emphasis>not</emphasis> a valid XPath expression…</para>
+      </listitem>
+      <listitem>
+        <para>The <step/> step tries to evaluate <code>Thing&#160;1:</code> as an expression and fails miserably (but rightly).</para>
+      </listitem>
+    </itemizedlist>
+
+  </example>
+
 </step>
