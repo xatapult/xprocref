@@ -1,48 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="text-head" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] text-head short description" required="true"
-  publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.text-head"
-  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<step name="text-head" version-idref="v30" category-idrefs="standard-steps text"
+  short-description="Returns lines from the beginning of a text document" required="true" publish="true"
+  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.text-head" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <input port="source" primary="true" sequence="false" content-types="text">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The text document to get the lines from.</para>
       </description>
     </input>
+
     <output port="result" primary="true" sequence="false" content-types="text">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting lines.</para>
       </description>
     </output>
+
     <option name="count" required="true" as="xs:integer">
       <description>
-        <para>[EDIT] option count</para>
+        <para>Indicates what <step/> should do:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If positive, <step/> returns the first <option>count</option> lines.</para>
+          </listitem>
+          <listitem>
+            <para>If zero, <step/> returns all lines.</para>
+          </listitem>
+          <listitem>
+            <para>If negative, <step/> returns all lines <emphasis>except</emphasis> the first <option>count</option> lines.</para>
+          </listitem>
+        </itemizedlist>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <code>p:text-head</code> step returns lines from the beginning of a text document.</para>
+    <para>The <step/> step returns lines from the beginning of a text document.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The <tag>p:text-head</tag> step returns on its <port>result</port> port lines from the text document that appears on its <port>source</port>
-      port:</para>
-    <itemizedlist>
-      <listitem>
-        <para>If the <option>count</option> option is positive, the <tag>p:text-head</tag> step returns the first <option>count</option> lines</para>
-      </listitem>
-      <listitem>
-        <para>If the <option>count</option> option is zero, the <tag>p:text-head</tag> step returns all lines</para>
-      </listitem>
-      <listitem>
-        <para>If the <option>count</option> option is negative, the <tag>p:text-head</tag> step returns all lines except the first
-            <option>count</option> lines</para>
-      </listitem>
-    </itemizedlist>
-    <para>Lines are identified as described in <link xlink:href="https://www.w3.org/TR/xml/#sec-line-ends" xmlns:xlink="http://www.w3.org/1999/xlink"
-        >XML, 2.11 End-of-Line Handling</link>. All lines returned by <tag>p:text-head</tag> are terminated with a single newline (&amp;#10;).</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="add-attribute-preserves-all">All document properties are preserved.</para>
+    <para>The <step/> step takes lines from the beginning of the text document appearing on its <port>source</port> port and returns these lines as a
+      text document on its <port>result</port> port. What exactly happens depends on the value of the <option>count</option> option.</para>
+    <para>As you might have guessed there is also a step that returns lines from the <emphasis>end</emphasis> of a document: <step-ref
+        name="p:text-tail"/>.</para>
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="../../text-fragments/line-end-detail.xml"/>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="../../text-fragments/line-end-return.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <para>Assume we have a text document, called <code>lines.txt</code>, that looks like this and we want to get the first 2 lines using
+      <step/>:</para>
+
+    <example-doc href="../../examples/text-head/lines.txt"/>
+
+    <xproc-example href="../../examples/text-head/text-head-01.xpl" show-source="false" fixup-pipeline-input="false" output-is-text="true"/>
+
+    <para>Setting the <option>count</option> option to <code>0</code> will simply return the original document (the step now acts like a <step-ref
+        name="p:identity"/> step).</para>
+
+    <xproc-example href="../../examples/text-head/text-head-02.xpl" show-source="false" fixup-pipeline-input="false" output-is-text="true">
+      <pipeline-header>
+        <para>Setting the <option>count</option> option to <code>-2</code> will return all lines <emphasis>except</emphasis> the first
+          two:</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+  
 </step>

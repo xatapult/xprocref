@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fragment xmlns:xlink="http://www.w3.org/1999/xlink">
+  <para>All lines returned by <step/> are terminated with a line-end character (line-feed, <code>&amp;#xA;</code>).</para>
+</fragment>

@@ -22,9 +22,8 @@
 
     <output port="result-uri" content-types="application/xml" primary="false" sequence="false">
       <description>
-        <para>An XML document consisting of just a single <tag>c:result</tag> element (the <code>c</code> prefix here is bound to the
-            <code>http://www.w3.org/ns/xproc-step</code> namespace), containing the <emphasis>absolute</emphasis> URI the document is stored
-          to.</para>
+        <para>An XML document consisting of just a single <tag>c:result</tag> element containing the <emphasis>absolute</emphasis> URI the document is
+          stored to (the <code>c</code> prefix here is bound to the <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
         <para>Example: <code><![CDATA[<c:result xmlns:c="http://www.w3.org/ns/xproc-step">file:///some/path/document.xml</c:result>]]></code></para>
       </description>
     </output>
