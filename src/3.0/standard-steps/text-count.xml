@@ -1,35 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="text-count" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] text-count short description" required="true"
-  publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.text-count"
+<step name="text-count" version-idref="v30" category-idrefs="standard-steps text" short-description="Counts the number of lines in a text document"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.text-count"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <input port="source" primary="true" sequence="false" content-types="text">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The text document to count the lines of.</para>
       </description>
     </input>
+
     <output port="result" primary="true" sequence="false" content-types="application/xml">
       <description>
-        <para>[EDIT] output result</para>
+        <para>An XML document consisting of a single <tag>c:result</tag> element containing the number of lines (the <code>c</code> prefix here is
+          bound to the <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
+        <para>Example: <code><![CDATA[<c:result xmlns:c="http://www.w3.org/ns/xproc-step">6</c:result>]]></code></para>
       </description>
     </output>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <code>p:text-count</code> step counts the number of lines in a text document and returns a single XML document containing that
-      number.</para>
+    <para>The <step/> step counts the number of lines in the text document appearing on its <port>source</port> port and returns an XML document on
+      its <port>result</port> port containing that number.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The <tag>p:text-count</tag> step counts the number of lines in the text document appearing on its <port>source</port> port. It returns on
-      its <port>result</port> port an XML document containing a single <tag>c:result</tag> element whose contents is the string representing this
-      count.</para>
-    <para>Lines are identified as described in <link xlink:href="https://www.w3.org/TR/xml/#sec-line-ends" xmlns:xlink="http://www.w3.org/1999/xlink"
-        >XML, 2.11 End-of-Line Handling</link>. For the purpose of identifying lines, if the very last character in the text document is a newline
-      (&amp;#10;), that newline is ignored. (It is not a separator between that line and a following line that contains no characters.) </para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="text-count-preserves-none">No document properties are preserved. The count document does not have a <property>base-uri</property>
-      property. </para>
+    <para>The <step/> step simply counts the number of lines in the text document appearing on its <port>source</port> port. This number is returned
+      on the <port>result</port> port, wrapped in an <tag>c:result</tag> element.</para>
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>No document-properties from the document on the <port>source</port> port survives. The resulting document has a
+        <property>content-type</property> document-property set to <code>application/xml</code> and no <property>base-uri</property>
+      document-property.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="../../text-fragments/line-end-detail.xml"/>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>If the very last character of the source document is a line-end, this is ignored. So it does not count as a separator between that line and
+      a following line (that contains no characters).</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <para>Assume we have a text document, called <code>lines.txt</code>, that looks like this and we want to count the number of lines using
+      <step/>:</para>
+
+    <example-doc href="../../examples/text-count/lines.txt"/>
+
+    <xproc-example href="../../examples/text-count/text-count-01.xpl" show-source="false" fixup-pipeline-input="false"/>
+
+  </example>
+
 </step>

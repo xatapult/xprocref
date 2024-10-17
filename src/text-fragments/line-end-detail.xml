@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fragment xmlns:xlink="http://www.w3.org/1999/xlink">
+  <para>What exactly constitutes a line-end is defined in the <link xlink:href="https://www.w3.org/TR/xml/#sec-line-ends" role="newpage">XML
+    specification</link>.</para>
+</fragment>

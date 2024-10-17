@@ -64,5 +64,9 @@
       <para>Steps for handling JSON documents.</para>
     </description>
   </category>
-
+  
+  <category id="text" name="Text document related steps">
+    <description>Steps that do something with (lines in) text documents.</description>
+  </category>
+  
 </categories>
