@@ -1,67 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="text-replace" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] text-replace short description"
-  required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.text-replace"
+<step name="text-replace" version-idref="v30" category-idrefs="standard-steps text" short-description="Replace substrings in a text document"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.text-replace"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <input port="source" primary="true" sequence="false" content-types="text">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The text document to replace the substrings in.</para>
       </description>
     </input>
+
     <output port="result" primary="true" sequence="false" content-types="text">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting document.</para>
       </description>
     </output>
+
     <option name="pattern" required="true" as="xs:string">
       <description>
-        <para>[EDIT] option pattern</para>
+        <para>The XPath regular expression that matches the substrings to replace.</para>
+        <para>See the <code>$pattern</code> argument of the XPath function <link xlink:href="https://w3.org/TR/xpath-functions-31/#func-replace"
+            role="newpage">fn:replace()</link> for more details.</para>
       </description>
     </option>
+
     <option name="replacement" required="true" as="xs:string">
       <description>
-        <para>[EDIT] option replacement</para>
+        <para>The replacement string.</para>
+        <para>See the <code>$replacement</code> argument of the XPath function <link xlink:href="https://w3.org/TR/xpath-functions-31/#func-replace"
+            role="newpage">fn:replace()</link> for more details.</para>
       </description>
     </option>
+
     <option name="flags" as="xs:string?" required="false">
       <description>
-        <para>[EDIT] option flags</para>
+        <para>Flags governing the matching process.</para>
+        <para>See the description of <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#flags" role="newpage">regular expression flags</link>
+          in the XPath standard for more details.</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <code>p:text-replace</code> step replaces all occurrences of substrings in a text document that match a supplied regular expression with
-      a given replacement string.</para>
+    <para>The <step/> step takes the text document appearing on its <port>source</port> port and replaces substrings that match a regular expression
+      with a replacement string.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The <code>p:text-replace</code> step replaces all occurrences of substrings in the text document appearing on its <port>source</port> port
-      that match a supplied regular expression with a given replacement string. The result is returned (as another text document) on its
-        <port>result</port> port. </para>
-    <para>This step is a convenience wrapper around the XPath <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-replace"
-        xmlns:xlink="http://www.w3.org/1999/xlink">
-        <function>fn:replace</function>
-      </link> function to ease text replacements in the document flow of a pipeline.</para>
-    <para>The <option>pattern</option>, <option>replacement</option> and <option>flags</option> options are specified the same as the parameters with
-      the same names of the <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-replace" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <function>fn:replace</function>
-      </link> function. The <option>pattern</option> option must be a regular expression as specified in <link
-        xlink:href="https://www.w3.org/TR/xpath-functions-31/" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1
-        functions</link> , section 7.61 “<literal>Regular Expression Syntax</literal>”. <emphasis role="bold">[ERROR <step-error-ref code="XC0147"
-        />]</emphasis>
-    </para>
-    <para>Replacing strings in text documents does not require identifying individual lines in each document, consequently no special end-of-line
-      handling is performed.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="add-attribute-preserves-all">All document properties are preserved.</para>
+    <para>The <step/> step is &#x201c;just&#x201d; a convenience wrapper around the Xpath <link
+        xlink:href="https://w3.org/TR/xpath-functions-31/#func-replace" role="newpage">fn:replace()</link> function. This function takes a string and
+      replaces substrings that match a regular expression with a replacement string. For the <step/> step, the input string is the full document on
+      the <port>source</port> port. The resulting document appears on the <port>result</port> port.</para>
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="../../text-fragments/no-separate-lines.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <para>Assume we have a text document, called <code>lines.txt</code>, that looks like this and we want to replace all <code>t</code> characters
+      followed by an <code>h</code> or an <code>e</code> with two <code>*</code> characters (case-insensitive):</para>
+
+    <example-doc href="../../examples/text-replace/lines.txt"/>
+
+    <xproc-example href="../../examples/text-replace/text-replace-01.xpl" show-source="false" fixup-pipeline-input="false" output-is-text="true"/>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
-    <step-error code="XC0147">
-      <description>
-        <para>It is a dynamic error if the specified value is not a valid XPath regular expression.</para>
-      </description>
-    </step-error>
+    <step-error code="XC0147"/>
   </step-errors>
+
 </step>
