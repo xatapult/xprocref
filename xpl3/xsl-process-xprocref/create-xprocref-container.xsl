@@ -901,7 +901,7 @@
           <db:title/>
         </db:info>
         <xsl:if test="$wip">
-          <db:para role="page-banner">This site is work in progress and therefore incomplete yet.</db:para>
+          <db:para role="page-banner">This site is work in progress and does not yet describe all available steps.</db:para>
         </xsl:if>
         <xsl:if test="not($production-version)">
           <db:para role="page-banner">You are looking at the TEST version!{if (exists($test-version-remark)) then (' (' || $test-version-remark ||
