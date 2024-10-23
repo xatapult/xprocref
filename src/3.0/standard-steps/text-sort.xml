@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="text-sort" version-idref="v30" category-idrefs="standard-steps text" short-description="Sorts lines in a text document" required="true"
-  publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.text-sort"
+  publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.text-sort"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
@@ -23,7 +23,7 @@
         <para>An XPath expression that results in the string to sort the lines on. It is evaluated for each line, with the line to sort (as a string)
           as context item (accessible with the dot operator <code>.</code>).</para>
         <para>During this evaluation, the <code>position()</code> and <code>last()</code> functions are available to get the position of the line in
-          the document and the number of lines.</para>
+          the document and the number of lines. See <example-ref idref="reverse-order"/> for an example of using these functions here.</para>
       </description>
     </option>
 
@@ -82,8 +82,9 @@
 
   <description>
     <para>The <step/> step takes the text document appearing on its <port>source</port> port and turns this into lines. These lines are then sorted
-      according to the values of the step options. This sort process is the same as described for the XSLT <code><link xlink:href="https://www.w3.org/TR/xslt-30/#xsl-sort"
-        >xsl:sort</link></code> instruction. The result appears on the <port>result</port> port.</para>
+      according to the values of the step options. This sort process is the same as described for the XSLT <code><link
+          xlink:href="https://www.w3.org/TR/xslt-30/#xsl-sort">xsl:sort</link></code> instruction. The result appears on the <port>result</port>
+      port.</para>
   </description>
 
   <!-- ======================================================================= -->
@@ -103,6 +104,33 @@
   <detail>
     <xi:include href="../../text-fragments/line-end-return.xml"/>
   </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <para>Assume we have a text document, called <code>lines.txt</code>, that looks like this and we want to sort the lines using <step/>:</para>
+
+    <example-doc href="../../examples/text-sort/lines.txt"/>
+
+    <xproc-example href="../../examples/text-sort/text-sort-01.xpl" show-source="false" fixup-pipeline-input="false" output-is-text="true"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Reversing the line order" id="reverse-order">
+
+    <para>This example is not very useful in itself, but it shows the use of the <code>position()</code> and <code>last()</code> function in the
+        <option>sort-key</option> option. We set this option to <code>last()&#160;-&#160;position()</code>, which has the effect of
+        <emphasis>reversing</emphasis> the line order.</para>
+
+    <para>Source document (<code>lines-2.txt</code>):</para>
+    <example-doc href="../../examples/text-sort/lines-2.txt"/>
+
+    <xproc-example href="../../examples/text-sort/text-sort-02.xpl" show-source="false" fixup-pipeline-input="false" output-is-text="true"/>
+
+  </example>
 
   <!-- ======================================================================= -->
 
