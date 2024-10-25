@@ -115,10 +115,6 @@
     <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
   </detail>
 
-  <detail>
-    <para>Any PSVI annotations (Post Schema Validation Infoset, optional information added by XML Schema validation) are retained.</para>
-  </detail>
-
   <!-- ======================================================================= -->
 
   <example title="Basic usage" id="basic-usage">
