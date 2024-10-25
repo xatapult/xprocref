@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="string-replace" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation" short-description="Replaces nodes with strings" required="true"
-  publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.string-replace" xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+<step name="string-replace" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation"
+  short-description="Replaces nodes with strings" required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.string-replace"
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
   <!-- ======================================================================= -->
 
@@ -92,7 +93,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <detail>
-    <para>If the value of an <code>xml:base</code> attribute is replaced, the base URI of the element </para>
+    <xi:include href="../../text-fragments/set-xml-base-changes-base-uri.xml"/>
   </detail>
 
   <!-- ======================================================================= -->
@@ -100,7 +101,6 @@
   <example title="Basic usage" id="basic-usage">
 
     <para>The following example simply replaces the thing&#x2019;s <tag>contents</tag> element with a (constant) description:</para>
-
     <xproc-example href="../../examples/string-replace/string-replace-01.xpl"/>
 
     <para>Please notice the single quotes around the value in the <option>replace</option> option. This option must not hold just some value but an
@@ -109,7 +109,6 @@
 
     <para role="break-before">If the <option>match</option> option matches an attribute, the <emphasis>value</emphasis> of the attribute is
       replaced:</para>
-
     <xproc-example href="../../examples/string-replace/string-replace-02.xpl"/>
 
   </example>
@@ -148,7 +147,7 @@
     <itemizedlist>
       <listitem>
         <para>The expression in the <code>p:with-option/@select</code> is executed by the pipeline first and results in:
-            <code>'Thing&#160;1:'</code></para>
+          <code>'Thing&#160;1:'</code></para>
       </listitem>
       <listitem>
         <para>This is <emphasis>not</emphasis> a valid XPath expression…</para>
