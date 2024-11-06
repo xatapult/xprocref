@@ -1,32 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="www-form-urlencode" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] www-form-urlencode short description"
-  required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.www-form-urlencode"
-  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+<step name="www-form-urlencode" version-idref="v30" category-idrefs="standard-steps" short-description="Encodes parameters into a URL string"
+  required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.www-form-urlencode" xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <output port="result" content-types="text/plain" primary="true" sequence="true">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting URL parameter string, as a text document.</para>
       </description>
     </output>
+
     <option name="parameters" required="true" as="map(xs:string,xs:anyAtomicType+)">
       <description>
-        <para>[EDIT] option parameters</para>
+        <para>A map with the parameters to encode</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:www-form-urlencode</tag> step encodes a set of parameter values as a <literal>x-www-form-urlencoded</literal> string.</para>
+    <para>The <step/> step encodes a set of parameters, given as entries in a map, into a URL parameter string (like <code>a=b&amp;c=d</code>). The
+      result appears on the <port>result</port> port as a text document.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The map entries of <option>parameters</option> option are encoded as a single <literal>x-www-form-urlencoded</literal> string of name/value
-      pairs. This string is returned on the <port>result</port> port as a text document. </para>
-    <para>If more than one value is associated with a given key in <option>parameters</option> option, a name/value pair is created for each
-      value.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="www-form-urlencode-preserves-none">The resulting text document has no properties apart from <property>content-type</property>. In
-      particular, it has no <property>base-uri</property>.</para>
+
+    <para>The <step/> step is one of the few steps that have no primary input port, its primary input is the value of the <option>parameters</option>
+      option. This value must be a map where each valid URL parameter string: the part that usually comes after the <code>?</code> in a URL, like
+      <code>a=b&amp;c=d</code>. Officially, this is called a <code>x-www-form-urlencoded</code> string. This format is also used for sending HTML
+      form data over HTTP.</para>
+    
+    <para>The <step/> step takes such a string in its <option>value</option> option and converts it into a map. Each name/value pair in the input
+      string is represented as a key/value pair in the map. Percent encoded values (like <code>%20</code> for space) are decoded. The <code>+</code>
+      sign also acts as a space.</para>
+    
+    <para>The resulting map appears on the <port>result</port> port as a JSON document.</para>
+    
+    <para>There is also a step for <emphasis>encoding</emphasis> these kinds of strings, called <step-ref name="p:www-form-urlencode"/>.</para>
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type.xml"/>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>If an entry in the map has multiple values, an entry for each value will appear in the resulting URL string. See also the <example-ref
+        idref="multiplepars"/> example.</para>
+  </detail>
+
 </step>

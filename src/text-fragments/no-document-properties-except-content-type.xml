@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fragment>
+  <para>The document appearing on the <port>result</port> port only has a <property>content-type</property> property. It has no other
+    document-properties (also no <property>base-uri</property>).</para>
+</fragment>
