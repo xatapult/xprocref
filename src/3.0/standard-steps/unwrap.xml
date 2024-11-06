@@ -22,8 +22,8 @@
 
     <option name="match" as="xs:string" select="'/*'" subtype="XSLTSelectionPattern" required="false">
       <description>
-        <para>The XSLT match pattern for the nodes to delete, as a string. This must match element nodes (or the document-node). If any other kind of
-          node is matched error <step-error-ref code="XC0023"/> is raised.</para>
+        <para>The XSLT match pattern for the nodes to unwrap, as a string. This must match element nodes (or the document-node). If any other kind of
+          node is matched, error <step-error-ref code="XC0023"/> is raised.</para>
       </description>
     </option>
 
@@ -33,8 +33,7 @@
 
   <summary>
     <para>The <step/> step unwraps element nodes, specified by an XSLT selection pattern, from the document appearing on its <code>source</code> port.
-      Unwrapping means: remove the matched element (including any attributes), but keep all its children. The resulting document appears on the
-        <port>result</port> port.</para>
+      Unwrapping means: remove the matched element (including any attributes), but keep all its children.</para>
   </summary>
 
   <!-- ======================================================================= -->

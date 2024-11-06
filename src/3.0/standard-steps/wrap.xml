@@ -1,67 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="wrap" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] wrap short description" required="true"
-  publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.wrap"
+<step name="wrap" version-idref="v30" category-idrefs="standard-steps" short-description="Wraps nodes in a parent element" required="true"
+  publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.wrap"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
-    <input port="source" content-types="xml html" primary="true" sequence="true">
+
+    <input port="source" content-types="xml html" primary="true" sequence="false">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The document that contains the nodes to wrap.</para>
       </description>
     </input>
-    <output port="result" content-types="application/xml" primary="true" sequence="true">
+
+    <output port="result" content-types="application/xml" primary="true" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting document.</para>
       </description>
     </output>
+
     <option name="wrapper" required="true" as="xs:QName">
       <description>
-        <para>[EDIT] option wrapper</para>
+        <para>The name of the wrapping element.</para>
       </description>
     </option>
+
     <option name="match" required="true" as="xs:string" subtype="XSLTSelectionPattern">
       <description>
-        <para>[EDIT] option match</para>
+        <para>The XSLT match pattern for the nodes to wrap, as a string. This must match either the document-node, an element, a
+          processing-instruction, or a comment. If any other kind of node is matched, error <step-error-ref code="XC0023"/> is raised.</para>
       </description>
     </option>
+
     <option name="group-adjacent" as="xs:string?" subtype="XPathExpression" required="false">
       <description>
-        <para>[EDIT] option group-adjacent</para>
+        <para>An XPath expression to use for grouping the wrapped elements. See <xref linkend="grouping"/> below.</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:wrap</tag> step wraps matching nodes in the <port>source</port> document with a new parent element.</para>
+    <para>The <step/> step wraps matching nodes in the document on the <port>source</port> into a new parent element.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The value of the <option>match</option> option must be an XSLTSelectionPattern. <emphasis role="bold">[ERROR <step-error-ref code="XC0023"
-        />]</emphasis>
-    </para>
-    <para>The value of the <option>group-adjacent</option> option must be an XPathExpression.</para>
-    <para>If the node matched is the document node (<code>match="/"</code>), the result is a new document where the document element is a new element
-      node whose QName is the value specified in the <option>wrapper</option> option. That new element contains copies of all of the children of the
-      original document node.</para>
-    <para>When the selection pattern does not match the document node, every node that matches the specified <option>match</option> pattern is
-      replaced with a new element node whose QName is the value specified in the <option>wrapper</option> option. The content of that new element is a
-      copy of the original, matching node. The <tag>p:wrap</tag> step performs a "deep" wrapping, the children of the matching node and their
-      descendants are processed and wrappers are added to all matching nodes. </para>
-    <para>The <option>group-adjacent</option> option can be used to group adjacent matching nodes in a single wrapper element. The specified XPath
-      expression is evaluated for each matching node with that node as the XPath context node. Whenever two or more adjacent matching nodes have the
-      same “group adjacent” value, they are wrapped together in a single wrapper element. Two “group adjacent” values are the same if the standard
-      XPath function <code>deep-equal()</code> returns true for them.</para>
-    <para>Two matching nodes are considered adjacent if and only if they are siblings and either there are no nodes between them or all intervening,
-      non-matching nodes are whitespace text, comment, or processing instruction nodes.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="wrap-preserves-all">All document properties are preserved.</para>
+
+    <para>The <step/> step takes the XSLT match pattern in the <option>match</option> option and holds this against the document appearing on its
+        <port>source</port> port. This pattern must match the document-node, an element, a processing-instruction, or a comment. The matched node is
+      wrapped in an element, as specified in the <option>wrapper</option> option.</para>
+
+    <para>The <step/> step perform a &#x201c;deep&#x201d; wrapping: the children of any matched node are also processed. Wrappers are added to
+        <emphasis>all</emphasis> matching nodes.</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="grouping">
+      <title>Grouping</title>
+
+      <para>The <option>group-adjacent</option> option of <step/> allows you to group adjacent matching nodes in a single wrapper element. The value
+        of this option must a valid XPath expression. It is evaluated for every node in the source document. Adjacent nodes with an equal result value
+        are wrapped together in the same wrapper element.</para>
+
+      <para>For all nodes in the document on the <port>source</port> port:</para>
+      <itemizedlist>
+        <listitem>
+          <para>The node becomes the context item (accessible with the dot <code>.</code> operator).</para>
+        </listitem>
+        <listitem>
+          <para>The expression in the <option>group-adjacent</option> option is evaluated.</para>
+        </listitem>
+        <listitem>
+          <para>Two values of sibling nodes, computed by the XPath expression, are considered equal if the XPath function <link
+              xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-deep-equal" role="newpage"><code>fn:deep-equal()</code></link> returns
+              <code>true</code> for them. In most cases this simply means that values are equal when you intuitively expect them to be.</para>
+        </listitem>
+        <listitem>
+          <para>All sibling nodes with equal values for the XPath expression, that are adjacent, are wrapped together in a wrapper element, as named
+            by the <option>wrapper</option> option.</para>
+        </listitem>
+      </itemizedlist>
+      <para>For an example see <example-ref idref="ws-grouping"/>.</para>
+    </section>
+
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <para>The following example wraps every <code>thing</code> element in a <tag>computer-part</tag> element:</para>
+
+    <xproc-example href="../../examples/wrap/wrap-01.xpl"/>
+
+    <para>Please notice that the nested <tag>thing</tag> elements (inside the <tag>subthings</tag> element) are also wrapped. This is because <step/>
+      performs &#x201c;deep&#x201d; wrapping.</para>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Grouping and wrapping" id="ws-grouping">
+
+    <para>This example shows what happens when you use the <option>group-adjacent</option> option. Here we group fruits by color:</para>
+
+    <xproc-example href="../../examples/wrap/wrap-02.xpl"/>
+
+    <para>You might have expected that the result would group the fruits together by color, resulting in groups of elements, wrapped in
+        <tag>fruits-by-color</tag> elements: one for <code>banana</code>+<code>lemon</code> and one for <code>orange</code>+<code>carrot</code>. But
+      <step/> groups sibling nodes that are <emphasis>adjacent</emphasis> to each other only. It does <emphasis>not</emphasis> do what would be called
+      &#x201c;group by&#x201d;: all sibling nodes with the same value for the XPath expression together in a single group. If you need this, you will
+      have to sort the document first. But unfortunately, XProc does not have anything on board for that. For more complex grouping, the advice is to
+      use XSLT or XQuery.</para>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Replacing comments by elements">
+
+    <para>This example shows that you can use <step/> not only to wrap elements, but also other kinds of nodes. Here we use its functionality,
+      together with the <step-ref name="p:string-replace"/> step, to change comments into elements. For this, we first wrap every element in a
+        <tag>comment</tag> element and then turn these comments into text nodes using <step-ref name="p:string-replace"/>. </para>
+
+    <xproc-example href="../../examples/wrap/wrap-03.xpl"/>
+  </example>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
-    <step-error code="XC0023">
-      <description>
-        <para>It is a dynamic error if the pattern matches anything other than document, element, text, processing instruction, and comment
-          nodes.</para>
-      </description>
-    </step-error>
+    <step-error code="XC0023"/>
   </step-errors>
+
 </step>
