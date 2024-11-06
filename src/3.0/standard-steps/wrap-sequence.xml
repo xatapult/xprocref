@@ -28,7 +28,7 @@
 
     <option name="group-adjacent" as="xs:string?" subtype="XPathExpression" required="false">
       <description>
-        <para>An XPath expression to use for grouping the wrapped elements.</para>
+        <para>An XPath expression to use for grouping the wrapped elements. See <xref linkend="grouping"/> below.</para>
       </description>
     </option>
 
@@ -51,7 +51,7 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <section>
+    <section xml:id="grouping">
       <title>Grouping</title>
 
       <para>The <option>group-adjacent</option> option of <step/> allows you to group documents together and wrap each group in the same wrapper

@@ -10,6 +10,6 @@
   <p:output port="result" sequence="true"/>
 
   <p:wrap-sequence wrapper="fruits-by-color" group-adjacent="/*/@color"/>
-  <p:wrap-sequence wrapper="groups"></p:wrap-sequence>
+  <p:wrap-sequence wrapper="groups"/>
 
 </p:declare-step>
