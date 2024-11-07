@@ -21,7 +21,7 @@
 
   <!-- ================================================================== -->
 
-  <p:variable name="limit-to-steps" as="xs:string*" select="('wrap', 'string-replace')"/>
+  <p:variable name="limit-to-steps" as="xs:string*" select="('www-form-urldecode', 'www-form-urlencode', 'identity')"/>
 
   <xpref:process-xprocref production-version="false" wip="false">
     <p:with-option name="limit-to-steps" select="$limit-to-steps"/>

@@ -1,43 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="www-form-urldecode" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] www-form-urldecode short description"
-  required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.www-form-urldecode"
+<step name="www-form-urldecode" version-idref="v30" category-idrefs="standard-steps env" short-description="Decode a URL parameter string into a map"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.www-form-urldecode"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <output port="result" content-types="application/json" primary="true" sequence="true">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting map, as a JSON document.</para>
       </description>
     </output>
+
     <option name="value" required="true" as="xs:string">
       <description>
-        <para>[EDIT] option value</para>
+        <para>The URL parameter string to decode.</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:www-form-urldecode</tag> step decodes a <literal>x-www-form-urlencoded</literal> string into a JSON representation.</para>
+    <para>The <step/> step decodes a URL parameter string (like <code>a=b&amp;c=d</code>) into a map. The result appears on the <port>result</port>
+      port as a JSON document.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>A JSON object of the form “<literal>map(xs:string, xs:string+)</literal>” will appear on <port>result</port> port. The
-        <option>value</option> option is interpreted as a string of parameter values encoded using the <literal>x-www-form-urlencoded</literal>
-      algorithm. Each name/value pair is represented in the JSON object as key/value entry. </para>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0037"/>]</emphasis>
-    </para>
-    <para>If any parameter name occurs more than once in the encoded string, a sequence will be associated with the respective key. The order in the
-      sequence retains the order of name/value pairs in the encoded string.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="www-form-urldecode-preserves-none">The resulting JSON document has no properties apart from <property>content-type</property>. In
-      particular, it has no <property>base-uri</property>.</para>
+
+    <para>The <step/> step is one of the few steps that have no primary input port, its main input is the value of the <option>value</option>
+      option. This value must be a valid URL parameter string: the part that usually comes after the <code>?</code> in a URL, like
+        <code>a=b&amp;c=d</code>. Officially, this is called a <code>x-www-form-urlencoded</code> string. This format is also used for sending HTML
+      form data over HTTP.</para>
+
+    <para>The <step/> step takes such a string in its <option>value</option> option and converts it into a map. Each name/value pair in the input
+      string is represented as a key/value pair in the map. Percent encoded values (like <code>%20</code> for space) are decoded. The <code>+</code>
+      sign also acts as a space.</para>
+
+    <para>The resulting map appears on the <port>result</port> port as a JSON document.</para>
+
+    <para>There is also a step for <emphasis>encoding</emphasis> these kinds of strings, called <step-ref name="p:www-form-urlencode"/>.</para>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type.xml"/>
+  </detail>
+
+  <detail>
+    <para>If any parameter name occurs more than once in the input string, a sequence will be associated with the respective key. The order in the
+      sequence retains the order of name/value pairs in the encoded string. However, if this happens, you cannot serialize (write to, for instance,
+      disk) the result because it is no longer valid JSON. You can however still use the map in your program and access its members. See also the
+        <example-ref idref="parsamename"/> example</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <xproc-example href="../../examples/www-form-urldecode/www-form-urldecode-01.xpl" show-source="false" output-is-text="true"/>
+
+    <para>Now assume you&#x2019;re interested in parameter <code>c</code> and want to turn its value into an XML element. This is how you can do
+      this:</para>
+
+    <xproc-example href="../../examples/www-form-urldecode/www-form-urldecode-02.xpl" show-source="false">
+      <pipeline-header/>
+    </xproc-example>
+
+    <para>The document coming out of the <step/> step is a map. This map flows through my pipeline. The <step-ref name="p:identity"/> step, since it
+      directly follows <step/>, can address this map with the dot <code>.</code> operator. And <code>.?c</code> is syntactic sugar for: give me the
+      value of the context item map with the key <code>'c'</code>. <!--You could also have written it as <code>.('c')</code>.--></para>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Parameters with the same name" id="parsamename">
+
+    <para>When the string to decode contains multiple parameters with the same name, the result for that key will be a <emphasis>sequence</emphasis>
+      of values. We cannot serialize such a result directly (since JSON doesn't allow map entries with multiple values), but we can access and work
+      with it in our program.</para>
+    <para>In the following example, parameter <code>a</code> is duplicated. The <step-ref name="p:identity"/> step combines the values for
+        <code>a</code> with a pipe character <code>|</code>, using the XPath <code><link
+          xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-string-join" role="newpage">string-join()</link></code> function.</para>
+
+    <xproc-example href="../../examples/www-form-urldecode/www-form-urldecode-03.xpl" show-source="false">
+      <pipeline-header/>
+    </xproc-example>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
-    <step-error code="XC0037">
-      <description>
-        <para>It is a dynamic error if the <option>value</option> provided is not a properly <literal>x-www-form-urlencoded</literal> value.</para>
-      </description>
-    </step-error>
+    <step-error code="XC0037"/>
   </step-errors>
+
 </step>
