@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="www-form-urldecode" version-idref="v30" category-idrefs="standard-steps" short-description="Decode a URL parameter string into a map"
+<step name="www-form-urldecode" version-idref="v30" category-idrefs="standard-steps env" short-description="Decode a URL parameter string into a map"
   required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.www-form-urldecode"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
@@ -33,7 +33,7 @@
 
   <description>
 
-    <para>The <step/> step is one of the few steps that have no primary input port, its primary input is the value of the <option>value</option>
+    <para>The <step/> step is one of the few steps that have no primary input port, its main input is the value of the <option>value</option>
       option. This value must be a valid URL parameter string: the part that usually comes after the <code>?</code> in a URL, like
         <code>a=b&amp;c=d</code>. Officially, this is called a <code>x-www-form-urlencoded</code> string. This format is also used for sending HTML
       form data over HTTP.</para>
@@ -88,8 +88,8 @@
       of values. We cannot serialize such a result directly (since JSON doesn't allow map entries with multiple values), but we can access and work
       with it in our program.</para>
     <para>In the following example, parameter <code>a</code> is duplicated. The <step-ref name="p:identity"/> step combines the values for
-        <code>a</code> with a pipe character <code>|</code>, using the XPath <link
-        xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-string-join" role="newpage">string-join()</link> function.</para>
+        <code>a</code> with a pipe character <code>|</code>, using the XPath <code><link
+          xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-string-join" role="newpage">string-join()</link></code> function.</para>
 
     <xproc-example href="../../examples/www-form-urldecode/www-form-urldecode-03.xpl" show-source="false">
       <pipeline-header/>

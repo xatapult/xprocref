@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="www-form-urlencode" version-idref="v30" category-idrefs="standard-steps" short-description="Encodes parameters into a URL string"
-  required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.www-form-urlencode" xmlns:xlink="http://www.w3.org/1999/xlink"
+<step name="www-form-urlencode" version-idref="v30" category-idrefs="standard-steps env" short-description="Encode parameters into a URL string"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.www-form-urlencode" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
@@ -16,7 +16,7 @@
 
     <option name="parameters" required="true" as="map(xs:string,xs:anyAtomicType+)">
       <description>
-        <para>A map with the parameters to encode</para>
+        <para>A map with the parameters to encode.</para>
       </description>
     </option>
 
@@ -33,18 +33,15 @@
 
   <description>
 
-    <para>The <step/> step is one of the few steps that have no primary input port, its primary input is the value of the <option>parameters</option>
-      option. This value must be a map where each valid URL parameter string: the part that usually comes after the <code>?</code> in a URL, like
-      <code>a=b&amp;c=d</code>. Officially, this is called a <code>x-www-form-urlencoded</code> string. This format is also used for sending HTML
-      form data over HTTP.</para>
-    
-    <para>The <step/> step takes such a string in its <option>value</option> option and converts it into a map. Each name/value pair in the input
-      string is represented as a key/value pair in the map. Percent encoded values (like <code>%20</code> for space) are decoded. The <code>+</code>
-      sign also acts as a space.</para>
-    
-    <para>The resulting map appears on the <port>result</port> port as a JSON document.</para>
-    
-    <para>There is also a step for <emphasis>encoding</emphasis> these kinds of strings, called <step-ref name="p:www-form-urlencode"/>.</para>
+    <para>The <step/> step is one of the few steps that have no primary input port, its main input is the value of the <option>parameters</option>
+      option. This value must be a map. The keys in the map are the parameter names, the value(s) the parameter values. The result will be a parameter
+      string (the part that usually comes after the <code>?</code> in a URL, like <code>a=b&amp;c=d</code>). Officially, this is called a
+        <code>x-www-form-urlencoded</code> string. This format is also used for sending HTML form data over HTTP.</para>
+
+    <para>The resulting parameter string appears on the <port>result</port> port as a text document.</para>
+
+    <para>There is also a step for <emphasis>decoding</emphasis> these kinds of strings, called <step-ref name="p:www-form-urldecode"/>.</para>
+
   </description>
 
   <!-- ======================================================================= -->
@@ -59,5 +56,25 @@
     <para>If an entry in the map has multiple values, an entry for each value will appear in the resulting URL string. See also the <example-ref
         idref="multiplepars"/> example.</para>
   </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <xproc-example href="../../examples/www-form-urlencode/www-form-urlencode-01.xpl" show-source="false" output-is-text="true"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Multiple parameter values" id="multiplepars">
+
+    <xproc-example href="../../examples/www-form-urlencode/www-form-urlencode-02.xpl" show-source="false" output-is-text="true">
+      <pipeline-header>
+        <para>If an entry in the map has multiple values (here for the entry with key <code>a</code>), the parameter is repeated in the output:</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
 
 </step>
