@@ -193,8 +193,8 @@
 
     <xproc-example href="../../examples/json-merge/json-merge-02.xpl" output-is-text="true" fixup-pipeline-input="false" show-source="false">
       <pipeline-header>
-        <para>The following pipeline produces a sequence of 3 documents on the <port>source</port> port of <step/>: An XML, a JSON map and another XML
-          document. With the <option>key</option> option we set the key for the result map to the local name of the root elements:
+        <para>The following pipeline produces a sequence of 3 documents on the <port>source</port> port of <step/>: An XML document, a JSON map and
+          another XML document. With the <option>key</option> option we set the key for the result map to the local name of the root elements:
             <code>local-name(/*)</code>. Notice that what happens with the keys for the second source document, which is itself a map, is not
           affected.</para>
       </pipeline-header>

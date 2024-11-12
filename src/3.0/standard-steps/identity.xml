@@ -53,7 +53,7 @@
         <example-doc href="../../examples/identity/identity-01.xml"/>
       </listitem>
       <listitem>
-        <para>Some pipelines write their main results to disk and the actual output of the pipeline doesn&#x2019;t matter. In these cases is often
+        <para>Some pipelines write their main results to disk and the actual output of the pipeline doesn&#x2019;t matter. In these cases it is often
           useful to produce some kind of report document with relevant information (for instance, when it happened, where the results are,
           etc.):</para>
         <example-doc href="../../examples/identity/identity-02.xml"/>
