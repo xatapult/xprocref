@@ -69,4 +69,8 @@
     <description>Steps that do something with (lines in) text documents.</description>
   </category>
   
+  <category id="additional-standards" name="Additional standards">
+    <description>Steps that implement additional standards.</description>
+  </category>
+  
 </categories>

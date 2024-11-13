@@ -1,53 +1,149 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="xinclude" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] xinclude short description" required="true"
-  publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.xinclude"
+<step name="xinclude" version-idref="v30" category-idrefs="standard-steps additional-standards"
+  short-description="Apply XInclude procesing to a document" required="true" publish="true"
+  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.xinclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <input port="source" content-types="xml html" primary="true" sequence="true">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The document to apply the XInclude processing to.</para>
       </description>
     </input>
+
     <output port="result" content-types="xml html" primary="true" sequence="true">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting document.</para>
       </description>
     </output>
+
     <option name="fixup-xml-base" as="xs:boolean" select="false()" required="false">
       <description>
-        <para>[EDIT] option fixup-xml-base</para>
+        <para>Perform <link xlink:href="https://www.w3.org/TR/xinclude/#base" role="newpage">base URI fixup</link> to the resulting document.
+          Basically this means that <code>xml:base</code> elements are added to the root elements of the included files, containing the URIs they were
+          included from. See also the <example-ref idref="base-uri-fixup"/> example.</para>
       </description>
     </option>
+
     <option name="fixup-xml-lang" as="xs:boolean" select="false()" required="false">
       <description>
-        <para>[EDIT] option fixup-xml-lang</para>
+        <para>Perform <link xlink:href="https://www.w3.org/TR/xinclude/#language" role="newpage">language fixup</link> on the resulting document.
+          Basically this means that an <code>xml:lang</code> attribute is added to the root elements of the included documents. This stops the
+          language settings of the including document from being inherited by the included document. See also the <example-ref idref="language-fixup"
+          /> example.</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:xinclude</tag> step applies <link xlink:href="https://www.w3.org/TR/xinclude/" role="newpage"
-        xmlns:xlink="http://www.w3.org/1999/xlink">XInclude</link> processing to the <port>source</port> document.</para>
+    <para>The <step/> step applies <link xlink:href="https://www.w3.org/TR/xinclude/" role="newpage">XInclude</link> processing to the document
+      appearing on the <port>source</port> document.</para>
   </summary>
+
   <description>
-    <para>[EDIT]</para>
-    <para>The value of the <option>fixup-xml-base</option> option must be a boolean. If it is true, base URI fixup will be performed as per <link
-        xlink:href="https://www.w3.org/TR/xinclude/" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink">XInclude</link> .</para>
-    <para>The value of the <option>fixup-xml-lang</option> option must be a boolean. If it is true, language fixup will be performed as per <link
-        xlink:href="https://www.w3.org/TR/xinclude/" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink">XInclude</link> .</para>
-    <para>The included documents are located with the base URI of the input document and are not provided as input to the step.</para>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0029"/>]</emphasis>
-    </para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="xinclude-preserves-all">All document properties are preserved.</para>
+
+    <para>The <link xlink:href="https://www.w3.org/TR/xinclude/" role="newpage">XInclude</link> standard defines a syntax for specifying document
+      inclusions. Basically this means:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>In your source document you write (zero, one or multiple times): <tag class="emptytag">xi:include href="…"</tag> (the <code>xi</code>
+          namespace prefix must be bound to the namespace <code>http://www.w3.org/2001/XInclude</code>).</para>
+      </listitem>
+      <listitem>
+        <para>You run your document through the <step/> step.</para>
+      </listitem>
+      <listitem>
+        <para>All <tag>xi:include</tag> elements are replaced with the contents of the document their <code>href</code> attribute is pointing to.
+        </para>
+      </listitem>
+      <listitem>
+        <para>All <tag>xi:include</tag> elements in the included documents are processed also, recursively.</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>Additionally, the <link xlink:href="https://www.w3.org/TR/xinclude/" role="newpage">XInclude</link> standard defines some <link
+        xlink:href="https://www.w3.org/TR/xinclude/#include_element" role="newpage">additional attributes</link> for the <tag>xi:include</tag>
+      element. The most used one is probably the <code>parse</code> attribute: <code>parse="xml"</code> (the default) means the document must be a
+      well-formed XML document and is included as an XML fragment; <code>parse="text"</code> means the document is included as plain text. There is
+      also an <link xlink:href="https://www.w3.org/TR/xinclude/#fallback_element" role="newpage"><tag>xi:fallback</tag></link> child element that
+      defines what will happen if the included document could not be found.</para>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="basic">
+
+    <para>Remark upfront: some of the example documents contain <code>xml:lang</code> attributes. These are intended for the <example-ref
+        idref="language-fixup"/> example below.</para>
+
+    <para>Assume we have a master document called <code>document-0.xml</code> that XIncludes two other documents:</para>
+    <example-doc href="../../examples/xinclude/document-0.xml"/>
+
+    <para>The first include document <code>includes/document-1.xml</code> looks like this, please notice that it contains an <tag>xi:include</tag>
+      element itself:</para>
+    <example-doc href="../../examples/xinclude/includes/document-1.xml"/>
+
+    <para>The second include document <code>includes/document-2.xml</code> (that is also included by <code>includes/document-1.xml</code>) looks like
+      this:</para>
+    <example-doc href="../../examples/xinclude/includes/document-1.xml"/>
+
+    <para>Now if we run <code>document-0.xml</code> through the <step/> step, the result is as follows:</para>
+    <xproc-example href="../../examples/xinclude/xinclude-01.xpl" show-source="false" fixup-pipeline-input="false"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Base URI fixup" id="base-uri-fixup">
+
+    <para>The XInclude base URI fixup means that an <code>xml:base</code> attribute is added to the root elements of the included documents. Using the
+      same documents and include structure as the <example-ref idref="basic"/> example, it looks like this:</para>
+
+    <xproc-example href="../../examples/xinclude/xinclude-02.xpl" show-source="false" fixup-pipeline-input="false" keep-from="includes/"/>
+
+    <para>Notice that there is no <code>xml:base</code> attribute added to the root element of the master document. If you need
+        <emphasis>all</emphasis> document root elements having an <code>xml:base</code> attribute, use the <step-ref name="p:add-xml-base"/> step
+      instead of XInclude base URI fixup:</para>
+
+    <xproc-example href="../../examples/xinclude/xinclude-03.xpl" show-source="false" fixup-pipeline-input="false" keep-from="includes/"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Language fixup" id="language-fixup">
+
+    <para>The XInclude language fixup means that an <code>xml:lang</code> attribute is added to the root elements of the included documents. This
+      stops the language settings of the including document from being inherited by the included documents. Using the same documents and include
+      structure as the <example-ref idref="basic"/> example, it looks like this:</para>
+
+    <xproc-example href="../../examples/xinclude/xinclude-04.xpl" show-source="false" fixup-pipeline-input="false" keep-from="includes/"/>
+
+    <para>Notice the empty <code>xml:base=""</code> attribute on the <tag>document-1</tag> element. That wasn&#x2019;t there in the source. It stops
+      the language settings of the including document <code>document-0.xml</code> (<code>xml:lang="en-us"</code>) from automatically being inherited
+      by the included document <code>includes/document-1.xml</code>.</para>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
-    <step-error code="XC0029">
-      <description>
-        <para>It is a dynamic error if an XInclude error occurs during processing.</para>
-      </description>
-    </step-error>
+    <step-error code="XC0029"/>
   </step-errors>
+
 </step>
