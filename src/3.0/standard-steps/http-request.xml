@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="http-request" version-idref="v30" category-idrefs="standard-steps env" short-description="Interact using HTTP (or related protocols)"
+<step name="http-request" version-idref="v30" category-idrefs="standard-steps env additional-standards" short-description="Interact using HTTP (or related protocols)"
   required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.http-request"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
