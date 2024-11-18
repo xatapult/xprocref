@@ -76,7 +76,7 @@
       <listitem>
         <para>For a JSON document-type, the document is loaded and interpreted (de-serialized) as JSON.</para>
         <para>The <option>parameters</option> option recognizes the parsing options as defined for the XPath <link
-            xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-parse-json" role="newpage"><code>fn:parse-json()</code></link> function (the
+            xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-parse-json" role="newpage"><code>parse-json()</code></link> function (the
             <code>$options</code> argument).</para>
       </listitem>
       <listitem>

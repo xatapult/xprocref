@@ -47,7 +47,7 @@
       <description>
         <para>Specifies the comparison method used. If the value of this option is the empty sequence (default) or <code>deep-equal</code>, <step/>
           must do the same as the XPath <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-deep-equal" role="newpage"
-              ><code>fn:deep-equal()</code></link> function.</para>
+              ><code>deep-equal()</code></link> function.</para>
         <para>Support for any other comparison method is implementation-defined and therefore depends on the XProc processor used.</para>
       </description>
     </option>

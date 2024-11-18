@@ -70,7 +70,7 @@
         </listitem>
         <listitem>
           <para>Two values computed by the XPath expression are considered equal if the XPath function <link
-              xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-deep-equal" role="newpage"><code>fn:deep-equal()</code></link> returns
+              xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-deep-equal" role="newpage"><code>deep-equal()</code></link> returns
               <code>true</code> for them. In most cases this simply means that values are equal when you intuitively expect them to be.</para>
         </listitem>
         <listitem>

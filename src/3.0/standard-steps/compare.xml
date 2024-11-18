@@ -50,7 +50,7 @@
       <description>
         <para>Specifies the comparison method used. If the value of this option is the empty sequence (default) or <code>deep-equal</code>, <step/>
           must do the same as the XPath <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-deep-equal" role="newpage"
-              ><code>fn:deep-equal()</code></link> function.</para>
+              ><code>deep-equal()</code></link> function.</para>
         <para>Support for any other comparison method is implementation-defined and therefore dependent on the XProc processor used.</para>
       </description>
     </option>
@@ -77,7 +77,7 @@
     <para>The <step/> step takes the documents appearing on its <port>source</port> and <port>alternate</port> ports and tests whether these are
       equal. Now testing XML documents for equality is not as easy as it sounds: what to do with whitespace, comments, order of attributes, etc. The
       default behavior of <step/> is the same as that of the XPath <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-deep-equal"
-        role="newpage"><code>fn:deep-equal()</code></link> function. Whether other comparison methods are supported is implementation-defined and
+        role="newpage"><code>deep-equal()</code></link> function. Whether other comparison methods are supported is implementation-defined and
       therefore dependent on the XProc processor used.</para>
     <para>If the <option>fail-if-not-equal</option> option is <code>false</code> (default), the step emits a simple XML document on its
         <port>result</port> port, saying <code>true</code> (equal) or <code>false</code> (not equal). If the <option>fail-if-not-equal</option> option
