@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="xslt" version-idref="v30" category-idrefs="standard-steps" short-description="Invoke an XSLT stylesheet" required="true" publish="false"
+<step name="xslt" version-idref="v30" category-idrefs="standard-steps additional-standards" short-description="Invoke an XSLT stylesheet" required="true" publish="false"
   href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.xslt" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
@@ -59,6 +59,7 @@
         <para>XSLT stylesheets (starting with XSLT version&#160;2.0) have a <emphasis>default collection</emphasis>, accessible using the XPath <link
             xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-collection" role="newpage">collection()</link> function. If you set this option
           to <code>true</code>, the documents appearing on the <port>source</port> port become the default collection.</para>
+        <para>Collections are supported starting XSLT version&#160;2.0.</para>
       </description>
     </option>
 
@@ -111,15 +112,15 @@
     <para>The <step/> step invokes the XSLT stylesheet that appears on the <port>stylesheet</port> port. What is used as input, how the XSLT
       processing starts and where/how the results appear depends on the XSLT version used. This is explained in the sections below.</para>
 
-    <para>Specifying the XSLT version is therefore important but, in most cases, rather simple: most likely the version as specified on the XSLT
-      stylesheet root element (the <code>xsl:stylesheet/@version</code> or <code>xsl:transform/@version</code> attribute) is used. Since such a
-      version attribute is required anyway, there usually won&#x2019;t be anything special you need to do. However, if you want you can set the
-      version explicitly using the <option>version</option> option.</para>
-
     <para>Because of all the details, invoking the <step/> step seems complicated. However, presumably, in the vast majority of cases it will be used
       in a classical manner: invoke an XSLT stylesheet on a source document and continue the pipeline using its result. Maybe with some parameters,
       maybe with some secondary results. For this, have a look at the <example-ref idref="basic-usage"/> example and don&#x2019;t let all the details
       overwhelm you.</para>
+
+    <para>Specifying the XSLT version is important but, in most cases, rather simple: most likely the version as specified on the XSLT stylesheet root
+      element (the <code>xsl:stylesheet/@version</code> or <code>xsl:transform/@version</code> attribute) is used. Since such a version attribute is
+      required anyway, there usually won&#x2019;t be anything special you need to do. However, if you want you can set the version explicitly using
+      the <option>version</option> option.</para>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -157,6 +158,7 @@
             port become the <emphasis>default collection</emphasis>, accessible using the XPath <link
               xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-collection" role="newpage">collection()</link> function.</para>
         </listitem>
+
         <listitem>
           <para>Then it is determined how to start the stylesheet processing:</para>
           <itemizedlist>
@@ -187,27 +189,14 @@
               <para>Any results created by <tag>xsl:result-document</tag> instructions appear on the <port>secondary</port> port. </para>
             </listitem>
           </itemizedlist>
-          <para>It is possible to have multiple documents as output: multiple principle documents or multiple documents the result of a single
-              <tag>xsl:result-document</tag> instruction. What happens depends on the value of the <code>build-tree</code> attribute of the output
-            definition for the result (the <tag>xsl:output</tag> or the <tag>xsl:result-document</tag> element):</para>
-          <itemizedlist>
-            <listitem>
-              <para>If <code>build-tree="false"</code>, the documents will appear as separate documents.</para>
-            </listitem>
-            <listitem>
-              <para>If <code>build-tree="true"</code>, the documents will appear as a <emphasis>single</emphasis> document. Since this document now
-                has multiple root elements, it is not well formed. However, that does not keep XProc from processing it. You will however run into
-                trouble if you serialize it (write it to disk) and expects a well-formed document.</para>
-            </listitem>
-          </itemizedlist>
         </listitem>
 
         <listitem>
           <para>Finally, the base URIs of the resulting documents (their <property>base-uri</property> document-property values) are determined. For
-            this we first need to determine the <emphasis>base output URI</emphasis>:</para>
+            this we first need to determine the <emphasis>base-output-URI</emphasis>:</para>
           <itemizedlist>
             <listitem>
-              <para>If the <option>base-output-uri</option> option is set, this value is used as the base output URI.</para>
+              <para>If the <option>base-output-uri</option> option is set, this value is used as base-output-URI.</para>
             </listitem>
             <listitem>
               <para>If the <option>base-output-uri</option> option is <emphasis>not</emphasis> set <emphasis>and</emphasis> there are documents on the
@@ -216,23 +205,23 @@
             </listitem>
             <listitem>
               <para>If the <option>base-output-uri</option> option is <emphasis>not</emphasis> set <emphasis>and</emphasis> there are
-                  <emphasis>no</emphasis> documents on the <port>source</port> port, the base URI of the stylesheet is used as base output URI.</para>
+                  <emphasis>no</emphasis> documents on the <port>source</port> port, the base URI of the stylesheet is used as base-output-URI.</para>
             </listitem>
           </itemizedlist>
           <para>The base URIs of the resulting documents (their <property>base-uri</property> document-property values) are now computed using this
-            base output URI:</para>
+            base-output-URI:</para>
           <itemizedlist>
             <listitem>
-              <para>The base URI of the principal output document(s) becomes the base output URI. This means that when there are multiple principal
+              <para>The base URI of the principal output document(s) becomes the base-output-URI. This means that when there are multiple principal
                 documents, they all have the same base URI!</para>
             </listitem>
             <listitem>
               <para>For all documents appearing on the <port>secondary</port> port, the base URI is determined by the
-                  <code>xsl:result-document/@href</code> attribute. A relative value is made absolute against the base output URI.</para>
+                  <code>xsl:result-document/@href</code> attribute. A relative value is made absolute against the base-output-URI.</para>
             </listitem>
           </itemizedlist>
         </listitem>
-        
+
       </itemizedlist>
 
     </section>
@@ -244,11 +233,94 @@
 
       <para>If the stylesheet version is determined as 3.0, the following happens:</para>
       <itemizedlist>
-        <listitem>
-          <para>TBD</para>
-        </listitem>
-      </itemizedlist>
 
+        <listitem>
+          <para>The following options are ignored: <option>static-parameters</option>, <option>global-context-item</option>.</para>
+        </listitem>
+
+        <listitem>
+          <para>An XSLT version&#160;2.0 stylesheet has an <emphasis>initial context node</emphasis>, the initial data the stylesheet works upon. This
+            is determined as follows:</para>
+          <itemizedlist>
+            <listitem>
+              <para>When no documents appear on the <port>source</port> port, the initial context node is undefined/empty.</para>
+            </listitem>
+            <listitem>
+              <para>When one or multiple documents appear on the <port>source</port> port, only the <emphasis>first</emphasis> document becomes the
+                initial context node.</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem>
+          <para>If the <option>populate-default-collection</option> is set to <code>true</code>, all documents that appear on the <port>source</port>
+            port become the <emphasis>default collection</emphasis>, accessible using the XPath <link
+              xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-collection" role="newpage">collection()</link> function.</para>
+        </listitem>
+
+        <listitem>
+          <para>Then it is determined how to start the stylesheet processing:</para>
+          <itemizedlist>
+            <listitem>
+              <para>If the <option>template-name</option> is <emphasis>not</emphasis> set, the normal &#x201c;apply-template invocation&#x201d; is
+                performed. The document(s) that appear on the <port>source</port> port are used, one by one, for the initial match.</para>
+              <para>If the <option>initial-mode</option> option is set, processing starts in that mode.</para>
+            </listitem>
+            <listitem>
+              <para>If the <option>template-name</option> is set, the named template with that name (<tag>xsl:template name="…"</tag>) is
+                invoked.</para>
+              <para>The <option>initial-mode</option> option is ignored.</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem>
+          <para>The stylesheet processes.</para>
+        </listitem>
+
+        <listitem>
+          <para>The result(s) appears on the output port(s):</para>
+          <itemizedlist>
+            <listitem>
+              <para>The principal result document of the stylesheet appears on the <port>result</port> port.</para>
+            </listitem>
+            <listitem>
+              <para>Any results created by <tag>xsl:result-document</tag> instructions appear on the <port>secondary</port> port. </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem>
+          <para>Finally, the base URIs of the resulting documents (their <property>base-uri</property> document-property values) are determined. For
+            this we first need to determine the <emphasis>base-output-URI</emphasis>:</para>
+          <itemizedlist>
+            <listitem>
+              <para>If the <option>base-output-uri</option> option is set, this value is used as base-output-URI.</para>
+            </listitem>
+            <listitem>
+              <para>If the <option>base-output-uri</option> option is <emphasis>not</emphasis> set <emphasis>and</emphasis> there are documents on the
+                  <port>source</port> port, the base URI of the <emphasis>first</emphasis> document on the <port>source</port> port is used as base
+                output URI.</para>
+            </listitem>
+            <listitem>
+              <para>If the <option>base-output-uri</option> option is <emphasis>not</emphasis> set <emphasis>and</emphasis> there are
+                  <emphasis>no</emphasis> documents on the <port>source</port> port, the base URI of the stylesheet is used as base-output-URI.</para>
+            </listitem>
+          </itemizedlist>
+          <para>The base URIs of the resulting documents (their <property>base-uri</property> document-property values) are now computed using this
+            base-output-URI:</para>
+          <itemizedlist>
+            <listitem>
+              <para>The base URI of the principal output document becomes the base-output-URI.</para>
+            </listitem>
+            <listitem>
+              <para>For all documents appearing on the <port>secondary</port> port, the base URI is determined by the
+                  <code>xsl:result-document/@href</code> attribute. A relative value is made absolute against the base-output-URI.</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+      </itemizedlist>
 
     </section>
 
@@ -257,16 +329,44 @@
     <section>
       <title>Invoking an XSLT&#160;1.0 stylesheet</title>
 
-      <para>If the stylesheet version is determined as 3.0, the following happens:</para>
+      <para>If the stylesheet version is determined as 1.0, the following happens:</para>
       <itemizedlist>
+
         <listitem>
-          <para>TBD</para>
+          <para>The following options are ignored: <option>global-context-item</option>, <option>initial-mode</option>,
+              <option>populate-default-collection</option>, <option>static-parameters</option>, <option>template-name</option>.</para>
         </listitem>
+
+        <listitem>
+          <para>There must be exactly one document appearing on the <port>source</port> port. This document will be processed.</para>
+        </listitem>
+
+        <listitem>
+          <para>The stylesheet processes.</para>
+        </listitem>
+
+        <listitem>
+          <para>The resulting document appears on the <port>result</port> port. The <port>secondary</port> port will always be empty.</para>
+        </listitem>
+
+        <listitem>
+          <para>Finally, the base URI of the resulting document (its <property>base-uri</property> document-property value) is determined. For this we
+            first need to determine the <emphasis>base-output-URI</emphasis>:</para>
+          <itemizedlist>
+            <listitem>
+              <para>If the <option>base-output-uri</option> option is set, this value is used as base-output-URI.</para>
+            </listitem>
+            <listitem>
+              <para>If the <option>base-output-uri</option> option is <emphasis>not</emphasis> set, the base URI of the <emphasis>first</emphasis>
+                document on the <port>source</port> port is used as base-output-URI.</para>
+            </listitem>
+          </itemizedlist>
+          <para>The base URI of the output document becomes the base-output-URI.</para>
+        </listitem>
+
       </itemizedlist>
 
-
     </section>
-
 
   </description>
 
@@ -328,6 +428,8 @@
   <!-- Example with base URI of main document? -->
 
   <!-- What happens when populate-defualt-collection is false to the default collection? -->
+
+  <!-- Iets met build-tree? -->
 
   <!-- ======================================================================= -->
 

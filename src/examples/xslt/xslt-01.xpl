@@ -7,12 +7,17 @@
   </p:input>
   <p:output port="result" sequence="true"/>
 
-  <p:xslt>
-    <p:with-input port="stylesheet" href="xsl/add-comment.xsl"></p:with-input>
+  <p:xslt name="t">
+    <p:with-input port="stylesheet" href="xsl/add-comment.xsl"/>
   </p:xslt>
-  
+
   <p:for-each>
-    <p:identity message="** {base-uri(/)}"></p:identity>
+    <p:identity message="** {base-uri(/)}"/>
+  </p:for-each>
+
+  <p:for-each>
+    <p:with-input pipe="secondary@t"/>
+    <p:identity message="**SECOND** {base-uri(/)}"/>
   </p:for-each>
 
 </p:declare-step>
