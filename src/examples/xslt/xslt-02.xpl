@@ -10,7 +10,7 @@
   </p:input>
   <p:output port="result" sequence="true"/>
 
-  <p:xslt>
+  <p:xslt parameters="map{'comment-text': 'Special comment text by parameter!'}">
     <p:with-input port="stylesheet" href="add-comment.xsl"/>
   </p:xslt>
 

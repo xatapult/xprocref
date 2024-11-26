@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="xslt" version-idref="v30" category-idrefs="standard-steps additional-standards" short-description="Invoke an XSLT stylesheet" required="true" publish="false"
-  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.xslt" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+<step name="xslt" version-idref="v30" category-idrefs="standard-steps additional-standards" short-description="Invoke an XSLT stylesheet"
+  required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.xslt" xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
   <!-- ======================================================================= -->
 
@@ -56,7 +56,7 @@
 
     <option name="populate-default-collection" as="xs:boolean?" select="true()" required="false">
       <description>
-        <para>XSLT stylesheets (starting with XSLT version&#160;2.0) have a <emphasis>default collection</emphasis>, accessible using the XPath <link
+        <para>XSLT stylesheets have a <emphasis>default collection</emphasis>, accessible using the XPath <link
             xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-collection" role="newpage">collection()</link> function. If you set this option
           to <code>true</code>, the documents appearing on the <port>source</port> port become the default collection.</para>
         <para>Collections are supported starting XSLT version&#160;2.0.</para>
@@ -91,7 +91,7 @@
       <description>
         <para>Explicitly sets the XSLT stylesheet version. Probable values are <code>1.0</code>, <code>2.0</code> or <code>3.0</code>.</para>
         <para>If this option is not set, officially the XSLT version used is implementation-defined and therefore depends on the XProc processor used.
-          But you can most likely assume that the XProc processor will use the stylesheet version as indicated on the stylesheet root element (the
+          However, most likely the XProc processor will use the stylesheet version as indicated on the stylesheet root element (the
             <code>xsl:stylesheet/@version</code> or <code>xsl:transform/@version</code> attribute).</para>
       </description>
     </option>
@@ -114,8 +114,8 @@
 
     <para>Because of all the details, invoking the <step/> step seems complicated. However, presumably, in the vast majority of cases it will be used
       in a classical manner: invoke an XSLT stylesheet on a source document and continue the pipeline using its result. Maybe with some parameters,
-      maybe with some secondary results. For this, have a look at the <example-ref idref="basic-usage"/> example and don&#x2019;t let all the details
-      overwhelm you.</para>
+      maybe with some secondary results. For this, have a look at the <example-ref idref="basic-usage"/> and <example-ref idref="basic-usage-2"/>
+      examples and don&#x2019;t let all the details overwhelm you.</para>
 
     <para>Specifying the XSLT version is important but, in most cases, rather simple: most likely the version as specified on the XSLT stylesheet root
       element (the <code>xsl:stylesheet/@version</code> or <code>xsl:transform/@version</code> attribute) is used. Since such a version attribute is
@@ -421,7 +421,47 @@
   <!-- ======================================================================= -->
 
   <example title="Basic usage" id="basic-usage">
-    <para>TBD</para>
+
+    <para>For the following example, we&#x2019;ll use a very simple (3.0) stylesheet, called <code>add-comment.xsl</code>, that adds a comment as the
+      first child of the root element:</para>
+
+    <example-doc href="../../examples/xslt/add-comment.xsl"/>
+
+    <para>Running this without any bells and whistles is as follows:</para>
+
+    <xproc-example href="../../examples/xslt/xslt-01.xpl"/>
+
+    <xproc-example href="../../examples/xslt/xslt-02.xpl" show-source="false">
+      <pipeline-header>
+        <para>Setting a stylesheet parameter is done by supplying a map with parameter name/value pairs as the value of the
+            <option>parameters</option> option:</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Basic usage with secondary documents" id="basic-usage-2">
+
+    <para>The output of <tag>xsl:result-document</tag> stylesheet instructions is written to the <port>secondary</port> port of the <step/>
+      invocation. The base URI of these documents is the value of the <code>xsl:result-document/@href</code> attribute.</para>
+
+    <para>The following stylesheet, called <code>split-documents.xsl</code>, writes the contents of each <tag>document</tag> element to a separate,
+      secondary, document. The base URI of the output documents is inferred from the <code>document/@name</code> attribute. The primary output of the
+      stylesheet is not used (it will be empty).</para>
+
+    <example-doc href="../../examples/xslt/split-documents.xsl"/>
+
+    <para>When using this stylesheet in an XProc pipeline, the documents, written by <tag>xsl:result-document</tag> instructions, end up on the
+        <port>secondary</port> port. If we want these written to disk, we need to add some code for it.</para>
+
+    <xproc-example href="../../examples/xslt/xslt-03.xpl" show-result="false"/>
+
+    <para>The <code>p:for-each</code> after the <step/> iterates over all secondary documents and invokes <step-ref name="p:store"/> to store them to disk,
+      using their base URI, that was set by the stylesheet. The result will be two documents, called <code>x1.xml</code> and <code>x2.xml</code>, in the
+        <code>tmp/</code> folder underneath the stylesheet location.</para>
+
   </example>
 
 
