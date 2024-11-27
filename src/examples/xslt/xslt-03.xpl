@@ -11,7 +11,7 @@
       </document>
     </documents>
   </p:input>
-  <p:output port="result" sequence="true"/>
+  <p:output port="result" pipe="result@create-secondary-documents"/>
 
   <p:xslt name="create-secondary-documents">
     <p:with-input port="stylesheet" href="split-documents.xsl"/>

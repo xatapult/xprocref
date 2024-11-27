@@ -46,11 +46,12 @@ p.tocentry {
 }
 
 p.page-banner {
-  background-color: darkred !important;
-  color: white;
+  background-color: yellow !important;
+  color: black;
   font-weight: bold;
   font-size: 110%;
-  padding-left: 1rem;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 p.step-start-character-list {

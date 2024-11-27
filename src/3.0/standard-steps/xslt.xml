@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="xslt" version-idref="v30" category-idrefs="standard-steps additional-standards" short-description="Invoke an XSLT stylesheet"
-  required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.xslt" xmlns:xlink="http://www.w3.org/1999/xlink"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.xslt" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
@@ -449,27 +449,22 @@
 
     <para>The following stylesheet, called <code>split-documents.xsl</code>, writes the contents of each <tag>document</tag> element to a separate,
       secondary, document. The base URI of the output documents is inferred from the <code>document/@name</code> attribute. The primary output of the
-      stylesheet is not used (it will be empty).</para>
+      stylesheet is almost identical to its input: the full URI of each written secondary output document is added to the <tag>document</tag> element
+      in an <code>href</code> attribute.</para>
 
     <example-doc href="../../examples/xslt/split-documents.xsl"/>
 
     <para>When using this stylesheet in an XProc pipeline, the documents, written by <tag>xsl:result-document</tag> instructions, end up on the
         <port>secondary</port> port. If we want these written to disk, we need to add some code for it.</para>
 
-    <xproc-example href="../../examples/xslt/xslt-03.xpl" show-result="false"/>
+    <xproc-example href="../../examples/xslt/xslt-03.xpl" keep-from="tmp/"/>
 
-    <para>The <code>p:for-each</code> after the <step/> iterates over all secondary documents and invokes <step-ref name="p:store"/> to store them to disk,
-      using their base URI, that was set by the stylesheet. The result will be two documents, called <code>x1.xml</code> and <code>x2.xml</code>, in the
-        <code>tmp/</code> folder underneath the stylesheet location.</para>
+   <para>The primary output of the <step/> is explicitly piped to the output port of the pipeline here (by the <code>p:output/@pipe</code> attribute).</para>
+    <para>The <code>p:for-each</code> after the <step/> iterates over all secondary documents and invokes <step-ref name="p:store"/> to store them to
+      disk, using their base URI, that was set by the stylesheet. The result will be two documents, called <code>x1.xml</code> and
+      <code>x2.xml</code>, in the <code>tmp/</code> folder underneath the stylesheet location.</para>
 
   </example>
-
-
-  <!-- Example with base URI of main document? -->
-
-  <!-- What happens when populate-defualt-collection is false to the default collection? -->
-
-  <!-- Iets met build-tree? -->
 
   <!-- ======================================================================= -->
 
