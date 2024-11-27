@@ -39,6 +39,8 @@
   <xsl:variable name="namespace-docbook" as="xs:string" select="'http://docbook.org/ns/docbook'"/>
 
   <xsl:variable name="namespaces-leave-unchanged" as="xs:string+" select="($namespace-docbook, $namespace-xdoc)"/>
+  
+  <xsl:variable name="wip-text" as="xs:string" select="normalize-space(doc('../../data/wip-text.xml')/*)"/>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Create index maps for faster lookups of steps, versions and categories: -->
@@ -352,6 +354,7 @@
         </xsl:call-template>
       </xsl:with-param>
       <xsl:with-param name="version-id" select="$version-id"/>
+      <xsl:with-param name="create-wip-remark" select="true()"/>
     </xsl:call-template>
 
   </xsl:template>
@@ -855,6 +858,7 @@
       <!-- The name to use when this document is linked to. -->
     </xsl:param>
     <xsl:param name="test-version-remark" as="xs:string?" required="false" select="()"/>
+    <xsl:param name="create-wip-remark" as="xs:boolean" required="false" select="false()"/>
 
     <xsl:variable name="prev-marker" as="node()*">
       <xsl:if test="map:contains($prev-next, $key-prev)">
@@ -900,8 +904,8 @@
         <db:info>
           <db:title/>
         </db:info>
-        <xsl:if test="$wip">
-          <db:para role="page-banner">This site is work in progress and does not yet describe all available steps.</db:para>
+        <xsl:if test="$wip and $create-wip-remark">
+          <db:para role="page-banner">{$wip-text}</db:para>
         </xsl:if>
         <xsl:if test="not($production-version)">
           <db:para role="page-banner">You are looking at the TEST version!{if (exists($test-version-remark)) then (' (' || $test-version-remark ||

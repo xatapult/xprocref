@@ -76,7 +76,7 @@
 
     <para>The document coming out of the <step/> step is a map. This map flows through my pipeline. The <step-ref name="p:identity"/> step, since it
       directly follows <step/>, can address this map with the dot <code>.</code> operator. And <code>.?c</code> is syntactic sugar for: give me the
-      value of the context item map with the key <code>'c'</code>. <!--You could also have written it as <code>.('c')</code>.--></para>
+      value of the context item map with the key <code>'c'</code>. You could also have written it as <code>.('c')</code>.</para>
 
   </example>
 

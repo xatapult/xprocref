@@ -24,7 +24,7 @@
       <description>
         <para>The XPath regular expression that matches the substrings to replace.</para>
         <para>See the <code>$pattern</code> argument of the XPath function <link xlink:href="https://w3.org/TR/xpath-functions-31/#func-replace"
-            role="newpage">fn:replace()</link> for more details.</para>
+            role="newpage">replace()</link> for more details.</para>
       </description>
     </option>
 
@@ -32,7 +32,7 @@
       <description>
         <para>The replacement string.</para>
         <para>See the <code>$replacement</code> argument of the XPath function <link xlink:href="https://w3.org/TR/xpath-functions-31/#func-replace"
-            role="newpage">fn:replace()</link> for more details.</para>
+            role="newpage">replace()</link> for more details.</para>
       </description>
     </option>
 
@@ -57,7 +57,7 @@
 
   <description>
     <para>The <step/> step is &#x201c;just&#x201d; a convenience wrapper around the Xpath <link
-        xlink:href="https://w3.org/TR/xpath-functions-31/#func-replace" role="newpage">fn:replace()</link> function. This function takes a string and
+        xlink:href="https://w3.org/TR/xpath-functions-31/#func-replace" role="newpage">replace()</link> function. This function takes a string and
       replaces substrings that match a regular expression with a replacement string. For the <step/> step, the input string is the full document on
       the <port>source</port> port. The resulting document appears on the <port>result</port> port.</para>
   </description>
