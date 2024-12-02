@@ -1,208 +1,165 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="xquery" version-idref="v30" category-idrefs="standard-steps" short-description="[EDIT] xquery short description" required="true"
-  publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.xquery"
+<step name="xquery" version-idref="v30" category-idrefs="standard-steps additional-standards" short-description="Invoke an XQuery query"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.xquery"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <input port="source" content-types="any" sequence="true" primary="true">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The documents to invoke the XQuery query on, accessible using the XPath <link
+            xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-collection" role="newpage">collection()</link> function. The first document
+          becomes the initial context item. </para>
+        <para>If no documents are provided on the <port>source</port> port, the initial context item is undefined and the default collection is
+          empty.</para>
       </description>
     </input>
-    <input port="query" content-types="text xml" primary="false" sequence="true">
+
+    <input port="query" content-types="text xml" primary="false" sequence="false">
       <description>
-        <para>[EDIT] input query</para>
+        <para>The XQuery query this step invokes. There are several ways to specify the query, see <xref linkend="queryspec"/> below.</para>
       </description>
     </input>
+
     <output port="result" sequence="true" content-types="any" primary="true">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting document(s).</para>
       </description>
     </output>
+
     <option name="parameters" as="map(xs:QName,item()*)?" required="false">
       <description>
-        <para>[EDIT] option parameters</para>
+        <para>A map with variable-names and corresponding values for the external variables in the query. See also the <example-ref
+            idref="queryparams"/> example.</para>
       </description>
     </option>
+
     <option name="version" as="xs:string?" required="false">
       <description>
-        <para>[EDIT] option version</para>
+        <para>Explicitly sets the XQuery version to use. Probable values are <code>3.0</code> or <code>3.1</code>.</para>
+        <para>If this option is not set, officially the XQuery version used is implementation-defined and therefore depends on the XProc processor
+          used. However, most likely the XProc processor will use the version as indicated in the query (the <code>xquery&#160;version</code>
+          statement at the top of the query).</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:xquery</tag> step applies an XQuery query to the sequence of documents provided on the <port>source</port> port.</para>
+    <para>The <step/> step applies an XQuery query to the sequence of documents provided on the <port>source</port> port.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>If a sequence of documents is provided on the <port>source</port> port, the first document is used as the initial context item. The whole
-      sequence is also the default collection. If no documents are provided on the <port>source</port> port, the initial context item is undefined and
-      the default collection is empty.</para>
-    <para>The <port>query</port> port must receive a single document which is either an XML document or a text document. A text document must be
-      treated as the query. For an XML document the following rules apply:</para>
-    <itemizedlist>
-      <listitem>
-        <para>If the document root element is <tag xml:id="cv.query">c:query</tag>, the text descendants of this element are considered the
-          query.</para>
-        <para>
-          <emphasis role="bold">[RNG Pattern VocabQuery]</emphasis>
-        </para>
-      </listitem>
-      <listitem>
-        <para>If the document root element is in the XQueryX namespace, the document is treated as an XQueryX-encoded query. Support for XQueryX is
-          implementation-defined. </para>
-      </listitem>
-      <listitem>
-        <para>Otherwise the serialization of the document must be treated as the query. The document's serialization property (if present) is
-          used.</para>
-      </listitem>
-    </itemizedlist>
-    <para>If the step specifies a <option>version</option>, then that version of XQuery must be used to process the transformation. <emphasis
-        role="bold">[ERROR <step-error-ref code="XC0009"/>]</emphasis> If the step does not specify a version, the implementation may use any version
-      it has available and may use any means to determine what version to use, including, but not limited to, examining the version of the query.It is
-      implementation defined which XQuery version(s) is/are supported.</para>
-    <para>The name/value pairs in option <option>parameters</option> are used to set the query’s external variables.</para>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0101"/>]</emphasis>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0102"/>]</emphasis>
-    </para>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0103"/>]</emphasis>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0104"/>]</emphasis>
-    </para>
-    <para>The output of this step may include PSVI annotations.</para>
-    <para>The static context of the XQuery processor is augmented in the following way:</para>
-    <variablelist>
-      <varlistentry>
-        <term>Statically known default collection type</term>
+
+    <para>XQuery is a programming language for querying sets of XML (and other) documents. More background information can be found on its <link
+        xlink:href="https://en.wikipedia.org/wiki/XQuery" role="newpage">Wikipedia page</link>. It is used in, for instance, XML databases like <link
+        xlink:href="https://exist-db.org/exist/apps/homepage/index.html" role="newpage">eXist</link> and <link xlink:href="https://basex.org/"
+        role="newpage">BaseX</link>.</para>
+
+    <para>The <step/> step invokes the XQuery query, as provided on the <port>query</port> port, on the document(s) appearing on the
+        <port>source</port> port. The resulting document(s) appear on the <port>result</port> port.</para>
+
+    <section xml:id="queryspec">
+      <title>Specifying the query</title>
+
+      <para>What appears on the <port>query</port> port determines the query the step invokes. XQuery queries are usually text documents (not XML),
+        but there is a way to specify a query using XML-only called <link xlink:href="https://www.w3.org/TR/xqueryx-31/" role="newpage"
+        >XQueryX</link>. There are several ways to specify the query:</para>
+
+      <itemizedlist>
         <listitem>
-          <para>
-            <literal>document()*</literal>
-          </para>
+          <para>If the document on the <port>query</port> port is a text document, this is the query.</para>
         </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Statically known namespaces:</term>
         <listitem>
-          <para>Unchanged from the implementation defaults. No namespace declarations in the XProc pipeline are automatically exposed in the static
-            context. </para>
+          <para>If the document on the <port>query</port> port is an XML document with root element <tag>c:query</tag> (the <code>c</code> namespace
+            prefix must be bound to the namespace <code>http://www.w3.org/ns/xproc-step</code>), the text value of this root element is the
+            query.</para>
+          <para>Usually this means that the <tag>c:query</tag> root element consists of text contents only (a single text node). However, if there are
+            child elements, all text nodes in the document will be concatenated.</para>
         </listitem>
-      </varlistentry>
-    </variablelist>
-    <para>The dynamic context of the XQuery processor is augmented in the following way:</para>
-    <variablelist>
-      <varlistentry>
-        <term>Context item</term>
         <listitem>
-          <para>The first document that appears on the <port>source</port> port. </para>
+          <para>If the document on the <port>query</port> port is an XML document with its root element in the XQueryX namespace
+              (<code>http://www.w3.org/2005/XQueryX</code>), the document is treated as an <link xlink:href="https://www.w3.org/TR/xqueryx-31/"
+              role="newpage">XQueryX</link> query. </para>
+          <para>Whether XQueryX is supported is implementation defined and therefore depends on the XProc processor used.</para>
         </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Context position</term>
         <listitem>
-          <para>
-            <literal>1</literal>
-          </para>
+          <para>In all other cases, the document on the <port>query</port> port is first serialized (as if written to disk), using the (optional)
+              <property>serialization</property> document-property settings. The resulting text is used as the query.</para>
         </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Context size</term>
-        <listitem>
-          <para>
-            <literal>1</literal>
-          </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Variable values</term>
-        <listitem>
-          <para>Any parameters passed in the <option>parameters</option> option augment any implementation-defined variable bindings known to the
-            XQuery processor. </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Function implementations</term>
-        <listitem>
-          <para>The function implementations provided by the XQuery processor.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Current dateTime</term>
-        <listitem>
-          <para>The point in time returned as the current dateTime is implementation-defined.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Implicit timezone</term>
-        <listitem>
-          <para>The implicit timezone is implementation-defined. </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Available documents</term>
-        <listitem>
-          <para>The set of available documents (those that may be retrieved with a URI) is implementation-dependent. </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Available collections</term>
-        <listitem>
-          <para>The set of available collections is implementation-dependent. </para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>Default collection</term>
-        <listitem>
-          <para>The sequence of documents provided on the <port>source</port> port. </para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
-    <sect2 xml:id="example-xquery" role="tocsuppress">
-      <title>Example</title>
-      <para>The following pipeline applies XInclude processing and schema validation before using XQuery:</para>
-      <example xml:id="ex.c.xquery">
-        <title>A Sample Pipeline Document</title>
-        <programlisting language="xml">
-               <include href="../../../../build/examples/xquery.txt" parse="text"/>
-            </programlisting>
-      </example>
-      <para>Where <filename>countp.xq</filename> might contain:</para>
-      <programlisting language="xml">&lt;count&gt;{count(.//p)}&lt;/count&gt;</programlisting>
-    </sect2>
-    <sect2>
-      <title>Document properties</title>
-      <para feature="xquery-preserves-none">No document properties are preserved. The <property>base-uri</property> property of each document will
-        reflect the base URI specified by the query. If the query does not establish a base URI, the document will not have one. </para>
-    </sect2>
+      </itemizedlist>
+    </section>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>Which XQuery version(s) is/are supported is implementation-defined and therefore depends on the XProc processor used.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>No document-properties from the source document(s) are preserved.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>The <property>base-uri</property> document of each result document is determined by the query. If the query does not establish a base URI,
+      the document will not have a <property>base-uri</property> document-property.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="basicusage">
+
+    <para>Assume we have input documents containing <tag>thing</tag> elements and we want to output a list of these elements, ordered by the value of
+      their <code>id</code> attribute. The following XQuery query, called <code>sort-things.xql</code>, does the trick:</para>
+    <example-doc href="../../examples/xquery/sort-things.xql"/>
+
+    <xproc-example href="../../examples/xquery/xquery-01.xpl" fixup-pipeline-input="false" show-source="false">
+      <pipeline-header>
+        <para>The following pipeline releases this query on some input documents containing <tag>thing</tag> elements:</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Passing parameters to a query" id="queryparams">
+
+    <para>Let&#x2019;s make the <example-ref idref="basicusage"/> example also usable for other elements than <tag>thing</tag>. The name of the
+      element to count is passed as an external variable. The query, called <code>sort.xql</code>, is as follows:</para>
+
+    <example-doc href="../../examples/xquery/sort.xql"/>
+
+    <xproc-example href="../../examples/xquery/xquery-02.xpl" fixup-pipeline-input="false" show-source="false">
+      <pipeline-header>
+        <para>The following pipeline releases this query on the same input documents as the <example-ref idref="basicusage"/> example. It again
+          selects <tag>thing</tag> elements, but the (local) name of this element is now passed as an external variable:</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
-    <step-error code="XC0009">
-      <description>
-        <para>It is a dynamic error if the specified XQuery version is not available.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0101">
-      <description>
-        <para>It is a dynamic error if a document appearing on port <port>source</port> cannot be represented in the XDM version associated with the
-          chosen XQuery version, e.g. when a JSON document contains a map and XDM 3.0 is used.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0102">
-      <description>
-        <para>It is a dynamic error if any key in option <option>parameters</option> is associated to a value that cannot be represented in the XDM
-          version associated with the chosen XQuery version, e.g. with a map, an array, or a function when XDM 3.0 is used.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0103">
-      <description>
-        <para>It is a dynamic error if any error occurs during XQuery’s static analysis phase.</para>
-      </description>
-    </step-error>
-    <step-error code="XC0104">
-      <description>
-        <para>It is a dynamic error if any error occurs during XQuery’s dynamic evaluation phase.</para>
-      </description>
-    </step-error>
+    <step-error code="XC0009"/>
+    <step-error code="XC0101"/>
+    <step-error code="XC0102"/>
+    <step-error code="XC0103"/>
+    <step-error code="XC0104"/>
   </step-errors>
+
 </step>

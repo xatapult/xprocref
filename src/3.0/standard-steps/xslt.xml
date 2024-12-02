@@ -386,7 +386,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <detail>
-    <para>The <property>base-uri</property> document of each result document (both for the <port>result</port> and the <port>secondary</port> port is
+    <para>The <property>base-uri</property> document of each result document (both for the <port>result</port> and the <port>secondary</port> port) is
       determined by the transformation. If the transformation does not establish a base URI, the document will not have a
         <property>base-uri</property> document-property.</para>
   </detail>

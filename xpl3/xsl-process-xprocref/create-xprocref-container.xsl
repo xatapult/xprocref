@@ -672,10 +672,10 @@
         <db:thead>
           <db:row>
             <db:entry>
-              <db:para>Type</db:para>
+              <db:para>Port</db:para>
             </db:entry>
             <db:entry>
-              <db:para>Port</db:para>
+              <db:para>Type</db:para>
             </db:entry>
             <db:entry>
               <db:para>Primary?</db:para>
@@ -800,14 +800,14 @@
       <db:entry>
         <db:para>
           <db:code>
-            <xsl:value-of select="local-name($port-elm)"/>
+            <xsl:value-of select="$port-elm/@port"/>
           </db:code>
         </db:para>
       </db:entry>
       <db:entry>
         <db:para>
           <db:code>
-            <xsl:value-of select="$port-elm/@port"/>
+            <xsl:value-of select="local-name($port-elm)"/>
           </db:code>
         </db:para>
       </db:entry>

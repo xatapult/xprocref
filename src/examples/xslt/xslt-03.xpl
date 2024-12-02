@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0">
 
-  <p:input port="source" sequence="true">
+  <p:input port="source">
     <documents>
       <document name="x1.xml">
         <document-1/>
