@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="xquery" version-idref="v30" category-idrefs="standard-steps additional-standards" short-description="Invoke an XQuery query"
-  required="true" publish="false" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.xquery"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.xquery"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
@@ -32,7 +32,8 @@
 
     <option name="parameters" as="map(xs:QName,item()*)?" required="false">
       <description>
-        <para>A map with variable-names and corresponding values for the external variables in the query.</para>
+        <para>A map with variable-names and corresponding values for the external variables in the query. See also the <example-ref
+            idref="queryparams"/> example.</para>
       </description>
     </option>
 
@@ -68,9 +69,9 @@
     <section xml:id="queryspec">
       <title>Specifying the query</title>
 
-      <para>What appears on the <port>query</port> port determines the query the step invokes. XQuery queries are usually text documents
-        (not XML), but there is a way to specify a query using XML-only called <link xlink:href="https://www.w3.org/TR/xqueryx-31/" role="newpage"
-          >XQueryX</link>. There are several ways to specify the query:</para>
+      <para>What appears on the <port>query</port> port determines the query the step invokes. XQuery queries are usually text documents (not XML),
+        but there is a way to specify a query using XML-only called <link xlink:href="https://www.w3.org/TR/xqueryx-31/" role="newpage"
+        >XQueryX</link>. There are several ways to specify the query:</para>
 
       <itemizedlist>
         <listitem>
@@ -116,6 +117,40 @@
     <para>The <property>base-uri</property> document of each result document is determined by the query. If the query does not establish a base URI,
       the document will not have a <property>base-uri</property> document-property.</para>
   </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="basicusage">
+
+    <para>Assume we have input documents containing <tag>thing</tag> elements and we want to output a list of these elements, ordered by the value of
+      their <code>id</code> attribute. The following XQuery query, called <code>sort-things.xql</code>, does the trick:</para>
+    <example-doc href="../../examples/xquery/sort-things.xql"/>
+
+    <xproc-example href="../../examples/xquery/xquery-01.xpl" fixup-pipeline-input="false" show-source="false">
+      <pipeline-header>
+        <para>The following pipeline releases this query on some input documents containing <tag>thing</tag> elements:</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Passing parameters to a query" id="queryparams">
+
+    <para>Let&#x2019;s make the <example-ref idref="basicusage"/> example also usable for other elements than <tag>thing</tag>. The name of the
+      element to count is passed as an external variable. The query, called <code>sort.xql</code>, is as follows:</para>
+
+    <example-doc href="../../examples/xquery/sort.xql"/>
+
+    <xproc-example href="../../examples/xquery/xquery-02.xpl" fixup-pipeline-input="false" show-source="false">
+      <pipeline-header>
+        <para>The following pipeline releases this query on the same input documents as the <example-ref idref="basicusage"/> example. It again
+          selects <tag>thing</tag> elements, but the (local) name of this element is now passed as an external variable:</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
 
   <!-- ======================================================================= -->
 
