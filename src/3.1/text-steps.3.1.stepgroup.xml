@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step-group xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <!-- == Step group for: text steps == -->
+  <xi:include href="text-steps/markdown-to-html.xml"/>
+
+</step-group>

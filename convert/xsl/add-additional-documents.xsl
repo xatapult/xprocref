@@ -94,6 +94,11 @@
             <namespace prefix="p" uri="http://www.w3.org/ns/xproc">
               <description>The main XProc namespace, used for all of its elements, steps and some of its attributes.</description>
             </namespace>
+            <namespace prefix="err" uri="http://www.w3.org/ns/xproc-error" error-namespace="true">
+              <description>
+                <para>This namespace is used for XProc errors.</para>
+              </description>
+            </namespace>
           </namespaces>
 
           <versions>

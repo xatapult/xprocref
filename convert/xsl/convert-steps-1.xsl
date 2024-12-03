@@ -84,7 +84,9 @@
   <xsl:template match="db:section">
 
     <xsl:variable name="step-specification-id" as="xs:string" select="xs:string(@xml:id)"/>
-    <xsl:variable name="step-title" as="xs:string" select="xs:string(db:title[1])"/>
+    <xsl:variable name="step-title-raw" as="xs:string" select="xs:string(db:title[1])"/>
+    <xsl:variable name="step-title" as="xs:string" select="if (starts-with($step-title-raw, 'p:')) then $step-title-raw else xs:string((.//db:tag)[1])"/>
+    
     <xsl:variable name="step-name" as="xs:string" select="substring-after($step-title, ':')"/>
 
     <xsl:message> * {$step-name}</xsl:message>
@@ -95,10 +97,11 @@
     </xsl:if>
 
     <step name="{$step-name}" version-idref="{$version-idref}" category-idrefs="{$step-group-id}"
-      short-description="{$edit-marker} {$step-name} short description" required="{$step-required}" publish="false">
+      short-description="{$edit-marker} {$step-name} short description" required="{$step-required}" publish="false"
+      xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
       <xsl:attribute name="href-specification" select="'{$' || $macrodef-step-group-baselink || '}#' || $step-specification-id"/>
       <xsl:attribute name="xsi:schemaLocation" select="'http://www.xtpxlib.nl/ns/xprocref ' || $href-xprocref-schema-rel"/>
-      
+
       <signature>
         <xsl:call-template name="copy-no-namespace">
           <xsl:with-param name="elms" select="p:declare-step[1]/*"/>

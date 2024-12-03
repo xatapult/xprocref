@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step-group xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xi="http://www.w3.org/2001/XInclude">
+  
+  <macrodefs>
+    <macrodef name="BASELINK-CURRENT" value="{$BASELINK-V30}"/>
+  </macrodefs>
+  
+  <!-- == Step group for: file steps == -->
+  <xi:include href="file-steps/directory-list.xml" />
+  <xi:include href="file-steps/file-copy.xml" />
+  <xi:include href="file-steps/file-delete.xml" />
+  <xi:include href="file-steps/file-info.xml" />
+  <xi:include href="file-steps/file-mkdir.xml" />
+  <xi:include href="file-steps/file-move.xml" />
+  <xi:include href="file-steps/file-create-tempfile.xml" />
+  <xi:include href="file-steps/file-touch.xml" />
+  
+</step-group>

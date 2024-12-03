@@ -8,9 +8,41 @@
 
   <category id="standard-steps" name="Standard XProc steps" primary="true">
     <description>
-      <para>These are the XProc steps that a conformant XProc processor <emphasis>must</emphasis> support. In other words: whatever processor you use
+      <para>XProc steps that a conformant XProc processor <emphasis>must</emphasis> support. In other words: whatever processor you use
         for processing your XProc pipelines, you can trust that these steps will always work.</para>
     </description>
+  </category>
+
+  <category id="file-steps" name="XProc file and directory related steps" primary="true">
+    <description>XProc steps that deal with files and directories. An XProc processor is not required to support these.</description>
+  </category>
+
+  <category id="os-steps" name="XProc operating system related steps" primary="true">
+    <description>XProc steps that deal with the operating system. An XProc processor is not required to support these.</description>
+  </category>
+
+  <category id="mail-steps" name="XProc email related steps" primary="true">
+    <description>XProc steps that deal with email. An XProc processor is not required to support these.</description>
+  </category>
+
+  <category id="paged-media-steps" name="XProc paged media related steps" primary="true">
+    <description>XProc steps that deal with creating paged media, for instance PDF. An XProc processor is not required to support
+      these.</description>
+  </category>
+
+  <category id="text-steps" name="XProc text related steps" primary="true">
+    <description>XProc steps that deal with text, for instance Markdown. An XProc processor is not required to support
+      these.</description>
+  </category>
+
+  <category id="validation-steps" name="XProc validation related steps" primary="true">
+    <description>XProc steps that deal with validation of XML and JSON documents. An XProc processor is not required to support
+      these.</description>
+  </category>
+
+  <category id="ixml-steps" name="XProc Invisible XML related steps" primary="true">
+    <description>XProc steps that deal with the processing of Invisible XML. An XProc processor is not required to support
+      these.</description>
   </category>
 
   <!-- ======================================================================= -->
@@ -64,13 +96,13 @@
       <para>Steps for handling JSON documents.</para>
     </description>
   </category>
-  
+
   <category id="text" name="Text document related steps">
     <description>Steps that do something with (lines in) text documents.</description>
   </category>
-  
+
   <category id="additional-standards" name="Additional standards">
     <description>Steps that implement additional standards.</description>
   </category>
-  
+
 </categories>

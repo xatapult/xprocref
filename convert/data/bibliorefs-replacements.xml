@@ -86,6 +86,9 @@
   <biblioref linkend="xpath31">
     <link xlink:href="https://www.w3.org/TR/xpath-31/" role="newpage">XPath 3.1</link>
   </biblioref>
+  <biblioref linkend="xproc31">
+    <link xlink:href="https://xproc.org/" role="newpage">XProc 3.1</link>
+  </biblioref>
   <!--<biblioref linkend="schematron-skeleton">
     <link xlink:href="" role="newpage">Schematron Skeleton</link>
   </biblioref>-->
@@ -101,4 +104,39 @@
   <!--<biblioref linkend="CSS">
     <link xlink:href="https://www.w3.org/TR/css-2018/">CSS</link>
   </biblioref>-->
+
+  <biblioref linkend="id-draft-klyne">
+    <link xlink:href="https://datatracker.ietf.org/doc/html/draft-klyne-message-rfc822-xml-03" role="newpage">An XML format for mail and other
+      messages</link>
+  </biblioref>
+
+  <biblioref linkend="CSS">
+    <link xlink:href="https://www.w3.org/TR/css-2018/" role="newpage">CSS Snapshot 2018</link>
+  </biblioref>
+
+  <biblioref linkend="media-types">
+    <link xlink:href="https://www.iana.org/assignments/media-types/media-types.xhtml" role="newpage">IANA Media Types</link>
+  </biblioref>
+
+  <biblioref linkend="relaxng-compact-syntax">
+    <link xlink:href="https://www.iso.org/standard/52348.html" role="newpage">Regular-grammar-based validation — RELAX NG</link>
+  </biblioref>
+
+  <biblioref linkend="relaxng-dtd-compat">
+    <link xlink:href="https://www.oasis-open.org/committees/relax-ng/compatibility-20011203.html" role="newpage">RELAX NG DTD Compatibility</link>
+  </biblioref>
+
+  <biblioref linkend="schematron-skeleton">
+    <emphasis>Schematron &#x201c;Skeleton&#x201d; implementation 2017</emphasis>
+  </biblioref>
+
+  <biblioref linkend="jsonschema2020-12">
+    <link xlink:href="https://json-schema.org/draft/2020-12/json-schema-validation" role="newpage">JSON Schema Validation: A Vocabulary for Structural
+      Validation of JSON</link>
+  </biblioref>
+  
+  <biblioref linkend="invisible-xml">
+    <link xlink:href="https://invisiblexml.org/1.0/" role="newpage">Invisible XML Specification</link>
+  </biblioref>
+
 </bibliorefs>

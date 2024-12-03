@@ -17,16 +17,19 @@
   <!-- ======================================================================= -->
   <!-- OPTIONS: -->
 
-  <!-- Make sure these directories end with a / ! -->
-  <p:option name="href-steps-in" as="xs:string" required="false" select="resolve-uri('../src/3.0/standard-steps/', static-base-uri())"/>
-  <p:option name="href-step-identities-out" as="xs:string" required="false" select="resolve-uri('../src/3.1/standard-steps/', static-base-uri())"/>
+  <p:option name="name" as="xs:string" required="false" select="'ixml'"/>
 
-  <!-- The version id we're creating the identities for: -->
   <p:option name="identity-version-idref" as="xs:string" required="false" select="'v31'"/>
 
+  <!-- Make sure these directories end with a / ! -->
+  <p:option name="href-steps-in" as="xs:string" required="false" select="resolve-uri('../src/3.0/' || $name || '-steps/', static-base-uri())"/>
+  <p:option name="href-step-identities-out" as="xs:string" required="false"
+    select="resolve-uri('../build/' || $name || '-' || $identity-version-idref || '-step-identities/', static-base-uri())"/>
+
   <!-- The baselink macro for the version we're creating the identities for: -->
-  <p:option name="identity-version-baselink-macro-name" as="xs:string" required="false" select="'BASELINK-STANDARD-STEPS-V31'"/>
-  
+  <p:option name="identity-version-baselink-macro-name" as="xs:string" required="false"
+    select="'BASELINK-STANDARD-STEPS-' || upper-case($identity-version-idref)"/>
+
   <!-- Schema location string: -->
   <p:option name="schema-location" as="xs:string" required="false" select="'http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd'"/>
 

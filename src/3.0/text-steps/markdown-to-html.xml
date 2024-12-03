@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="markdown-to-html" version-idref="v30" category-idrefs="text-steps" short-description="[EDIT]"
+  required="true" publish="false" href-specification="{$BASELINK-TEXT-STEPS-V30}#c.rename"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" content-types="xml html" primary="true" sequence="false">
+      <description>
+        <para>TBD</para>
+      </description>
+    </input>
+    <output port="result" content-types=" html" primary="true" sequence="false">
+      <description>
+        <para>The resulting document.</para>
+      </description>
+    </output>
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>TBD ALSO OPTIONS ARE INCOMPLETE!</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+
+    <para>TBD</para>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <!--<detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>-->
+
+  <!-- ======================================================================= -->
+
+</step>
