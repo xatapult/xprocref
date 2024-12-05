@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element-description xmlns="http://www.xtpxlib.nl/ns/xdoc" xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xdoc
+  ../../../../xatapult/xtpxlib-xdoc/xsd/element-description.xsd" name="c:file" sort-attributes="false">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <attribute name="name" required="true">
+    <description>
+      <para>The name of the file (without a path in front).</para>
+    </description>
+    <type name="xs:string"/>
+  </attribute>
+  <attribute name="xml:base" required="true">
+    <description>
+      <para>The name of the file (identical to the <code>name</code> attribute).</para>
+    </description>
+    <type name="xs:anyURI"/>
+  </attribute>
+  <attribute name="size" required="false">
+    <description>
+      <para>The size of the file entry (in bytes). See below.</para>
+    </description>
+    <type name="xs:integer"/>
+  </attribute>
+  <attribute name="readable" required="false">
+    <description>
+      <para>Whether this file is readable for the current user. See below.</para>
+    </description>
+    <type name="xs:boolean"/>
+  </attribute>
+  <attribute name="writable" required="false">
+    <description>
+      <para>Whether this file is readable for the current user. See below.</para>
+    </description>
+    <type name="xs:boolean"/>
+  </attribute>
+  <attribute name="last-modified" required="false">
+    <description>
+      <para>The date and time this file was last modified. See below.</para>
+    </description>
+    <type name="xs:dateTime"/>
+  </attribute>
+  <attribute name="hidden" required="false">
+    <description>
+      <para>Whether this file is hidden for the current user. See below.</para>
+    </description>
+    <type name="xs:boolean"/>
+  </attribute>
+  <attribute name="content-type" required="false">
+    <description>
+      <para>The content-type (MIME type) of this file. If this cannot be determined, its value is <code>application/octet-stream</code>. See
+        below.</para>
+    </description>
+    <type name="xs:string"/>
+  </attribute>
+
+</element-description>

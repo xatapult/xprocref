@@ -1,207 +1,243 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="directory-list" version-idref="v30" category-idrefs="file-steps" short-description="[EDIT] directory-list short description"
-  required="false" publish="false" href-specification="{$BASELINK-FILE-STEPS-V30}#c.directory-list"
+<step name="directory-list" version-idref="v30" category-idrefs="file-steps env" short-description="List the contents of a directory" required="false"
+  publish="false" href-specification="{$BASELINK-FILE-STEPS-V30}#c.directory-list"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <output port="result" content-types="application/xml" primary="true" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting XML document that describes the contents of the directory. See <xref linkend="result-doc"/>.</para>
       </description>
     </output>
+
     <option name="path" required="true" as="xs:anyURI">
       <description>
-        <para>[EDIT] option path</para>
+        <para>The path of the directory to describe the contents of.</para>
       </description>
     </option>
+
     <option name="detailed" as="xs:boolean" select="false()" required="false">
       <description>
-        <para>[EDIT] option detailed</para>
+        <para>Whether detailed information about the directory and its contents is returned. See TBD</para>
       </description>
     </option>
+
     <option name="max-depth" as="xs:string?" select="'1'" required="false">
       <description>
-        <para>[EDIT] option max-depth</para>
+        <para>How deep (how many levels of subdirectories) the directory is described. Its value must be a string that can be cast to either a
+          (non-negative) integer or the word <code>unbounded</code>:</para>
+        <itemizedlist>
+          <listitem>
+            <para>A value of <code>0</code> means that only information about the given directory is returned.</para>
+          </listitem>
+          <listitem>
+            <para>A value of <code>1</code> (default) returns information about the direct contents of the given directory.</para>
+          </listitem>
+          <listitem>
+            <para>A numerical value greater than <code>1</code> returns information up to that level of subdirectories.</para>
+          </listitem>
+          <listitem>
+            <para>A value <code>unbounded</code> returns information about all subdirectories.</para>
+          </listitem>
+        </itemizedlist>
+        <para>See also the <example-ref idref="example-depth"/> example.</para>
       </description>
     </option>
+
     <option name="include-filter" as="xs:string*" required="false">
       <description>
-        <para>[EDIT] option include-filter</para>
+        <para>A sequence of XPath regular expression that specifies which directories/files are included. See <xref linkend="include-exclude"
+          />. See also the <example-ref idref="example-inex"/> example.</para>
       </description>
     </option>
+
     <option name="exclude-filter" as="xs:string*" required="false">
       <description>
-        <para>[EDIT] option exclude-filter</para>
+        <para>A sequence of XPath regular expression that specifies which directories/files are excluded. See <xref linkend="include-exclude"
+        />. See also the <example-ref idref="example-inex"/> example.</para>
       </description>
     </option>
+
     <option name="override-content-types" as="array(array(xs:string))?" required="false">
       <description>
-        <para>[EDIT] option override-content-types</para>
+        <para>Use this to override the content-type determination of the files. Determining the content-type of a file happens when you ask for
+          detailed information (the <option>detailed</option> option is set to <code>true</code>).</para>
+        <para>This works just like the mechanism for the <option>override-content-types</option> option of <step-ref name="p:archive-manifest"/>, ,
+          except that the regular expression matching is done against the paths as used for the matching of the <option>include-filter</option> and
+            <option>exclude-filter</option> options. For more information see <xref linkend="include-exclude"/>.</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <code>p:directory-list</code> step produces a list of the contents of a specified directory.</para>
+    <para>The <step/> step produces an XML document that contains an overview of the contents of a specified directory.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>Conformant processors must support directory paths whose scheme is <code>file</code>. It is implementation-defined what other schemes are
-      supported by <tag>p:directory-list</tag>, and what the interpretation of ‘directory’, ‘file’ and ‘contents’ is for those schemes. <emphasis
-        role="bold">[ERROR <step-error-ref code="XC0090"/>]</emphasis>
-    </para>
-    <para>If <option>path</option> is relative, it is made absolute against the base URI of the element on which it is specified
-        (<tag>p:with-option</tag> or <tag>p:directory-list</tag> in the case of a syntactic shortcut value). <emphasis role="bold">[ERROR
-          <step-error-ref code="XD0064"/>]</emphasis>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0017"/>]</emphasis>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0012"/>]</emphasis></para>
-    <para>If the <option>detailed</option> option is true, the pipeline author is requesting additional information about the matching entries, see
-        <xref linkend="dir-list-details"/>.</para>
-    <para>The <option>max-depth</option> option may contain either the string “<literal>unbounded</literal>” or a string that may be cast to a
-      non-negative integer. An integer value of <literal>0</literal> means that only information about the directory that is given in the
-        <option>path</option> option is returned. A <option>max-depth</option> of <literal>1</literal>, which is the default, will effect that also
-      information about the top-level directory’s immediate children will be included. For larger values of <option>max-depth</option>, also the
-      content of directories will be considered recursively up to the maximum depth, and it will be included as children of the corresponding
-        <tag>c:directory</tag> elements.</para>
-    <para>If present, the value of the <option>include-filter</option> or <option>exclude-filter</option> option must be a sequence of strings, each
-      one representing a regular expressions as specified in <link xlink:href="https://www.w3.org/TR/xpath-functions-31/" role="newpage"
-        xmlns:xlink="http://www.w3.org/1999/xlink">the XPath 3.1 functions</link> , section 7.61 “<literal>Regular Expression Syntax</literal>”.
-        <emphasis role="bold">[ERROR <step-error-ref code="XC0147"/>]</emphasis></para>
-    <para>The regular expressions will be matched against an item’s file system path relative to the top-level path that was given in the
-        <option>path</option> option. If the item is a directory, a trailing slash will be appended. The matching is done unanchored: it is a match if
-      the regular expression matches part of the relative item’s file system path. Informally: matching behaves like applying the XPath
-        <code>matches#2</code> function, like in <code>matches($path, $regular-expression)</code>.</para>
-    <para>Examples: A file <literal>file.txt</literal> in the directory specified by <option>path</option> will remain <literal>file.txt</literal>,
-      a relative path <literal>dir1/file.txt</literal> will remain <literal>dir1/file.txt</literal>, while a relative path
-        <literal>dir1/dir2</literal> will become <literal>dir1/dir2/</literal> if <literal>dir2</literal> is a directory.</para>
-    <para>Regular expressions that match <literal>a/a/b/file.txt</literal> are, for example, <literal>^(\w+/){2,3}.+\.txt$</literal>,
-        <literal>a/a/b/</literal>, or <literal>/file\.[^/]+$</literal>.</para>
-    <para>If any <option>include-filter</option> pattern matches the slash-augmented relative path, the entry is included in the output. Matching a
-      directory doesn’t automatically include the contents of the directory or its descendants; to be included, each individual entry must match an
-      include filter. For example, the filter regex <literal>^dir/</literal> will match a directory and its content, but <literal>^dir/$</literal>
-      won’t.</para>
-    <para>Although matching a directory doesn’t automatically include its entries, matching an entry <emphasis>does</emphasis> automatically include
-      all of its ancestors (back to the initial directory). This assures that the hierarchy of the XML elements matches the hierarchy of the
-      filesystem. When ancestors are included this way, none of their other entires are included unless they match an include filter.</para>
-    <para>For a file <literal>a/a/b/file.txt</literal> below the initial directory <literal>/home/jane</literal>, this output will be produced,
-      omitting content that might be present in the intermediate directories:</para>
-    <programlisting language="xml">&lt;c:directory xml:base="file:///home/jane/" name="jane"&gt; &lt;c:directory xml:base="a/" name="a"&gt; &lt;c:directory xml:base="a/" name="a"&gt; &lt;c:directory xml:base="b/" name="b"&gt; &lt;c:file xml:base="file.txt" name="file.txt"/&gt; &lt;/c:directory&gt; &lt;/c:directory&gt; &lt;/c:directory&gt; &lt;/c:directory&gt;</programlisting>
-    <para>If the <option>exclude-filter</option> pattern matches the slash-augmented relative path, the entry (and all of its content in case of a
-      directory) is excluded in the output.</para>
-    <para>If both options are provided, the include filter is processed first, then the exclude filter. As a result, an item is included if it matches
-      (at least) one of the <option>include-filter</option> values and none of the <option>exclude-filter</option> values.</para>
-    <para>If no <option>include-filter</option> is given, that is, if <option>include-filter</option> is an empty sequence, any item will be included
-      in the result (unless it is excluded by <option>exclude-filter</option>).</para>
-    <note>
-      <para>There is no way to specify a list of values using attribute value templates. If the option shortcut syntax is used to provide the
-          <option>include-filter</option> or <option>exclude-filter</option> option, it will consist of a single regular expression. To specify a list
-        of regular expressions, you must use the <tag>p:with-option</tag> syntax. </para>
-    </note>
-    <para>The <option>override-content-types</option> option can be used to partially override the content-type determination mechanism. This works
-      just like with the <option>override-content-types</option> option of <tag>p:archive-manifest</tag> and <tag>p:unarchive</tag> (see <xspecref
-        spec="steps" xref="override-content-type"/>), except that the regular expression matching is done against the paths as used for the matching
-      of the <option>include-filter</option> and <option>exclude-filter</option> options.</para>
-    <para xml:id="cv.directory">The result document produced for the specified directory path has a <tag>c:directory</tag> document element whose base
-      URI, attached as an <tag role="attribute">xml:base</tag> attribute, is the absolute directory path (expressed as a URI that ends in a slash) and
-      whose <tag class="attribute">name</tag> attribute (without a trailing slash) is the last segment of the directory path. The same base URI is
-      attached as the resulting document’s base-uri property and, accordingly, as its document node’s base URI.</para>
-    <para>
-      <emphasis role="bold">[RNG Pattern VocabDirectory]</emphasis>
-    </para>
-    <para>Its contents are determined as follows, based on the entries in the directory identified by the directory path. For each entry in the
-      directory and subject to the rules that are imposed by the <option>max-depth</option>, <option>include-filter</option>, and
-        <option>exclude-filter</option> options, a <tag>c:file</tag>, a <tag>c:directory</tag>, or a <tag>c:other</tag> element is produced, as
-      follows: </para>
-    <itemizedlist>
-      <listitem>
-        <para>A <tag>c:directory</tag> is produced for each subdirectory not determined to be special. Depending on the values of the three options,
-          it may contain child elements for the directory’s content.</para>
-      </listitem>
-      <listitem>
-        <para xml:id="cv.file">A <tag>c:file</tag> is produced for each file not determined to be special.</para>
-        <para>
-          <emphasis role="bold">[RNG Pattern VocabFile]</emphasis>
-        </para>
-      </listitem>
-      <listitem>
-        <para xml:id="cv.other">Any file or directory determined to be special by the <tag>p:directory-list</tag> step may be output using a
-            <tag>c:other</tag> element but the criteria for marking a file as special are implementation-defined. </para>
-        <para>
-          <emphasis role="bold">[RNG Pattern VocabOther]</emphasis>
-        </para>
-      </listitem>
-    </itemizedlist>
-    <para>Each of the elements <tag>c:file</tag>, <tag>c:directory</tag>, and <tag>c:other</tag> has a <code>name</code> attribute, whose value is a
-      relative IRI reference, giving the (local) file or directory name.</para>
-    <para>Each of these element also contains the corresponding resource’s URI in an <tag role="attribute">xml:base</tag> attribute, which may be a
-      relative URI for any but the top-level <tag>c:directory</tag> element. In the case of <tag>c:directory</tag>, it must end in a trailing slash.
-      This way, users will always be able to compute the absolute URI for any of these elements by applying <code>fn:base-uri()</code> to it.</para>
-    <bridgehead>Directory list details</bridgehead>
-    <para>If <option>detailed</option> is false, then only the <tag class="attribute">name</tag> and <tag class="attribute">xml:base</tag> attributes
-      are expected on <tag>c:file</tag>, <tag>c:directory</tag>, or <tag>c:other</tag> elements.</para>
-    <para>If <option>detailed</option> is true, then the pipeline author is expecting additional details about each entry. The following attributes
-      should be provided by the implementation:</para>
-    <variablelist>
-      <varlistentry>
-        <term>
-          <tag class="attribute">content-type</tag>
-        </term>
+
+    <para>The <step/> takes a directory path as its main input in the <option>path</option> option. The <port>result</port> port emits a document (see
+        <xref linkend="result-doc"/>) that describes this directory by listing its contents (files and subdirectories). What happens exactly depends
+      on the settings of the other options. The step has no input port(s).</para>
+    <para>The directory to describe, as specified in the <option>path</option> option, <emphasis>must</emphasis> exist. Otherwise, error
+        <step-error-ref code="XC0017"/> is raised.</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="include-exclude">
+      <title>Including and excluding files and directories</title>
+
+      <para>The <option>include-filter</option> and <option>exclude-filter</option> determine which files and directories are included/excluded in the
+        result. Both options are a sequence of (zero or more) XPath regular expression strings.</para>
+
+      <itemizedlist>
         <listitem>
-          <para>The <tag role="attribute">content-type</tag> attribute contains the content type of the respective file. The value
-              “<literal>application/octet-stream</literal>” will be used if the processor is not able to identify another content type.</para>
+          <para>If the <option>include-filter</option> is not specified (or the empty sequence), <emphasis>all</emphasis> files/directories are
+            included.</para>
+          <para>Otherwise, every regular expression string in the option value is matched against the <emphasis>relative</emphasis> file/directory
+            paths (relative to the path that was given in the <option>path</option> option). A match means the file/directory is included.</para>
         </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <tag class="attribute">readable</tag>
-        </term>
         <listitem>
-          <para>“<code>true</code>” if the entry is readable.</para>
+          <para>If the <option>exclude-filter</option> is not specified (or the empty sequence), <emphasis>no</emphasis> files/directories are
+            excluded.</para>
+          <para>Otherwise, every regular expression string in the option value is matched against the <emphasis>relative</emphasis> file/directory
+            paths (relative to the path that was given in the <option>path</option> option). A match means the file/directory is excluded.</para>
         </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <tag class="attribute">writable</tag>
-        </term>
         <listitem>
-          <para>“<code>true</code>” if the entry is writable.</para>
+          <para>A file/directory is part of the result if it is included and not excluded.</para>
         </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <tag class="attribute">hidden</tag>
-        </term>
+      </itemizedlist>
+
+      <para>Matching the regular expressions behaves like applying the XPath <code><link
+            xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-matches" role="newpage">matches()</link></code> function (like in
+          <code>matches($relative-path, $regular-expression)</code>).</para>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="result-doc">
+      <title>The result document</title>
+
+      <para>The root element of the resulting XML document is <tag>c:directory</tag> (the <code>c</code> prefix here is bound to the
+          <code>http://www.w3.org/ns/xproc-step</code> namespace):</para>
+      <xdoc:transform href="$xdoc/xml-description.xpl">
+        <xi:include href="../../element-descriptions/c-directory.description.xml"/>
+      </xdoc:transform>
+
+      <para>Every file in a directory is described using a <tag>c:file</tag> element:</para>
+      <xdoc:transform href="$xdoc/xml-description.xpl">
+        <xi:include href="../../element-descriptions/c-file.description.xml"/>
+      </xdoc:transform>
+
+      <para>Anything else in a directory is described using the <tag>c:other</tag> element. This looks just like the <tag>c:file</tag> element, but
+        without a <code>content-type</code> attribute.</para>
+
+      <para role="break-before">About the optional attributes on the result elements:</para>
+      <itemizedlist>
         <listitem>
-          <para>“<code>true</code>” if the entry is hidden.</para>
+          <para>If the <option>detailed</option> option is <code>false</code> (default), only the <code>name</code> and <code>xml:base</code>
+            attributes will be there.</para>
         </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <tag class="attribute">last-modified</tag>
-        </term>
         <listitem>
-          <para>The last modification time of the entry, expressed as a lexical <code>xs:dateTime</code> in UTC.</para>
+          <para>If the <option>detailed</option> option is <code>true</code>, the other, optional, attributes will be present also.</para>
         </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <tag class="attribute">size</tag>
-        </term>
-        <listitem>
-          <para>The size of the entry in bytes.</para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
-    <para>The precise meaning of the detailed properties are implementation-defined and may vary according to the URI scheme of the
-        <option>path</option>. If the value of an attribute is “<code>false</code>” or if it has no meaningful value, the attribute may be
-      omitted.</para>
-    <para>Any other attributes on <tag>c:file</tag>, <tag>c:directory</tag>, or <tag>c:other</tag> are implementation-defined, but they must be in a
-      namespace.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="directory-list-preserves-none">Besides the <property>content-type</property> property, the resulting document has a
-        <property>base-uri</property>. Its value is identical to the top-level element’s <tag class="attribute">xml:base</tag> attribute, that is, to
-      the directory’s URI.</para>
+      </itemizedlist>
+      <para>What the values of the various attributes actually mean is implementation defined and therefore depends on the XProc processor used. For
+        most attributes there will be no surprises, but what, for instance, is the size of a directory? It may take some experiments to get things
+        right.</para>
+
+
+    </section>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>Only the <property>base-uri</property> property will be set. Its value will be the absolute URI of the directory described.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>A relative value for the <option>path</option> option is resolved against the base URI of the element on which this option is specified. In
+      most cases this will be the static base URI of your pipeline (the path where the XProc source containing the <step/> is stored).</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>Getting information for &#x201c;normal&#x201d; directories (on disk, URI scheme <code>file://</code>) will always work. Whether any other
+      types of directories are supported is implementation-defined, and therefore depends on the XProc processor used. For this, also the
+      interpretation/definition of what is a &#x201c;directory&#x201d;, &#x201c;file&#x201d;, and &#x201c;contents&#x201d; may vary.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>An XProc processor may add additional, implementation-defined, attributes to the various result elements as described in <xref
+        linkend="result-doc"/>. These attributes will always be in some, XProc processor dependent, namespace.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="example-basic">
+
+    <para>Assume we have a disk layout that looks like this:</para>
+
+    <programlisting>
+-- data -- + -- x1.txt
+           | 
+           + -- x1.xml
+           |
+           + -- sub1/ -- + -- sub1-x1.xml
+                        |
+                        + -- sub2/ -- + -- sub2-x1.txt 
+</programlisting>
+
+    <para>For the examples to come we assume this <code>data</code> directory is in the same location as our pipeline. Simply asking for the directory
+      listing, using the default values for the options of <step/>, is as follows:</para>
+
+    <xproc-example href="../../examples/directory-list/directory-list-01.xpl" show-source="false" keep-from="data"/>
+
+    <para>When we ask for details, the following happens:</para>
+    <xproc-example href="../../examples/directory-list/directory-list-02.xpl" show-source="false" keep-from="data"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Changing the depth of the directory lisiting" id="example-depth">
+
+    <para>The following examples work on the same directory structure as described in <example-ref idref="example-basic"/>. Asking for a directory
+      description with <option>max-depth</option> option set to <code>0</code> just gives us the main directory itself:</para>
+    <xproc-example href="../../examples/directory-list/directory-list-03.xpl" show-source="false" keep-from="data"/>
+
+    <para>And getting the full directory structure is as follows:</para>
+    <xproc-example href="../../examples/directory-list/directory-list-04.xpl" show-source="false" keep-from="data"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="including and excluding files" id="example-inex">
+
+    <para>The following examples work on the same directory structure as described in <example-ref idref="example-basic"/>. TBD</para>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
     <step-error code="XC0090"/>
     <step-error code="XD0064"/>
