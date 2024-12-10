@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="directory-list" version-idref="v30" category-idrefs="file-steps env" short-description="List the contents of a directory" required="false"
-  publish="false" href-specification="{$BASELINK-FILE-STEPS-V30}#c.directory-list"
+  publish="true" href-specification="{$BASELINK-FILE-STEPS-V30}#c.directory-list"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc">
@@ -51,15 +51,15 @@
 
     <option name="include-filter" as="xs:string*" required="false">
       <description>
-        <para>A sequence of XPath regular expression that specifies which directories/files are included. See <xref linkend="include-exclude"
-          />. See also the <example-ref idref="example-inex"/> example.</para>
+        <para>A sequence of XPath regular expression that specifies which directories/files are included. See <xref linkend="include-exclude"/>. See
+          also the <example-ref idref="example-inex"/> example.</para>
       </description>
     </option>
 
     <option name="exclude-filter" as="xs:string*" required="false">
       <description>
-        <para>A sequence of XPath regular expression that specifies which directories/files are excluded. See <xref linkend="include-exclude"
-        />. See also the <example-ref idref="example-inex"/> example.</para>
+        <para>A sequence of XPath regular expression that specifies which directories/files are excluded. See <xref linkend="include-exclude"/>. See
+          also the <example-ref idref="example-inex"/> example.</para>
       </description>
     </option>
 
@@ -85,9 +85,14 @@
 
   <description>
 
-    <para>The <step/> takes a directory path as its main input in the <option>path</option> option. The <port>result</port> port emits a document (see
-        <xref linkend="result-doc"/>) that describes this directory by listing its contents (files and subdirectories). What happens exactly depends
-      on the settings of the other options. The step has no input port(s).</para>
+    <para>The <step/> step provides you with an overview of the contents of a directory, similar to a Windows <code>dir</code> or a Unix/Linux/macOS
+        <code>ls</code> command. This often comes in handy, for instance when you need to perform some operation on <emphasis>all</emphasis> files in
+      a directory (or a directory tree). The <example-ref idref="handling-all"/> example gives an example of how to do this.</para>
+
+    <para>The <step/> step takes a directory path as its main input in the <option>path</option> option. The <port>result</port> port emits a document
+      (see <xref linkend="result-doc"/>) that describes this directory by listing its contents (files and subdirectories). What happens exactly
+      depends on the settings of the other options. The step has no input port(s).</para>
+
     <para>The directory to describe, as specified in the <option>path</option> option, <emphasis>must</emphasis> exist. Otherwise, error
         <step-error-ref code="XC0017"/> is raised.</para>
 
@@ -177,9 +182,15 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <detail>
-    <para>Getting information for &#x201c;normal&#x201d; directories (on disk, URI scheme <code>file://</code>) will always work. Whether any other
-      types of directories are supported is implementation-defined, and therefore depends on the XProc processor used. For this, also the
-      interpretation/definition of what is a &#x201c;directory&#x201d;, &#x201c;file&#x201d;, and &#x201c;contents&#x201d; may vary.</para>
+    <para>If some entry (file or directory) is included in the result, all directories leading up to this entry are always included, even if they're
+      excluded because of the <option>include-filter</option> and <option>exclude-filter</option> option settings. This assures that the hierarchy of
+      the result always matches the hierarchy of the filesystem.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="../../text-fragments/file-scheme-uris.xml"/>
   </detail>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -202,7 +213,10 @@
            |
            + -- sub1/ -- + -- sub1-x1.xml
                         |
-                        + -- sub2/ -- + -- sub2-x1.txt 
+                        + -- sub2/ -- + -- sub2.tmp 
+                                      |
+                                      + -- sub2-x1.txt
+                        
 </programlisting>
 
     <para>For the examples to come we assume this <code>data</code> directory is in the same location as our pipeline. Simply asking for the directory
@@ -230,10 +244,46 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <example title="including and excluding files" id="example-inex">
+  <example title="Including and excluding files" id="example-inex">
 
-    <para>The following examples work on the same directory structure as described in <example-ref idref="example-basic"/>. TBD</para>
+    <para>The following examples work on the same directory structure as described in <example-ref idref="example-basic"/>. Assume we only need the
+      text files in the directory tree: all files ending with <code>.txt</code>. A regular expression that matches this is <code>\.txt$</code>, so we
+      have to pass this as the value of the <option>include-filter</option> option:</para>
+    <xproc-example href="../../examples/directory-list/directory-list-05.xpl" show-source="false" keep-from="data"/>
 
+    <para>Assume that we know that all files that start with an <code>x</code> are not interesting. We can exclude these by passing the regular
+      expression <code>^x</code> as the value of the <option>exclude-filter</option> option:</para>
+    <xproc-example href="../../examples/directory-list/directory-list-06.xpl" show-source="false" keep-from="data"/>
+
+    <para>Finally, assume we both need the XML and text files in the directory tree, but not anything else. For this we could do two things:</para>
+    <itemizedlist>
+      <listitem>
+        <para>Create a regular expression that incorporates both, and pass it as an <code>include-filter</code> attribute on the
+            <tag>p:directory-list</tag> element, just like we did in the examples above: <tag>p:directory list path="data"
+            include-filter="\.(xml|txt)$" max-depth="unbounded"/</tag></para>
+      </listitem>
+      <listitem>
+        <para>Or we could pass a regular expression for each file type. If we do it this way we can no longer pass the <option>include-filter</option>
+          option as an attribute. We have to use a <tag>p:with-option</tag> child element:</para>
+      </listitem>
+    </itemizedlist>
+    <xproc-example href="../../examples/directory-list/directory-list-07.xpl" show-source="false" keep-from="data"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Handling all files in a directory" id="handling-all">
+
+    <para>Again, the following examples work on the same directory structure as described in <example-ref idref="example-basic"/>. Assume we need to
+      do something with all XML documents in the <code>data</code> directory. Using <step/> we can easily get the names of these files. However, to
+      process them we will need to load them, and for that its handy if we have their full absolute URIs. These can be added using the <step-ref
+        name="p:make-absolute-uris"/> step and change the <code>name</code> attributes into full URIs:</para>
+    <xproc-example href="../../examples/directory-list/directory-list-08.xpl" show-source="false" keep-from="data"/>
+
+    <para>We can now use this result to process all the XML documents. The following pipeline simply loads them (using <step-ref name="p:load"/>), and
+      wraps all contents (using <step-ref name="p:wrap-sequence"/>) in an <tag>all-xml-documents</tag> element:</para>
+    <xproc-example href="../../examples/directory-list/directory-list-09.xpl" show-source="false" keep-from="data"/>
   </example>
 
   <!-- ======================================================================= -->

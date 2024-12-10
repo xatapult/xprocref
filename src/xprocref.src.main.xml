@@ -8,32 +8,38 @@
 
   <macrodefs>
     <!-- Baselinks to the standard: -->
+    
     <macrodef name="BASELINK-V30" value="https://spec.xproc.org/3.0/"/>
     <macrodef name="BASELINK-V31" value="https://spec.xproc.org/lastcall-2024-08/head/"/>
     
     <macrodef name="BASELINK-STANDARD-STEPS-V30" value="{$BASELINK-V30}steps/"/>
     <macrodef name="BASELINK-STANDARD-STEPS-V31" value="{$BASELINK-V31}steps/"/>
     
-    <macrodef name="BASELINK-FILE-STEPS-V30" value="{$BASELINK-V30}file/"/>
-    <macrodef name="BASELINK-FILE-STEPS-V31" value="{$BASELINK-V31}file/"/>
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     
-    <macrodef name="BASELINK-OS-STEPS-V30" value="{$BASELINK-V30}os/"/>
-    <macrodef name="BASELINK-OS-STEPS-V31" value="{$BASELINK-V31}os/"/>
+    <macrodef name="BASELINK-NONSTANDARD-STEPS-V30" value="https://spec.xproc.org/master/head/"/>
+    <macrodef name="BASELINK-NONSTANDARD-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V30}"/>
     
-    <macrodef name="BASELINK-MAIL-STEPS-V30" value="{$BASELINK-V30}mail/"/>
-    <macrodef name="BASELINK-MAIL-STEPS-V31" value="{$BASELINK-V31}mail/"/>
+    <macrodef name="BASELINK-FILE-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}file/"/>
+    <macrodef name="BASELINK-FILE-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}file/"/>
     
-    <macrodef name="BASELINK-PAGED-MEDIA-STEPS-V30" value="{$BASELINK-V30}paged-media/"/>
-    <macrodef name="BASELINK-PAGED-MEDIA-STEPS-V31" value="{$BASELINK-V31}paged-media/"/>
+    <macrodef name="BASELINK-OS-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}os/"/>
+    <macrodef name="BASELINK-OS-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}os/"/>
     
-    <macrodef name="BASELINK-TEXT-STEPS-V30" value="{$BASELINK-V30}text/"/>
-    <macrodef name="BASELINK-TEXT-STEPS-V31" value="{$BASELINK-V31}text/"/>
+    <macrodef name="BASELINK-MAIL-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}mail/"/>
+    <macrodef name="BASELINK-MAIL-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}mail/"/>
     
-    <macrodef name="BASELINK-VALIDATION-STEPS-V30" value="{$BASELINK-V30}validation/"/>
-    <macrodef name="BASELINK-VALIDATION-STEPS-V31" value="{$BASELINK-V31}validation/"/>
+    <macrodef name="BASELINK-PAGED-MEDIA-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}paged-media/"/>
+    <macrodef name="BASELINK-PAGED-MEDIA-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}paged-media/"/>
     
-    <macrodef name="BASELINK-IXML-STEPS-V30" value="{$BASELINK-V30}ixml/"/>
-    <macrodef name="BASELINK-IXML-STEPS-V31" value="{$BASELINK-V31}ixml/"/>
+    <macrodef name="BASELINK-TEXT-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}text/"/>
+    <macrodef name="BASELINK-TEXT-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}text/"/>
+    
+    <macrodef name="BASELINK-VALIDATION-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}validation/"/>
+    <macrodef name="BASELINK-VALIDATION-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}validation/"/>
+    
+    <macrodef name="BASELINK-IXML-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}ixml/"/>
+    <macrodef name="BASELINK-IXML-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}ixml/"/>
     
   </macrodefs>
 

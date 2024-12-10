@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fragment>
+  <para>Working on &#x201c;normal&#x201d; files and/or directories (on disk, URI scheme <code>file://</code>) is always supported. Whether any other
+    types are supported is implementation-defined, and therefore depends on the XProc processor used. For this, also the interpretation/definition of
+    what is a &#x201c;directory&#x201d; and &#x201c;file&#x201d; may vary.</para>
+</fragment>

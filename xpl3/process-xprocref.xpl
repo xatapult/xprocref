@@ -241,12 +241,19 @@
     <p:variable name="xproc-example-elm" as="element(db:xproc-example)" select="/*"/>
     <p:variable name="output-is-text" as="xs:boolean" select="xs:boolean((/*/@output-is-text, false())[1])"/>
 
-    <!-- Load the pipeline source and find out whether it has a source port: -->
+    <!-- Get the pipeline href and use this to remove any existing build/ and tmp/ directories for the example:: -->
     <p:variable name="href-pipeline" as="xs:string" select="xs:string(/*/@href)"/>
-    <p:load href="{$href-pipeline}" name="example-pipeline"/>
-    <p:variable name="has-source-port" as="xs:boolean" select="exists(/*/p:input[@port eq'source'])"/>
+    <p:variable name="href-pipeline-dir" as="xs:string" select="replace($href-pipeline, '(.*)[/\\][^/\\]+$', '$1')"/>
+    <p:file-delete fail-on-error="false" recursive="true">
+      <p:with-option name="href" select="string-join(($href-pipeline-dir, '..', 'build/'), '/')"/>
+    </p:file-delete>
+    <p:file-delete fail-on-error="false" recursive="true">
+      <p:with-option name="href" select="string-join(($href-pipeline-dir, '..', 'tmp/'), '/')"/>
+    </p:file-delete>
 
     <!-- Run the pipeline and add the result, wrapped in <_RESULT>: -->
+    <p:load href="{$href-pipeline}" name="example-pipeline"/>
+    <p:variable name="has-source-port" as="xs:boolean" select="exists(/*/p:input[@port eq'source'])"/>
     <p:choose>
       <p:when test="$has-source-port">
         <p:run>

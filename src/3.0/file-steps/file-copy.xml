@@ -1,90 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="file-copy" version-idref="v30" category-idrefs="file-steps" short-description="[EDIT] file-copy short description" required="false"
+<step name="file-copy" version-idref="v30" category-idrefs="file-steps env" short-description="Copies a file or directory" required="false"
   publish="false" href-specification="{$BASELINK-FILE-STEPS-V30}#c.file-copy"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <output port="result" primary="true" content-types="application/xml" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>A <tag>c:result</tag> element containing the absolute URI of the target (the <code>c</code> prefix here is bound to the
+            <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
       </description>
     </output>
+
     <option name="href" required="true" as="xs:anyURI">
       <description>
-        <para>[EDIT] option href</para>
+        <para>The URI of the source file or directory to copy from.</para>
       </description>
     </option>
+
     <option name="target" required="true" as="xs:anyURI">
       <description>
-        <para>[EDIT] option target</para>
+        <para>The URI of the target file or directory to copy to.</para>
       </description>
     </option>
+
     <option name="fail-on-error" as="xs:boolean" select="true()" required="false">
       <description>
-        <para>[EDIT] option fail-on-error</para>
+        <para>Determines what happens if an error occurs during the copy operation:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If this option is <code>true</code> (default), an appropriate XProc error is raised.</para>
+          </listitem>
+          <listitem>
+            <para>If this option is <code>false</code>, the step returns a <tag>c:error</tag> document (see <link
+                xlink:href="https://spec.xproc.org/master/head/xproc/#err-vocab" role="newpage">here</link> for more information) on its
+                <port>result</port> port.</para>
+          </listitem>
+        </itemizedlist>
+        <para>If you&#x2019;re copying a directory, please note that an error may mean that a partial copy has already been made.</para>
       </description>
     </option>
+
     <option name="overwrite" as="xs:boolean" select="true()" required="false">
       <description>
-        <para>[EDIT] option overwrite</para>
+        <para>Determines what happens if <step/> needs to overwrite an existing file:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If this option is <code>true</code> (default), the existing file is overwritten.</para>
+          </listitem>
+          <listitem>
+            <para>If this option is <code>false</code>, no existing file will be changed.</para>
+          </listitem>
+        </itemizedlist>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <code>p:file-copy</code> step copies a file or a directory to a given target.</para>
+    <para>The <step/> step copies a file or a directory to a given target.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The <tag>p:file-copy</tag> step copies the file or directory named in <option>href</option> to the new position specified in
-        <option>target</option>. Any non existent directory contained in <option>target</option> will be created before copying starts. If the target
-      is a directory, the step attempts to copy the file or directory into that directory, preserving its base name. <emphasis role="bold">[ERROR
-          <step-error-ref code="XC0157"/>]</emphasis></para>
-    <para>If the <option>overwrite</option> evaluates to <literal>false</literal>, no existing file will be changed.</para>
-    <para>Conformant processors must support URIs whose scheme is <code>file</code> for the <option>href</option> and <option>target</option> options
-      of <tag>p:file-copy</tag>. It is implementation-defined what other schemes are supported by <tag>p:file-copy</tag>, and what the interpretation
-      of ‘directory’, ‘file’ and ‘contents’ is for those schemes. <emphasis role="bold">[ERROR <step-error-ref code="XC0144"/>]</emphasis>
-    </para>
-    <para>If <option>href</option> or <option>target</option> are relative, they are made absolute against the base URI of the element on which they
-      are specified (<tag>p:with-option</tag> or <tag>p:file-copy</tag> in the case of a syntactic shortcut value). <emphasis role="bold">[ERROR
-          <step-error-ref code="XD0064"/>]</emphasis>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0145"/>]</emphasis></para>
-    <para>If no error occurs, the step returns a <tag>c:result</tag> element containing the absolute URI of the target.</para>
-    <para>If an error occurs and <option>fail-on-error</option> is <code>false</code>, the step returns a <tag>c:error</tag> element which may contain
-      additional, implementation-defined, information about the nature of the error. In the case of a recursive copy, processing stops at the first
-      error.</para>
-    <para>If an error occurs and <option>fail-on-error</option> is <code>true</code>, one of the following errors is raised:</para>
-    <itemizedlist>
-      <listitem>
-        <para>
-          <emphasis role="bold">[ERROR <step-error-ref code="XD0011"/>]</emphasis>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis role="bold">[ERROR <step-error-ref code="XC0050"/>]</emphasis>
-        </para>
-      </listitem>
-    </itemizedlist>
-    <bridgehead>Copying directories</bridgehead>
-    <para>If <option>href</option> identifies a directory and <code>target</code> also identifies a directory, or does not exist, then the
-        <tag>p:file-copy</tag> step attempts to copy the entire directory tree identified by <option>href</option>: the directory and all of its
-      descendants.</para>
-    <para>In this case:</para>
-    <itemizedlist>
-      <listitem>
-        <para>If <option>fail-on-error</option> is <code>false</code> and an error occurs, no further copying is attempted after the first error is
-          detected.</para>
-      </listitem>
-      <listitem>
-        <para>If <option>overwrite</option> is <code>true</code>, <code>err:XC0157</code> does not apply to descendants. A directory under
-            <option>href</option> may replace a file with the corresponding name under <option>target</option>. </para>
-      </listitem>
-    </itemizedlist>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="file-copy-preserves-none">The resulting document has no properties apart from <property>content-type</property>. In particular, it
-      has no <property>base-uri</property>.</para>
+    <para>The <step/> step copies a file or a directory, as specified in the <option>href</option> option, to the target given in the
+        <option>target</option> option. Any non-existent directory in the <option>target</option> option value will be created.</para>
+
+    <para>If the <option>target</option> option specifies a directory (ends with a slash <code>/</code>), the step attempts to copy the source file or
+      directory <emphasis>into</emphasis> the target directory, preserving its name. This means that you cannot use <step/> to copy a directory to
+      another location under a different name. See the <example-ref idref="dir-copy-rename"/> example on how you do can achieve this.</para>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type.xml"/>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>Relative values for the <option>href</option> and <option>target</option> options are resolved against the base URI of the element on which
+      this option is specified. In most cases this will be the static base URI of your pipeline (the path where the XProc source containing the
+      <step/> is stored).</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="../../text-fragments/file-scheme-uris.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <para>The following example copies a file <code>data/x1.xml</code> to the <code>build/</code> directory:</para>
+    <para>TBD WAIT FOR ANSWER ACHIM</para>
+    <!--<xproc-example href="../../examples/file-copy/file-copy-01.xpl" show-source="false" keep-from="build" />-->
+
+    <para>We could also copy it using a different target name:</para>
+    <xproc-example href="../../examples/file-copy/file-copy-02.xpl" show-source="false" keep-from="build"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Copying and renaming a directory" id="dir-copy-rename">
+
+    <para>If you&#x2019;re copying a directory, the <step/> step always copies this <emphasis>into</emphasis> the designated target directory. This
+      means that you cannot copy a directory to another location under a different name. To achieve this you subsequently have to rename it using <step-ref name="p:file-move"/>:</para>
+    <xproc-example href="../../examples/file-copy/file-copy-03.xpl" show-source="false" keep-from="build"/>
+    
+  </example>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
     <step-error code="XC0157"/>
     <step-error code="XC0144"/>
@@ -93,4 +131,5 @@
     <step-error code="XD0011"/>
     <step-error code="XC0050"/>
   </step-errors>
+
 </step>
