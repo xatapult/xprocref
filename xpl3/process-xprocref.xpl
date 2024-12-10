@@ -245,10 +245,10 @@
     <p:variable name="href-pipeline" as="xs:string" select="xs:string(/*/@href)"/>
     <p:variable name="href-pipeline-dir" as="xs:string" select="replace($href-pipeline, '(.*)[/\\][^/\\]+$', '$1')"/>
     <p:file-delete fail-on-error="false" recursive="true">
-      <p:with-option name="href" select="string-join(($href-pipeline-dir, '..', 'build/'), '/')"/>
+      <p:with-option name="href" select="string-join(($href-pipeline-dir, 'build/'), '/')"/>
     </p:file-delete>
     <p:file-delete fail-on-error="false" recursive="true">
-      <p:with-option name="href" select="string-join(($href-pipeline-dir, '..', 'tmp/'), '/')"/>
+      <p:with-option name="href" select="string-join(($href-pipeline-dir, 'tmp/'), '/')"/>
     </p:file-delete>
 
     <!-- Run the pipeline and add the result, wrapped in <_RESULT>: -->
