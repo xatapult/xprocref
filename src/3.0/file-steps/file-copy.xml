@@ -113,12 +113,17 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <example title="Copying and renaming a directory" id="dir-copy-rename">
+  <example title="Copying a directory under a different name" id="dir-copy-rename">
 
     <para>If you&#x2019;re copying a directory, the <step/> step always copies this <emphasis>into</emphasis> the designated target directory. This
-      means that you cannot copy a directory to another location under a different name. To achieve this you subsequently have to rename it using <step-ref name="p:file-move"/>:</para>
-    <xproc-example href="../../examples/file-copy/file-copy-03.xpl" show-source="false" keep-from="build"/>
-    
+      means that you cannot copy a directory to another location under a different name. In order to achieve this, you subsequently must rename the
+      copied result using <step-ref name="p:file-move"/>:</para>
+    <xproc-example href="../../examples/file-copy/file-copy-03.xpl" show-source="false" keep-from="build">
+      <result-header>
+        <para>Result document (of the <step-ref name="p:file-move"/>):</para>
+      </result-header>
+    </xproc-example>
+
   </example>
 
   <!-- ======================================================================= -->
