@@ -293,10 +293,6 @@
       <p:with-option name="parameters" select="map{'xproc-example-elm': $xproc-example-elm, 'has-source-port': $has-source-port}"/>
     </p:xslt>
 
-    <p:store href="file:///C:/xdata/x.xml">
-      <p:with-input pipe="@create-examples"/>
-    </p:store>
-
   </p:viewport>
 
   <!-- Process any Markdown (into DocBook): -->
