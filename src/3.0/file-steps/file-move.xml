@@ -1,74 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="file-move" version-idref="v30" category-idrefs="file-steps" short-description="[EDIT] file-move short description" required="false"
-  publish="false" href-specification="{$BASELINK-FILE-STEPS-V30}#c.file-move"
+<step name="file-move" version-idref="v30" category-idrefs="file-steps env" short-description="Moves or renames a file or directory" required="false"
+  publish="true" href-specification="{$BASELINK-FILE-STEPS-V30}#c.file-move"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <output port="result" primary="true" content-types="application/xml" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>A <tag>c:result</tag> element containing the absolute URI of the target (the <code>c</code> prefix here is bound to the
+            <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
       </description>
     </output>
+
     <option name="href" required="true" as="xs:anyURI">
       <description>
-        <para>[EDIT] option href</para>
+        <para>The URI of the source file or directory to move (or rename).</para>
       </description>
     </option>
+
     <option name="target" required="true" as="xs:anyURI">
       <description>
-        <para>[EDIT] option target</para>
+        <para>The URI of the target file or directory to move to.</para>
       </description>
     </option>
+
     <option name="fail-on-error" as="xs:boolean" select="true()" required="false">
       <description>
-        <para>[EDIT] option fail-on-error</para>
+        <para>Determines what happens if an error occurs during the move operation:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If this option is <code>true</code> (default), an appropriate XProc error is raised.</para>
+          </listitem>
+          <listitem>
+            <para>If this option is <code>false</code>, the step returns a <tag>c:error</tag> document (see <link
+                xlink:href="https://spec.xproc.org/master/head/xproc/#err-vocab" role="newpage">here</link> for more information) on its
+                <port>result</port> port.</para>
+          </listitem>
+        </itemizedlist>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <code>p:file-move</code> step moves a file or directory.</para>
+    <para>The <step/> step moves (or renames) a file or directory to a different location (or name).</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The <tag>p:file-move</tag> step moves the file or directory named in <option>href</option> to the new location specified in
-        <option>target</option>. If the <option>target</option> option specifies an <emphasis>existing</emphasis> directory, the step attempts to move
-      the file or directory <emphasis>into</emphasis> that directory, preserving its base name. <emphasis role="bold">[ERROR <step-error-ref
-          code="XC0158"/>]</emphasis></para>
-    <para>Conformant processors must support URIs whose scheme is <code>file</code> for the <option>href</option> and <option>target</option> options
-      of <tag>p:file-move</tag>. It is implementation-defined what other schemes are supported by <tag>p:file-move</tag>, and what the interpretation
-      of ‘directory’, ‘file’ and ‘contents’ is for those schemes. <emphasis role="bold">[ERROR <step-error-ref code="XC0148"/>]</emphasis>
-    </para>
-    <para>If <option>href</option> or <option>target</option> are relative, they are made absolute against the base URI of the element on which they
-      are specified (<tag>p:with-option</tag> or <tag>p:file-move</tag> in the case of a syntactic shortcut value). <emphasis role="bold">[ERROR
-          <step-error-ref code="XD0064"/>]</emphasis>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0149"/>]</emphasis></para>
-    <para>If the <option>href</option> option specifies a device or other special kind of object, the results are implementation-defined.</para>
-    <para>If the move is successful, the step returns a <tag>c:result</tag> element containing the absolute URI of the target.</para>
-    <para>If an error occurs and <option>fail-on-error</option> is <code>false</code>, the step returns a <tag>c:error</tag> element which may contain
-      additional, implementation-defined, information about the nature of the error.</para>
-    <para>If an error occurs and <option>fail-on-error</option> is <code>true</code>, one of the following errors is raised:</para>
+    <para>The <step/> step attempts to move (or rename) the file or directory specified in the <option>href</option> option to the location specified
+      in the <option>target</option> option. The <port>result</port> port emits a small XML document with only a <tag>c:result</tag> element
+      containing the absolute URI of the target (the <code>c</code> prefix here is bound to the <code>http://www.w3.org/ns/xproc-step</code>
+      namespace). </para>
+
+    <para>The inspiration for this step comes from the Unix <code>mv</code> command. If you&#x2019;re not used to it, it may come as a surprise that
+        <emphasis>moving</emphasis> something can also mean <emphasis>renaming</emphasis> it:</para>
     <itemizedlist>
       <listitem>
-        <para>
-          <emphasis role="bold">[ERROR <step-error-ref code="XD0011"/>]</emphasis>
-        </para>
+        <para>Moving <code>file:///a/b/c.xml</code> to <code>file:///a/b2/c.xml</code>&#160;<emphasis>moves</emphasis> the file to the <code>b2</code>
+          directory. See also the <example-ref idref="basic-usage"/> example.</para>
       </listitem>
       <listitem>
-        <para>
-          <emphasis role="bold">[ERROR <step-error-ref code="XC0115"/>]</emphasis>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          <emphasis role="bold">[ERROR <step-error-ref code="XC0050"/>]</emphasis>
-        </para>
+        <para>But moving <code>file:///a/b/c.xml</code> to <code>file:///a/b/c2.xml</code>&#160;<emphasis>renames</emphasis> the file. See also the
+            <example-ref idref="renaming"/> example. An example of renaming a directory can be found in the example <example-ref
+            idref="dir-copy-rename" step-name="p:file-copy"/>.</para>
       </listitem>
     </itemizedlist>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="file-move-preserves-none">The resulting document has no properties apart from <property>content-type</property>. In particular, it
-      has no <property>base-uri</property>.</para>
+
+    <para>If you&#x2019;re moving into another directory, this directory must exist. A target must not exist.</para>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type.xml"/>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>Relative values for the <option>href</option> and <option>target</option> options are resolved against the base URI of the element on which
+      this option is specified. In most cases this will be the static base URI of your pipeline (the path where the XProc source containing the
+      <step/> is stored).</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="../../text-fragments/file-scheme-uris.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="basic-usage">
+
+    <para>The following example moves a file <code>data/x1.xml</code> to <code>build/x1-copied.xml</code>:</para>
+    <xproc-example href="../../examples/file-move/file-move-01.xpl" show-source="false" keep-from="build"/>
+    <para>Please note that the target <code>build/</code> directory must exist, without an existing <code>x1-copied.xml</code> file.</para>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Renaming a file" id="renaming">
+
+    <para>The following example <emphasis>renames</emphasis> an existing file <code>build/x1.xml</code> to <code>build/x2.xml</code>:</para>
+    <xproc-example href="../../examples/file-move/file-move-02.xpl" show-source="false" keep-from="build"/>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
     <step-error code="XC0158"/>
     <step-error code="XC0148"/>

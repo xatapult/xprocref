@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="file-copy" version-idref="v30" category-idrefs="file-steps env" short-description="Copies a file or directory" required="false"
-  publish="false" href-specification="{$BASELINK-FILE-STEPS-V30}#c.file-copy"
+  publish="true" href-specification="{$BASELINK-FILE-STEPS-V30}#c.file-copy"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
@@ -69,12 +69,14 @@
   <!-- ======================================================================= -->
 
   <description>
-    <para>The <step/> step copies a file or a directory, as specified in the <option>href</option> option, to the target given in the
-        <option>target</option> option. Any non-existent directory in the <option>target</option> option value will be created.</para>
+    <para>The <step/> step copies a file or a directory, as specified in the <option>href</option> option, to the target specified in the
+        <option>target</option> option. Any non-existent directory in the <option>target</option> option value will be created. The
+        <port>result</port> port emits a small XML document with only a <tag>c:result</tag> element containing the absolute URI of the target (the
+        <code>c</code> prefix here is bound to the <code>http://www.w3.org/ns/xproc-step</code> namespace). </para>
 
-    <para>If the <option>target</option> option specifies a directory (ends with a slash <code>/</code>), the step attempts to copy the source file or
-      directory <emphasis>into</emphasis> the target directory, preserving its name. This means that you cannot use <step/> to copy a directory to
-      another location under a different name. See the <example-ref idref="dir-copy-rename"/> example on how you do can achieve this.</para>
+    <para>If the <option>target</option> option specifies an existing directory (existing on disk), the step attempts to copy the source file or
+      directory <emphasis>into</emphasis> that target directory, preserving the name of the source. This means that you cannot use <step/> to copy a
+      directory to another location under a different name. See the <example-ref idref="dir-copy-rename"/> example on how to achieve this.</para>
 
   </description>
 
@@ -102,11 +104,7 @@
 
   <example title="Basic usage">
 
-    <para>The following example copies a file <code>data/x1.xml</code> to the <code>build/</code> directory:</para>
-    <para>TBD WAIT FOR ANSWER ACHIM</para>
-    <!--<xproc-example href="../../examples/file-copy/file-copy-01.xpl" show-source="false" keep-from="build" />-->
-
-    <para>We could also copy it using a different target name:</para>
+    <para>The following example copies a file <code>data/x1.xml</code> to <code>build/x1-copied</code>:</para>
     <xproc-example href="../../examples/file-copy/file-copy-02.xpl" show-source="false" keep-from="build"/>
 
   </example>
@@ -118,7 +116,7 @@
     <para>If you&#x2019;re copying a directory, the <step/> step always copies this <emphasis>into</emphasis> the designated target directory. This
       means that you cannot copy a directory to another location under a different name. In order to achieve this, you subsequently must rename the
       copied result using <step-ref name="p:file-move"/>:</para>
-    <xproc-example href="../../examples/file-copy/file-copy-03.xpl" show-source="false" keep-from="build">
+    <xproc-example href="../../examples/file-copy/file-copy-03.xpl" show-source="false" keep-from="test">
       <result-header>
         <para>Result document (of the <step-ref name="p:file-move"/>):</para>
       </result-header>

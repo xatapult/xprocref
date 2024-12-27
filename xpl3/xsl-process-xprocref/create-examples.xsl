@@ -156,7 +156,13 @@
   <xsl:template match="p:input[@port eq 'source']/@href" mode="mode-prepare-pipeline-for-display">
     <!-- Remove... -->
   </xsl:template>
-
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <xsl:template match="p:*[xtlc:str2bln(@xpref:example-remove, false())]" mode="mode-prepare-pipeline-for-display">
+    <!-- Remove... -->
+  </xsl:template>
+  
   <!-- ======================================================================= -->
   <!-- OTHER SUPPORT: -->
 
