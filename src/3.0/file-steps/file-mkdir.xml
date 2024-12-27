@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="file-mkdir" version-idref="v30" category-idrefs="file-steps" short-description="[EDIT] file-mkdir short description" required="false"
+  publish="false" href-specification="{$BASELINK-FILE-STEPS-V30}#c.file-mkdir"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  <signature>
+    <output port="result" primary="true" content-types="application/xml" sequence="false">
+      <description>
+        <para>[EDIT] output result</para>
+      </description>
+    </output>
+    <option name="href" required="true" as="xs:anyURI">
+      <description>
+        <para>[EDIT] option href</para>
+      </description>
+    </option>
+    <option name="fail-on-error" as="xs:boolean" select="true()" required="false">
+      <description>
+        <para>[EDIT] option fail-on-error</para>
+      </description>
+    </option>
+  </signature>
+  <summary>
+    <para>[EDIT]</para>
+    <para>The <code>p:file-mkdir</code> step creates a directory.</para>
+  </summary>
+  <description>
+    <para>[EDIT]</para>
+    <para>The <tag>p:file-mkdir</tag> create the directory named in the <option>href</option> option. If this includes more than one directory
+      component, all of the intermediate components are created. If the directory already exists the step just returns the <tag>c:result</tag> element
+      as described below. The path separator is implementation-defined.</para>
+    <para>Conformant processors must support URIs whose scheme is <code>file</code> for the <option>href</option> option of <tag>p:file-mkdir</tag>.
+      It is implementation-defined what other schemes are supported by <tag>p:file-mkdir</tag>, and what the interpretation of ‘directory’, ‘file’ and
+      ‘contents’ is for those schemes. <emphasis role="bold">[ERROR <step-error-ref code="XC0140"/>]</emphasis>
+    </para>
+    <para>If <option>href</option> is relative, it is made absolute against the base URI of the element on which it is specified
+        (<tag>p:with-option</tag> or <tag>p:file-mkdir</tag> in the case of a syntactic shortcut value). <emphasis role="bold">[ERROR <step-error-ref
+          code="XD0064"/>]</emphasis>
+      <emphasis role="bold">[ERROR <step-error-ref code="XC0141"/>]</emphasis></para>
+    <para>The step returns a <tag>c:result</tag> element containing the absolute URI of the directory.</para>
+    <para>If an error occurs and <option>fail-on-error</option> is <code>false</code>, the step returns a <tag>c:error</tag> element which may contain
+      additional, implementation-defined, information about the nature of the error.</para>
+    <para>If an error occurs and <option>fail-on-error</option> is <code>true</code>, the following error is raised:</para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <emphasis role="bold">[ERROR <step-error-ref code="XC0114"/>]</emphasis>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <bridgehead>Document properties</bridgehead>
+    <para feature="file-mkdir-preserves-none">The resulting document has no properties apart from <property>content-type</property>. In particular, it
+      has no <property>base-uri</property>.</para>
+  </description>
+  <step-errors>
+    <step-error code="XC0140"/>
+    <step-error code="XD0064"/>
+    <step-error code="XC0141"/>
+    <step-error code="XC0114"/>
+  </step-errors>
+</step>

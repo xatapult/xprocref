@@ -55,4 +55,5 @@
   <xi:include href="standard-steps/xinclude.xml"/>
   <xi:include href="standard-steps/xquery.xml"/>
   <xi:include href="standard-steps/xslt.xml"/>
+
 </step-group>

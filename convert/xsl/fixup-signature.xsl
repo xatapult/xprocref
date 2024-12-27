@@ -27,7 +27,7 @@
         <xsl:attribute name="primary" select="true()"/>
       </xsl:if>
       <xsl:if test="empty(@sequence)">
-        <xsl:attribute name="sequence" select="true()"/>
+        <xsl:attribute name="sequence" select="false()"/>
       </xsl:if>
       <xsl:if test="empty(@content-types)">
         <!-- Is this ok? -->

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step-group xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <!-- == Step group for: validation steps == -->
+  <xi:include href="validation-steps/validate-with-nvdl.xml"/>
+  <xi:include href="validation-steps/validate-with-relax-ng.xml"/>
+  <xi:include href="validation-steps/validate-with-schematron.xml"/>
+  <xi:include href="validation-steps/validate-with-xml-schema.xml"/>
+  <xi:include href="validation-steps/validate-with-json-schema.xml"/>
+  <xi:include href="validation-steps/validate-with-dtd.xml"/>
+
+</step-group>

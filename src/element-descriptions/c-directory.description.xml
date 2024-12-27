@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element-description xmlns="http://www.xtpxlib.nl/ns/xdoc" xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xdoc
+  ../../../../xatapult/xtpxlib-xdoc/xsd/element-description.xsd" name="c:directory" sort-attributes="false">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <attribute name="name" required="true">
+    <description>
+      <para>The name of the directory (without a path in front).</para>
+    </description>
+    <type name="xs:string"/>
+  </attribute>
+  <attribute name="xml:base" required="true">
+    <description>
+      <para>The URI of the directory, always ending with a slash.</para>
+      <itemizedlist>
+        <listitem>
+          <para>For the root <tag>c:directory</tag> element this will be the absolute path of the directory described.</para>
+        </listitem>
+        <listitem>
+          <para>For any nested <tag>c:directory</tag> elements, this will be the name of the directory.</para>
+        </listitem>
+      </itemizedlist>
+    </description>
+    <type name="xs:anyURI"/>
+  </attribute>
+  <attribute name="size" required="false">
+    <description>
+      <para>The size of the directory entry (in bytes). See below.</para>
+    </description>
+    <type name="xs:integer"/>
+  </attribute>
+  <attribute name="readable" required="false">
+    <description>
+      <para>Whether this directory is readable for the current user. See below.</para>
+    </description>
+    <type name="xs:boolean"/>
+  </attribute>
+  <attribute name="writable" required="false">
+    <description>
+      <para>Whether this directory is readable for the current user. See below.</para>
+    </description>
+    <type name="xs:boolean"/>
+  </attribute>
+  <attribute name="last-modified" required="false">
+    <description>
+      <para>The date and time this directory was last modified. See below.</para>
+    </description>
+    <type name="xs:dateTime"/>
+  </attribute>
+  <attribute name="hidden" required="false">
+    <description>
+      <para>Whether this directory is hidden for the current user. See below.</para>
+    </description>
+    <type name="xs:boolean"/>
+  </attribute>
+
+  <choice occurs="*">
+    <element name="c:file" occurs="1">
+      <description>
+        <para>An file in the given directory</para>
+      </description>
+    </element>
+    <element name="c:directory" occurs="1">
+      <description>
+        <para>A subdirectory in the given directory</para>
+      </description>
+    </element>
+    <element name="c:other" occurs="1">
+      <description>
+        <para>Anything in the given directory that is &#x201c;special&#x201d;. What is considered special is implementation defined and therefore
+          depends on the XProc processor used.</para>
+      </description>
+    </element>
+  </choice>
+
+</element-description>

@@ -8,10 +8,39 @@
 
   <macrodefs>
     <!-- Baselinks to the standard: -->
+    
     <macrodef name="BASELINK-V30" value="https://spec.xproc.org/3.0/"/>
-    <macrodef name="BASELINK-STANDARD-STEPS-V30" value="{$BASELINK-V30}steps/"/>
     <macrodef name="BASELINK-V31" value="https://spec.xproc.org/lastcall-2024-08/head/"/>
+    
+    <macrodef name="BASELINK-STANDARD-STEPS-V30" value="{$BASELINK-V30}steps/"/>
     <macrodef name="BASELINK-STANDARD-STEPS-V31" value="{$BASELINK-V31}steps/"/>
+    
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    
+    <macrodef name="BASELINK-NONSTANDARD-STEPS-V30" value="https://spec.xproc.org/master/head/"/>
+    <macrodef name="BASELINK-NONSTANDARD-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V30}"/>
+    
+    <macrodef name="BASELINK-FILE-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}file/"/>
+    <macrodef name="BASELINK-FILE-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}file/"/>
+    
+    <macrodef name="BASELINK-OS-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}os/"/>
+    <macrodef name="BASELINK-OS-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}os/"/>
+    
+    <macrodef name="BASELINK-MAIL-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}mail/"/>
+    <macrodef name="BASELINK-MAIL-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}mail/"/>
+    
+    <macrodef name="BASELINK-PAGED-MEDIA-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}paged-media/"/>
+    <macrodef name="BASELINK-PAGED-MEDIA-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}paged-media/"/>
+    
+    <macrodef name="BASELINK-TEXT-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}text/"/>
+    <macrodef name="BASELINK-TEXT-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}text/"/>
+    
+    <macrodef name="BASELINK-VALIDATION-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}validation/"/>
+    <macrodef name="BASELINK-VALIDATION-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}validation/"/>
+    
+    <macrodef name="BASELINK-IXML-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}ixml/"/>
+    <macrodef name="BASELINK-IXML-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}ixml/"/>
+    
   </macrodefs>
 
   <!-- ======================================================================= -->
@@ -83,10 +112,23 @@
 
     <!-- 3.0: -->
     <xi:include href="3.0/standard-steps.3.0.stepgroup.xml"/>
+    <xi:include href="3.0/file-steps.3.0.stepgroup.xml"/>
+    <xi:include href="3.0/os-steps.3.0.stepgroup.xml"/>
+    <xi:include href="3.0/mail-steps.3.0.stepgroup.xml"/>
+    <xi:include href="3.0/paged-media-steps.3.0.stepgroup.xml"/>
+    <xi:include href="3.0/text-steps.3.0.stepgroup.xml"/>
+    <xi:include href="3.0/validation-steps.3.0.stepgroup.xml"/>
+    <xi:include href="3.0/ixml-steps.3.0.stepgroup.xml"/>
 
     <!-- 3.1: -->
     <xi:include href="3.1/standard-steps.3.1.stepgroup.xml"/>
-
+    <xi:include href="3.1/file-steps.3.1.stepgroup.xml"/>
+    <xi:include href="3.1/os-steps.3.1.stepgroup.xml"/>
+    <xi:include href="3.1/mail-steps.3.1.stepgroup.xml"/>
+    <xi:include href="3.1/paged-media-steps.3.1.stepgroup.xml"/>
+    <xi:include href="3.1/text-steps.3.1.stepgroup.xml"/>
+    <xi:include href="3.1/validation-steps.3.1.stepgroup.xml"/>
+    
   </steps>
 
 </xprocref>

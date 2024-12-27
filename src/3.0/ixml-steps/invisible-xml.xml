@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="invisible-xml" version-idref="v30" category-idrefs="ixml-steps" short-description="[EDIT] invisible-xml short description"
+  required="false" publish="false" href-specification="{$BASELINK-IXML-STEPS-V30}#c.ixml"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  
+  <signature>
+    <input port="grammar" sequence="true" content-types="text xml" primary="false">
+      <description>
+        <para>[EDIT] input grammar</para>
+      </description>
+    </input>
+    <input port="source" primary="true" content-types="any -xml -html" sequence="false">
+      <description>
+        <para>[EDIT] input source</para>
+      </description>
+    </input>
+    <output port="result" sequence="true" content-types="any" primary="true">
+      <description>
+        <para>[EDIT] output result</para>
+      </description>
+    </output>
+    <option name="parameters" as="map(xs:QName, item()*)?" required="false">
+      <description>
+        <para>[EDIT] option parameters</para>
+      </description>
+    </option>
+    <option name="fail-on-error" as="xs:boolean" select="true()" required="false">
+      <description>
+        <para>[EDIT] option fail-on-error</para>
+      </description>
+    </option>
+  </signature>
+  <summary>
+    <para>[EDIT]</para>
+    <para>The <tag>p:invisible-xml</tag> step performs Invisible XML processing per <link xlink:href="https://invisiblexml.org/1.0/" role="newpage"
+        xmlns:xlink="http://www.w3.org/1999/xlink">Invisible XML Specification</link> . It transforms a non-XML input into XML by applying the
+      specified Invisible XML grammar.</para>
+  </summary>
+  <description>
+    <para>[EDIT]</para>
+    <para>If no grammar is provided on the <port>grammar</port> port, the grammar for Invisible XML is assumed. If an XML or text grammar is provided
+      it must be an Invisible XML grammar. <emphasis role="bold">[ERROR <step-error-ref code="XC0212"/>]</emphasis>
+      <emphasis role="bold">[ERROR <step-error-ref code="XC0211"/>]</emphasis></para>
+    <para>The <port>source</port> to be processed is usually text, but there’s nothing in principle that prevents an Invisible XML grammar from
+      applying to an arbitrary sequence of characters.</para>
+    <para>The <port>result</port> should be XML. It is implementation-defined if other result formats are possible. (An implementation might, for
+      example, provide a way for the <tag>p:invisible-xml</tag> step to compile an Invisible XML grammar into some format that can be processed more
+      efficiently.)</para>
+    <itemizedlist>
+      <listitem>
+        <para>The <option>parameters</option> are implementation-defined. An implementation might provide parameters to select among different
+          ambiguous parses or choose alternate representations.</para>
+      </listitem>
+      <listitem>
+        <para>If <option>fail-on-error</option> is <code>true</code>, the step will raise an error if the input cannot be parsed by the grammar.
+            <emphasis role="bold">[ERROR <step-error-ref code="XC0205"/>]</emphasis> If <option>fail-on-error</option> is <code>false</code>, no error
+          will be raised. </para>
+        <para>The Invisible XML specification provides a mechanism to identify failed parses in the output.</para>
+      </listitem>
+    </itemizedlist>
+    <sect2 xml:id="example-ixml">
+      <title>Examples</title>
+
+      <para>Several examples demonstrate features of the step.</para>
+
+      <sect3 xml:id="example-parse-ixml">
+        <title>Parsing an Invisible XML grammar</title>
+
+        <para>In this first example, no grammar is provided, so the pipeline parses the Invisible XML grammar on the <port>source</port> port and
+          returns its XML representation:</para>
+
+        <programlisting language="xml"><include href="../examples/dates-1.xml" parse="text"/></programlisting>
+
+        <para>This would produce an XML version of the grammar:</para>
+
+        <programlisting language="xml">&lt;ixml&gt; &lt;rule name="date"&gt; &lt;alt&gt; &lt;option&gt; &lt;nonterminal name="s"/&gt; &lt;/option&gt; &lt;nonterminal name="day"/&gt; &lt;nonterminal name="s"/&gt; &lt;nonterminal name="month"/&gt; &lt;option&gt; &lt;alts&gt; &lt;alt&gt; &lt;nonterminal name="s"/&gt; &lt;nonterminal name="year"/&gt; &lt;/alt&gt; &lt;/alts&gt; &lt;/option&gt; &lt;/alt&gt; &lt;/rule&gt; &lt;!-- … remaining rules elided for brevity … --&gt; &lt;/ixml&gt;</programlisting>
+
+      </sect3>
+      <sect3 xml:id="example-parse-date">
+        <title>Parsing a date</title>
+
+        <para>If the grammar is provided on the <port>grammar</port> port, it can be used to parse input, the string “31 December 2021” in this
+          case:</para>
+
+        <programlisting language="xml"><include href="../examples/dates-2.xml" parse="text"/></programlisting>
+
+        <para>This would produce an XML version of the date:</para>
+
+        <programlisting language="xml">&lt;date&gt;&lt;day&gt;31&lt;/day&gt;&lt;month&gt;December&lt;/month&gt;&lt;year&gt;2021&lt;/year&gt;&lt;/date&gt;</programlisting>
+
+      </sect3>
+      <sect3 xml:id="example-parse-fail">
+        <title>Failed parses</title>
+
+        <para>If a parse fails, the implementation must indicate this, but it may also provide information about where the processing failed.</para>
+
+        <programlisting language="xml"><include href="../examples/dates-3.xml" parse="text"/></programlisting>
+
+        <para>Here the output might be something like this:</para>
+
+        <programlisting language="xml">&lt;error xmlns:ixml="http://invisiblexml.org/NS" xmlns:ex="http://example.com/NS" ixml:state="failed" ex:lastChar="4"&gt; &lt;parse&gt; month -&gt; • M a r c h month -&gt; M • a r c h &lt;/parse&gt; &lt;parse&gt; month -&gt; • M a y month -&gt; M • a y &lt;/parse&gt; &lt;/error&gt;</programlisting>
+
+        <para>In the case of failure, Invisible XML requires that the <tag class="attribute">ixml:state</tag> attribute appear on the root element
+          containing the token “<code>failed</code>”. It doesn’t constrain the implementation’s choice of the root element or the content of the
+          document. </para>
+
+      </sect3>
+      <sect3 xml:id="example-parse-ambiguous-1">
+        <title>Ambiguous parses</title>
+
+        <para>An ixml grammar may be ambiguous. In the grammar below, there are three different possible ways to parse the input. By default, one of
+          them is returned. </para>
+
+        <programlisting language="xml"><include href="../examples/ambig-1.xml" parse="text"/></programlisting>
+
+        <para>This might return any one of these parses:</para>
+
+        <programlisting language="xml">&lt;letters ixml:state="ambiguous" xmlns:ixml="http://invisiblexml.org/NS"&gt;&lt;X&gt;a&lt;/X&gt;&lt;C&gt;&lt;digits&gt;123&lt;/digits&gt;&lt;/C&gt;&lt;/letters&gt;</programlisting>
+
+        <para>or</para>
+
+        <programlisting language="xml">&lt;letters ixml:state="ambiguous" xmlns:ixml="http://invisiblexml.org/NS"&gt;&lt;X&gt;a&lt;/X&gt;&lt;A&gt;&lt;digits&gt;123&lt;/digits&gt;&lt;/A&gt;&lt;/letters&gt;</programlisting>
+
+        <para>or</para>
+
+        <programlisting language="xml">&lt;letters ixml:state="ambiguous" xmlns:ixml="http://invisiblexml.org/NS"&gt;&lt;X&gt;a&lt;/X&gt;&lt;B&gt;&lt;digits&gt;123&lt;/digits&gt;&lt;/B&gt;&lt;/letters&gt;</programlisting>
+
+        <para>All are equally correct.</para>
+      </sect3>
+
+      <sect3 xml:id="example-parse-ambiguous-2">
+        <title>Ambiguous parse selection</title>
+
+        <para>An implementation might provide a parameter to allow the author to select a particular parse: </para>
+
+        <programlisting language="xml"><include href="../examples/ambig-2.xml" parse="text"/></programlisting>
+
+        <para>This might return:</para>
+
+        <programlisting language="xml">&lt;letters ixml:state="ambiguous"&gt;&lt;X&gt;a&lt;/X&gt;&lt;A&gt;&lt;digits&gt;123&lt;/digits&gt;&lt;/A&gt;&lt;/letters&gt;</programlisting>
+      </sect3>
+
+      <sect3 xml:id="example-parse-ambiguous-3">
+        <title>Multiple ambiguous outputs</title>
+
+        <para>Or a processor might provide a parameter to return all of the parses.</para>
+
+        <programlisting language="xml"><include href="../examples/ambig-3.xml" parse="text"/></programlisting>
+
+        <para>This might return three documents:</para>
+
+        <programlisting language="xml">&lt;letters ixml:state="ambiguous"&gt;&lt;X&gt;a&lt;/X&gt;&lt;C&gt;&lt;digits&gt;123&lt;/digits&gt;&lt;/C&gt;&lt;/letters&gt; &lt;letters ixml:state="ambiguous"&gt;&lt;X&gt;a&lt;/X&gt;&lt;B&gt;&lt;digits&gt;123&lt;/digits&gt;&lt;/B&gt;&lt;/letters&gt; &lt;letters ixml:state="ambiguous"&gt;&lt;X&gt;a&lt;/X&gt;&lt;A&gt;&lt;digits&gt;123&lt;/digits&gt;&lt;/A&gt;&lt;/letters&gt;</programlisting>
+
+        <para>As before, there is nothing standardized about the results in this case.</para>
+      </sect3>
+    </sect2>
+    <sect2>
+      <title>Formerly the <code>p:ixml</code> step</title>
+
+      <para>In earlier drafts of this specification, the <tag>p:invisible-xml</tag> step was named <code>p:ixml</code>. Changing the name of the step
+        to <tag>p:invisible-xml</tag> brings the name into better alignment with the naming conventions used for most other XProc steps and aligns its
+        name with the <code>fn:invisible-xml()</code> function in XPath 4.0.</para>
+
+      <para>Implementors may wish to support both names for some period of time in order to avoid breaking changes in existing pipelines. Support for
+        the alternative name <code>p:ixml</code> is implementation-defined.</para>
+    </sect2>
+    <bridgehead>Document properties</bridgehead>
+    <para feature="exec-preserves-none">No document properties are preserved.</para>
+  </description>
+  <step-errors>
+    <step-error code="XC0212"/>
+    <step-error code="XC0211"/>
+    <step-error code="XC0205"/>
+  </step-errors>
+</step>

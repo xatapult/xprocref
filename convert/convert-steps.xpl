@@ -77,6 +77,8 @@
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl/add-additional-documents.xsl"/>
   </p:xslt>
+  <!-- Now we can remove the contents of step-error elements: -->
+  <p:delete match="xpref:step-error/node()"/>
   
   <!-- Fix weird text nodes: -->
   <p:xslt>
@@ -100,9 +102,9 @@
     </p:xslt>
     <p:store href="{$href-abs}" serialization="map{'indent': true()}"/>
   </p:for-each>
-  <p:variable name="count" as="xs:integer" select="count(collection())" collection="true"/>
 
   <!-- Create a report thingy: -->
+  <p:variable name="count" as="xs:integer" select="count(collection())" collection="true"/>
   <p:identity>
     <p:with-input>
       <convert-steps name="{$name}" count="{$count}" timestamp="{current-dateTime()}" href-target="{$href-target}"/>

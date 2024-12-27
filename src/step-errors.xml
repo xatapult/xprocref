@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <errors xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
   <!-- == Errors for: Standard steps == -->
+
   <error code="XC0001">
     <!-- == p:text-join == -->
     <description>
@@ -121,12 +124,6 @@
     <!-- == p:xslt == -->
     <description>
       <para>It is a dynamic error if the source port does not contain exactly one XML document or one HTML document if XSLT 1.0 is used.</para>
-    </description>
-  </error>
-  <error code="XC0050">
-    <!-- == p:store == -->
-    <description>
-      <para>It is a dynamic error if the URI scheme is not supported or the step cannot store to the specified location.</para>
     </description>
   </error>
   <error code="XC0056">
@@ -387,8 +384,9 @@
   <error code="XC0109">
     <!-- == p:namespace-delete == -->
     <description>
-      <para>It is a dynamic error if a namespace is to be removed from an attribute and the element already has an attribute with the resulting
-        name. For instance, removing the namespace with the <code>ns1</code> prefix will raise this error when applied to <tag>something ns1:status="ok" status="bad"/</tag>.</para>
+      <para>It is a dynamic error if a namespace is to be removed from an attribute and the element already has an attribute with the resulting name.
+        For instance, removing the namespace with the <code>ns1</code> prefix will raise this error when applied to <tag>something ns1:status="ok"
+          status="bad"/</tag>.</para>
     </description>
   </error>
   <error code="XC0110">
@@ -662,5 +660,366 @@
     <!-- == p:load - It is a dynamic error if a supplied content-type is not a valid media type of the form “type/subtype+ext” or “type/subtype”. == -->
     <!-- == p:text-join - It is a dynamic error if a supplied content-type is not a valid media type of the form “type/subtype+ext” or “type/subtype”. == -->
     <!-- == p:uncompress - It is a dynamic error if a supplied content-type is not a valid media type of the form “type/subtype+ext” or “type/subtype”. == -->
+  </error>
+
+  <!-- ======================================================================= -->
+  <!-- == Errors for: file steps == -->
+
+  <error code="XC0012">
+    <!-- == p:directory-list == -->
+    <description>
+      <para>It is a dynamic error if the contents of the directory path are not available to the step due to access restrictions in the environment in
+        which the pipeline is run.</para>
+    </description>
+  </error>
+  <error code="XC0017">
+    <!-- == p:directory-list == -->
+    <description>
+      <para>It is a dynamic error if the absolute path does not identify a directory.</para>
+    </description>
+  </error>
+  <error code="XC0050">
+    <!-- == p:file-copy == -->
+    <description>
+      <para>It is a dynamic error the file or directory cannot be copied to the specified location.</para>
+    </description>
+    <!-- == p:file-move - It is a dynamic error if the directory cannot be moved to the specified location. == -->
+  </error>
+  <error code="XC0090">
+    <!-- == p:directory-list == -->
+    <description>
+      <para>It is a dynamic error if an implementation does not support directory listing for a specified scheme.</para>
+    </description>
+  </error>
+  <error code="XC0113">
+    <!-- == p:file-delete == -->
+    <description>
+      <para>It is a dynamic error if an attempt is made to delete a non-empty directory and the <option>recursive</option> option was set to
+          <code>false</code>.</para>
+    </description>
+  </error>
+  <error code="XC0114">
+    <!-- == p:file-mkdir == -->
+    <description>
+      <para>It is a dynamic error if the directory referenced by the <option>href</option> option cannot be created.</para>
+    </description>
+  </error>
+  <error code="XC0115">
+    <!-- == p:file-move == -->
+    <description>
+      <para>It is a dynamic error if the resource referenced by the <option>target</option> option is an existing file or other file system
+        object.</para>
+    </description>
+  </error>
+  <error code="XC0116">
+    <!-- == p:file-create-tempfile == -->
+    <description>
+      <para>It is a dynamic error if the temporary file could not be created.</para>
+    </description>
+  </error>
+  <error code="XC0134">
+    <!-- == p:file-info == -->
+    <description>
+      <para>It is a dynamic error if an implementation does not support <tag>p:file-info</tag> for a specified scheme.</para>
+    </description>
+  </error>
+  <error code="XC0135">
+    <!-- == p:file-info == -->
+    <description>
+      <para>It is a dynamic error if <tag>p:file-info</tag> is not available to the step due to access restrictions in the environment in which the
+        pipeline is run.</para>
+    </description>
+  </error>
+  <error code="XC0136">
+    <!-- == p:file-touch == -->
+    <description>
+      <para>It is a dynamic error if an implementation does not support <tag>p:file-touch</tag> for a specified scheme.</para>
+    </description>
+  </error>
+  <error code="XC0137">
+    <!-- == p:file-touch == -->
+    <description>
+      <para>It is a dynamic error if <tag>p:file-touch</tag> cannot be completed due to access restrictions in the environment in which the pipeline
+        is run.</para>
+    </description>
+  </error>
+  <error code="XC0138">
+    <!-- == p:file-create-tempfile == -->
+    <description>
+      <para>It is a dynamic error if an implementation does not support <tag>p:file-create-tempfile</tag> for a specified scheme.</para>
+    </description>
+  </error>
+  <error code="XC0139">
+    <!-- == p:file-create-tempfile == -->
+    <description>
+      <para>It is a dynamic error if <tag>p:file-create-tempfile</tag> cannot be completed due to access restrictions in the environment in which the
+        pipeline is run.</para>
+    </description>
+  </error>
+  <error code="XC0140">
+    <!-- == p:file-mkdir == -->
+    <description>
+      <para>It is a dynamic error if an implementation does not support <tag>p:file-mkdir</tag> for a specified scheme.</para>
+    </description>
+  </error>
+  <error code="XC0141">
+    <!-- == p:file-mkdir == -->
+    <description>
+      <para>It is a dynamic error if <tag>p:file-mkdir</tag> not available to the step due to access restrictions in the environment in which the
+        pipeline is run.</para>
+    </description>
+  </error>
+  <error code="XC0142">
+    <!-- == p:file-delete == -->
+    <description>
+      <para>It is a dynamic error if an implementation does not support <tag>p:file-delete</tag> for a specified scheme.</para>
+    </description>
+  </error>
+  <error code="XC0143">
+    <!-- == p:file-delete == -->
+    <description>
+      <para>It is a dynamic error if <tag>p:file-delete</tag> is not available to the step due to access restrictions in the environment in which the
+        pipeline is run.</para>
+    </description>
+  </error>
+  <error code="XC0144">
+    <!-- == p:file-copy == -->
+    <description>
+      <para>It is a dynamic error if an implementation does not support <tag>p:file-copy</tag> for a specified scheme.</para>
+    </description>
+  </error>
+  <error code="XC0145">
+    <!-- == p:file-copy == -->
+    <description>
+      <para>It is a dynamic error if <tag>p:file-copy</tag> is not available to the step due to access restrictions in the environment in which the
+        pipeline is run.</para>
+    </description>
+  </error>
+  <error code="XC0148">
+    <!-- == p:file-move == -->
+    <description>
+      <para>It is a dynamic error if an implementation does not support <tag>p:file-move</tag> for a specified scheme.</para>
+    </description>
+  </error>
+  <error code="XC0149">
+    <!-- == p:file-move == -->
+    <description>
+      <para>It is a dynamic error if <tag>p:file-move</tag> is not available to the step due to access restrictions in the environment in which the
+        pipeline is run.</para>
+    </description>
+  </error>
+  <error code="XC0157">
+    <!-- == p:file-copy == -->
+    <description>
+      <para>It is a dynamic error if the <option>href</option> option names a directory, but the <option>target</option> option names a file.</para>
+    </description>
+  </error>
+  <error code="XC0158">
+    <!-- == p:file-move == -->
+    <description>
+      <para>It is a dynamic error if the <option>href</option> option names a directory, but the <option>target</option> option names a file.</para>
+    </description>
+  </error>
+
+  <!-- ======================================================================= -->
+  <!-- == Errors for: os steps == -->
+
+  <error code="XC0032">
+    <!-- == p:os-exec == -->
+    <description>
+      <para>It is a dynamic error if more than one document appears on the <port>source</port> port of the <tag>p:os-exec</tag> step.</para>
+    </description>
+  </error>
+  <error code="XC0033">
+    <!-- == p:os-exec == -->
+    <description>
+      <para>It is a dynamic error if the command cannot be run.</para>
+    </description>
+  </error>
+  <error code="XC0034">
+    <!-- == p:os-exec == -->
+    <description>
+      <para>It is a dynamic error if the current working directory cannot be changed to the value of the <option>cwd</option> option.</para>
+    </description>
+  </error>
+  <error code="XC0063">
+    <!-- == p:os-exec == -->
+    <description>
+      <para>It is a dynamic error if the <option>path-separator</option> option is specified and is not exactly one character long.</para>
+    </description>
+  </error>
+  <error code="XC0064">
+    <!-- == p:os-exec == -->
+    <description>
+      <para>It is a dynamic error if the exit code from the command is greater than the specified <option>failure-threshold</option> value.</para>
+    </description>
+  </error>
+
+  <!-- ======================================================================= -->
+  <!-- == Errors for: mail steps == -->
+
+  <error code="XC0159">
+    <!-- == p:send-mail == -->
+    <description>
+      <para>It is a dynamic error if any key in the “<literal>auth</literal>” map is associated with a value that is not an instance of the required
+        type.</para>
+    </description>
+  </error>
+  <error code="XC0160">
+    <!-- == p:send-mail == -->
+    <description>
+      <para>It is a dynamic error if any key in the “<literal>parameters</literal>” map is associated with a value that is not an instance of the
+        required type.</para>
+    </description>
+  </error>
+  <error code="XC0161">
+    <!-- == p:send-mail == -->
+    <description>
+      <para>It is a dynamic error if the first document on the <port>source</port> port does not conform to the required format.</para>
+    </description>
+  </error>
+  <error code="XC0162">
+    <!-- == p:send-mail == -->
+    <description>
+      <para>It is a dynamic error if the email cannot be send.</para>
+    </description>
+  </error>
+
+  <!-- ======================================================================= -->
+  <!-- == Errors for: paged-media steps == -->
+
+  <error code="XC0166">
+    <!-- == p:css-formatter == -->
+    <description>
+      <para>It is a dynamic error if the requested document cannot be produced.</para>
+    </description>
+  </error>
+  <error code="XC0167">
+    <!-- == p:xsl-formatter == -->
+    <description>
+      <para>It is a dynamic error if the requested document cannot be produced.</para>
+    </description>
+  </error>
+  <error code="XC0204">
+    <!-- == p:css-formatter == -->
+    <description>
+      <para>It is a dynamic error if the requested content-type is not supported.</para>
+    </description>
+    <!-- == p:xsl-formatter - It is a dynamic error if the requested content-type is not supported. == -->
+  </error>
+
+  <!-- ======================================================================= -->
+  <!-- == Errors for: validation steps == -->
+  <error code="XC0011">
+    <!-- == p:validate-with-xml-schema == -->
+    <description>
+      <para>It is a dynamic error if the specified schema version is not available.</para>
+    </description>
+  </error>
+  <error code="XC0053">
+    <!-- == p:validate-with-nvdl == -->
+    <description>
+      <para>It is a dynamic error if the <option>assert-valid</option> option on <tag>p:validate-with-nvdl</tag> is <literal>true</literal> and the
+        input document is not valid.</para>
+    </description>
+  </error>
+  <error code="XC0054">
+    <!-- == p:validate-with-schematron == -->
+    <description>
+      <para>It is a dynamic error if the <option>assert-valid</option> option is <literal>true</literal> and any Schematron assertions fail.</para>
+    </description>
+  </error>
+  <error code="XC0055">
+    <!-- == p:validate-with-xml-schema == -->
+    <description>
+      <para>It is a dynamic error if the implementation does not support the specified mode.</para>
+    </description>
+  </error>
+  <error code="XC0151">
+    <!-- == p:validate-with-schematron == -->
+    <description>
+      <para>It is a dynamic error if the document supplied on <port>schema</port> port is not a valid Schematron document.</para>
+    </description>
+  </error>
+  <error code="XC0152">
+    <!-- == p:validate-with-xml-schema == -->
+    <description>
+      <para>It is a dynamic error if the document supplied on <port>schema</port> port is not a valid XML schema document.</para>
+    </description>
+  </error>
+  <error code="XC0153">
+    <!-- == p:validate-with-relax-ng == -->
+    <description>
+      <para>It is a dynamic error if the document supplied on <port>schema</port> port cannot be interpreted as an RELAX NG Grammar. </para>
+    </description>
+  </error>
+  <error code="XC0154">
+    <!-- == p:validate-with-nvdl == -->
+    <description>
+      <para>It is a dynamic error if the document supplied on <port>nvdl</port> port is not a valid NVDL document.</para>
+    </description>
+  </error>
+  <error code="XC0155">
+    <!-- == p:validate-with-relax-ng == -->
+    <description>
+      <para>It is a dynamic error if the <option>assert-valid</option> option on <tag>p:validate-with-relax-ng</tag> is <literal>true</literal> and
+        the input document is not valid.</para>
+    </description>
+  </error>
+  <error code="XC0156">
+    <!-- == p:validate-with-xml-schema == -->
+    <description>
+      <para>It is a dynamic error if the <option>assert-valid</option> option on <tag>p:validate-with-xml-schema</tag> is <literal>true</literal> and
+        the input document is not valid.</para>
+    </description>
+  </error>
+  <error code="XC0163">
+    <!-- == p:validate-with-json-schema == -->
+    <description>
+      <para>It is a dynamic error if the selected version is not supported.</para>
+    </description>
+  </error>
+  <error code="XC0164">
+    <!-- == p:validate-with-json-schema == -->
+    <description>
+      <para>It is a dynamic error if the document supplied on <port>schema</port> port is not a valid JSON schema document in the selected
+        version.</para>
+    </description>
+  </error>
+  <error code="XC0165">
+    <!-- == p:validate-with-json-schema == -->
+    <description>
+      <para>It is a dynamic error if the <option>assert-valid</option> option on <tag>p:validate-with-json-schema</tag> is <literal>true</literal> and
+        the input document is not valid.</para>
+    </description>
+  </error>
+  <error code="XC0210">
+    <!-- == p:validate-with-dtd == -->
+    <description>
+      <para>It is a dynamic error if the <option>assert-valid</option> option on <tag>p:validate-with-dtd</tag> is <literal>true</literal> and the
+        input document is not valid.</para>
+    </description>
+  </error>
+
+  <!-- ======================================================================= -->
+  <!-- == Errors for: ixml steps == -->
+
+  <error code="XC0205">
+    <!-- == p:invisible-xml == -->
+    <description>
+      <para>It is a dynamic error if the source document cannot be parsed by the provided grammar.</para>
+    </description>
+  </error>
+  <error code="XC0211">
+    <!-- == p:invisible-xml == -->
+    <description>
+      <para>It is a dynamic error if more than one document appears on the <port>grammar</port> port.</para>
+    </description>
+  </error>
+  <error code="XC0212">
+    <!-- == p:invisible-xml == -->
+    <description>
+      <para>It is a dynamic error if the grammar provided is not a valid Invisible XML grammar.</para>
+    </description>
   </error>
 </errors>
