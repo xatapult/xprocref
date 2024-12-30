@@ -1,85 +1,169 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="file-create-tempfile" version-idref="v30" category-idrefs="file-steps" short-description="[EDIT] file-create-tempfile short description"
-  required="false" publish="false" href-specification="{$BASELINK-FILE-STEPS-V30}#c.file-create-tempfile"
+<step name="file-create-tempfile" version-idref="v30" category-idrefs="file-steps env" short-description="Creates a temporary file" required="false"
+  publish="true" href-specification="{$BASELINK-FILE-STEPS-V30}#c.file-create-tempfile"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <output port="result" primary="true" content-types="application/xml" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>A <tag>c:result</tag> element containing the absolute URI of the created temporary file (the <code>c</code> prefix here is bound to the
+            <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
       </description>
     </output>
+
     <option name="href" as="xs:anyURI?" required="false">
       <description>
-        <para>[EDIT] option href</para>
+        <para>The URI of the (existing) directory where the temporary file is created. If not specified, location of the temporary file is
+          implementation-defined and therefore depends on the XProc processor used. Usually this will be the operating system&#x2019;s default
+          location for temporary files.</para>
       </description>
     </option>
+
     <option name="suffix" as="xs:string?" required="false">
       <description>
-        <para>[EDIT] option suffix</para>
+        <para>The suffix string for the name of the temporary file to create.</para>
+        <para>Setting the <option>suffix</option> option must be used if you want your temporary file to have a specific extension, like
+            <code>.xml</code>. See also the <example-ref idref="set-extension"/> example.</para>
       </description>
     </option>
+
     <option name="prefix" as="xs:string?" required="false">
       <description>
-        <para>[EDIT] option prefix</para>
+        <para>The prefix string for the name of the temporary file to create.</para>
+        <para>Specifying a prefix is useful if your want the temporary files created by your pipeline to be distinguishable from other temporary files
+          in the same directory.</para>
       </description>
     </option>
+
     <option name="delete-on-exit" as="xs:boolean" select="false()" required="false">
       <description>
-        <para>[EDIT] option delete-on-exit</para>
+        <para>If set to <code>true</code>, an attempt will be made to automatically delete the temporary file when the processor terminates the
+          pipeline. No error will be raised if this is unsuccessful.</para>
       </description>
     </option>
+
     <option name="fail-on-error" as="xs:boolean" select="true()" required="false">
       <description>
-        <para>[EDIT] option fail-on-error</para>
+        <para>Determines what happens if an error occurs during the operation:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If this option is <code>true</code> (default), an appropriate XProc error is raised.</para>
+          </listitem>
+          <listitem>
+            <para>If this option is <code>false</code>, the step returns a <tag>c:error</tag> document (see <link
+                xlink:href="https://spec.xproc.org/master/head/xproc/#err-vocab" role="newpage">here</link> for more information) on its
+                <port>result</port> port.</para>
+          </listitem>
+        </itemizedlist>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <code>p:file-create-tempfile</code> step creates a temporary file.</para>
+    <para>The <step/> step creates a temporary file.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The <tag>p:file-create-tempfile</tag> creates a temporary file. The temporary file is guaranteed not to already exist when the step is
-      called.</para>
-    <para>If the <option>href</option> option is specified it must be the URI of an existing directory. The temporary file is created here. If there
-      is no <option>href</option> option specified the location of the temporary file is implementation defined, usually the operating system's
-      default location for temporary files.</para>
-    <para>Conformant processors must support URIs whose scheme is <code>file</code> for the <option>href</option> option of
-        <tag>p:file-create-tempfile</tag>. It is implementation-defined what other schemes are supported by <tag>p:file-create-tempfile</tag>, and
-      what the interpretation of ‘directory’, ‘file’ and ‘contents’ is for those schemes. <emphasis role="bold">[ERROR <step-error-ref code="XC0138"
-        />]</emphasis>
-    </para>
-    <para>If <option>href</option> is relative, it is made absolute against the base URI of the element on which it is specified
-        (<tag>p:with-option</tag> or <tag>p:file-create-tempfile</tag> in the case of a syntactic shortcut value). <emphasis role="bold">[ERROR
-          <step-error-ref code="XD0064"/>]</emphasis>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0139"/>]</emphasis></para>
-    <para>If the <option>prefix</option> option is specified, the filename will begin with that prefix. If the <option>suffix</option> option is
-      specified, the filename will end with that suffix.</para>
-    <para>If the <option>delete-on-exit</option> option is <code>true</code>, an attempt will be made to automatically delete the temporary file when
-      the processor terminates the pipeline. No error will be raised if this is unsuccessful.</para>
-    <para>If the temporary file creation is successful, the step returns a <tag>c:result</tag> element containing the absolute URI of this
-      file.</para>
-    <para>If an error occurs and <option>fail-on-error</option> is <code>false</code>, the step returns a <tag>c:error</tag> element which may contain
-      additional, implementation-defined, information about the nature of the error.</para>
-    <para>If an error occurs and <option>fail-on-error</option> is <code>true</code>, one of the following errors is raised:</para>
+    <para>XProc is designed to process documents without having to continuously store and load these documents to/from disk. But sometimes you do need
+      documents to be stored on disk, for instance when some additional process demands this. You can of course solve this by using <step-ref
+        name="p:store"/> with a fixed (or generated) filename. However, if the filename is not important, or there is no obvious location for these
+      files, or if you do&#x2019;t want these documents to survive pipeline processing, <step/> comes to the rescue.</para>
+
+    <para>The <step/> step creates a temporary file:</para>
     <itemizedlist>
       <listitem>
-        <para>
-          <emphasis role="bold">[ERROR <step-error-ref code="XD0011"/>]</emphasis>
-        </para>
+        <para>It is guaranteed that this file didn&#x2019;t exist beforehand.</para>
       </listitem>
       <listitem>
-        <para>
-          <emphasis role="bold">[ERROR <step-error-ref code="XC0116"/>]</emphasis>
-        </para>
+        <para>The directory where the will be created can be specified using the <option>href</option> option (if you don&#x2019;t, some logical,
+          system dependent, location for temporary files will be used).</para>
+      </listitem>
+      <listitem>
+        <para>The main part of the filename will be generated by the step. However, you can specify a filename suffix (in the <option>suffix</option>
+          option) and prefix (in the <option>prefix</option> option). This is especially useful if you want your temporary file to have a specific
+          extension. See also the <example-ref idref="set-extension"/> example.</para>
+      </listitem>
+      <listitem>
+        <para>If you want the resulting temporary file to get deleted after the pipeline finishes, set the <option>delete-on-exit</option> option to
+          true. There is however no guarantee that this deletion succeeds (and you will not get notified if it does&#x2019;t).</para>
       </listitem>
     </itemizedlist>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="file-create-tempfile-preserves-none">The resulting document has no properties apart from <property>content-type</property>. In
-      particular, it has no <property>base-uri</property>.</para>
+
+    <para> The <port>result</port> port emits a small XML document with only a <tag>c:result</tag> element, containing the absolute URI of the
+      temporary file (the <code>c</code> prefix here is bound to the <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type.xml"/>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>Relative values for the <option>href</option> option are resolved against the base URI of the element on which this option is specified. In
+      most cases this will be the static base URI of your pipeline (the path where the XProc source containing the <step/> is stored).</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <xi:include href="../../text-fragments/file-scheme-uris.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <para>The following example creates a temporary file in the (existing) <code>build/</code> subdirectory (and deletes this again when the pipeline
+      has come to an end):</para>
+
+    <xproc-example href="../../examples/file-create-tempfile/file-create-tempfile-01.xpl" show-source="false" keep-from="build"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Specifying the temporary file&#x2019;s extension" id="set-extension">
+
+    <para>The following example creates a temporary file with a specific <code>.xml</code> extension in the (existing) <code>build/</code>
+      subdirectory. In this case we don&#x2019;t specify that the file must get deleted after the pipeline finishes. Because of the explicit
+        <code>.xml</code> extension, it will be easy to open and inspect the file using your XML editor, if needed.</para>
+
+    <xproc-example href="../../examples/file-create-tempfile/file-create-tempfile-02.xpl" show-source="false" keep-from="build"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Using a temporary file">
+
+    <para>Of course, just creating a temporary file is not very useful. You&#x2019;ll want to write some data to it. The following example shows you
+      how to do this: the document appearing on the <port>source</port> port is written to the temporary file. This is not very useful in itself but
+      it shows how you can &#x201c;catch&#x201d; the created temporary file URI and use this in a subsequent step.</para>
+
+    <xproc-example href="../../examples/file-create-tempfile/file-create-tempfile-03.xpl" show-source="false" show-result="false"/>
+
+    <para>You might also consider catching the created temporary file URI in a variable and use it from there. For this, add the next line directly
+      after the <step/> invocation:</para>
+
+    <programlisting><![CDATA[<p:variable name="href-tempfile-uri" select="string(.)"/>]]></programlisting>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
     <step-error code="XC0138"/>
     <step-error code="XD0064"/>
