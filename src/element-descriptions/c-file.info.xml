@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element-description xmlns="http://www.xtpxlib.nl/ns/xdoc" xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xdoc
+  ../../../../xatapult/xtpxlib-xdoc/xsd/element-description.xsd" name="c:file | c:directory" sort-attributes="true">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <attribute name="name" required="true">
+    <description>
+      <para>The name of the file or directory.</para>
+    </description>
+    <type name="xs:string"/>
+  </attribute>
+  <attribute name="size" required="false">
+    <description>
+      <para>The size of the file or directory entry (in bytes). See below.</para>
+    </description>
+    <type name="xs:integer"/>
+  </attribute>
+  <attribute name="readable" required="false">
+    <description>
+      <para>Whether this file or directory is readable for the current user. See below.</para>
+    </description>
+    <type name="xs:boolean"/>
+  </attribute>
+  <attribute name="writable" required="false">
+    <description>
+      <para>Whether this file or directory is readable for the current user. See below.</para>
+    </description>
+    <type name="xs:boolean"/>
+  </attribute>
+  <attribute name="last-modified" required="false">
+    <description>
+      <para>The date and time this file or directory was last modified. See below.</para>
+    </description>
+    <type name="xs:dateTime"/>
+  </attribute>
+  <attribute name="hidden" required="false">
+    <description>
+      <para>Whether this file or directory is hidden for the current user. See below.</para>
+    </description>
+    <type name="xs:boolean"/>
+  </attribute>
+  <attribute name="content-type" required="false">
+    <description>
+      <para>The content-type (MIME type) of a file. If this cannot be determined, its value is <code>application/octet-stream</code>. See
+        below.</para>
+    </description>
+    <type name="xs:string"/>
+  </attribute>
+
+</element-description>

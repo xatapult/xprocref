@@ -57,7 +57,7 @@
     <para>The <step/> step attempts to move (or rename) the file or directory specified in the <option>href</option> option to the location specified
       in the <option>target</option> option. The <port>result</port> port emits a small XML document with only a <tag>c:result</tag> element
       containing the absolute URI of the target (the <code>c</code> prefix here is bound to the <code>http://www.w3.org/ns/xproc-step</code>
-      namespace). </para>
+      namespace).</para>
 
     <para>The inspiration for this step comes from the Unix <code>mv</code> command. If you&#x2019;re not used to it, it may come as a surprise that
         <emphasis>moving</emphasis> something can also mean <emphasis>renaming</emphasis> it:</para>
@@ -68,8 +68,8 @@
       </listitem>
       <listitem>
         <para>But moving <code>file:///a/b/c.xml</code> to <code>file:///a/b/c2.xml</code>&#160;<emphasis>renames</emphasis> the file. See also the
-            <example-ref idref="renaming"/> example. An example of renaming a directory can be found in the example <example-ref
-            idref="dir-copy-rename" step-name="p:file-copy"/>.</para>
+            <example-ref idref="renaming"/> example.</para>
+        <para>An example of renaming a directory can be found in the example <example-ref idref="dir-copy-rename" step-name="p:file-copy"/>.</para>
       </listitem>
     </itemizedlist>
 
