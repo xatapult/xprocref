@@ -65,9 +65,9 @@
 
     <option name="override-content-types" as="array(array(xs:string))?" required="false">
       <description>
-        <para>Use this to override the content-type determination of the files. Determining the content-type of a file happens when you ask for
+        <para>Use this to override the content-type determination of files. Determining the content-type of a file happens when you ask for
           detailed information (the <option>detailed</option> option is set to <code>true</code>).</para>
-        <para>This works just like the mechanism for the <option>override-content-types</option> option of <step-ref name="p:archive-manifest"/>, ,
+        <para>This works just like the mechanism for the <option>override-content-types</option> option of <step-ref name="p:archive-manifest"/>,
           except that the regular expression matching is done against the paths as used for the matching of the <option>include-filter</option> and
             <option>exclude-filter</option> options. For more information see <xref linkend="include-exclude"/>.</para>
       </description>
