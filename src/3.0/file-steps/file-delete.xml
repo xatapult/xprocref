@@ -60,7 +60,7 @@
   <description>
 
     <para>The <step/> step deletes a file or directory specified in the <option>href</option> option. The <port>result</port> port emits a small XML
-      document with only a <tag>c:result</tag> element containing the absolute URI of the deleted file or directory (the <code>c</code> prefix here is
+      document with only a <tag>c:result</tag> element, containing the absolute URI of the deleted file or directory (the <code>c</code> prefix here is
       bound to the <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
 
     <para>If you're deleting a directory, you&#x2019;ll probably want the <option>recursive</option> option set to <code>true</code>. This ensures
