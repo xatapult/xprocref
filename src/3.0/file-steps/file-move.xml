@@ -29,17 +29,7 @@
 
     <option name="fail-on-error" as="xs:boolean" select="true()" required="false">
       <description>
-        <para>Determines what happens if an error occurs during the move operation:</para>
-        <itemizedlist>
-          <listitem>
-            <para>If this option is <code>true</code> (default), an appropriate XProc error is raised.</para>
-          </listitem>
-          <listitem>
-            <para>If this option is <code>false</code>, the step returns a <tag>c:error</tag> document (see <link
-                xlink:href="https://spec.xproc.org/master/head/xproc/#err-vocab" role="newpage">here</link> for more information) on its
-                <port>result</port> port.</para>
-          </listitem>
-        </itemizedlist>
+        <xi:include href="../../text-fragments/file-fail-on-error.xml"/>
       </description>
     </option>
 

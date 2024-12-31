@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fragment xmlns:xlink="http://www.w3.org/1999/xlink">
+  <para>Determines what happens if an error occurs during the operation:</para>
+  <itemizedlist>
+    <listitem>
+      <para>If this option is <code>true</code> (default), an appropriate XProc error is raised.</para>
+    </listitem>
+    <listitem>
+      <para>If this option is <code>false</code>, the step returns a <tag>c:error</tag> document (see <link
+          xlink:href="https://spec.xproc.org/master/head/xproc/#err-vocab" role="newpage">here</link> for more information) on its
+        <port>result</port> port.</para>
+    </listitem>
+  </itemizedlist>
+</fragment>

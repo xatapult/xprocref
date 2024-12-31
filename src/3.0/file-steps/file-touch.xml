@@ -10,7 +10,7 @@
 
     <output port="result" primary="true" content-types="application/xml" sequence="false">
       <description>
-        <para>A <tag>c:result</tag> element containing the absolute URI of modified file (the <code>c</code> prefix here is bound to the
+        <para>A <tag>c:result</tag> element containing the absolute URI of the modified file (the <code>c</code> prefix here is bound to the
             <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
       </description>
     </output>
@@ -29,17 +29,7 @@
 
     <option name="fail-on-error" as="xs:boolean" select="true()" required="false">
       <description>
-        <para>Determines what happens if an error occurs during the operation:</para>
-        <itemizedlist>
-          <listitem>
-            <para>If this option is <code>true</code> (default), an appropriate XProc error is raised.</para>
-          </listitem>
-          <listitem>
-            <para>If this option is <code>false</code>, the step returns a <tag>c:error</tag> document (see <link
-                xlink:href="https://spec.xproc.org/master/head/xproc/#err-vocab" role="newpage">here</link> for more information) on its
-                <port>result</port> port.</para>
-          </listitem>
-        </itemizedlist>
+        <xi:include href="../../text-fragments/file-fail-on-error.xml"/>
       </description>
     </option>
 
@@ -50,13 +40,15 @@
   <summary>
     <para>The <step/> step changes the modification timestamp of the file specified in the <option>href</option> option.</para>
   </summary>
-  
+
   <!-- ======================================================================= -->
 
   <description>
-    <para>The <step/> step changes the modification timestamp of the file specified in the <option>href</option> option. The <port>result</port> port emits a small XML
-      document with only a <tag>c:result</tag> element, containing the absolute URI of the changed file (the <code>c</code> prefix here is
-      bound to the <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
+    <para>The <step/> step changes the modification timestamp of the file specified in the <option>href</option> option. The <port>result</port> port
+      emits a small XML document with only a <tag>c:result</tag> element, containing the absolute URI of the changed file (the <code>c</code> prefix
+      here is bound to the <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
+
+    <para>If the file specified by the <option>href</option> option doesn&#x2019;t exist, an empty file will be created at the given location.</para>
   </description>
 
   <!-- ======================================================================= -->
@@ -77,15 +69,15 @@
   <detail>
     <xi:include href="../../text-fragments/file-scheme-uris.xml"/>
   </detail>
-  
+
   <!-- ======================================================================= -->
-  
+
   <example title="Basic usage">
-    
+
     <para>The following example changes the modification date of <code>data/x.xml</code> the current system date and time:</para>
-    
+
     <xproc-example href="../../examples/file-touch/file-touch-01.xpl" show-source="false" keep-from="data"/>
-    
+
   </example>
 
   <!-- ======================================================================= -->
