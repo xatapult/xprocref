@@ -9,5 +9,5 @@
     <p:file-mkdir href="build/" fail-on-error="false"/>
   </p:group>
   <p:file-create-tempfile href="build/" delete-on-exit="true"/>
-  
+
 </p:declare-step>

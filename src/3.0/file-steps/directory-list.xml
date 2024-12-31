@@ -3,7 +3,7 @@
   publish="true" href-specification="{$BASELINK-FILE-STEPS-V30}#c.directory-list"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc">
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" keywords="file directory list listing overview">
 
   <!-- ======================================================================= -->
 
@@ -65,8 +65,8 @@
 
     <option name="override-content-types" as="array(array(xs:string))?" required="false">
       <description>
-        <para>Use this to override the content-type determination of files. Determining the content-type of a file happens when you ask for
-          detailed information (the <option>detailed</option> option is set to <code>true</code>).</para>
+        <para>Use this to override the content-type determination of files. Determining the content-type of a file happens when you ask for detailed
+          information (the <option>detailed</option> option is set to <code>true</code>).</para>
         <para>This works just like the mechanism for the <option>override-content-types</option> option of <step-ref name="p:archive-manifest"/>,
           except that the regular expression matching is done against the paths as used for the matching of the <option>include-filter</option> and
             <option>exclude-filter</option> options. For more information see <xref linkend="include-exclude"/>.</para>

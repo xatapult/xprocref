@@ -7,14 +7,14 @@
   <p:unarchive>
     <p:with-option name="override-content-types" select="[ ['\.png$', 'application/octet-stream'] ]"/>
   </p:unarchive>
-  
-  <p:for-each >
+
+  <p:for-each>
     <p:identity>
-      <p:with-input exclude-inline-prefixes="#all"> 
+      <p:with-input exclude-inline-prefixes="#all">
         <unarchived-file href="{p:document-property(/, 'base-uri')}" content-type="{p:document-property(/, 'content-type')}"/>
       </p:with-input>
     </p:identity>
   </p:for-each>
   <p:wrap-sequence wrapper="unarchived-files"/>
-  
+
 </p:declare-step>

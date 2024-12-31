@@ -3,7 +3,7 @@
   short-description="Returns lines from the beginning of a text document" required="true" publish="true"
   href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.text-head" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="text lines first head">
 
   <!-- ======================================================================= -->
 
@@ -89,11 +89,10 @@
 
     <xproc-example href="../../examples/text-head/text-head-02.xpl" show-source="false" fixup-pipeline-input="false" output-is-text="true">
       <pipeline-header>
-        <para>Setting the <option>count</option> option to <code>-2</code> will return all lines <emphasis>except</emphasis> the first
-          two:</para>
+        <para>Setting the <option>count</option> option to <code>-2</code> will return all lines <emphasis>except</emphasis> the first two:</para>
       </pipeline-header>
     </xproc-example>
 
   </example>
-  
+
 </step>

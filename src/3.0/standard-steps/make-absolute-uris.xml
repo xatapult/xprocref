@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="make-absolute-uris" version-idref="v30" category-idrefs="standard-steps env misc"
-  short-description="Make URIs in the document absolute" required="true" publish="true"
-  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.make-absolute-uris" xmlns:xlink="http://www.w3.org/1999/xlink"
+<step name="make-absolute-uris" version-idref="v30" category-idrefs="standard-steps env misc" short-description="Make URIs in the document absolute"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.make-absolute-uris" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="URI absolute">
 
   <!-- ======================================================================= -->
 
@@ -67,8 +66,8 @@
       </listitem>
       <listitem>
         <para>When its value does <emphasis>not</emphasis> end with a slash, it points to a document. All URIs are resolved against the location of
-          this document. For instance, for a <option>base-uri</option> value <code>file:///myapp/images/logo.svg</code>, the URIs are resolved against the location
-            <code>file:///myapp/images/</code></para>
+          this document. For instance, for a <option>base-uri</option> value <code>file:///myapp/images/logo.svg</code>, the URIs are resolved against
+          the location <code>file:///myapp/images/</code></para>
       </listitem>
     </itemizedlist>
     <para>The <example-ref idref="basic-usage"/> example shows this difference.</para>

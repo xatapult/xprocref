@@ -11,5 +11,5 @@
   <p:output port="result" sequence="true"/>
 
   <p:filter select="/parts/(bolt | pipe)"/>
-  
+
 </p:declare-step>

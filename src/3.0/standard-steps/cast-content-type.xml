@@ -3,7 +3,7 @@
   required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.cast-content-type"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="content-type media-type">
 
   <!-- ======================================================================= -->
 
@@ -90,12 +90,12 @@
                 standard defines an <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping" role="newpage">XML format for the
                   representation of JSON data</link>. The XPath function <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-xml-to-json"
                   role="newpage"><code>xml-to-json()</code></link> converts this format into a JSON conformant string (and for further processing,
-                  <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-parse-json"><code>parse-json()</code></link> turns this string
-                into a map/array).</para>
+                  <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-parse-json"><code>parse-json()</code></link> turns this string into
+                a map/array).</para>
               <para>If an input document of <step/> is conformant to this <link
                   xlink:href="https://www.w3.org/TR/xpath-functions-31/#json-to-xml-mapping" role="newpage">XML format for the representation of JSON
-                  data</link>, it&#x2019;s converted into its JSON equivalent (like calling <code>parse-json(xml-to-json())</code>). See
-                  <example-ref idref="converting-json-xml"/> for an example.</para>
+                  data</link>, it&#x2019;s converted into its JSON equivalent (like calling <code>parse-json(xml-to-json())</code>). See <example-ref
+                  idref="converting-json-xml"/> for an example.</para>
             </listitem>
             <listitem>
               <para>If the input document has a <tag>c:param-set</tag> root element and <tag>c:param name="…" value="…"/</tag> child elements (the

@@ -6,102 +6,98 @@
   <!-- PRIMARY CATEGORIES: -->
   <!-- Primary categories are used for the classification the specification makes also. -->
 
-  <category id="standard-steps" name="Standard XProc steps" primary="true">
+  <category id="standard-steps" name="Standard XProc steps" primary="true" keywords="standard">
     <description>
-      <para>XProc steps that a conformant XProc processor <emphasis>must</emphasis> support. In other words: whatever processor you use
-        for processing your XProc pipelines, you can trust that these steps will always work.</para>
+      <para>XProc steps that a conformant XProc processor <emphasis>must</emphasis> support. In other words: whatever processor you use for processing
+        your XProc pipelines, you can trust that these steps will always work.</para>
     </description>
   </category>
 
-  <category id="file-steps" name="XProc file and directory related steps" primary="true">
+  <category id="file-steps" name="XProc file and directory related steps" primary="true" keywords="file directory">
     <description>XProc steps that deal with files and directories. An XProc processor is not required to support these.</description>
   </category>
 
-  <category id="os-steps" name="XProc operating system related steps" primary="true">
+  <category id="os-steps" name="XProc operating system related steps" primary="true" keywords="os operating-system">
     <description>XProc steps that deal with the operating system. An XProc processor is not required to support these.</description>
   </category>
 
-  <category id="mail-steps" name="XProc email related steps" primary="true">
+  <category id="mail-steps" name="XProc email related steps" primary="true" keywords="mail">
     <description>XProc steps that deal with email. An XProc processor is not required to support these.</description>
   </category>
 
-  <category id="paged-media-steps" name="XProc paged media related steps" primary="true">
-    <description>XProc steps that deal with creating paged media, for instance PDF. An XProc processor is not required to support
-      these.</description>
+  <category id="paged-media-steps" name="XProc paged media related steps" primary="true" keywords="css pdf paged-media">
+    <description>XProc steps that deal with creating paged media, for instance PDF. An XProc processor is not required to support these.</description>
   </category>
 
-  <category id="text-steps" name="XProc text related steps" primary="true">
-    <description>XProc steps that deal with text, for instance Markdown. An XProc processor is not required to support
-      these.</description>
+  <category id="text-steps" name="XProc text related steps" primary="true" keywords="text">
+    <description>XProc steps that deal with text, for instance Markdown. An XProc processor is not required to support these.</description>
   </category>
 
-  <category id="validation-steps" name="XProc validation related steps" primary="true">
-    <description>XProc steps that deal with validation of XML and JSON documents. An XProc processor is not required to support
-      these.</description>
+  <category id="validation-steps" name="XProc validation related steps" primary="true" keywords="validation schema">
+    <description>XProc steps that deal with validation of XML and JSON documents. An XProc processor is not required to support these.</description>
   </category>
 
-  <category id="ixml-steps" name="XProc Invisible XML related steps" primary="true">
-    <description>XProc steps that deal with the processing of Invisible XML. An XProc processor is not required to support
-      these.</description>
+  <category id="ixml-steps" name="XProc Invisible XML related steps" primary="true" keywords="ixml invisible-xml">
+    <description>XProc steps that deal with the processing of Invisible XML. An XProc processor is not required to support these.</description>
   </category>
 
   <!-- ======================================================================= -->
   <!-- SECONDARY CATEGORIES: -->
 
-  <category id="misc" name="Miscellaneous">
+  <category id="misc" name="Miscellaneous" keywords="miscellaneous">
     <description>
       <para>Miscellaneous steps, which are usually used for housekeeping purposes in the pipeline.</para>
     </description>
   </category>
 
-  <category id="basic-xml-manipulation" name="Basic XML manipulation">
+  <category id="basic-xml-manipulation" name="Basic XML manipulation" keywords="xml-manipulation">
     <description>
       <para>These steps implement basic XML manipulation, like adding attributes, inserting elements, etc.</para>
     </description>
   </category>
 
-  <category id="xml-base-related" name="Base URI related">
+  <category id="xml-base-related" name="Base URI related" keywords="xml-base xml:base">
     <description>
       <para>These steps act on or use the base URI value of elements.</para>
     </description>
   </category>
 
-  <category id="archive" name="Archive handling">
+  <category id="archive" name="Archive handling" keywords="zip archive">
     <description>
       <para>These steps handle archives (for instance, ZIP files).</para>
     </description>
   </category>
 
-  <category id="compress" name="Compression">
+  <category id="compress" name="Compression" keywords="compression compress zip">
     <description>
       <para>Steps that have to do with compressing (or uncompressing) documents.</para>
     </description>
   </category>
 
-  <category id="namespaces" name="Namespace handling">
+  <category id="namespaces" name="Namespace handling" keywords="namespaces namespace">
     <description>
       <para>Steps that have to do with namespace handling.</para>
     </description>
   </category>
 
-  <category id="env" name="Interaction with the environment">
+  <category id="env" name="Interaction with the environment" keywords="environment file directory network HTTP HTTPS">
     <description>
       <para>Steps that interact (or prepare interaction) with the environment of the pipeline, for instance communication over HTTP(S) or working with
         directories and files.</para>
     </description>
   </category>
 
-  <category id="json" name="JSON related steps">
+  <category id="json" name="JSON related steps" keywords="JSON">
     <description>
       <para>Steps for handling JSON documents.</para>
     </description>
   </category>
 
-  <category id="text" name="Text document related steps">
+  <category id="text" name="Text document related steps" keywords="text lines">
     <description>Steps that do something with (lines in) text documents.</description>
   </category>
 
-  <category id="additional-standards" name="Additional standards">
+  <category id="additional-standards" name="Additional standards" keywords="standards standard">
     <description>Steps that implement additional standards.</description>
   </category>
 

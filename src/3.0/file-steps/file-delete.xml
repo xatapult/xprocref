@@ -2,7 +2,8 @@
 <step name="file-delete" version-idref="v30" category-idrefs="file-steps env" short-description="Deletes a file or directory" required="false"
   publish="true" href-specification="{$BASELINK-FILE-STEPS-V30}#c.file-delete"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref"
+  keywords="file directory delete remove">
 
   <!-- ======================================================================= -->
 

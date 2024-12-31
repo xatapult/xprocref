@@ -2,7 +2,8 @@
 <step name="file-copy" version-idref="v30" category-idrefs="file-steps env" short-description="Copies a file or directory" required="false"
   publish="true" href-specification="{$BASELINK-FILE-STEPS-V30}#c.file-copy"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref"
+  keywords="file directory copy">
 
   <!-- ======================================================================= -->
 
@@ -106,7 +107,7 @@
     <para>If you&#x2019;re copying a directory, the <step/> step always copies this <emphasis>into</emphasis> the designated target directory. This
       means that you cannot copy a directory to another location under a different name. In order to achieve this, you subsequently must rename the
       copied result using <step-ref name="p:file-move"/>:</para>
-    <xproc-example href="../../examples/file-copy/file-copy-03.xpl" show-source="false" keep-from="test">
+    <xproc-example href="../../examples/file-copy/file-copy-03.xpl" show-source="false" keep-from="build">
       <result-header>
         <para>Result document (of the <step-ref name="p:file-move"/>):</para>
       </result-header>

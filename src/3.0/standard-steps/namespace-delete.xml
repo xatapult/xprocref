@@ -3,7 +3,8 @@
   short-description="Deletes namespaces from a document" required="true" publish="true"
   href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.namespace-delete"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref"
+  keywords="namespace namespaces delete remove">
 
   <!-- ======================================================================= -->
 

@@ -28,6 +28,8 @@
 
   <xsl:param name="xprocref-index" as="document-node()" required="true"/>
 
+  <xsl:param name="keywords" as="xs:string?" required="true"/>
+
   <!-- ======================================================================= -->
   <!-- GLOBAL DECLARATIONS: -->
 
@@ -40,6 +42,8 @@
 
   <xsl:variable name="homedir-macro" as="xs:string" select="'$HOMEDIR$'"/>
   <xsl:variable name="homedir-macro-regexp" as="xs:string" select="xtlc:str2regexp($homedir-macro)"/>
+
+  <xsl:variable name="standard-keywords" as="xs:string+" select="('xproc', 'xprocref', 'xml')"/>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -63,6 +67,16 @@
 
   <xsl:template match="@*[contains(., $homedir-macro)]" mode="mode-process-template">
     <xsl:attribute name="{node-name(.)}" select="replace(., $homedir-macro-regexp, $homedir-path)"/>
+  </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="xhtml:meta[@name eq 'keywords']" mode="mode-process-template">
+    <meta>
+      <xsl:copy-of select="@* except @content"/>
+      <xsl:attribute name="content" select="string-join(($standard-keywords, $keywords), ' ')"/>
+      <xsl:apply-templates mode="#current"/>
+    </meta>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

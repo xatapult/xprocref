@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step-group xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
-  
+
   <macrodefs>
     <macrodef name="BASELINK-CURRENT" value="{$BASELINK-V31}"/>
   </macrodefs>
-  
+
   <!-- == Step group for: Standard steps == -->
   <xi:include href="standard-steps/add-attribute.xml"/>
   <xi:include href="standard-steps/add-xml-base.xml"/>

@@ -3,13 +3,12 @@
 
   <p:input port="source">
     <movies>
-      <movie title="Apocalypse now" />
+      <movie title="Apocalypse now"/>
       <movie title="Dune" xml:id="1234"/>
     </movies>
   </p:input>
   <p:output port="result"/>
 
-  <p:label-elements match="movie" label="generate-id() || '_' || replace(@title, '\s', '-')" 
-    replace="false"/>
+  <p:label-elements match="movie" label="generate-id() || '_' || replace(@title, '\s', '-')" replace="false"/>
 
 </p:declare-step>

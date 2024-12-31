@@ -2,9 +2,9 @@
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0">
 
   <p:input port="source">
-<input-document timestamp="2024-08-23T09:12:45">
-  <text color="red">Hi there!</text>
-</input-document>
+    <input-document timestamp="2024-08-23T09:12:45">
+      <text color="red">Hi there!</text>
+    </input-document>
   </p:input>
   <p:output port="result"/>
 

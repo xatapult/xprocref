@@ -4,7 +4,7 @@
   <p:input port="source">
     <p:inline content-type="x/x">Hi there!</p:inline>
   </p:input>
-  <p:output port="result" />
+  <p:output port="result"/>
 
   <p:cast-content-type content-type="text/xml"/>
 

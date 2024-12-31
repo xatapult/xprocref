@@ -12,5 +12,5 @@
   <p:output port="result"/>
 
   <p:delete match="text[@type eq 'normal']"/>
-  
+
 </p:declare-step>

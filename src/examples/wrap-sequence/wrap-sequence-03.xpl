@@ -10,10 +10,10 @@
     </fruits>
   </p:input>
   <p:output port="result"/>
-  
+
   <p:for-each>
     <p:with-input select="/*/*[@color eq 'yellow']"/>
-    <p:add-attribute attribute-name="delivery" attribute-value="special"></p:add-attribute>
+    <p:add-attribute attribute-name="delivery" attribute-value="special"/>
   </p:for-each>
 
   <p:wrap-sequence wrapper="yellow-fruits"/>

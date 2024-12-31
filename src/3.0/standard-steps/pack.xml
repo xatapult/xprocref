@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="pack" version-idref="v30" category-idrefs="standard-steps misc" short-description="Merges two document sequences, pair-wise" required="true"
-  publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.pack"
+<step name="pack" version-idref="v30" category-idrefs="standard-steps misc" short-description="Merges two document sequences, pair-wise"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.pack"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="documents merge">
 
   <!-- ======================================================================= -->
 
@@ -77,7 +77,7 @@
         <para>The resulting document sequence here is wrapped using <step-ref name="p:wrap-sequence"/>, just to show the results.</para>
       </pipeline-header>
     </xproc-example>
-    
+
   </example>
 
 </step>

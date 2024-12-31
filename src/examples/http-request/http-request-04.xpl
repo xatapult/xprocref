@@ -18,6 +18,6 @@
       </p:with-input>
     </p:identity>
   </p:for-each>
-  <p:wrap-sequence wrapper="http-response-headers"/> 
+  <p:wrap-sequence wrapper="http-response-headers"/>
 
 </p:declare-step>

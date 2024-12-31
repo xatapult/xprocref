@@ -312,12 +312,13 @@
       <p:identity message="    * Page {p:iteration-position()}/{$html-page-count}"/>
     </p:if>
     <p:variable name="href-target" as="xs:string" select="xs:string(/*/@href-target)"/>
+    <p:variable name="keywords" as="xs:string?" select="string(/*/@keywords)[.]"/>
     <p:viewport match="db:article[1]">
       <xdoc:xdoc-to-xhtml add-numbering="false" add-identifiers="false" create-header="false"/>
       <p:xslt>
         <p:with-input port="stylesheet" href="xsl-process-xprocref/xhtml-to-page.xsl"/>
         <p:with-option name="parameters"
-          select="map{'href-template': $href-web-template, 'href-target': $href-target, 'xprocref-index': $xprocref-index}"/>
+          select="map{'href-template': $href-web-template, 'href-target': $href-target, 'xprocref-index': $xprocref-index, 'keywords': $keywords}"/>
       </p:xslt>
       <p:xslt>
         <p:with-input port="stylesheet" href="xsl-process-xprocref/convert-menu.xsl"/>

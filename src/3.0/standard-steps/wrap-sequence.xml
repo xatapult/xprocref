@@ -2,7 +2,8 @@
 <step name="wrap-sequence" version-idref="v30" category-idrefs="standard-steps misc" short-description="Wraps a sequence of documents in an element."
   required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.wrap-sequence"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref"
+  keywords="documents wrap element node">
 
   <!-- ======================================================================= -->
 
@@ -137,8 +138,8 @@
     <para>You might have expected that the result would group all fruits together by color, resulting in two documents: one for
         <code>banana</code>+<code>lemon</code> and one for <code>orange</code>+<code>carrot</code>. But <step/> groups documents that are
         <emphasis>adjacent</emphasis> to each other only. It does <emphasis>not</emphasis> do what would be called &#x201c;group by&#x201d;: all
-      documents with the same value for the XPath expression together in a single group. If you need this, you will have to sort the documents
-      first. But unfortunately, XProc does not have anything on board for that. For more complex grouping, the advice is to use XSLT or XQuery.</para>
+      documents with the same value for the XPath expression together in a single group. If you need this, you will have to sort the documents first.
+      But unfortunately, XProc does not have anything on board for that. For more complex grouping, the advice is to use XSLT or XQuery.</para>
 
   </example>
 

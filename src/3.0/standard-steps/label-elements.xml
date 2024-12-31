@@ -3,7 +3,8 @@
   short-description="Labels elements by adding an attribute" required="true" publish="true"
   href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.label-elements"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+  keywords="label elements id identifier">
 
   <!-- ======================================================================= -->
 
@@ -102,7 +103,7 @@
 
     <para>To make this a little more interesting, let&#x2019;s label the <tag>movie</tag> elements only and compute their label based on a generated
       identifier (using <link xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-generate-id" role="newpage"
-        ><code>generate-id()</code></link>) and the movie&#x2019;s name (replacing whitespace using <link
+      ><code>generate-id()</code></link>) and the movie&#x2019;s name (replacing whitespace using <link
         xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-replace" role="newpage"><code>replace()</code></link>). We keep existing
         <code>xml:id</code> attributes. The source document is the same as in the previous example.</para>
     <xproc-example href="../../examples/label-elements/label-elements-02.xpl" show-source="false"/>

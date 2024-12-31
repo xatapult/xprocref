@@ -7,8 +7,8 @@
     </listitem>
     <listitem>
       <para>If this option is <code>false</code>, the step returns a <tag>c:error</tag> document (see <link
-          xlink:href="https://spec.xproc.org/master/head/xproc/#err-vocab" role="newpage">here</link> for more information) on its
-        <port>result</port> port.</para>
+          xlink:href="https://spec.xproc.org/master/head/xproc/#err-vocab" role="newpage">here</link> for more information) on its <port>result</port>
+        port.</para>
     </listitem>
   </itemizedlist>
 </fragment>

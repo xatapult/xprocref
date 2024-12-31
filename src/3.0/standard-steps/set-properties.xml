@@ -3,7 +3,7 @@
   short-description="Sets or changes document-properties" required="true" publish="true"
   href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.set-properties" xmlns:xlink="http://www.w3.org/1999/xlink"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="document-properties">
 
   <!-- ======================================================================= -->
 

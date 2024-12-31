@@ -1,86 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="file-mkdir" version-idref="v30" category-idrefs="file-steps env" short-description="Creates a directory" required="false"
-  publish="true" href-specification="{$BASELINK-FILE-STEPS-V30}#c.file-mkdir"
-  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
-  
+<step name="file-mkdir" version-idref="v30" category-idrefs="file-steps env" short-description="Creates a directory" required="false" publish="true"
+  href-specification="{$BASELINK-FILE-STEPS-V30}#c.file-mkdir" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="directory create make">
+
   <!-- ======================================================================= -->
-  
+
   <signature>
-    
+
     <output port="result" primary="true" content-types="application/xml" sequence="false">
       <description>
-        <para>A <tag>c:result</tag> element containing the absolute URI of the created directory (the <code>c</code> prefix here is bound to
-          the <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
+        <para>A <tag>c:result</tag> element containing the absolute URI of the created directory (the <code>c</code> prefix here is bound to the
+            <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
       </description>
     </output>
-    
+
     <option name="href" required="true" as="xs:anyURI">
       <description>
         <para>The URI of the directory to create.</para>
       </description>
     </option>
-    
+
     <option name="fail-on-error" as="xs:boolean" select="true()" required="false">
       <description>
         <xi:include href="../../text-fragments/file-fail-on-error.xml"/>
       </description>
     </option>
-    
+
   </signature>
-  
+
   <!-- ======================================================================= -->
-  
+
   <summary>
     <para>The <step/> step creates the directory specified in the <option>href</option> option.</para>
   </summary>
 
-<!-- ======================================================================= -->
+  <!-- ======================================================================= -->
 
   <description>
     <para>The <step/> step creates the directory specified in the <option>href</option> option . The <port>result</port> port emits a small XML
-      document with only a <tag>c:result</tag> element, containing the absolute URI of the created directory (the <code>c</code> prefix here is
-      bound to the <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
+      document with only a <tag>c:result</tag> element, containing the absolute URI of the created directory (the <code>c</code> prefix here is bound
+      to the <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
     <para>Any non-existent directories leading up to the final directory to create are created also.</para>
   </description>
-  
+
   <!-- ======================================================================= -->
-  
+
   <detail>
     <xi:include href="../../text-fragments/no-document-properties-except-content-type.xml"/>
   </detail>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
+
   <detail>
     <para>Relative values for the <option>href</option> option are resolved against the base URI of the element on which this option is specified. In
       most cases this will be the static base URI of your pipeline (the path where the XProc source containing the <step/> is stored).</para>
   </detail>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
+
   <detail>
     <xi:include href="../../text-fragments/file-scheme-uris.xml"/>
   </detail>
-  
+
   <!-- ======================================================================= -->
-  
+
   <example title="Basic usage">
-    
+
     <para>The following example creates a <code>build</code> directory:</para>
-    
-    <xproc-example href="../../examples/file-mkdir/file-mkdir-01.xpl" show-source="false" />
-    
+
+    <xproc-example href="../../examples/file-mkdir/file-mkdir-01.xpl" show-source="false"/>
+
   </example>
-  
-  
+
+
   <!-- ======================================================================= -->
-  
+
   <step-errors>
     <step-error code="XC0140"/>
     <step-error code="XD0064"/>
     <step-error code="XC0141"/>
     <step-error code="XC0114"/>
   </step-errors>
-  
+
 </step>

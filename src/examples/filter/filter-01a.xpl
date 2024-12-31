@@ -13,5 +13,5 @@
   <p:identity>
     <p:with-input select="/parts/(bolt | pipe)"/>
   </p:identity>
-  
+
 </p:declare-step>
