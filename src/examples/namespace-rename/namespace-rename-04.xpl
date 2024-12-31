@@ -2,7 +2,7 @@
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0">
 
   <p:input port="source">
-    <some-document >
+    <some-document>
       <contents a="b"/>
     </some-document>
   </p:input>

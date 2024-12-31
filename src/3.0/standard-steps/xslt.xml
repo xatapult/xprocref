@@ -459,7 +459,8 @@
 
     <xproc-example href="../../examples/xslt/xslt-03.xpl" keep-from="tmp/"/>
 
-   <para>The primary output of the <step/> is explicitly piped to the output port of the pipeline here (by the <code>p:output/@pipe</code> attribute).</para>
+    <para>The primary output of the <step/> is explicitly piped to the output port of the pipeline here (by the <code>p:output/@pipe</code>
+      attribute).</para>
     <para>The <code>p:for-each</code> after the <step/> iterates over all secondary documents and invokes <step-ref name="p:store"/> to store them to
       disk, using their base URI, that was set by the stylesheet. The result will be two documents, called <code>x1.xml</code> and
       <code>x2.xml</code>, in the <code>tmp/</code> folder underneath the stylesheet location.</para>

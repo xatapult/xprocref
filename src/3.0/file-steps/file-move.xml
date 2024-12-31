@@ -2,7 +2,8 @@
 <step name="file-move" version-idref="v30" category-idrefs="file-steps env" short-description="Moves or renames a file or directory" required="false"
   publish="true" href-specification="{$BASELINK-FILE-STEPS-V30}#c.file-move"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref"
+  keywords="file directory move rename mv">
 
   <!-- ======================================================================= -->
 
@@ -29,17 +30,7 @@
 
     <option name="fail-on-error" as="xs:boolean" select="true()" required="false">
       <description>
-        <para>Determines what happens if an error occurs during the move operation:</para>
-        <itemizedlist>
-          <listitem>
-            <para>If this option is <code>true</code> (default), an appropriate XProc error is raised.</para>
-          </listitem>
-          <listitem>
-            <para>If this option is <code>false</code>, the step returns a <tag>c:error</tag> document (see <link
-                xlink:href="https://spec.xproc.org/master/head/xproc/#err-vocab" role="newpage">here</link> for more information) on its
-                <port>result</port> port.</para>
-          </listitem>
-        </itemizedlist>
+        <xi:include href="../../text-fragments/file-fail-on-error.xml"/>
       </description>
     </option>
 
@@ -127,4 +118,5 @@
     <step-error code="XC0115"/>
     <step-error code="XC0050"/>
   </step-errors>
+
 </step>

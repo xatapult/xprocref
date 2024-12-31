@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0" xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref"
-  name="example-pipeline">
+<p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0" xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref" name="example-pipeline">
 
   <p:input port="source">
     <doc>This is an example document!</doc>
@@ -12,9 +11,9 @@
     <p:file-mkdir href="build/" fail-on-error="false"/>
   </p:group>
   <p:file-create-tempfile href="build/" suffix=".xml"/>
-  
+
   <p:store href="{string(.)}">
-    <p:with-input pipe="source@example-pipeline"></p:with-input>
+    <p:with-input pipe="source@example-pipeline"/>
   </p:store>
-  
+
 </p:declare-step>

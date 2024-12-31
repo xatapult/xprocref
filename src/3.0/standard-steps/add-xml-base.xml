@@ -3,7 +3,7 @@
   short-description="Add explicit xml:base attributes to a document" required="true" publish="true"
   href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.add-xml-base" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink">
+  xmlns:xlink="http://www.w3.org/1999/xlink" keywords="xml-base xml:base">
 
   <!-- ======================================================================= -->
 

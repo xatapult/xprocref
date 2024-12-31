@@ -3,7 +3,7 @@
   publish="false" href-specification="{$BASELINK-OS-STEPS-V30}#c.os-info"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
-  
+
   <signature>
     <output port="result" content-types="application/xml" primary="true" sequence="false">
       <description>

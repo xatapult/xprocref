@@ -12,7 +12,7 @@
 
   <p:insert match="/things/thing[@id eq '456']" position="last-child">
     <p:with-input port="insertion">
-     <p:inline content-type="text/plain"> (special!)</p:inline>
+      <p:inline content-type="text/plain"> (special!)</p:inline>
     </p:with-input>
   </p:insert>
 

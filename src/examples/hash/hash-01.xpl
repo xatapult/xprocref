@@ -6,7 +6,7 @@
       <hash>Will be replaced by the hash value!</hash>
     </hash-value>
   </p:input>
-  <p:output port="result" />
+  <p:output port="result"/>
 
   <p:hash algorithm="crc" value="Hi there!"/>
 

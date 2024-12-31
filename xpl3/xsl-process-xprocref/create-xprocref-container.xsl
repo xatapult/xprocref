@@ -108,6 +108,7 @@
       <xsl:call-template name="create-docbook-article">
         <xsl:with-param name="href-target" select="local:href-result-file($xpref:name-versions-overview-page)"/>
         <xsl:with-param name="title" select="'XProc versions'"/>
+        <xsl:with-param name="keywords" select="'versions'"/>
         <xsl:with-param name="content">
           <db:itemizedlist role="versions-list">
             <xsl:for-each select="$xprocref-index/*/xpref:versionref">
@@ -135,6 +136,7 @@
       <xsl:call-template name="create-docbook-article">
         <xsl:with-param name="href-target" select="local:href-result-file($xpref:name-error-codes-overview-page)"/>
         <xsl:with-param name="title" select="'Error codes (all versions)'"/>
+        <xsl:with-param name="keywords" select="'errors'"/>
         <xsl:with-param name="content">
           <db:para role="break-after">All errors are in the <db:code>{$error-namespace-elm/@uri}</db:code> namespace (recommended prefix:
               <db:code>{$error-namespace-elm/@prefix}</db:code>).</db:para>
@@ -181,6 +183,7 @@
       <xsl:call-template name="create-docbook-article">
         <xsl:with-param name="href-target" select="local:href-result-file($xpref:name-namespaces-overview-page)"/>
         <xsl:with-param name="title" select="'Namespaces used (all versions)'"/>
+        <xsl:with-param name="keywords" select="('namespaces', 'namespace')"/>
         <xsl:with-param name="content">
           <db:itemizedlist>
             <xsl:for-each select="$specification/*/xpref:namespaces/xpref:namespace">
@@ -201,6 +204,7 @@
       <xsl:call-template name="create-docbook-article">
         <xsl:with-param name="href-target" select="$xpref:name-about-page"/>
         <xsl:with-param name="title" select="'About XProcRef'"/>
+        <xsl:with-param name="keywords" select="'about'"/>
         <xsl:with-param name="content">
           <xsl:sequence select="$about-page-content"/>
           <db:para>&#160;</db:para>
@@ -241,6 +245,7 @@
     <xsl:call-template name="create-docbook-article">
       <xsl:with-param name="href-target" select="local:href-result-file($version-id, $xpref:name-categories-overview-page)"/>
       <xsl:with-param name="title" select="'Categories (' || $version-name || ')'"/>
+      <xsl:with-param name="keywords" select="'categories'"/>
       <xsl:with-param name="content">
         <!-- Get all category elements: -->
         <xsl:variable name="category-elms" as="element(xpref:category)*">
@@ -281,6 +286,7 @@
         <xsl:with-param name="href-target" select="local:href-result-file($version-id, local:category-page-name($category-id))"/>
         <xsl:with-param name="title" select="'Category: ' || $category-name || ' (' || $version-name || ')'"/>
         <xsl:with-param name="prev-next" select="local:get-prev-next($categoryref-elm)"/>
+        <xsl:with-param name="keywords" select="string-join(('category', $category-elm/@keywords), ' ')"/>
         <xsl:with-param name="content">
           <xsl:call-template name="process-text">
             <xsl:with-param name="surrounding-elm" select="$category-elm/xpref:description"/>
@@ -377,6 +383,7 @@
       <xsl:with-param name="prev-next" select="local:get-prev-next($stepref-elm)"/>
       <xsl:with-param name="title" select="$step-full-name || ' (' || $version-name || ')'"/>
       <xsl:with-param name="test-version-remark" select="'step published: ' || xtlc:str2bln($step-elm/@publish, false())"/>
+      <xsl:with-param name="keywords" select="('step', $step-full-name, substring-after($step-full-name, $xpref:default-namespace-prefix || ':'), $step-elm/@keywords)"/>
       <xsl:with-param name="content">
         <!-- The short description to start with: -->
         <db:para>{local:description($step-elm/@short-description)}</db:para>
@@ -859,6 +866,9 @@
     </xsl:param>
     <xsl:param name="test-version-remark" as="xs:string?" required="false" select="()"/>
     <xsl:param name="create-wip-remark" as="xs:boolean" required="false" select="false()"/>
+    <xsl:param name="keywords" as="xs:string*" required="false" select="()">
+      <!-- Any additional keywords, specific for this page. -->
+    </xsl:param>
 
     <xsl:variable name="prev-marker" as="node()*">
       <xsl:if test="map:contains($prev-next, $key-prev)">
@@ -886,7 +896,7 @@
     </xsl:variable>
 
     <!-- Remark: We set the content type to text/html, although it isn't yet XHTML. But it will very soon be... -->
-    <xtlcon:document href-target="{$href-target}" content-type="text/html">
+    <xtlcon:document href-target="{$href-target}" content-type="text/html" keywords="{string-join($keywords, ' ')}">
       <xsl:if test="exists($type)">
         <xsl:attribute name="type" select="$type"/>
       </xsl:if>

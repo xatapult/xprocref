@@ -3,7 +3,8 @@
   short-description="Renames a namespace to a new URI" required="true" publish="true"
   href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.namespace-rename"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref"
+  keywords="namespace namespaces rename">
 
   <!-- ======================================================================= -->
 

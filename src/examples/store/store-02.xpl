@@ -7,7 +7,7 @@
   <p:output port="result"/>
 
   <p:store href="tmp/x.xml"/>
-  
+
   <p:identity>
     <p:with-input pipe="result-uri"/>
   </p:identity>

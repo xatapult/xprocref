@@ -4,8 +4,6 @@
   <p:input port="source" href="test.zip"/>
   <p:output port="result"/>
 
-  <p:archive-manifest relative-to="file:///test/">
-  
-  </p:archive-manifest>
+  <p:archive-manifest relative-to="file:///test/"> </p:archive-manifest>
 
 </p:declare-step>

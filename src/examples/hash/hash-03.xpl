@@ -4,7 +4,7 @@
   <p:input port="source">
     <anything/>
   </p:input>
-  <p:output port="result" />
+  <p:output port="result"/>
 
   <p:hash algorithm="crc" value="Hi there!" match="/"/>
 

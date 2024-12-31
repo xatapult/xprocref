@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fragment xmlns:xlink="http://www.w3.org/1999/xlink">
-    <para>The only format this step is required to handle is ZIP. The ZIP format definition can be found <link
+  <para>The only format this step is required to handle is ZIP. The ZIP format definition can be found <link
       xlink:href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT" role="newpage">here</link>.</para>
 </fragment>

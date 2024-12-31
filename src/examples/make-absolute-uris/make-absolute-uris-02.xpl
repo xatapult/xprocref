@@ -12,5 +12,5 @@
   <p:output port="result"/>
 
   <p:make-absolute-uris match="URI" base-uri="file:///X/Y/Z"/>
-  
+
 </p:declare-step>

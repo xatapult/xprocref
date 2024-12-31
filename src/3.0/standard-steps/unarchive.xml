@@ -3,7 +3,7 @@
   short-description="Extracts documents from an archive file" required="true" publish="true"
   href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.unarchive" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="archive zip">
 
   <!-- ======================================================================= -->
 

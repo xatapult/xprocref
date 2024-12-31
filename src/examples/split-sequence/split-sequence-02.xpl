@@ -9,7 +9,7 @@
   </p:input>
   <p:output port="result"/>
 
-  <p:split-sequence test="/*/@color eq 'yellow'" />
+  <p:split-sequence test="/*/@color eq 'yellow'"/>
 
   <p:wrap-sequence wrapper="not-matched-documents">
     <p:with-input pipe="not-matched"/>

@@ -7,8 +7,8 @@
   <p:output port="result"/>
 
   <p:cast-content-type content-type="x/x"/>
-  
-  <p:variable name="contents"  select="string(.)"/>
-  <p:identity message="*** {$contents}"></p:identity>
-  
+
+  <p:variable name="contents" select="string(.)"/>
+  <p:identity message="*** {$contents}"/>
+
 </p:declare-step>

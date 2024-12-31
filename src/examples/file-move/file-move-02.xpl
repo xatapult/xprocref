@@ -7,8 +7,8 @@
          it will come out fine in the example. -->
     <p:file-delete href="build/x1.xml" fail-on-error="false"/>
     <p:file-delete href="build/x2.xml" fail-on-error="false"/>
-    <p:file-mkdir href="build/" fail-on-error="false" />
-    <p:file-copy href="data/x1-source.xml" target="build/x1.xml" />
+    <p:file-mkdir href="build/" fail-on-error="false"/>
+    <p:file-copy href="data/x1-source.xml" target="build/x1.xml"/>
   </p:group>
   <p:file-move href="build/x1.xml" target="build/x2.xml"/>
 

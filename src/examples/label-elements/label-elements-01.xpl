@@ -3,7 +3,7 @@
 
   <p:input port="source">
     <movies>
-      <movie title="Apocalypse now" />
+      <movie title="Apocalypse now"/>
       <movie title="Dune" xml:id="1234"/>
     </movies>
   </p:input>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="wrap" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation" short-description="Wraps nodes in a parent element" required="true"
-  publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.wrap"
+<step name="wrap" version-idref="v30" category-idrefs="standard-steps basic-xml-manipulation" short-description="Wraps nodes in a parent element"
+  required="true" publish="true" href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.wrap"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref"
+  keywords="element node">
 
   <!-- ======================================================================= -->
 

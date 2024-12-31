@@ -3,7 +3,7 @@
   required="false" publish="true" href-specification="{$BASELINK-FILE-STEPS-V30}#c.file-info"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="file directory info information metadata">
 
   <!-- ======================================================================= -->
 
@@ -24,17 +24,7 @@
 
     <option name="fail-on-error" as="xs:boolean" select="true()" required="false">
       <description>
-        <para>Determines what happens if an error occurs during the operation:</para>
-        <itemizedlist>
-          <listitem>
-            <para>If this option is <code>true</code> (default), an appropriate XProc error is raised.</para>
-          </listitem>
-          <listitem>
-            <para>If this option is <code>false</code>, the step returns a <tag>c:error</tag> document (see <link
-                xlink:href="https://spec.xproc.org/master/head/xproc/#err-vocab" role="newpage">here</link> for more information) on its
-                <port>result</port> port.</para>
-          </listitem>
-        </itemizedlist>
+        <xi:include href="../../text-fragments/file-fail-on-error.xml"/>
       </description>
     </option>
 
@@ -122,11 +112,11 @@
 
     <para>Notice that the result has an <code>xml:base</code> attribute with the absolute URI of the object described. This is attribute is not
       mandatory, but you can very probably rely on it being there.</para>
-    
+
     <para>Describing a file looks like this:</para>
-    
+
     <xproc-example href="../../examples/file-info/file-info-01.xpl" show-source="false" keep-from="data"/>
-    
+
   </example>
 
   <!-- ======================================================================= -->

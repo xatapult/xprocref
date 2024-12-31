@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step-group xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xi="http://www.w3.org/2001/XInclude">
-  
+
   <!-- == Step group for: paged-media steps == -->
-  <xi:include href="paged-media-steps/css-formatter.xml" />
-  <xi:include href="paged-media-steps/xsl-formatter.xml" />
-  
+  <xi:include href="paged-media-steps/css-formatter.xml"/>
+  <xi:include href="paged-media-steps/xsl-formatter.xml"/>
+
 </step-group>

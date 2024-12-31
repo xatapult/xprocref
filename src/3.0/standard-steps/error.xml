@@ -2,7 +2,7 @@
 <step name="error" version-idref="v30" category-idrefs="standard-steps misc" short-description="Raises an error" required="true" publish="true"
   href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.error" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="raise error">
 
   <!-- ======================================================================= -->
 
@@ -40,20 +40,20 @@
 
   <description>
     <para>the <step/> step raises a dynamic error, breaking the pipeline&#x2019;s document flow.</para>
-    
+
     <para>An error has a code, which must be provided using the <option>code</option> option. An error code is a QName (a name with an optional
       namespace part). This code is shown in the resulting error message. You can also use this code for catching this specific error in a
         <code>p:try/p:catch</code> construction. Using a namespace in an error code raised by <step/> is recommended because it then clearly
       distinguishes itself from errors raised by XProc itself.</para>
-    
+
     <para>The text or XML document(s) on the step&#x2019;s <port>source</port> port become the error message(s) accompanying the error. They will
       return as the contents of the <code>c:errors/c:error</code> element(s) in the <link xlink:href="{$BASELINK-CURRENT}xproc/#err-vocab"
         role="newpage">error report document</link> produced by the error.</para>
-    
+
     <para>The <step/> step also has a (primary) output port, but that is just for the convenience of the pipeline author: nothing will ever appear on
       it (since the flow is broken by the generated error). It makes it easier to insert a <step/> in situations where a primary output port is
       required, for instance inside a <code>p:if</code> that tests whether an error must be raised.</para>
-    
+
   </description>
 
   <!-- ======================================================================= -->

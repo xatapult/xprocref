@@ -34,7 +34,7 @@
       </description>
     </option>
 
-   <!-- <option name="parameters" required="false" as="map(xs:QName, item()*)?">
+    <!-- <option name="parameters" required="false" as="map(xs:QName, item()*)?">
       <description>
         <para>Parameters used to control the UUID generation. The XProc specification does not define any parameters for this option. A specific XProc
           processor might define its own.</para>
@@ -62,8 +62,8 @@
     <para>The <step/> step does the following:</para>
     <itemizedlist>
       <listitem>
-        <para>It computes a <emphasis>single</emphasis> UUID, using the <option>version</option> option. This UUID is
-          used for all replacements (so all replacements get the <emphasis>same</emphasis> value).</para>
+        <para>It computes a <emphasis>single</emphasis> UUID, using the <option>version</option> option. This UUID is used for all replacements (so
+          all replacements get the <emphasis>same</emphasis> value).</para>
       </listitem>
       <listitem>
         <para>It takes the document appearing on its <port>source</port> port and holds the XSLT selection pattern in the <option>match</option>
@@ -99,21 +99,21 @@
   <detail>
     <xi:include href="../../text-fragments/set-xml-base-changes-base-uri.xml"/>
   </detail>
-  
+
   <!-- ======================================================================= -->
-  
+
   <example title="Basic usage">
-    
+
     <para>The following example replaces the text inside the <tag>uuid</tag> elements with a generated UUID:</para>
     <xproc-example href="../../examples/uuid/uuid-01.xpl"/>
     <para>Please notice that the UUIDs are identical, the same value is used for every replacement.</para>
-    
+
     <para role="break-before">If the <option>match</option> option matches an attribute, the <emphasis>value</emphasis> of the attribute is
       replaced:</para>
     <xproc-example href="../../examples/uuid/uuid-02.xpl"/>
-    
+
   </example>
-  
+
   <!-- ======================================================================= -->
 
   <step-errors>

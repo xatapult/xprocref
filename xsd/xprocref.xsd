@@ -186,6 +186,14 @@
                 <xs:documentation>Whether this is a primary catergroy (a category as used by the specification).</xs:documentation>
               </xs:annotation>
             </xs:attribute>
+            <xs:attribute name="keywords">
+              <xs:annotation>
+                <xs:documentation>Keywords for the HTML meta tag for this category page.</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:list itemType="xs:string"/>
+              </xs:simpleType>
+            </xs:attribute>
           </xs:complexType>
         </xs:element>
       </xs:sequence>
@@ -357,6 +365,14 @@
         </xs:annotation>
       </xs:attribute>
       <xs:attribute ref="xml:base"/>
+      <xs:attribute name="keywords">
+        <xs:annotation>
+          <xs:documentation>Keywords for the HTML meta tag for this step page.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:list itemType="xs:string"/>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
     <xs:unique name="unique-example-identifiers">
       <xs:selector xpath="xpref:example"/>
