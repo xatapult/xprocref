@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element-description xmlns="http://www.xtpxlib.nl/ns/xdoc" xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xdoc
+  ../../../../xatapult/xtpxlib-xdoc/xsd/element-description.xsd" name="c:result" sort-attributes="true">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <attribute name="file-separator" required="true">
+    <description>
+      <para>The file/path separator character. For instance <code>/</code> on Unix or <code>\</code> on Windows.</para>
+    </description>
+  </attribute>
+  <attribute name="path-separator" required="true">
+    <description>
+      <para>The path separator character. For instance <code>:</code> on Unix or <code>;</code> on Windows.</para>
+    </description>
+  </attribute>
+  <attribute name="os-architecture" required="true">
+    <description>
+      <para>The operating system architecture. For instance <code>i386</code>.</para>
+    </description>
+  </attribute>
+  <attribute name="os-name" required="true">
+    <description>
+      <para>The name of the operating system. For instance <code>Mac&#160;OS&#160;X</code> or <code>Windows&#160;10</code>.</para>
+    </description>
+  </attribute>
+  <attribute name="os-version" required="true">
+    <description>
+      <para>The version of the operating system. For instance <code>10.0</code>.</para>
+    </description>
+  </attribute>
+  <attribute name="cwd" required="true">
+    <description>
+      <para>The current working directory (in operating system dependent notation). For instance <code>C:\user\erik\data\bin</code>.</para>
+    </description>
+  </attribute>
+  <attribute name="user-name" required="true">
+    <description>
+      <para>The (login) name of the current user. For instance <code>erik</code></para>
+    </description>
+  </attribute>
+  <attribute name="user-home" required="true">
+    <description>
+      <para>The home directory of the current user (in operating system dependent notation). For instance <code>C:\user\erik\data</code>.</para>
+    </description>
+  </attribute>
+  <attribute name="*">
+    <description>
+      <para>The XProc processor may add other attributes with information about the operating system (in a different namespace). These attributes, their values
+        and meaning are implementation-defined and therefore depend on the XProc processor used.</para>
+    </description>
+  </attribute>
+
+  <element name="c:environment name=&quot;…&quot; value=&quot;…&quot;" occurs="*">
+    <description>
+      <para>Name and value of an environment variable.</para>
+    </description>
+  </element>
+
+</element-description>

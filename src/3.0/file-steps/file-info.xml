@@ -48,36 +48,19 @@
 
   <description>
     <para>The <step/> step returns information about a file or directory (or other file system object) as a small XML document on its
-        <port>result</port> port. What will be returned is dependent on the type of file system object:</para>
-    <itemizedlist>
-      <listitem>
-        <para>If the <option>href</option> option references a file: a <tag>c:file</tag> document with standard attributes describing this. See <xref
-            linkend="result-document"/>.</para>
-      </listitem>
-      <listitem>
-        <para>If the <option>href</option> option references a directory: a <tag>c:directory</tag> document with standard attributes describing this.
-          See <xref linkend="result-document"/>.</para>
-      </listitem>
-      <listitem>
-        <para>If the <option>href</option> option references any other system object (for instance, on Unix, a device), the result is
-          implementation-defined and therefore depends on the XProc processor used.</para>
-      </listitem>
-    </itemizedlist>
+        <port>result</port> port. What will be returned is dependent on the type of file system object, see <xref linkend="result-document"/>.</para>
+
 
     <section xml:id="result-document">
       <title>The result document</title>
 
       <para>The result document describing a file or directory consists of either a <tag>c:file</tag> or <tag>c:directory</tag> element (the
-          <code>c</code> prefix here is bound to the <code>http://www.w3.org/ns/xproc-step</code> namespace), with the following standard attributes.
-        There will always be a <code>name</code> attribute, the other attributes might be absent when not applicable. </para>
+          <code>c</code> prefix here is bound to the <code>http://www.w3.org/ns/xproc-step</code> namespace). These elements and their attributes are
+        the same as returned by <step-ref name="p:directory-list"/> for such a file system object (with the <option>detailed</option> option set to
+          <code>true</code>). </para>
 
-      <xdoc:transform href="$xdoc/xml-description.xpl">
-        <xi:include href="../../element-descriptions/c-file.info.xml"/>
-      </xdoc:transform>
-
-      <para>What the values of the various attributes actually mean is implementation defined and therefore depends on the XProc processor used. For
-        most attributes there will be no surprises, but what, for instance, is the size of a directory? It may take some experiments to get things
-        right.</para>
+      <para>If the <option>href</option> option references any other system object (for instance, on Unix, a device), the result is
+        implementation-defined and therefore depends on the XProc processor used.</para>
 
     </section>
 

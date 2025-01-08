@@ -22,7 +22,18 @@
 
     <option name="duration" required="true" as="xs:nonNegativeInteger">
       <description>
-        <para>The duration of the delay, expressed in milliseconds.</para>
+        <para>The duration of the delay, expressed as either:</para>
+        <itemizedlist>
+          <listitem>
+            <para>A number (an <code>xs:double</code>), indicating a number of seconds. For instance <code>1</code> (1&#160;second), <code>2.5</code>
+              (2.5&#160;seconds) or <code>0.250</code> (250&#160;milliseconds).</para>
+          </listitem>
+          <listitem>
+            <para>A string that can be interpreted as an <code>xs:dayTimeDuration</code>. For instance <code>PT4H5M</code> (4&#160;hours and
+              5&#160;minutes) or <code>P1D</code> (1&#160;day).</para>
+          </listitem>
+        </itemizedlist>
+        <para>The duration must not be negative, otherwise error <step-error-ref code="XD0036"/> is raised.</para>
       </description>
     </option>
 
@@ -31,16 +42,15 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>The <step/> step delays the execution of the pipeline for a specified number of milliseconds. Source documents are passed unchanged (like in
-      a <step-ref name="p:identity"/> step).</para>
+    <para>The <step/> step delays the execution of the pipeline for a specified time. Source documents are passed unchanged (like in a <step-ref
+        name="p:identity"/> step).</para>
   </summary>
 
   <!-- ======================================================================= -->
 
   <description>
     <para>Sometimes it is useful to stop executing a pipeline for a little while, for instance when interacting with remote web servers. The <step/>
-      step does exactly this: it just stops executing the pipeline for the number of milliseconds specified in the <option>duration</option>
-      option.</para>
+      step does exactly this: it just stops executing the pipeline for the time as specified in the <option>duration</option> option.</para>
   </description>
 
   <!-- ======================================================================= -->
@@ -52,8 +62,22 @@
       the XProc processor used. </para>
   </detail>
 
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <detail>
+    <para>A reasonable effort will be made to delay for the specified duration. However, this may not be entirely accurate.</para>
+  </detail>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
   <detail>
     <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
   </detail>
+
+  <!-- ======================================================================= -->
+
+  <step-errors>
+    <step-error code="XD0036"/>
+  </step-errors>
 
 </step>

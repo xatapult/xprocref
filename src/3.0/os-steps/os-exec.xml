@@ -1,109 +1,165 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="os-exec" version-idref="v30" category-idrefs="os-steps" short-description="[EDIT] os-exec short description" required="false"
-  publish="false" href-specification="{$BASELINK-OS-STEPS-V30}#c.os-exec"
-  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<step name="os-exec" version-idref="v30" category-idrefs="os-steps env" short-description="Runs an external command" required="false" publish="true"
+  href-specification="{$BASELINK-OS-STEPS-V30}#c.os-exec" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <input port="source" sequence="true" content-types="any" primary="true">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The document that appears on the standard input of the external command. If the <port>source</port> port is empty, the command receives
+          nothing on standard input.</para>
+        <para>This document is serialized (as if written to disk) first. For this, the value of the <property>serialization</property>
+          document-property and that of the <option>serialization</option> option are used. See the <option>serialization</option> option for more
+          information.</para>
+        <para>The port accepts zero or one document. For multiple documents, error <step-error-ref code="XC0032"/> is raised.</para>
+        <para>If you want the source port to be empty, you must specify this:</para>
+        <programlisting><![CDATA[<p:with-input port="source">
+  <p:empty/>
+</p:with-input>]]></programlisting>
       </description>
     </input>
+
     <output port="result" primary="true" sequence="true" content-types="any">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The result of the external command: what was written by the command on the standard output.</para>
+        <para>The standard output of the command is processed as if it was read from disk by <step-ref name="p:load"/>. The value of the
+            <option>result-content-type</option> option of <step/> is taken as the value for the <option>content-type</option> option of <step-ref
+            name="p:load"/>.</para>
+        <para>If there is no content on the standard output, this port will be empty.</para>
       </description>
     </output>
+
     <output port="error" sequence="true" content-types="any" primary="false">
       <description>
-        <para>[EDIT] output error</para>
+        <para>The error result of the external command: what was written by the command on the standard error.</para>
+        <para>The standard error of the command is processed as if it was read from disk by <step-ref name="p:load"/>. The value of the
+            <option>error-content-type</option> option of <step/> is taken as the value for the <option>content-type</option> option of <step-ref
+            name="p:load"/>.</para>
+        <para>If there is no content on the standard error, this port will be empty.</para>
       </description>
     </output>
+
     <output port="exit-status" content-types="application/xml" primary="false" sequence="false">
       <description>
-        <para>[EDIT] output exit-status</para>
+        <para>A <tag>c:result</tag> element containing the system exit status, as an integer (the <code>c</code> prefix here is bound to the
+            <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
       </description>
     </output>
+
     <option name="command" required="true" as="xs:string">
       <description>
-        <para>[EDIT] option command</para>
+        <para>The external command to execute (without arguments).</para>
       </description>
     </option>
+
     <option name="args" select="()" as="xs:string*" required="false">
       <description>
-        <para>[EDIT] option args</para>
+        <para>The arguments for the external command (as a sequence of strings).</para>
       </description>
     </option>
-    <option name="cwd" as="xs:string?" required="false">
+
+    <option name="cwd" as="xs:string?" required="false" select="()">
       <description>
-        <para>[EDIT] option cwd</para>
+        <para>The current working directory for the execution of the command.</para>
+        <para>If this option is left unspecified, the current working directory will be implementation-defined and therefore depends on the XProc
+          processor used.</para>
+        <para>The exact format for this option is unspecified, and is operating system dependent (as, for instance, <code>C:/x/y/z</code> on
+          Windows).</para>
       </description>
     </option>
+
     <option name="result-content-type" select="'text/plain'" as="xs:string" required="false">
       <description>
-        <para>[EDIT] option result-content-type</para>
+        <para>The content type of the command&#x2019;s result (its standard output). See the description of the <port>result</port> port.</para>
       </description>
     </option>
+
     <option name="error-content-type" select="'text/plain'" as="xs:string" required="false">
       <description>
-        <para>[EDIT] option error-content-type</para>
+        <para>The content type of the command&#x2019;s error result (its standard error). See the description of the <port>error</port> port.</para>
       </description>
     </option>
+
     <option name="path-separator" as="xs:string?" required="false">
       <description>
-        <para>[EDIT] option path-separator</para>
+        <para>If specified, every occurrence of this character that occurs in the <option>command</option>, <option>args</option>, or
+            <option>cwd</option> options will be replaced by the platform-specific path separator character.</para>
+        <para>The value for this option must be exactly one character long. if not, error <step-error-ref code="XC0063"/> is raised.</para>
       </description>
     </option>
+
     <option name="failure-threshold" as="xs:integer?" required="false">
       <description>
-        <para>[EDIT] option failure-threshold</para>
+        <para>If a value for this option is supplied and the command exit status is greater than this value, error <step-error-ref code="XC0064"/> is
+          raised.</para>
       </description>
     </option>
+
     <option name="serialization" as="map(xs:QName,item()*)?" required="false">
       <description>
-        <para>[EDIT] option serialization</para>
+        <para>This option can supply a map with <link xlink:href="https://www.w3.org/TR/xslt-xquery-serialization-31/" role="newpage">serialization
+            properties</link> for serializing the document on the <port>source</port> port, before it is passed as the standard input of the
+          command.</para>
+        <xi:include href="../../text-fragments/merge-serialization-properties.xml"/>
+        <para>Example: <code>serialization="map{'method':&#160;'text'}"</code></para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:os-exec</tag> step runs an external command passing the input that arrives on its <port>source</port> port as standard input,
-      reading <port>result</port> from standard output, and <port>error</port> from standard error.</para>
+    <para>The <step/> step runs the external command as specified in the <option>command</option> and <option>args</option> options. It passes the
+      input that arrives on its <port>source</port> port as standard input to the command. The standard output and standard error of the command are
+      returned on the <port>result</port> and <port>error</port> ports.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The <tag>p:os-exec</tag> step executes the command passed on <option>command</option> with the arguments passed on <option>args</option>.
-      The processor does not interpolate the values of the <option>command</option> or <option>args</option> (for example, expanding references to
-      environment variables). <emphasis role="bold">[ERROR <step-error-ref code="XC0033"/>]</emphasis>
-    </para>
-    <para>If <option>cwd</option> is specified, then the current working directory is changed to the value of that option before execution begins.
-        <emphasis role="bold">[ERROR <step-error-ref code="XC0034"/>]</emphasis> If <option>cwd</option> is not specified, the current working
-      directory is implementation-defined.</para>
-    <para>If the <option>path-separator</option> option is specified, every occurrence of the character identified as the
-        <option>path-separator</option> character that occurs in the <option>command</option>, <option>args</option>, or <option>cwd</option> will be
-      replaced by the platform-specific path separator character. <emphasis role="bold">[ERROR <step-error-ref code="XC0063"/>]</emphasis>
-    </para>
-    <para>The <port>source</port> port is declared to accept a sequence so that it can be empty. If no document appears on the <port>source</port>
-      port, then the command receives nothing on standard input. If a document does arrive on the <port>source</port> port, it will be passed to the
-      command as its standard input. <emphasis role="bold">[ERROR <step-error-ref code="XC0032"/>]</emphasis> The <option>serialization</option>
-      option is used to control the serialization of the document before passing it to the standard input. If a document has a
-        “<literal>serialization</literal>” document property, the effective value of the serialization options is the union of the two maps, where the
-      entries in the “<literal>serialization</literal>” document property take precedence. Serialization is described in <link
-        xlink:href="https://xproc.org/" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink">XProc 3.1</link> .</para>
-    <para>If there is content on standard output, it is read and processed as described in <tag>p:load</tag> with <option>result-content-type</option>
-      taken as value for <tag>p:load</tag>'s <option>content-type</option> option. The created document is returned on <port>result</port>. Otherwise
-        <port>result</port> will be empty.</para>
-    <para>If there is content on standard error, it is read and processed as described in <tag>p:load</tag> with <option>error-content-type</option>
-      taken as value for <tag>p:load</tag>'s <option>content-type</option> option. The created document is returned on <port>error</port>. Otherwise
-        <port>error</port> will be empty.</para>
-    <para>The <port>exit-status</port> port always returns a single <tag>c:result</tag> element which contains the system exit status that the process
-      returned. The specific exit status values returned by a process invoked with <tag>p:os-exec</tag> are implementation-dependent.</para>
-    <para>If a <option>failure-threshold</option> value is supplied, and the exit status is greater than that threshold, then the <tag>p:os-exec</tag>
-      step must fail. <emphasis role="bold">[ERROR <step-error-ref code="XC0064"/>]</emphasis> This failure, like any step failure, can be captured
-      with a <tag>p:try</tag>.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="exec-preserves-none">No document properties are preserved.</para>
+    <para>The <step/> step can be used to run an external command. For instance, a Python script or post-process some result with something not
+      available in XProc.</para>
+    <para>The command itself is specified using the <option>command</option> and <option>args</option> options. Every string in the
+        <option>args</option> option is a separate argument (also when it contains spaces). What appears on the <port>result> port is passed as the
+        command&#x2019;s standard input.</port></para>
+    <para>The command&#x2019;s output and error information is returned on the <port>result</port> and <port>error</port> ports. You can use the
+        <option>result-content-type</option> and <option>error-content-type</option> options to tailor how this comes out.</para>
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>The documents appearing on the output ports only have a <property>content-type</property> property. They have no other document-properties
+      (also no <property>base-uri</property>).</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <para>This example runs the (Windows) <code>dir</code> command (that shows a directory overview) on the <code>data/</code> subdirectory of where
+      the pipeline is stored. It does so by starting the Windows command processor (called <code>cmd</code>) with the arguments
+        <code>/C&#160;dir&#160;data</code>. This is the same as typing <code>dir&#160;data</code> on the Windows command line.</para>
+    <para>A problem we have here is that we need to set the current working directory (in the <option>cwd</option>) to the location of the pipeline.
+      The example computes this, based on the <code>static-base-uri()</code> of the pipeline, using regular expression magic. The <option>cwd</option>
+      option of <step/> does not accept a URI, so we have to strip the <code>file:/</code> in front also. The result is stored in the
+        <code>$cwd</code> variable.</para>
+
+    <xproc-example href="../../examples/os-exec/os-exec-01.xpl" show-source="false" output-is-text="true">
+      <result-header>
+        <para>Result document (text):</para>
+      </result-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
     <step-error code="XC0033"/>
     <step-error code="XC0034"/>
@@ -111,4 +167,5 @@
     <step-error code="XC0032"/>
     <step-error code="XC0064"/>
   </step-errors>
+
 </step>
