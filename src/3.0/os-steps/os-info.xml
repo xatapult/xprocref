@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="os-info" version-idref="v30" category-idrefs="os-steps env" short-description="Returns information about the operating system"
-  required="false" publish="false" href-specification="{$BASELINK-OS-STEPS-V30}#c.os-info"
+  required="false" publish="true" href-specification="{$BASELINK-OS-STEPS-V30}#c.os-info"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
@@ -9,12 +9,14 @@
 
 
   <signature>
+
     <output port="result" content-types="application/xml" primary="true" sequence="false">
       <description>
         <para>A <tag>c:result</tag> element describing properties of the operating system. See <xref linkend="os-info-doc"/> for more
           information.</para>
       </description>
     </output>
+
   </signature>
 
   <!-- ======================================================================= -->
@@ -61,7 +63,7 @@
 
     <xproc-example href="../../examples/os-info/os-info-01.xpl" show-source="false">
       <result-header>
-        <para>On the system used to develop the XprocRef site on, the <emphasis>partial</emphasis> result is:</para>
+        <para>On the system used to develop the XProcRef site on, the <emphasis>partial</emphasis> result is:</para>
       </result-header>
     </xproc-example>
 
