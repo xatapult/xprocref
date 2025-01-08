@@ -1,97 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="os-info" version-idref="v30" category-idrefs="os-steps" short-description="[EDIT] os-info short description" required="false"
-  publish="false" href-specification="{$BASELINK-OS-STEPS-V30}#c.os-info"
+<step name="os-info" version-idref="v30" category-idrefs="os-steps env" short-description="Returns information about the operating system"
+  required="false" publish="false" href-specification="{$BASELINK-OS-STEPS-V30}#c.os-info"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
 
   <signature>
     <output port="result" content-types="application/xml" primary="true" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>A <tag>c:result</tag> element describing properties of the operating system. See <xref linkend="os-info-doc"/> for more
+          information.</para>
       </description>
     </output>
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <code>p:os-info</code> step returns information about the operating system on which the processor is running.</para>
+    <para>The <step/> step returns information about the operating system the XProc processor is running on, which appears on the <port>result</port>
+      port as an XML document.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The step returns a <tag>c:result</tag> element with attributes describing properties of the system. It must include the following
-      properties. The attribute can be an empty string if they do not apply to the runtime environment. For example <code>cwd</code> will be an empty
-      string on systems which have no concept of a working directory the value of the attribute will be empty.</para>
-    <variablelist>
-      <varlistentry>
-        <term>
-          <tag class="attribute">file-separator</tag>
-        </term>
-        <listitem>
-          <para>The file separator; usually <code>"/"</code> on Unix, <code>"\"</code> on Windows.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <tag class="attribute">path-separator</tag>
-        </term>
-        <listitem>
-          <para>The path separator; usually <code>":"</code> on Unix, <code>";"</code> on Windows.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <tag class="attribute">os-architecture</tag>
-        </term>
-        <listitem>
-          <para>The operating system architecture, for example <code>"i386"</code>.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <tag class="attribute">os-name</tag>
-        </term>
-        <listitem>
-          <para>The name of the operating system, for example <code>"Mac OS X"</code>.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <tag class="attribute">os-version</tag>
-        </term>
-        <listitem>
-          <para>The version of the operating system, for example <code>"10.5.6"</code>.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <tag class="attribute">cwd</tag>
-        </term>
-        <listitem>
-          <para>The current working directory.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <tag class="attribute">user-name</tag>
-        </term>
-        <listitem>
-          <para>The login name of the effective user, for example <code>"ndw"</code>.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>
-          <tag class="attribute">user-home</tag>
-        </term>
-        <listitem>
-          <para>The home directory of the effective user, for example <code>"/home/ndw"</code>.</para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
-    <para>The <tag>c:result</tag> element can contain zero or more <tag>c:environment</tag> elements that identify the environment variables
-      available. These elements have a mandatory <code>name</code> and <code>value</code> attribute, reflecting name and value of the environment
-      variable. Implementations should include all available operating system environment variables.</para>
-    <para>The exact set of properties returned is implementation-defined. Additional attributes must be in a namespace.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="os-info-preserves-none">The resulting document has no properties apart from <property>content-type</property>. In particular, it
-      has no <property>base-uri</property>.</para>
+    <para>The <step/> step gathers information about the operating system the XProc processor is running on. This results in an XML document on the
+        <port>result</port> port.</para>
+
+    <section xml:id="os-info-doc">
+      <title>The result document</title>
+
+      <para>The document appearing on the <port>result</port> port has a <tag>c:result</tag> root element (the <code>c</code> prefix here is bound to
+        the <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
+      <para>Basic information is contained in a number of mandatory attributes. XProc processors may add other attributes with operating system
+        information, but these are, of course, implementation-defined and therefore depend on the XProc processor used. Attribute values can be the
+        empty string if they do not apply to the runtime environment (which will rarely happen).</para>
+      <para>Environment variables are listed in <tag>c:environment</tag> child elements.</para>
+
+      <xdoc:transform href="$xdoc/xml-description.xpl">
+        <xi:include href="../../element-descriptions/c-os-info.description.xml"/>
+      </xdoc:transform>
+
+    </section>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type.xml"/>
+  </detail>
+
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <xproc-example href="../../examples/os-info/os-info-01.xpl" show-source="false">
+      <result-header>
+        <para>On the system used to develop the XprocRef site on, the <emphasis>partial</emphasis> result is:</para>
+      </result-header>
+    </xproc-example>
+
+    <para>Some information (especially the names and values of the environment variables) is left out for privacy reasons.</para>
+
+  </example>
+
 </step>
