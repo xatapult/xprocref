@@ -3,55 +3,72 @@
   short-description="[EDIT] validate-with-schematron short description" required="false" publish="false"
   href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-schematron"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
 
   <signature>
+
     <input port="source" primary="true" content-types="xml html" sequence="false">
       <description>
         <para>[EDIT] input source</para>
       </description>
     </input>
+
     <input port="schema" content-types="xml" primary="false" sequence="false">
       <description>
         <para>[EDIT] input schema</para>
       </description>
     </input>
+
     <output port="result" primary="true" content-types="xml html" sequence="false">
       <description>
         <para>[EDIT] output result</para>
       </description>
     </output>
+
     <output port="report" sequence="true" content-types="xml json" primary="false">
       <description>
         <para>[EDIT] output report</para>
       </description>
     </output>
+
     <option name="parameters" as="map(xs:QName,item()*)?" required="false">
       <description>
         <para>[EDIT] option parameters</para>
       </description>
     </option>
+
     <option name="phase" select="'#DEFAULT'" as="xs:string" required="false">
       <description>
         <para>[EDIT] option phase</para>
       </description>
     </option>
+
     <option name="assert-valid" select="true()" as="xs:boolean" required="false">
       <description>
         <para>[EDIT] option assert-valid</para>
       </description>
     </option>
+
     <option name="report-format" select="'svrl'" as="xs:string" required="false">
       <description>
         <para>[EDIT] option report-format</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
     <para>[EDIT]</para>
     <para>The <tag>p:validate-with-schematron</tag> step applies <link xlink:href="https://schematron.com/" role="newpage"
         xmlns:xlink="http://www.w3.org/1999/xlink">Schematron</link> processing to the <port>source</port> document.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
     <para>[EDIT]</para>
     <para>
@@ -90,8 +107,12 @@
     <para feature="validate-with-schematron-preserves-all">All document properties on the <port>source</port> port are preserved on the
         <port>result</port> port. No document properties are preserved on the <port>report</port> port.</para>
   </description>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
     <step-error code="XC0151"/>
     <step-error code="XC0054"/>
   </step-errors>
+
 </step>

@@ -1,121 +1,228 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="validate-with-xml-schema" version-idref="v30" category-idrefs="validation-steps"
-  short-description="[EDIT] validate-with-xml-schema short description" required="false" publish="false"
+<step name="validate-with-xml-schema" version-idref="v30" category-idrefs="validation-steps additional-standards"
+  short-description="Validates a document using XML Schema" required="false" publish="false"
   href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-xml-schema"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
   <signature>
+
     <input port="source" primary="true" content-types="xml html" sequence="false">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The document to validate.</para>
       </description>
     </input>
+
     <input port="schema" sequence="true" content-types="xml" primary="false">
       <description>
-        <para>[EDIT] input schema</para>
+        <para>The schema(s) to validate against.</para>
       </description>
     </input>
+
     <output port="result" primary="true" content-types="xml html" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The document that appeared on the <port>source</port> port with the following alterations (for more information see the <link
+            xlink:href="https://www.w3.org/TR/xmlschema-1/" role="newpage">XML Schema recommendation</link>):</para>
+        <itemizedlist>
+          <listitem>
+            <para>If the XProc processor supports PSVI (Post-Schema-Validation-Infoset) annotations:</para>
+            <itemizedlist>
+              <listitem>
+                <para>The document is <emphasis>valid</emphasis>: the source document with PSVI annotations.</para>
+              </listitem>
+              <listitem>
+                <para>The document is <emphasis>invalid</emphasis> and the <option>assert-valid</option> option is <code>false</code>: the source
+                  document with maybe some PSVI annotations (at least for the sub-trees that are valid).</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>If PSVI annotations are <emphasis>not</emphasis> supported by the XProc processor used:</para>
+            <itemizedlist>
+              <listitem>
+                <para>The document is <emphasis>valid</emphasis>: the source document with any defaulting of attributes and elements filled in.</para>
+              </listitem>
+              <listitem>
+                <para>The document is <emphasis>invalid</emphasis> and the <option>assert-valid</option> option is <code>false</code>: the source
+                  document, unchanged.</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </itemizedlist>
+        <para>When the <option>assert-valid</option> option is <code>true</code> and the document is <emphasis>invalid</emphasis>, nothing will appear
+          on this port because error <step-error-ref code="XC0156"/> is raised.</para>
       </description>
     </output>
+
     <output port="report" sequence="true" content-types="xml json" primary="false">
       <description>
-        <para>[EDIT] output report</para>
+        <para>A report that describes the validation results, both for valid and invalid source documents. The format for this report is determined by
+          the <option>report-format</option> option.</para>
+        <para>When the <option>assert-valid</option> option is <code>true</code> and the document is <emphasis>invalid</emphasis>, nothing will appear
+          on this port because error <step-error-ref code="XC0156"/> is raised.</para>
       </description>
     </output>
+
     <option name="use-location-hints" select="false()" as="xs:boolean" required="false">
       <description>
-        <para>[EDIT] option use-location-hints</para>
+        <para>Determines what to do with schema location hints in the source document. See <xref linkend="locating-schemas"/> for more
+          information.</para>
       </description>
     </option>
+
     <option name="try-namespaces" select="false()" as="xs:boolean" required="false">
       <description>
-        <para>[EDIT] option try-namespaces</para>
+        <para>Whether to try to dereference any namespace URIs in the source document for locating schemas. See <xref linkend="locating-schemas"/> for
+          more information.</para>
       </description>
     </option>
+
     <option name="assert-valid" select="true()" as="xs:boolean" required="false">
       <description>
-        <para>[EDIT] option assert-valid</para>
+        <para>Determines what happens if the document is <emphasis>invalid</emphasis>:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If <code>true</code>, error <step-error-ref code="XC0156"/> is raised.</para>
+          </listitem>
+          <listitem>
+            <para>If <code>false</code>, the step always succeeds. The validity of the document must be determined by inspecting the document that
+              appears on the <port>report</port> port.</para>
+          </listitem>
+        </itemizedlist>
       </description>
     </option>
+
     <option name="parameters" as="map(xs:QName,item()*)?" required="false">
       <description>
-        <para>[EDIT] option parameters</para>
+        <para>Parameters controlling the validation. See <xref linkend="validation-parameters"/> for more information.</para>
       </description>
     </option>
+
     <option name="mode" select="'strict'" values="('strict','lax')" required="false" as="item()*">
       <description>
-        <para>[EDIT] option mode</para>
+        <para>This option controls how the schema validation starts:</para>
+        <itemizedlist>
+          <listitem>
+            <para>Setting this to <code>strict</code> means that the document element must be declared and schema-valid, otherwise it will be treated
+              as invalid.</para>
+          </listitem>
+          <listitem>
+            <para>Setting this to <code>lax</code> means that the absence of a declaration for the document element does not itself count as an
+              unsuccessful outcome of validation.</para>
+          </listitem>
+        </itemizedlist>
+        <para>TBD TBD TBD EXAMPLE?</para>
+
       </description>
     </option>
+
     <option name="version" as="xs:string?" required="false">
       <description>
-        <para>[EDIT] option version</para>
+        <para>If this option is set, the specified version of XML Schema must be used for validation. Likely values are <code>1.0</code> or
+            <code>1.1</code>. Which XML Schema versions are supported is implementation-defined and therefore dependent on the XProc processor used.
+          In all likelihood, version <code>1.0</code> will always be supported.</para>
+        <para>If this option is <emphasis>not</emphasis> set, the XML schema version use and therefore dependent on the XProc processor used. For
+          instance, it might be simply <code>1.0</code>, or the XProc processor might take a look at the XML schema itself to determine the
+          version.</para>
       </description>
     </option>
+
     <option name="report-format" select="'xvrl'" as="xs:string" required="false">
       <description>
-        <para>[EDIT] option report-format</para>
+        <para>The format for the document on the <port>report</port> port. The value <code>xvrl</code> (default) will always work: the report will be
+          in <link xlink:href="https://spec.xproc.org/master/head/xvrl/">XVRL</link> (Extensible Validation Report Language).</para>
+        <para>Whether any other formats are supported is implementation-defined and therefore dependent on the XProc processor used.</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:validate-with-xml-schema</tag> step applies <link xlink:href="https://www.w3.org/TR/xmlschema-1/" role="newpage"
-        xmlns:xlink="http://www.w3.org/1999/xlink">XML Schema</link> validity assessment to the <port>source</port> input.</para>
+    <para>The <step/> step validates the document appearing on the <port>source</port> port using XML Schema validation.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0152"/>]</emphasis>
-    </para>
-    <para>The values of the <option>use-location-hints</option>, <option>try-namespaces</option>, and <option>assert-valid</option> options must be
-      boolean.</para>
-    <para>The value of the <option>mode</option> option must be an NMTOKEN whose value is either “<literal>strict</literal>” or
-        “<literal>lax</literal>”.</para>
-    <para>Validation is performed against the set of schemas represented by the documents on the <port>schema</port> port. These schemas must be used
-      in preference to any schema locations provided by schema location hints encountered during schema validation, that is, schema locations supplied
-      for <code>xs:import</code> or <code>xsi:schema-location</code>, or determined by schema-processor-defined namespace-based strategies, for the
-      namespaces covered by the documents available on the schemas port.</para>
-    <para>If <code>xs:include</code> elements occur within the supplied schema documents, they are treated like any other external documents (see
-        <link xlink:href="https://xproc.org/" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink">XProc 3.1</link> ). It is
-      implementation-defined if the documents supplied on the <port>schemas</port> port are considered when resolving <code>xs:include</code> elements
-      in the schema documents provided. </para>
-    <para>The <option>use-location-hints</option> and <option>try-namespaces</option> options allow the pipeline author to control how the schema
-      processor should attempt to locate schema documents necessary but not provided on the <port>schema</port> port. Any schema documents provided on
-      the <port>schema</port> port must be used in preference to schema documents located by other means.</para>
-    <para>If the <option>use-location-hints</option> option is “<literal>true</literal>”, the processor should make use of schema location hints to
-      locate schema documents. If the option is “<literal>false</literal>”, the processor should ignore any such hints.</para>
-    <para>If the <option>try-namespaces</option> option is “<literal>true</literal>”, the processor should attempt to dereference the namespace URI to
-      locate schema documents. If the option is “<literal>false</literal>”, the processor should not dereference namespace URIs.</para>
-    <para>The <option>mode</option> option allow the pipeline author to control how schema validation begins. The “<literal>strict</literal>” mode
-      means that the document element must be declared and schema-valid, otherwise it will be treated as invalid. The “<literal>lax</literal>” mode
-      means that the absence of a declaration for the document element does not itself count as an unsuccessful outcome of validation.</para>
-    <para>If the step specifies a <option>version</option>, then that version of XML Schema must be used to process the validation. <emphasis
-        role="bold">[ERROR <step-error-ref code="XC0011"/>]</emphasis> If the step does not specify a version, the implementation may use any version
-      it has available and may use any means to determine what version to use, including, but not limited to, examining the version of the
-      schema(s).</para>
-    <para><emphasis role="bold">[ERROR <step-error-ref code="XC0156"/>]</emphasis> If the <option>assert-valid</option> option is
-        <literal>false</literal>, it is not an error for the document to be invalid. In this case, if the implementation does not support the PSVI,
-        <tag>p:validate-with-xml-schema</tag> is essentially just an “identity” step, but if the implementation <emphasis>does</emphasis> support the
-      PSVI, then the resulting document will have additional type information (at least for the subtrees that are valid).</para>
-    <para>When XML Schema validation assessment is performed, the processor is invoked in the mode specified by the <option>mode</option> option.
-        <emphasis role="bold">[ERROR <step-error-ref code="XC0055"/>]</emphasis>
-    </para>
-    <para>The <port>result</port> of the assessment is a document with the Post-Schema-Validation-Infoset (PSVI) ( <link
-        xlink:href="https://www.w3.org/TR/xmlschema-1/" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink">XML Schema</link> ) annotations, if
-      the pipeline implementation supports such annotations. If not, the input document is reproduced with any defaulting of attributes and elements
-      performed as specified by the XML Schema recommendation.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="validate-with-xml-schema-preserves-all">All document properties on the <port>source</port> port are preserved on the
-        <port>result</port> port. No document properties are preserved on the <port>report</port> port.</para>
+
+    <para>TBD</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="locating-schemas">
+      <title>Locating schemas</title>
+
+      <para>One or more schemas can be provided on the <port>schema</port> port. But it is also possible the document on the <port>source</port> port
+        contains schema references on its own, for instance an <code>xsi:schemaLocation</code> attribute. So which schema(s) should the step use for
+        validation? The rules are as follows:</para>
+      <itemizedlist>
+        <listitem>
+          <para>If documents are provided on the <port>schema</port> port, these will be used. For most use-cases, this is the preferred way of
+            providing the schema(s).</para>
+        </listitem>
+        <listitem>
+          <para>If there are no schemas supplied on the <port>schema</port> port:</para>
+          <itemizedlist>
+            <listitem>
+              <para>If the <option>use-location-hint</option> option is <code>true</code>, the XProc processor will have a look at schema references
+                in the source document. Which location hints it will recognize as such is implementation-defined and therefore dependent on the XProc
+                processor used. However, most probably, the <code>xsi:noNamespaceSchemaLocation</code> and <code>xsi:schemaLocation</code> attributes
+                should do the trick (the <code>xsi</code> namespace prefix here is bound to the <code>http://www.w3.org/2001/XMLSchema-instance</code>
+                namespace).</para>
+              <para>If the <option>use-location-hint</option> option is <code>false</code> (default), schema references in the source document are
+                ignored.</para>
+            </listitem>
+            <listitem>
+              <para>If the <option>try-namespaces</option> option is <code>true</code>, the XProc processor will try to retrieve the schema for a
+                namespace using the namespace URI. So if we have a document in the <code>http://www.something.org/ns/documents</code> namespace, the
+                XProc processor will perform an HTTP&#160;GET request on this URI. If this returns a valid XML schema, the show is on. Some
+                implementations might also be able to handle <link xlink:href="https://rddl.org/" role="newpage">RDDL</link> documents that refer to
+                schemas.</para>
+              <para>If the <option>try-namespaces</option> option is <code>false</code> (default) no attempt like this will be made.</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="validation-parameters">
+      <title>Validation parameters</title>
+
+    </section>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para><step/> preserves all document-properties of the document appearing on its <port>source</port> port for the document on its
+        <port>result</port> port.</para>
+  </detail>
+
+  <detail>
+    <para>The document appearing on the <port>report</port> port only has a <property>content-type</property> property. It has no other
+      document-properties (also no <property>base-uri</property>).</para>
+  </detail>
+
+  <detail>
+    <para>A schema can contain <tag>xs:include</tag> or <tag>xs:import</tag> elements. It is implementation-defined, and therefore dependent on the
+      XProc processor used, if the documents supplied on the <port>schema</port> port are considered when resolving these elements.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
     <step-error code="XC0152"/>
     <step-error code="XC0011"/>
     <step-error code="XC0156"/>
     <step-error code="XC0055"/>
   </step-errors>
+
 </step>
