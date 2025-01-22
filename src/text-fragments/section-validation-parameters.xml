@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="validation-parameters" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Validation parameters</title>
+  
+  <para>The <step/> step has a <port>parameters</port> port of datatype <code>map(xs:QName,&#160;item()*)?</code>. This (optional) map passes
+    additional parameters for the validation process to the step:</para>
+  <itemizedlist>
+    <listitem>
+      <para>The parameters in this map, their values and semantics are implementation-defined and therefore dependent on the XProc processor
+        used.</para>
+    </listitem>
+    <listitem>
+      <para>A special entry with key <code>c:compile</code> (the <code>c</code> namespace prefix is bound to the standard XProc namespace
+        <code>http://www.w3.org/ns/xproc-step</code>) is reserved for parameters for the schema <emphasis>compilation</emphasis> (if
+        applicable). The value of this key must be a map itself.</para>
+    </listitem>
+    <listitem>
+      <para>If the <option>report-format</option> option is set to <code>xvrl</code> (default): Any entries with keys in the <code>xvrl</code>
+        namespace (<code>http://www.xproc.org/ns/xvrl</code>) are passed as parameters to the process that generates the <link
+          xlink:href="https://spec.xproc.org/master/head/xvrl/" role="newpage">XVRL</link> report appearing on the <port>report</port> port. All
+        <link xlink:href="https://spec.xproc.org/master/head/xvrl/#xvrl-generation" role="newpage">standard XVRL generation parameters</link>
+        are supported.</para>
+    </listitem>
+  </itemizedlist>
+  
+</section>
