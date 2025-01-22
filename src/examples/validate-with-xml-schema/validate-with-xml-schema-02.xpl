@@ -2,9 +2,9 @@
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0">
 
   <p:input port="source" href="input-valid.xml"/>
-  <p:output port="result"/>
+  <p:output port="result" pipe="report@validate"/>
 
-  <p:validate-with-xml-schema>
+  <p:validate-with-xml-schema name="validate">
     <p:with-input port="schema" href="example.xsd"/>
   </p:validate-with-xml-schema>
 

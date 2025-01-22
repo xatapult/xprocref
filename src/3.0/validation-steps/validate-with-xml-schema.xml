@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="validate-with-xml-schema" version-idref="v30" category-idrefs="validation-steps additional-standards"
-  short-description="Validates a document using XML Schema" required="false" publish="false"
+  short-description="Validates a document using XML Schema" required="false" publish="true"
   href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-xml-schema"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
@@ -17,20 +17,22 @@
 
     <input port="schema" sequence="true" content-types="xml" primary="false">
       <description>
-        <para>The schema(s) to validate against.</para>
+        <para>Schema(s) to validate against. Providing a schema (or more than one) on this port is the most common way of supplying schemas to the
+          step. There are other ways to provide schemas, see <xref linkend="locating-schemas"/> for more information.</para>
       </description>
     </input>
 
     <output port="result" primary="true" content-types="xml html" sequence="false">
       <description>
-        <para>The document that appeared on the <port>source</port> port with the following alterations (for more information see the <link
+        <para>The document that appeared on the <port>source</port> port with the following alterations (see also the <link
             xlink:href="https://www.w3.org/TR/xmlschema-1/" role="newpage">XML Schema recommendation</link>):</para>
         <itemizedlist>
           <listitem>
             <para>If the XProc processor supports PSVI (Post-Schema-Validation-Infoset) annotations:</para>
             <itemizedlist>
               <listitem>
-                <para>The document is <emphasis>valid</emphasis>: the source document with PSVI annotations.</para>
+                <para>The document is <emphasis>valid</emphasis>: the source document with PSVI annotations and any defaulting of attributes and
+                  elements filled in.</para>
               </listitem>
               <listitem>
                 <para>The document is <emphasis>invalid</emphasis> and the <option>assert-valid</option> option is <code>false</code>: the source
@@ -94,7 +96,7 @@
       </description>
     </option>
 
-    <option name="parameters" as="map(xs:QName,item()*)?" required="false">
+    <option name="parameters" as="map(xs:QName,&#160;item()*)?" required="false">
       <description>
         <para>Parameters controlling the validation. See <xref linkend="validation-parameters"/> for more information.</para>
       </description>
@@ -110,11 +112,9 @@
           </listitem>
           <listitem>
             <para>Setting this to <code>lax</code> means that the absence of a declaration for the document element does not itself count as an
-              unsuccessful outcome of validation.</para>
+              unsuccessful outcome of validation. See <example-ref idref="validate-lax"/> for an example.</para>
           </listitem>
         </itemizedlist>
-        <para>TBD TBD TBD EXAMPLE?</para>
-
       </description>
     </option>
 
@@ -132,7 +132,7 @@
     <option name="report-format" select="'xvrl'" as="xs:string" required="false">
       <description>
         <para>The format for the document on the <port>report</port> port. The value <code>xvrl</code> (default) will always work: the report will be
-          in <link xlink:href="https://spec.xproc.org/master/head/xvrl/">XVRL</link> (Extensible Validation Report Language).</para>
+          in <link xlink:href="https://spec.xproc.org/master/head/xvrl/" role="newpage">XVRL</link> (Extensible Validation Report Language).</para>
         <para>Whether any other formats are supported is implementation-defined and therefore dependent on the XProc processor used.</para>
       </description>
     </option>
@@ -142,14 +142,27 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>The <step/> step validates the document appearing on the <port>source</port> port using XML Schema validation.</para>
+    <para>The <step/> step validates the document appearing on the <port>source</port> port using XML Schema validation. The most common way to
+      provide a schema is through its <port>schema</port> port. The <port>result</port> port emits a copy of the source document with default
+      attributes/elements filled in and (optional) PSVI annotations.</para>
   </summary>
 
   <!-- ======================================================================= -->
 
   <description>
 
-    <para>TBD</para>
+    <para>The <step/> step validates the document appearing on the <port>source</port> against one or more <link
+        xlink:href="https://www.w3.org/TR/xmlschema-1/" role="newpage">W3C XML Schema(s)</link>.</para>
+
+    <para>The schema(s) used for validation can be provided in several ways. Probably the most common way is to provide them on the
+        <port>schema</port> port. Another likely way to provide schemas is using schema references in the source document. If you want the <step/>
+      step to do this, you must set the <option>use-location-hint</option> option to <code>true</code>. For more information about providing schemas
+      see the <xref linkend="locating-schemas"/> section below.</para>
+
+    <para>The outcome of the step, what appears on the <port>result</port> port, is a copy of the source document with a few alterations. If the
+      document is valid all default attributes and elements will be filled in. If the processor supports PSVI annotations (as described in the <link
+        xlink:href="https://www.w3.org/TR/xmlschema-1/" role="newpage">XML Schema recommendation</link>) these will be present to. For details see the
+      description of the <port>result</port> port.</para>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -172,7 +185,7 @@
                 in the source document. Which location hints it will recognize as such is implementation-defined and therefore dependent on the XProc
                 processor used. However, most probably, the <code>xsi:noNamespaceSchemaLocation</code> and <code>xsi:schemaLocation</code> attributes
                 should do the trick (the <code>xsi</code> namespace prefix here is bound to the <code>http://www.w3.org/2001/XMLSchema-instance</code>
-                namespace).</para>
+                namespace). See <example-ref idref="use-location-hints"/> for an example.</para>
               <para>If the <option>use-location-hint</option> option is <code>false</code> (default), schema references in the source document are
                 ignored.</para>
             </listitem>
@@ -192,10 +205,7 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <section xml:id="validation-parameters">
-      <title>Validation parameters</title>
-
-    </section>
+    <xi:include href="../../text-fragments/section-validation-parameters.xml"/>
 
   </description>
 
@@ -215,6 +225,95 @@
     <para>A schema can contain <tag>xs:include</tag> or <tag>xs:import</tag> elements. It is implementation-defined, and therefore dependent on the
       XProc processor used, if the documents supplied on the <port>schema</port> port are considered when resolving these elements.</para>
   </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage (valid source document)" id="basic-valid">
+
+    <para>We&#x2019;re going to use a schema, that validates simple XML documents, consisting of a <tag>things</tag> root element and zero or more
+        <tag>thing</tag> children. The root element has an optional attribute called <code>status</code> with default value
+      <code>normal</code>.</para>
+
+    <example-doc href="../../examples/validate-with-xml-schema/example.xsd"/>
+
+    <xproc-example href="../../examples/validate-with-xml-schema/validate-with-xml-schema-01.xpl">
+      <source-header>
+        <para>Let&#x2019;s use this schema to validate a valid document (called <code>input-valid.xml</code>) and see what comes out of the
+            <port>result</port> port:</para>
+      </source-header>
+    </xproc-example>
+
+    <para>Notice that the missing optional attribute <code>status</code>, as defined in the schema, has been added to the <tag>things</tag> root
+      element, with its default value <code>normal</code>. This will happen to every optional attribute and/or element that is not present in the
+      source.</para>
+
+    <xproc-example href="../../examples/validate-with-xml-schema/validate-with-xml-schema-02.xpl" show-source="false">
+      <pipeline-header>
+        <para role="break-before">Now let&#x2019;s have a look at the <link xlink:href="https://spec.xproc.org/master/head/xvrl/">XVRL</link> report
+          appearing on the <port>report</port> port (for the same, valid, source document):</para>
+      </pipeline-header>
+    </xproc-example>
+
+    <para>The exact format of the report might differ across implementations. Please experiment before using it.</para>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Basic usage (invalid source document)">
+
+    <xproc-example href="../../examples/validate-with-xml-schema/validate-with-xml-schema-03.xpl">
+      <source-header>
+        <para>We&#x2019;re going to use the same schema as in <example-ref idref="basic-valid"/>, but now provide an <emphasis>invalid</emphasis>
+          source document (called <code>input-invalid.xml</code>):</para>
+      </source-header>
+      <pipeline-header>
+        <para>The pipeline will catch the resulting <link xlink:href="https://spec.xproc.org/master/head/xvrl/">XVRL</link> report. Please notice that
+          we need to set the <option>assert-valid</option> option to <code>false</code>. If we had left it to its default value <code>true</code>,
+          error <step-error-ref code="XC0156"/> would have been raised.</para>
+      </pipeline-header>
+    </xproc-example>
+    <para>Again, the exact format of the report might differ across implementations. Please experiment before using it.</para>
+
+    <xproc-example href="../../examples/validate-with-xml-schema/validate-with-xml-schema-04.xpl" show-source="false" keep-namespace-prefixes="err">
+      <pipeline-header>
+        <para role="break-before">Another way of handling validation errors is to have <step/> raise its error <step-error-ref code="XC0156"/> and
+          catch this in a <tag>p:try</tag>/<tag>p:catch</tag> construction. The following pipeline shows you the <tag>c:errors</tag> result, that is
+          available inside the <tag>p:catch</tag>:</para>
+      </pipeline-header>
+    </xproc-example>
+    <para>The exact contents of the <tag>c:errors</tag> element might differ across implementations. Please experiment before using it.</para>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Using location hints" id="use-location-hints">
+
+    <xproc-example href="../../examples/validate-with-xml-schema/validate-with-xml-schema-05.xpl">
+      <source-header>
+        <para>Sometimes you have source documents that already contain schema references, for instance:</para>
+      </source-header>
+      <pipeline-header>
+        <para>If we want the <step/> step to use this reference, we have to set the <option>try-location-hints</option> to <code>true</code>. We
+          don&#x2019;t need to validate against any other schemas, so we set the <port>schema</port> port to empty.</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Validating in lax mode" id="validate-lax">
+
+    <para>Usually you want a document to completely validate against a schema. However, there are use-cases where the documents to validate are
+        <emphasis>wrapped</emphasis> inside some root element. This happens, for instance, when in XProc you have a sequence of documents and use
+        <step-ref name="p:wrap-sequence"/> to wrap these results into a single XML document. The <step/> step allows you to disregard the root element
+      and validate its child elements only by setting the <option>mode</option> option to <code>lax</code>.</para>
+
+    <xproc-example href="../../examples/validate-with-xml-schema/validate-with-xml-schema-06.xpl"/>
+
+  </example>
 
   <!-- ======================================================================= -->
 
