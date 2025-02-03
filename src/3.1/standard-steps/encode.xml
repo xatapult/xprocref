@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="encode" version-idref="v31" category-idrefs="standard-steps misc" short-description="Encodes a document" required="true" publish="false"
+  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.identity" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" sequence="false" content-types="any" primary="true">
+      <description>
+        <para>The source document to encode:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If this is a binary document, its content is encoded directly.</para>
+          </listitem>
+          <listitem>
+            <para>Any other kind of document is serialized first (as if written to disk, see also the <option>serialization</option> option). The
+              serialized version is encoded.</para>
+          </listitem>
+        </itemizedlist>
+      </description>
+    </input>
+
+    <output port="result" sequence="true" content-types="application/xml" primary="true">
+      <description>
+        <para>A <tag>c:data</tag> element (the <code>c</code> prefix here is bound to the <code>http://www.w3.org/ns/xproc-step</code> namespace),
+          containing the encoded version of the source document. See <link xlink:href="https://xprocref.org/3.1/p.cast-content-type.html#c-data"
+            role="newpage">here</link> for a more detailed description of the <tag>c:data</tag> element.</para>
+      </description>
+    </output>
+
+    <option name="encoding" required="false" as="xs:string">
+      <description>
+        <para>The encoding the step must produce. The only standard value currently supported is <code>base64</code> (default).</para>
+        <para>Whether any other encodings are supported and what their names (value for this option) are is implementation-defined and therefore
+          dependent on the XProc processor used.</para>
+      </description>
+    </option>
+
+    <option name="serialization" as="map(xs:QName,item()*)?" required="false">
+      <description>
+        <para>This option can supply a map with <link xlink:href="https://www.w3.org/TR/xslt-xquery-serialization-31/" role="newpage">serialization
+            properties</link> for serializing the document on the <port>source</port> port, before encoding takes place.</para>
+        <xi:include href="../../text-fragments/merge-serialization-properties.xml"/>
+        <para>Example: <code>serialization="map{'indent':&#160;false()}"</code></para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step encodes the document appearing on its <port>source</port> port, for example with <code>base64</code> encoding. The encoded
+      version is wrapped in a <tag>c:data</tag> element and appears on the <port>result</port> port.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+    <para>The <step/> can be used to encode a document. The only standard encoding currently supported is <code>base64</code>. The encoded version of
+      the source document is wrapped in a <tag>c:data</tag> element and appears on the <port>result</port> port.</para>
+
+    <para>There is no <code>p:decode</code> step. For this you can use <step-ref name="p:cast-content-type"/>.</para>
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <!--<step-errors>
+    <step-error code="XC0052"/>
+  </step-errors>-->
+  
+</step>

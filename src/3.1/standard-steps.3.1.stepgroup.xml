@@ -16,6 +16,7 @@
   <xi:include href="standard-steps/compress.xml"/>
   <xi:include href="standard-steps/count.xml"/>
   <xi:include href="standard-steps/delete.xml"/>
+  <xi:include href="standard-steps/encode.xml"/>
   <xi:include href="standard-steps/error.xml"/>
   <xi:include href="standard-steps/filter.xml"/>
   <xi:include href="standard-steps/hash.xml"/>

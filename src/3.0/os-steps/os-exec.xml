@@ -67,8 +67,8 @@
         <para>The current working directory for the execution of the command.</para>
         <para>If this option is left unspecified, the current working directory will be implementation-defined and therefore depends on the XProc
           processor used.</para>
-        <para>The exact format for this option is unspecified, and is operating system dependent (as, for instance, <code>C:/x/y/z</code> on
-          Windows).</para>
+        <para>To resolve variations in the syntax of directory specifications, the value supplied for this option will be normalized using the <code><link
+              xlink:href="https://spec.xproc.org/master/head/xproc/#f.urify" role="newpage">p:urify()</link></code> function.</para>
       </description>
     </option>
 
@@ -125,8 +125,8 @@
     <para>The <step/> step can be used to run an external command. For instance, a Python script or post-process some result with something not
       available in XProc.</para>
     <para>The command itself is specified using the <option>command</option> and <option>args</option> options. Every string in the
-        <option>args</option> option is a separate argument (also when it contains spaces). What appears on the <port>result> port is passed as the
-        command&#x2019;s standard input.</port></para>
+        <option>args</option> option is a separate argument (also when it contains spaces). What appears on the <port>result</port> port is passed as the
+        command&#x2019;s standard input.</para>
     <para>The command&#x2019;s output and error information is returned on the <port>result</port> and <port>error</port> ports. You can use the
         <option>result-content-type</option> and <option>error-content-type</option> options to tailor how this comes out.</para>
   </description>

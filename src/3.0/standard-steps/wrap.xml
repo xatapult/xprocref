@@ -58,6 +58,8 @@
 
     <para>The <step/> step perform a &#x201c;deep&#x201d; wrapping: the children of any matched node are also processed. Wrappers are added to
         <emphasis>all</emphasis> matching nodes.</para>
+    
+    <para>You can&#x2019;t use <step/> to wrap a text document. For this use <step-ref name="p:wrap-sequence"/>.</para>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
