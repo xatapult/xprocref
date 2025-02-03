@@ -1,4 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step-identity version-idref="v31" name="wrap" href-specification="{$BASELINK-STANDARD-STEPS-V31}#c.wrap" base-version-idref="v30"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref"/>
+  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <signature>
+
+    <input port="source" content-types="xml html" primary="true" sequence="false">
+      <description>
+        <para>The document that contains the nodes to wrap.</para>
+      </description>
+    </input>
+
+    <output port="result" content-types="application/xml" primary="true" sequence="false">
+      <description>
+        <para>The resulting document.</para>
+      </description>
+    </output>
+
+    <option name="wrapper" required="true" as="xs:QName">
+      <description>
+        <para>The name of the wrapping element.</para>
+      </description>
+    </option>
+
+    <option name="match" required="true" as="xs:string" subtype="XSLTSelectionPattern">
+      <description>
+        <para>The XSLT match pattern for the nodes to wrap, as a string. This must match either the document-node, an element, a
+          processing-instruction, or a comment. If any other kind of node is matched, error <step-error-ref code="XC0023"/> is raised.</para>
+      </description>
+    </option>
+
+    <option name="group-adjacent" as="xs:string?" subtype="XPathExpression" required="false">
+      <description>
+        <para>An XPath expression to use for grouping the wrapped elements. See <xref linkend="grouping"/> below.</para>
+      </description>
+    </option>
+
+    <option name="attributes" required="false" as="map(xs:QName, xs:anyAtomicType)?">
+      <description>
+        <para>An optional map with entries (attribute name, attribute value). The attributes specified in this map are created on the wrapper
+          element.</para>
+        <para>Specifying attributes using this option works the same as performing a <step/> step (without an <option>attributes</option> option), directly
+          followed by a <step-ref name="p:set-attributes"/> step.</para>
+      </description>
+    </option>
+
+  </signature>
+
+</step-identity>

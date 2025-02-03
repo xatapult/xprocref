@@ -93,7 +93,7 @@
 
   &lt;p:cast-content-type content-type="text/plain"/&gt;
 
-&lt;/p:declare-step&gt;</pre></div><p class="para">The resulting <span class="emphasis italic">text</span> (it looks like it is another XML document, but it is just text):</p><div class="programlisting"><pre class="programlisting">&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;input-document timestamp="2024-08-23T09:12:45"&gt;
+&lt;/p:declare-step&gt;</pre></div><p class="para">The resulting <span class="emphasis italic">text</span> (it looks like it is another XML document, but it is just text):</p><div class="programlisting"><pre class="programlisting">&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;input-document timestamp="2024-08-23T09:12:45"&gt;
       &lt;text color="red"&gt;Hi there!&lt;/text&gt;
     &lt;/input-document&gt;</pre></div><p class="para">Now assume we need this text representation without the XML header (the <code class="code">&lt;?xml … ?&gt;</code> part at the top). The <code class="code step">p:cast-content-type</code> step
       uses the document <code class="code property">serialization</code> document-property to guide the conversions. This document-property is a map containing the

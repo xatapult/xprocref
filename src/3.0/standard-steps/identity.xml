@@ -25,7 +25,7 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>The <step>p:identity</step> step makes a verbatim copy of what appears on its <port>source</port> port to its <port>result</port>
+    <para>The <step/> step makes a verbatim copy of what appears on its <port>source</port> port to its <port>result</port>
       port.</para>
   </summary>
 
