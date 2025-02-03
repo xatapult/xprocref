@@ -1,91 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="validate-with-nvdl" version-idref="v30" category-idrefs="validation-steps" short-description="[EDIT] validate-with-nvdl short description"
-  required="false" publish="false" href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-nvdl"
+<step name="validate-with-nvdl" version-idref="v30" category-idrefs="validation-steps" short-description="Validate a document using NVDL"
+  required="false" publish="true" href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-nvdl"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
-  
+
   <!-- ======================================================================= -->
-  
+
   <signature>
 
     <input port="source" primary="true" content-types="xml html" sequence="false">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The document to validate.</para>
       </description>
     </input>
 
     <input port="nvdl" content-types="xml" primary="false" sequence="false">
       <description>
-        <para>[EDIT] input nvdl</para>
+        <para>The NVDL schema to validate against.</para>
       </description>
     </input>
 
     <input port="schemas" sequence="true" content-types="text xml" primary="false" empty="true">
       <description>
-        <para>[EDIT] input schemas</para>
+        <para>Optional schemas, referenced from the NVDL schema by URI. See the description below for more information.</para>
       </description>
     </input>
 
     <output port="result" primary="true" content-types="xml html" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>A verbatim copy of the document that appeared on the <port>source</port> port.</para>
       </description>
     </output>
 
     <output port="report" sequence="true" content-types="xml json" primary="false">
       <description>
-        <para>[EDIT] output report</para>
+        <para>A report that describes the validation results, both for valid and invalid source documents. The format for this report is determined by
+          the <option>report-format</option> option.</para>
+        <para>When the <option>assert-valid</option> option is <code>true</code> and the document is <emphasis>invalid</emphasis>, nothing will appear
+          on this port because error <step-error-ref code="XC0053"/> is raised.</para>
       </description>
     </output>
 
     <option name="assert-valid" select="true()" as="xs:boolean" required="false">
       <description>
-        <para>[EDIT] option assert-valid</para>
+        <para>Determines what happens if the document is <emphasis>invalid</emphasis>:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If <code>true</code>, error <step-error-ref code="XC0053"/> is raised.</para>
+          </listitem>
+          <listitem>
+            <para>If <code>false</code>, the step always succeeds. The validity of the document must be determined by inspecting the document that
+              appears on the <port>report</port> port.</para>
+          </listitem>
+        </itemizedlist>
       </description>
     </option>
 
     <option name="report-format" select="'xvrl'" as="xs:string" required="false">
       <description>
-        <para>[EDIT] option report-format</para>
+        <para>The format for the document on the <port>report</port> port. The value <code>xvrl</code> (default) will always work: the report will be
+          in <link xlink:href="https://spec.xproc.org/master/head/xvrl/" role="newpage">XVRL</link> (Extensible Validation Report Language).</para>
+        <para>Whether any other formats are supported is implementation-defined and therefore dependent on the XProc processor used.</para>
       </description>
     </option>
 
     <option name="parameters" as="map(xs:QName,item()*)?" required="false">
       <description>
-        <para>[EDIT] option parameters</para>
+        <para>Parameters controlling the validation. See <xref linkend="validation-parameters"/> for more information.</para>
       </description>
     </option>
-    
+
   </signature>
-  
+
   <!-- ======================================================================= -->
-  
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:validate-with-nvdl</tag> step applies <link
-        xlink:href="https://en.wikipedia.org/wiki/Namespace-based_Validation_Dispatching_Language" role="newpage"
-        xmlns:xlink="http://www.w3.org/1999/xlink">NVDL</link> validation to the <port>source</port> document.</para>
+
+    <para>The <step/> step validates the document appearing on the <port>source</port> port using <link
+        xlink:href="https://en.wikipedia.org/wiki/Namespace-based_Validation_Dispatching_Language" role="newpage">NVDL</link> (Namespace-based
+      Validation Dispatching Language) validation. The NVDL schema is supplied through the <port>nvdl</port> port. The <port>result</port> port emits
+      a copy of the source document. </para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The <port>source</port> document is validated using the namespace dispatching rules contained in the <port>nvdl</port> document. <emphasis
-        role="bold">[ERROR <step-error-ref code="XC0154"/>]</emphasis></para>
-    <para>The dispatching rules may contain URI references that point to the actual schemas to be used. As long as these schemas are accessible, it is
-      not necessary to pass anything on the schemas port. However, if one or more schemas are provided on the <port>schemas</port> port, then these
-      schemas should be used in validation. </para>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0053"/>]</emphasis>
-    </para>
-    <para>The output from this step is a copy of the input. The output of this step may include PSVI annotations.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="validate-with-nvdl-preserves-all">All document properties on the <port>source</port> port are preserved on the <port>result</port>
-      port. No document properties are preserved on the <port>report</port> port.</para>
+    <para>The <step/> step applies <link xlink:href="https://en.wikipedia.org/wiki/Namespace-based_Validation_Dispatching_Language" role="newpage"
+        >NVDL</link> validation to the document appearing on the <port>source</port> port. The NVDL schema must be supplied using the
+        <port>schema</port> port. The outcome of the step, what appears on the <port>result</port> port, is a verbatim copy of the source
+      document.</para>
+
+    <para>An NVDL schema usually refers to other schemas by URI. To find such a schema, the step first looks at the schemas provided on the
+        <port>schema</port> port (if any). If a schema with the same base URI as mentioned in the NVDL schema is present on the <port>schemas</port>
+      port, this is used. If not, the XProc processor will attempt to load it by its URI, usually from disk.</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <xi:include href="../../text-fragments/section-validation-parameters.xml"/>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved-for-result.xml"/>
+  </detail>
+
+  <detail>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type-for-report.xml"/>
+  </detail>
+
+  <detail>
+    <xi:include href="../../text-fragments/result-port-with-optional-psvi.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage (valid source document)" id="basic-valid">
+
+    <para>Assume we have an input document, called <code>input-valid.xml</code>, that looks like this:</para>
+    <example-doc href="../../examples/validate-with-nvdl/input-valid.xml"/>
+
+    <para>Since this document mixes namespaces, we want to validate it using NVDL. An NVDL schema for this, called <code>example.nvdl</code>, is as
+      follows:</para>
+    <example-doc href="../../examples/validate-with-nvdl/example.nvdl"/>
+
+    <para>The <tag>thing</tag> elements in the <code>https://www.xprocref.org/ns/thingies</code> namespace are validated using the following simple
+      XML schema called <code>thingies.xsd</code>. It says that the only thing allowed is a <tag>thing</tag> element with a required <code>id</code>
+      attribute:</para>
+    <example-doc href="../../examples/validate-with-nvdl/thingies.xsd"/>
+
+    <para>Performing this validation using the <step/> step returns the following on the <port>report</port> port:</para>
+    <xproc-example href="../../examples/validate-with-nvdl/validate-with-nvdl-01.xpl" show-source="false"/>
+
+  </example>
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <example title="Basic usage (invalid source document)">
+    
+    <para>Using the same NVDL schema as in <example-ref idref="basic-valid"/>, we&#x2019;re now going to validate an
+      <emphasis>in</emphasis>valid document (called <code>input-invalid.xml</code>). Since we want to have a look at what comes out of the
+      <port>report</port> port, we have to set the <option>assert-valid</option> option to <code>false</code>.</para>
+    
+    <example-doc href="../../examples/validate-with-nvdl/input-invalid.xml"/>
+  
+    <para>Performing this validation using the <step/> step returns the following on the <port>report</port> port:</para>
+    
+    <xproc-example href="../../examples/validate-with-nvdl/validate-with-nvdl-02.xpl" show-source="false"/>
+    
+  </example>
   
   <!-- ======================================================================= -->
-  
+
   <step-errors>
     <step-error code="XC0154"/>
     <step-error code="XC0053"/>
   </step-errors>
+
 </step>

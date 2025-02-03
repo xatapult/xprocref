@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="validate-with-schematron" version-idref="v30" category-idrefs="validation-steps additional-standards"
-  short-description="Validates a document using Schematron" required="false" publish="false"
+  short-description="Validates a document using Schematron" required="false" publish="true"
   href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-schematron"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
@@ -24,8 +24,6 @@
     <output port="result" primary="true" content-types="xml html" sequence="false">
       <description>
         <para>A verbatim copy of the document that appeared on the <port>source</port> port.</para>
-        <para>Depending on the XProc processor used and/or the configuration, PSVI (Post-Schema-Validation-Infoset) annotations (see the <link
-            xlink:href="https://www.w3.org/TR/xmlschema-1/" role="newpage">XML Schema recommendation</link>) might be added.</para>
       </description>
     </output>
 
@@ -98,12 +96,9 @@
   <description>
 
     <para>The <step/> step applies <link xlink:href="https://schematron.com/" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink"
-        >Schematron</link> processing to the document appearing on the <port>source</port> port. The Schematron schema must be supplied using the
-        <port>schema</port> port.</para>
-
-    <para>The outcome of the step, what appears on the <port>result</port> port, is a verbatim copy of the source document (with the exception of
-      optionally adding PSVI (Post-Schema-Validation-Infoset) annotations, see the <link xlink:href="https://www.w3.org/TR/xmlschema-1/"
-        role="newpage">XML Schema recommendation</link>).</para>
+        >Schematron</link> validation to the document appearing on the <port>source</port> port. The Schematron schema must be supplied using the
+        <port>schema</port> port. The outcome of the step, what appears on the <port>result</port> port, is a verbatim copy of the source
+      document.</para>
 
     <section xml:id="validation-parameters">
       <!-- Main text copied from ../../text-fragments/section-validation-parameters.xml, added c:implementation. -->
@@ -146,13 +141,15 @@
   <!-- ======================================================================= -->
 
   <detail>
-    <para><step/> preserves all document-properties of the document appearing on its <port>source</port> port for the document on its
-        <port>result</port> port.</para>
+    <xi:include href="../../text-fragments/document-properties-preserved-for-result.xml"/>
   </detail>
-
+  
   <detail>
-    <para>The document appearing on the <port>report</port> port only has a <property>content-type</property> property. It has no other
-      document-properties (also no <property>base-uri</property>).</para>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type-for-report.xml"/>
+  </detail>
+  
+  <detail>
+    <xi:include href="../../text-fragments/result-port-with-optional-psvi.xml"/>
   </detail>
 
   <!-- ======================================================================= -->
@@ -188,7 +185,7 @@
 
     <para>Using the same Schematron schema as in <example-ref idref="basic-valid"/>, we&#x2019;re now going to validate an
       <emphasis>in</emphasis>valid document (called <code>input-invalid.xml</code>). Since we want to have a look at what comes out of the
-        <port>report</port> port, we&#x2019;re going to set the <option>assert-valid</option> option to <code>fasle</code>.</para>
+        <port>report</port> port, we have to set the <option>assert-valid</option> option to <code>false</code>.</para>
 
     <example-doc href="../../examples/validate-with-schematron/input-invalid.xml"/>
 

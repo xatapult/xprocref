@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fragment>
+  <para><step/> preserves all document-properties of the document appearing on its <port>source</port> port for the document on its
+      <port>result</port> port.</para>
+</fragment>

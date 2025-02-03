@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <things>
   <thing id="A">A thing...</thing>
-  <thing is="B">Another thing... referencing <thingref idref="A"/>!</thing>
+  <thing id="B">Another thing... referencing <thingref idref="A"/>!</thing>
 </things>

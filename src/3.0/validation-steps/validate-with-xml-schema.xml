@@ -212,15 +212,13 @@
   <!-- ======================================================================= -->
 
   <detail>
-    <para><step/> preserves all document-properties of the document appearing on its <port>source</port> port for the document on its
-        <port>result</port> port.</para>
+    <xi:include href="../../text-fragments/document-properties-preserved-for-result.xml"/>
   </detail>
-
+  
   <detail>
-    <para>The document appearing on the <port>report</port> port only has a <property>content-type</property> property. It has no other
-      document-properties (also no <property>base-uri</property>).</para>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type-for-report.xml"/>
   </detail>
-
+  
   <detail>
     <para>A schema can contain <tag>xs:include</tag> or <tag>xs:import</tag> elements. It is implementation-defined, and therefore dependent on the
       XProc processor used, if the documents supplied on the <port>schema</port> port are considered when resolving these elements.</para>
