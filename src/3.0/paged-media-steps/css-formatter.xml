@@ -1,65 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="css-formatter" version-idref="v30" category-idrefs="paged-media-steps" short-description="[EDIT] css-formatter short description"
-  required="false" publish="false" href-specification="{$BASELINK-PAGED-MEDIA-STEPS-V30}#c.css-formatter"
+<step name="css-formatter" version-idref="v30" category-idrefs="paged-media-steps additional-standards" short-description="Renders a document using CSS formating"
+  required="false" publish="true" href-specification="{$BASELINK-PAGED-MEDIA-STEPS-V30}#c.css-formatter"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
 
   <signature>
+
     <input port="source" content-types="xml html" primary="true" sequence="false">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The XML or HTML document to render.</para>
       </description>
     </input>
+
     <input port="stylesheet" content-types="text" sequence="true" primary="false" empty="true">
       <description>
-        <para>[EDIT] input stylesheet</para>
+        <para>The CSS stylesheets to use for the rendering.</para>
       </description>
     </input>
+
     <output port="result" content-types="any" primary="true" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>The resulting rendition.</para>
       </description>
     </output>
+
     <option name="parameters" as="map(xs:QName,item()*)?" required="false">
       <description>
-        <para>[EDIT] option parameters</para>
+        <para>Parameters used to control the rendering. The XProc specification does not define any parameters for this option. A specific XProc
+          processor (or renderer used) might define its own.</para>
       </description>
     </option>
+
     <option name="content-type" as="xs:string?" required="false">
       <description>
-        <para>[EDIT] option content-type</para>
+        <para>The content-type (media type) of the rendition that appears on the <port>result</port> port. The default value is
+            <code>application/pdf</code>. Whether any other formats are supported is implementation-defined and therefore dependent on the XProc
+          processor and renderer used.</para>
+        <para>This option may include media type parameters as well (for instance <code>application/pdf; charset=UTF-8</code>).</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:css-formatter</tag> step applies <link xlink:href="https://www.w3.org/TR/css-2018/" role="newpage"
-        xmlns:xlink="http://www.w3.org/1999/xlink">CSS Snapshot 2018</link> formatting to an XML or HTML document. The output of this step is often,
-      but not necessarily, a PDF document.</para>
+    <para>The <step/> step renders an XML or HTML document using <link xlink:href="https://www.w3.org/TR/css-2018/" role="newpage">CSS
+        formatting</link>, usually into PDF. The CSS stylesheets for this must be present on the <port>stylesheet</port> port. The resulting rendition
+      appears, as a binary document, on the <port>result</port> port.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The document on the <port>source</port> port is formatted using one or more CSS stylesheets. The content-type of the output is controlled by
-      the <option>content-type</option> option. This option specifies a media type as defined by <link
-        xlink:href="https://www.iana.org/assignments/media-types/media-types.xhtml" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink">IANA
-        Media Types</link> . <emphasis role="bold">[ERROR <step-error-ref code="XD0079"/>]</emphasis> The option may include media type parameters as
-      well (e.g. "application/someformat; charset=UTF-8"). The use of media type parameters on the <option>content-type</option> option is
-      implementation-defined. If the <option>content-type</option> option is not specified, the output type is implementation-defined. The default
-      should be PDF. <emphasis role="bold">[ERROR <step-error-ref code="XC0204"/>]</emphasis>
-    </para>
-    <para>If one or more stylesheets are provided on the <port>stylesheet</port> port, they should be used. The precise way that the
-        <tag>p:css-formatter</tag> step selects stylesheets is implementation-defined. Because CSS stylesheets may have import statements that rely on
-      relative URI references, it may be more convenient for authors and implementors to allow stylesheets to be specified as a list of URIs (in, for
-      example, one of the <option>parameters</option>).</para>
-    <para>A formatter may take any number of optional rendering parameters via the step's <option>parameters</option>; such parameters are defined by
-      the CSS implementation used and are implementation-defined.</para>
-    <para> The CSS level and the particular CSS features supported by <tag>p:css-formatter</tag> are implementation-defined. </para>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0166"/>]</emphasis>
-    </para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="css-formatter-preserves-none">No document properties are preserved.</para>
+
+
+    <para>The <step/> step allows you to transform XML or HTML into some kind of rendition, usually PDF, by applying <link
+        xlink:href="https://www.w3.org/TR/css-2018/" role="newpage">CSS formatting</link>. Most likely, <link
+        xlink:href="https://www.w3.org/TR/css-page-3/" role="newpage">CSS Paged Media</link> will be used.</para>
+
+    <para>In most cases, <step/> relies on an external CSS formatter. You&#x2019;ll probably have to do some XProc processor dependent configuration
+      before this step will work. Please consult the XProc processor documentation about this.</para>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type.xml"/>
+  </detail>
+  
+  <!-- ======================================================================= -->
+  
+  <example title="Basic usage">
+    
+    <para>The following pipeline transforms some XML document into PDF using <step/>, and stores it as <code>result.pdf</code>:</para>
+    <example-doc href="../../examples/css-formatter/css-formatter-01.xpl"/>
+    
+  </example>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
     <step-error code="XD0079"/>
     <step-error code="XC0204"/>

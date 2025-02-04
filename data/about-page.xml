@@ -31,6 +31,12 @@
     processor <emphasis>implementers</emphasis>, not at language <emphasis>users</emphasis>. To correct this, this site contains reference information
     about the XProc steps, written from a more user-oriented perspective. With the increasing popularity of XProc, I hope this fills a need.</para>
 
+  <para role="break-before">Help is always welcome. If you have anything to say, add or comment about something on XProcRef, please <link
+      xlink:href="https://github.com/xatapult/xprocref/issues" role="newpage">raise an issue</link>. Or for the more adventurous types: fork the <link
+      xlink:href="https://github.com/xatapult/xprocref" role="newpage">XProcRef GitHub repository</link>, make the change yourself, and create a pull
+    request. There is a little documentation in the <code>doc/</code> subdirectory.</para>
+
+
   <para role="break-before">Erik&#160;Siegel (<link xlink:href="mailto:erik@xatapult.nl">erik@xatapult.nl</link>)</para>
   <para>
     <link xlink:href="https://www.xatapult.com/" role="newpage">Xatapult&#160;Content&#160;Engineering</link>
