@@ -21,7 +21,7 @@
 
   <!-- ================================================================== -->
 
-  <p:variable name="limit-to-steps" as="xs:string*" select="('validate-with-nvdl')"/>
+  <p:variable name="limit-to-steps" as="xs:string*" select="('validate-with-relax-ng')"/>
 
   <xpref:process-xprocref production-version="false" wip="false">
     <p:with-option name="limit-to-steps" select="$limit-to-steps"/>

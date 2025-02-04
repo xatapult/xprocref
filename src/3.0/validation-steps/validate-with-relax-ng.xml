@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="validate-with-relax-ng" version-idref="v30" category-idrefs="validation-steps"
-  short-description="[EDIT] validate-with-relax-ng short description" required="false" publish="false"
+<step name="validate-with-relax-ng" version-idref="v30" category-idrefs="validation-steps additional-standards"
+  short-description="Validate a document using RELAX&#160;NG" required="false" publish="false"
   href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-relax-ng"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
@@ -10,55 +10,83 @@
 
     <input port="source" primary="true" content-types="xml html" sequence="false">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The document to validate.</para>
       </description>
     </input>
 
     <input port="schema" content-types="text xml" primary="false" sequence="false">
       <description>
-        <para>[EDIT] input schema</para>
+        <para>The RELAX&#160;NG schema to validate against:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If the document appearing on this port is XML (has an XML media type), it must be a valid <link
+                xlink:href="https://en.wikipedia.org/wiki/RELAX_NG#XML_syntax" role="newpage">RELAX&#160;NG XML Syntax</link> schema.</para>
+          </listitem>
+          <listitem>
+            <para>If the document appearing on this port is text (has a text media type), it must be a valid <link
+                xlink:href="https://en.wikipedia.org/wiki/RELAX_NG#Compact_syntax" role="newpage">RELAX&#160;NG Compact Syntax</link> schema.</para>
+          </listitem>
+        </itemizedlist>
       </description>
     </input>
 
     <output port="result" primary="true" content-types="xml html" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>A verbatim copy of the document that appeared on the <port>source</port> port.</para>
       </description>
     </output>
 
     <output port="report" sequence="true" content-types="xml json" primary="false">
       <description>
-        <para>[EDIT] output report</para>
+        <para>A report that describes the validation results, both for valid and invalid source documents. The format for this report is determined by
+          the <option>report-format</option> option.</para>
+        <para>When the <option>assert-valid</option> option is <code>true</code> and the document is <emphasis>invalid</emphasis>, nothing will appear
+          on this port because error <step-error-ref code="XC0155"/> is raised.</para>
       </description>
     </output>
 
     <option name="dtd-attribute-values" select="false()" as="xs:boolean" required="false">
       <description>
-        <para>[EDIT] option dtd-attribute-values</para>
+        <para>If <code>true</code>, the attribute value defaulting conventions of RELAX&#160;NG are applied. See the <link
+            xlink:href="https://www.oasis-open.org/committees/relax-ng/compatibility-20011203.html" role="newpage">RELAX&#160;NG DTD Compatibility
+            specification</link> for more information.</para>
       </description>
     </option>
 
     <option name="dtd-id-idref-warnings" select="false()" as="xs:boolean" required="false">
       <description>
-        <para>[EDIT] option dtd-id-idref-warnings</para>
+        <para>If <code>true</code>, a schema that is incompatible with the ID/IDREF/IDREFs feature of RELAX&#x2019;NG DTD Compatibility as invalid.
+          See the <link xlink:href="https://www.oasis-open.org/committees/relax-ng/compatibility-20011203.html" role="newpage">RELAX&#160;NG DTD
+            Compatibility specification</link> for more information.</para>
       </description>
     </option>
 
     <option name="assert-valid" select="true()" as="xs:boolean" required="false">
       <description>
-        <para>[EDIT] option assert-valid</para>
+        <para>Determines what happens if the document is <emphasis>invalid</emphasis>:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If <code>true</code>, error <step-error-ref code="XC0155"/> is raised.</para>
+          </listitem>
+          <listitem>
+            <para>If <code>false</code>, the step always succeeds. The validity of the document must be determined by inspecting the document that
+              appears on the <port>report</port> port.</para>
+          </listitem>
+        </itemizedlist>
       </description>
     </option>
 
     <option name="report-format" select="'xvrl'" as="xs:string" required="false">
       <description>
-        <para>[EDIT] option report-format</para>
+        <para>The format for the document on the <port>report</port> port. The value <code>xvrl</code> (default) will always work: the report will be
+          in <link xlink:href="https://spec.xproc.org/master/head/xvrl/" role="newpage">XVRL</link> (Extensible Validation Report Language).</para>
+        <para>Whether any other formats are supported is implementation-defined and therefore dependent on the XProc processor used.</para>
       </description>
     </option>
 
     <option name="parameters" as="map(xs:QName,item()*)?" required="false">
       <description>
-        <para>[EDIT] option parameters</para>
+        <para>Parameters controlling the validation. See <xref linkend="validation-parameters"/> for more information.</para>
       </description>
     </option>
 
@@ -67,44 +95,82 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:validate-with-relax-ng</tag> step applies <link xlink:href="https://www.iso.org/standard/52348.html" role="newpage"
-        xmlns:xlink="http://www.w3.org/1999/xlink">RELAX NG</link> validation to the <port>source</port> document.</para>
+    <para>The <step/> step validates the document appearing on the <port>source</port> port using <link
+        xlink:href="https://en.wikipedia.org/wiki/RELAX_NG" role="newpage">RELAX&#160;NG</link> (REgular LAnguage for XML Next Generation) validation.
+      The RELAX&#160;NG schema is supplied through the <port>schema</port> port. The <port>result</port> port emits a copy of the source document.
+    </para>
   </summary>
 
   <!-- ======================================================================= -->
 
   <description>
-    <para>[EDIT]</para>
-    <para>The values of the <option>dtd-attribute-values</option> and <option>dtd-id-idref-warnings</option> options must be booleans.</para>
-    <para>If the <port>schema</port> document has an XML media type, then it must be interpreted as a RELAX NG Grammar. If the <port>schema</port>
-      document has a text media type, then it must be interpreted as a <link xlink:href="https://www.iso.org/standard/52348.html" role="newpage"
-        xmlns:xlink="http://www.w3.org/1999/xlink">Regular-grammar-based validation — RELAX NG</link> document for validation. <emphasis role="bold"
-        >[ERROR <step-error-ref code="XC0153"/>]</emphasis></para>
-    <para>If the <option>dtd-attribute-values</option> option is <literal>true</literal>, then the attribute value defaulting conventions of <link
-        xlink:href="https://www.oasis-open.org/committees/relax-ng/compatibility-20011203.html" role="newpage"
-        xmlns:xlink="http://www.w3.org/1999/xlink">RELAX NG DTD Compatibility</link> are also applied.</para>
-    <para>If the <option>dtd-id-idref-warnings</option> option is <literal>true</literal>, then the validator should treat a schema that is
-      incompatible with the ID/IDREF/IDREFs feature of <link xlink:href="https://www.oasis-open.org/committees/relax-ng/compatibility-20011203.html"
-        role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink">RELAX NG DTD Compatibility</link> as if the document was invalid. </para>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0155"/>]</emphasis>
-    </para>
-    <para>The output from this step is a copy of the input, possibly augmented by application of the <link
-        xlink:href="https://www.oasis-open.org/committees/relax-ng/compatibility-20011203.html" role="newpage"
-        xmlns:xlink="http://www.w3.org/1999/xlink">RELAX NG DTD Compatibility</link> . The output of this step may include PSVI annotations.</para>
-    <para>Support for <link xlink:href="https://www.oasis-open.org/committees/relax-ng/compatibility-20011203.html" role="newpage"
-        xmlns:xlink="http://www.w3.org/1999/xlink">RELAX NG DTD Compatibility</link> is implementation-defined.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="validate-with-relax-ng-preserves-all">All document properties on the <port>source</port> port are preserved on the
-        <port>result</port> port. No document properties are preserved on the <port>report</port> port.</para>
+
+    <para>The <step/> step applies <link xlink:href="https://en.wikipedia.org/wiki/RELAX_NG" role="newpage">RELAX&#160;NG</link> (REgular LAnguage for
+      XML Next Generation) validation to the document appearing on the <port>source</port> port. The RELAX&#160;NG schema is supplied using the
+        <port>schema</port> port. The outcome of the step, what appears on the <port>result</port> port, is a verbatim copy of the source
+      document.</para>
+
+    <para>RELAX&#160;NG has two syntaxes: An <link xlink:href="https://en.wikipedia.org/wiki/RELAX_NG#XML_syntax" role="newpage">XML based
+        syntax</link> and a <link xlink:href="https://en.wikipedia.org/wiki/RELAX_NG#Compact_syntax" role="newpage">text based syntax</link>. Both can
+      be used.</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <xi:include href="../../text-fragments/section-validation-parameters.xml"/>
+
   </description>
 
   <!-- ======================================================================= -->
 
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved-for-result.xml"/>
+  </detail>
+
+  <detail>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type-for-report.xml"/>
+  </detail>
+
+  <detail>
+    <xi:include href="../../text-fragments/result-port-with-optional-psvi.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage (valid source document)" id="basic-valid">
+    
+    <para>Assume we have an input document, called <code>input-valid.xml</code>, that looks like this:</para>
+    <example-doc href="../../examples/validate-with-relax-ng/input-valid.xml"/>
+    
+    <para>A RELAX&#160;NG schema to validate this is as
+      follows:</para>
+    <example-doc href="../../examples/validate-with-relax-ng/example.rng"/>
+    
+    <para>Performing this validation using the <step/> step returns the following on the <port>report</port> port:</para>
+    <xproc-example href="../../examples/validate-with-relax-ng/validate-with-relax-ng-01.xpl" show-source="false"/>
+    
+  </example>
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <example title="Basic usage (invalid source document)">
+    
+    <para>Using the same RELAX&#160;NG schema as in <example-ref idref="basic-valid"/>, we&#x2019;re now going to validate an <emphasis>in</emphasis>valid
+      document (called <code>input-invalid.xml</code>). Since we want to have a look at what comes out of the <port>report</port> port, we have to set
+      the <option>assert-valid</option> option to <code>false</code>.</para>
+    
+    <example-doc href="../../examples/validate-with-nvdl/input-invalid.xml"/>
+    
+    <para>Performing this validation using the <step/> step returns the following on the <port>report</port> port:</para>
+    
+    <xproc-example href="../../examples/validate-with-relax-ng/validate-with-relax-ng-02.xpl" show-source="false"/>
+    
+  </example>
+  
+<!-- ======================================================================= -->
+  
   <step-errors>
     <step-error code="XC0153"/>
     <step-error code="XC0155"/>
   </step-errors>
-  
+
 </step>

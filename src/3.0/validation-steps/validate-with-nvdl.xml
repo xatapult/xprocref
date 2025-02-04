@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="validate-with-nvdl" version-idref="v30" category-idrefs="validation-steps" short-description="Validate a document using NVDL"
-  required="false" publish="true" href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-nvdl"
+<step name="validate-with-nvdl" version-idref="v30" category-idrefs="validation-steps additional-standards"
+  short-description="Validate a document using NVDL" required="false" publish="true"
+  href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-nvdl"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
@@ -75,7 +76,6 @@
   <!-- ======================================================================= -->
 
   <summary>
-
     <para>The <step/> step validates the document appearing on the <port>source</port> port using <link
         xlink:href="https://en.wikipedia.org/wiki/Namespace-based_Validation_Dispatching_Language" role="newpage">NVDL</link> (Namespace-based
       Validation Dispatching Language) validation. The NVDL schema is supplied through the <port>nvdl</port> port. The <port>result</port> port emits
@@ -85,10 +85,11 @@
   <!-- ======================================================================= -->
 
   <description>
+
     <para>The <step/> step applies <link xlink:href="https://en.wikipedia.org/wiki/Namespace-based_Validation_Dispatching_Language" role="newpage"
-        >NVDL</link> validation to the document appearing on the <port>source</port> port. The NVDL schema must be supplied using the
-        <port>schema</port> port. The outcome of the step, what appears on the <port>result</port> port, is a verbatim copy of the source
-      document.</para>
+        >NVDL</link> (Namespace-based Validation Dispatching Language) validation to the document appearing on the <port>source</port> port. The NVDL
+      schema is supplied using the <port>nvdl</port> port. The outcome of the step, what appears on the <port>result</port> port, is a verbatim copy
+      of the source document.</para>
 
     <para>An NVDL schema usually refers to other schemas by URI. To find such a schema, the step first looks at the schemas provided on the
         <port>schema</port> port (if any). If a schema with the same base URI as mentioned in the NVDL schema is present on the <port>schemas</port>
@@ -134,23 +135,23 @@
     <xproc-example href="../../examples/validate-with-nvdl/validate-with-nvdl-01.xpl" show-source="false"/>
 
   </example>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
+
   <example title="Basic usage (invalid source document)">
-    
-    <para>Using the same NVDL schema as in <example-ref idref="basic-valid"/>, we&#x2019;re now going to validate an
-      <emphasis>in</emphasis>valid document (called <code>input-invalid.xml</code>). Since we want to have a look at what comes out of the
-      <port>report</port> port, we have to set the <option>assert-valid</option> option to <code>false</code>.</para>
-    
+
+    <para>Using the same NVDL schema as in <example-ref idref="basic-valid"/>, we&#x2019;re now going to validate an <emphasis>in</emphasis>valid
+      document (called <code>input-invalid.xml</code>). Since we want to have a look at what comes out of the <port>report</port> port, we have to set
+      the <option>assert-valid</option> option to <code>false</code>.</para>
+
     <example-doc href="../../examples/validate-with-nvdl/input-invalid.xml"/>
-  
+
     <para>Performing this validation using the <step/> step returns the following on the <port>report</port> port:</para>
-    
+
     <xproc-example href="../../examples/validate-with-nvdl/validate-with-nvdl-02.xpl" show-source="false"/>
-    
+
   </example>
-  
+
   <!-- ======================================================================= -->
 
   <step-errors>
