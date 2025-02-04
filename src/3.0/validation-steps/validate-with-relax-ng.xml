@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="validate-with-relax-ng" version-idref="v30" category-idrefs="validation-steps additional-standards"
-  short-description="Validate a document using RELAX&#160;NG" required="false" publish="false"
+  short-description="Validate a document using RELAX&#160;NG" required="false" publish="true"
   href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-relax-ng"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
