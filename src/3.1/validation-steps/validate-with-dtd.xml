@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="validate-with-dtd" version-idref="v31" category-idrefs="validation-steps" short-description="[EDIT] validate-with-dtd short description"
-  required="false" publish="false" href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-dtd"
+<step name="validate-with-dtd" version-idref="v31" category-idrefs="validation-steps additional-standards"
+  short-description="Validates a document using a DTD" required="false" publish="true"
+  href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-dtd"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
@@ -10,37 +11,55 @@
 
     <input port="source" primary="true" content-types="xml html" sequence="false">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The document to validate.</para>
       </description>
     </input>
 
     <output port="result" primary="true" content-types="xml html" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>A copy of the document that appeared on the <port>source</port> port. If validation was successful, the output may have been augmented
+          by the DTD. (For example, default attributes may have been added).</para>
       </description>
     </output>
 
     <output port="report" sequence="true" content-types="xml json" primary="false">
       <description>
-        <para>[EDIT] output report</para>
+        <para>A report that describes the validation results, both for valid and invalid source documents. The format for this report is determined by
+          the <option>report-format</option> option.</para>
+        <para>When the <option>assert-valid</option> option is <code>true</code> and the document is <emphasis>invalid</emphasis>, nothing will appear
+          on this port because error <step-error-ref code="XC0210"/> is raised.</para>
       </description>
     </output>
 
     <option name="report-format" select="'xvrl'" as="xs:string" required="false">
       <description>
-        <para>[EDIT] option report-format</para>
+        <para>The format for the document on the <port>report</port> port. The value <code>xvrl</code> (default) will always work: the report will be
+          in <link xlink:href="https://spec.xproc.org/master/head/xvrl/" role="newpage">XVRL</link> (Extensible Validation Report Language).</para>
+        <para>Whether any other formats are supported is implementation-defined and therefore dependent on the XProc processor used.</para>
       </description>
     </option>
 
     <option name="serialization" as="map(xs:QName,item()*)?" required="false">
       <description>
-        <para>[EDIT] option serialization</para>
+        <para>This option can supply a map with <link xlink:href="https://www.w3.org/TR/xslt-xquery-serialization-31/" role="newpage">serialization
+            properties</link> for serializing the document on the <port>source</port> port, before it is re-parsed for validation (see the description
+          for an explanation).</para>
+        <xi:include href="../../text-fragments/merge-serialization-properties.xml"/>
       </description>
     </option>
 
     <option name="assert-valid" select="true()" as="xs:boolean" required="false">
       <description>
-        <para>[EDIT] option assert-valid</para>
+        <para>Determines what happens if the document is <emphasis>invalid</emphasis>:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If <code>true</code>, error <step-error-ref code="XC0210"/> is raised.</para>
+          </listitem>
+          <listitem>
+            <para>If <code>false</code>, the step always succeeds. The validity of the document must be determined by inspecting the document that
+              appears on the <port>report</port> port.</para>
+          </listitem>
+        </itemizedlist>
       </description>
     </option>
 
@@ -49,40 +68,70 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:validate-with-dtd</tag> step validates XML with a DTD.</para>
+    <para>The <step/> step validates the document appearing on the <port>source</port> port using <link
+        xlink:href="https://en.wikipedia.org/wiki/Document_type_definition" role="newpage">DTD</link> (Document Type Definition) validation. The
+        <port>result</port> port emits a copy of the source document, possibly augmented. </para>
   </summary>
 
   <!-- ======================================================================= -->
 
   <description>
-    <para>[EDIT]</para>
-    <para>DTD validation differs from the other XML validation technologies in that it is applied during parsing. It isn’t possible to validate an XML
-      data model with a DTD. This step necessarily serializes and reparses.</para>
-    <para>The <tag>p:validate-with-dtd</tag> step serializes the document on the <port>source</port> port and parses the serialization with a
-      validating XML parser. The <option>serialization</option> option can be used to control the serialization. If the document to be stored has a
-      “serialization” property, the serialization is controlled by the merger of the two maps where the entries in the “serialization” property take
-      precedence. Serialization is described in <link xlink:href="https://xproc.org/" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink"
-        >XProc 3.1</link> .</para>
-    <para>Any warning or error messages produced by the parser will appear on the <port>report</port> port.</para>
-    <note>
-      <para>The serialization options must include at least the <literal>doctype-system</literal> property (without a system identifier, the document
-        cannot be successfully parsed with a validating parser).</para>
-    </note>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0210"/>]</emphasis>
-    </para>
-    <para>The output from this step is a copy of the input. If validation was successful, the output may have been augmented by the DTD. (For example,
-      default attributes may have been added.)</para>
-    <bridgehead>Using an internal subset</bridgehead>
-    <para>To validate a document with an internal subset, construct a text document that is a syntactically valid XML serialization with the internal
-      subset, use <tag>p:cast-content-type</tag> to create an XML document, and then validate the resulting document with this step.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="validate-with-dtd-preserves-some">If validation fails (and <option>assert-valid</option> is <code>false</code>), all document
-      properties on the <port>source</port> port are preserved on the <port>result</port> port. If validation succeeds, only the <code>base-uri</code>
-      and <code>serialization</code> properties are preserved, the content-type will be <code>application/xml</code>.</para>
-    <para>No document properties are preserved on the <port>report</port> port.</para>
+
+    <para>The <step/> step validates the document appearing on the <port>source</port> port using <link
+        xlink:href="https://en.wikipedia.org/wiki/Document_type_definition" role="newpage">DTD</link> (Document Type Definition) validation. This
+      works a little differently than the other validation techniques: validation takes place by first serializing the document (as if written to
+      disk) and subsequently re-parse it using a validating XML parser. The DTD (or a link to it) must be supplied by the source document itself or by
+      the serialization process.</para>
+
+    <para>The serialization options (whether provide by the <property>serialization</property> document-property or the <option>serialization</option>
+      option) <emphasis>must</emphasis> include at least a <code>doctype-system</code> property. Without a system identifier, the document cannot be
+      successfully parsed with a validating parser.</para>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>If validation fails (and <option>assert-valid</option> is <code>false</code>), all document-properties on the <port>source</port> port are
+      preserved on the <port>result</port> port. If validation succeeds, only the <property>base-uri</property> and <property>serialization</property>
+      document-properties are preserved, the <property>content-type</property> document-property will be <code>application/xml</code>.</para>
+  </detail>
+
+  <detail>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type-for-report.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage (valid source document)" id="basic-valid">
+
+    <para>Assume we have an input document, called <code>input-valid.xml</code>, that looks like this:</para>
+    <example-doc href="../../examples/validate-with-dtd/input-valid.xml"/>
+
+    <para>We want to validate this document using the following DTD, called <code>example.dtd</code>:</para>
+    <example-doc href="../../examples/validate-with-dtd/example.dtd"/>
+
+    <para>To perform this validation using the <step/> step, we need to link the DTD to the document using the <code>doctype-system</code>
+      serialization property. The output of the example is what is returned on the <port>report</port> port.</para>
+    <xproc-example href="../../examples/validate-with-dtd/validate-with-dtd-01.xpl" show-source="false"/>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Basic usage (invalid source document)">
+
+    <para>Using the same DTD as in <example-ref idref="basic-valid"/>, we&#x2019;re now going to validate an <emphasis>in</emphasis>valid document
+      (called <code>input-invalid.xml</code>). Since we want to have a look at what comes out of the <port>report</port> port, we have to set the
+        <option>assert-valid</option> option to <code>false</code>.</para>
+
+    <example-doc href="../../examples/validate-with-dtd/input-invalid.xml"/>
+
+    <para>Performing this validation using the <step/> step returns the following on the <port>report</port> port:</para>
+
+    <xproc-example href="../../examples/validate-with-dtd/validate-with-dtd-02.xpl" show-source="false"/>
+
+  </example>
 
   <!-- ======================================================================= -->
 

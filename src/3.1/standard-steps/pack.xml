@@ -1,43 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step-identity version-idref="v31" name="pack" href-specification="{$BASELINK-STANDARD-STEPS-V31}#c.pack" base-version-idref="v30"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
-  
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
   <signature>
-    
+
     <input port="source" content-types="text xml html" sequence="true" primary="true">
       <description>
         <para>The first document sequence to merge.</para>
       </description>
     </input>
-    
+
     <input port="alternate" sequence="true" content-types="text xml html" primary="false">
       <description>
         <para>The second document sequence to merge.</para>
       </description>
     </input>
-    
+
     <output port="result" sequence="true" content-types="application/xml" primary="true">
       <description>
         <para>The resulting merged document sequences.</para>
       </description>
     </output>
-    
+
     <option name="wrapper" required="true" as="xs:QName">
       <description>
         <para>The element to wrap the document pairs in.</para>
       </description>
     </option>
-    
+
     <option name="attributes" required="false" as="map(xs:QName, xs:anyAtomicType)?">
       <description>
-        <para>An optional map with entries (attribute name, attribute value). The attributes specified in this map are created on the wrapper
-          element.</para>
-        <para>Specifying attributes using this option works the same as performing a <step/> step (without an <option>attributes</option> option), directly
-          followed by a <step-ref name="p:set-attributes"/> step.</para>
+        <xi:include href="../../text-fragments/attributes-on-wrap.xml"/>
       </description>
     </option>
-    
+
   </signature>
-  
+
 </step-identity>

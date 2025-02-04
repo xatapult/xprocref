@@ -409,6 +409,11 @@
       <para>It is a dynamic error if more than one document appears on the port <port>manifest</port>.</para>
     </description>
   </error>
+  <error code="XC0117">
+    <description>
+      <para>It is a dynamic error if a report-format option was specified that the processor does not support.</para>
+    </description>
+  </error>
   <error code="XC0118">
     <!-- == p:archive == -->
     <description>

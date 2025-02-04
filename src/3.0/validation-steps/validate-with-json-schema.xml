@@ -1,93 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="validate-with-json-schema" version-idref="v30" category-idrefs="validation-steps"
-  short-description="[EDIT] validate-with-json-schema short description" required="false" publish="false"
+<step name="validate-with-json-schema" version-idref="v30" category-idrefs="validation-steps additional-standards json"
+  short-description="Validates a JSON document using JSON schema" required="false" publish="true"
   href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-json-schema"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
-  
+
   <!-- ======================================================================= -->
-  
+
   <signature>
-    
+
     <input port="source" primary="true" content-types="json" sequence="false">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The document to validate.</para>
       </description>
     </input>
-    
+
     <input port="schema" sequence="false" content-types="json" primary="false">
       <description>
-        <para>[EDIT] input schema</para>
+        <para>The JSON schema to validate against.</para>
       </description>
     </input>
-    
+
     <output port="result" primary="true" content-types="json" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>A verbatim copy of the document that appeared on the <port>source</port> port.</para>
       </description>
     </output>
-    
+
     <output port="report" sequence="true" content-types="xml json" primary="false">
       <description>
-        <para>[EDIT] output report</para>
+        <para>A report that describes the validation results, both for valid and invalid source documents. The format for this report is determined by
+          the <option>report-format</option> option.</para>
+        <para>When the <option>assert-valid</option> option is <code>true</code> and the document is <emphasis>invalid</emphasis>, nothing will appear
+          on this port because error <step-error-ref code="XC0165"/> is raised.</para>
       </description>
     </output>
-    
+
     <option name="assert-valid" select="true()" as="xs:boolean" required="false">
       <description>
-        <para>[EDIT] option assert-valid</para>
+        <para>Determines what happens if the document is <emphasis>invalid</emphasis>:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If <code>true</code>, error <step-error-ref code="XC0165"/> is raised.</para>
+          </listitem>
+          <listitem>
+            <para>If <code>false</code>, the step always succeeds. The validity of the document must be determined by inspecting the document that
+              appears on the <port>report</port> port.</para>
+          </listitem>
+        </itemizedlist>
       </description>
     </option>
-    
+
     <option name="default-version" as="xs:string?" required="false">
       <description>
-        <para>[EDIT] option default-version</para>
+        <para>Specifies the schema version if the schema itself doesn&#x2019;t specify one itself.</para>
+        <para>If both the schema doesn&#x2019;t specify a version and this option is empty, the schema version is implementation-defined and therefore
+          dependent on the XProc processor used.</para>
       </description>
     </option>
-    
+
     <option name="parameters" as="map(xs:QName,item()*)?" required="false">
       <description>
-        <para>[EDIT] option parameters</para>
+        <para>Parameters controlling the validation. See <xref linkend="validation-parameters"/> for more information.</para>
       </description>
     </option>
-    
+
     <option name="report-format" select="'xvrl'" as="xs:string" required="false">
       <description>
-        <para>[EDIT] option report-format</para>
+        <para>The format for the document on the <port>report</port> port. The value <code>xvrl</code> (default) will always work: the report will be
+          in <link xlink:href="https://spec.xproc.org/master/head/xvrl/" role="newpage">XVRL</link> (Extensible Validation Report Language).</para>
+        <para>Whether any other formats are supported is implementation-defined and therefore dependent on the XProc processor used.</para>
       </description>
     </option>
-    
+
   </signature>
-  
+
   <!-- ======================================================================= -->
-  
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:validate-with-json-schema</tag> step applies a JSON schema validation (as defined in <link
-        xlink:href="https://json-schema.org/draft/2020-12/json-schema-validation" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink">JSON
-        Schema Validation: A Vocabulary for Structural Validation of JSON</link> and other publications) to the <port>source</port> input.</para>
+    <para>The <step/> step validates the JSON document appearing on the <port>source</port> port using <link
+        xlink:href="https://json-schema.org/draft/2020-12/json-schema-validation" role="newpage">JSON Schema</link> validation. The JSON schema (a
+      JSON document itself) is supplied through the <port>schema</port> port. The <port>result</port> port emits a copy of the source document.
+    </para>
   </summary>
-  
+
   <!-- ======================================================================= -->
-  
+
   <description>
-    <para>[EDIT]</para>
-    <para>The option <option>default-version</option> can be used to control the schema's version in case it does not specify one itself. If the
-      schema does not specify a version and option <option>default-version</option> is empty, the version used is implementation-defined.</para>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0163"/>]</emphasis>
-    </para>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0164"/>]</emphasis>
-    </para>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0165"/>]</emphasis>
-    </para>
-    <para>The output from this step is a copy of the input.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="validate-with-json-preserves-all">All document properties on the <port>source</port> port are preserved on the <port>result</port>
-      port. No document properties are preserved on the <port>report</port> port.</para>
+
+    <para>The <step/> step applies <link xlink:href="https://json-schema.org/draft/2020-12/json-schema-validation" role="newpage">JSON
+      Schema</link>validation to the JSON document appearing on the <port>source</port> port. The JSON schema is supplied using the
+        <port>schema</port> port. The outcome of the step, what appears on the <port>result</port> port, is a verbatim copy of the source
+      document.</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <xi:include href="../../text-fragments/section-validation-parameters.xml"/>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved-for-result.xml"/>
+  </detail>
+
+  <detail>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type-for-report.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage (valid source document)" id="basic-valid">
+    
+    <para>Assume we have a JSON input document, called <code>input-valid.json</code>, that looks like this:</para>
+    <example-doc href="../../examples/validate-with-json-schema/input-valid.json"/>
+    
+    <para>A JSON schema to validate this is as
+      follows:</para>
+    <example-doc href="../../examples/validate-with-json-schema/example-json-schema.json"/>
+    
+    <para>Performing this validation using the <step/> step returns the following on the <port>report</port> port:</para>
+    <xproc-example href="../../examples/validate-with-json-schema/validate-with-json-schema-01.xpl" show-source="false"/>
+    
+  </example>
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <example title="Basic usage (invalid source document)">
+    
+    <para>Using the same JSON schema as in <example-ref idref="basic-valid"/>, we&#x2019;re now going to validate an <emphasis>in</emphasis>valid
+      document (called <code>input-invalid.json</code>). Since we want to have a look at what comes out of the <port>report</port> port, we have to set
+      the <option>assert-valid</option> option to <code>false</code>.</para>
+    
+    <example-doc href="../../examples/validate-with-json-schema/input-invalid.json"/>
+    
+    <para>Performing this validation using the <step/> step returns the following on the <port>report</port> port:</para>
+    
+    <xproc-example href="../../examples/validate-with-json-schema/validate-with-json-schema-02.xpl" show-source="false"/>
+    
+  </example>
   
   <!-- ======================================================================= -->
   
@@ -95,5 +147,6 @@
     <step-error code="XC0163"/>
     <step-error code="XC0164"/>
     <step-error code="XC0165"/>
+    <step-error code="XC0117"/>
   </step-errors>
 </step>

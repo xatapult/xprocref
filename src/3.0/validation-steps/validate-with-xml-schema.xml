@@ -212,13 +212,11 @@
   <!-- ======================================================================= -->
 
   <detail>
-    <para><step/> preserves all document-properties of the document appearing on its <port>source</port> port for the document on its
-        <port>result</port> port.</para>
+    <xi:include href="../../text-fragments/document-properties-preserved-for-result.xml"/>
   </detail>
 
   <detail>
-    <para>The document appearing on the <port>report</port> port only has a <property>content-type</property> property. It has no other
-      document-properties (also no <property>base-uri</property>).</para>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type-for-report.xml"/>
   </detail>
 
   <detail>
@@ -322,6 +320,7 @@
     <step-error code="XC0011"/>
     <step-error code="XC0156"/>
     <step-error code="XC0055"/>
+    <step-error code="XC0117"/>
   </step-errors>
 
 </step>

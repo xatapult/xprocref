@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fragment xmlns:xlink="http://www.w3.org/1999/xlink">
+  <para>An optional map with entries (attribute name, attribute value). The attributes specified in this map are created on the wrapper
+    element.</para>
+  <para>Specifying attributes using this option works the same as performing a <step/> step (without an <option>attributes</option> option), directly
+    followed by a <step-ref name="p:set-attributes"/> step.</para>
+</fragment>

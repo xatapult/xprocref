@@ -593,14 +593,14 @@
       <xsl:for-each select="($signature-elm/(xpref:input | xpref:output))[xs:boolean(@primary)]">
         <xsl:sort select="local-name(.)"/>
         <xsl:variable name="add-empty" as="xs:boolean" select="exists(self::xpref:input) and xtlc:str2bln(@empty, false())"/>
-        <xsl:sequence select="local:declare-step-sub-element-to-string(., (@port, @primary), (), $add-empty)"/>
+        <xsl:sequence select="local:declare-step-sub-element-to-string(., (@port, @primary), (@empty), $add-empty)"/>
       </xsl:for-each>
       <!-- Non-primary ports: -->
       <xsl:for-each select="($signature-elm/(xpref:input | xpref:output))[not(xs:boolean(@primary))]">
         <xsl:sort select="local-name(.)"/>
         <xsl:sort select="xs:string(@port)"/>
         <xsl:variable name="add-empty" as="xs:boolean" select="exists(self::xpref:input) and xtlc:str2bln(@empty, false())"/>
-        <xsl:sequence select="local:declare-step-sub-element-to-string(., (@port, @primary), (), $add-empty)"/>
+        <xsl:sequence select="local:declare-step-sub-element-to-string(., (@port, @primary), (@empty), $add-empty)"/>
       </xsl:for-each>
       <!-- Options: -->
       <xsl:for-each select="$signature-elm/xpref:option">

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xtlcon="http://www.xtpxlib.nl/ns/container"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="keywords" content="xproc xprocref xml step p:validate-with-schematron validate-with-schematron"><link href="../css/bootstrap.min.css" rel="stylesheet"><link href="../css/xprocref.css" rel="stylesheet"><script defer src="../js/bootstrap.bundle.min.js"></script><title>&nbsp;p:validate-with-schematron (3.0)&nbsp;</title><link rel="shortcut icon" href="../images/favicon.ico"></head><body><nav class="navbar navbar-expand-sm bg-secondary navbar-dark "><div class="container-fluid"><a class="navbar-brand" href="../index.html"><img src="../images/logo.png" class="img-fluid" width="18%"></a></div><div class="container-fluid"><ul class="nav justify-content-end nav-pills text-light"><li class="nav-item lead"><a class="nav-link text-light" href="../index.html">home</a></li><li class="nav-item lead"><a class="nav-link text-light" href="../3.0/categories.html">categories</a></li><li class="nav-item dropdown lead"><a class="nav-link dropdown-toggle text-light" data-bs-toggle="dropdown" href="#">info</a><ul class="dropdown-menu"><li class="lead"><a class="dropdown-item" href="../versions.html">versions</a></li><li class="lead"><a class="dropdown-item" href="../error-codes.html">error codes</a></li><li class="lead"><a class="dropdown-item" href="../namespaces.html">namespaces</a></li><li class="lead"><a class="dropdown-item" href="https://xproc.org">XProc</a></li></ul></li><li class="nav-item lead"><a class="nav-link text-light" href="../about.html">about</a></li></ul></div></nav><div class="container pt-5"><div class="sect1" id="sect1-d574e31859"><a name="sect1-d574e31859"><!----></a><h1 class="sect1"><a href="p.validate-with-relax-ng.html"><span class="link"><img src="../images/previous.png" class="inlinemediaobject next-prev-marker" width="1.5%"></span></a>&nbsp;p:validate-with-schematron (3.0)&nbsp;<a href="p.validate-with-xml-schema.html"><span class="link"><img src="../images/next.png" class="inlinemediaobject next-prev-marker" width="1.5%"></span></a></h1><p class="para">Validates a document using Schematron.</p><ul class="itemizedlist toc toc-2"><li><p class="para tocentry tocentry-2"><a href="#sect2-d574e31872"><span class="link">Summary</span></a></p></li><li><p class="para tocentry tocentry-2"><a href="#sect2-d574e32199"><span class="link">Description</span></a></p><ul class="itemizedlist toc toc-3"><li><p class="para tocentry tocentry-3"><a href="#validation-parameters"><span class="link">Validation parameters</span></a></p></li></ul></li><li><p class="para tocentry tocentry-2"><a href="#sect2-d574e32313"><span class="link">Examples</span></a></p><ul class="itemizedlist toc toc-3"><li><p class="para tocentry tocentry-3"><a href="#p_validate-with-schematron-v30-basic-valid"><span class="link">Basic usage (valid source document)</span></a></p></li><li><p class="para tocentry tocentry-3"><a href="#sect3-d574e32353"><span class="link">Basic usage (invalid source document)</span></a></p></li></ul></li><li><p class="para tocentry tocentry-2"><a href="#sect2-d574e32432"><span class="link">Additional details</span></a></p></li><li><p class="para tocentry tocentry-2"><a href="#sect2-d574e32476"><span class="link">Errors raised</span></a></p></li><li><p class="para tocentry tocentry-2"><a href="#sect2-d574e32527"><span class="link">Reference information</span></a></p></li></ul><div class="sect2" id="sect2-d574e31872"><a name="sect2-d574e31872"><!----></a><h2 class="sect2">Summary</h2><div class="programlisting step-signature"><pre class="programlisting step-signature">&lt;p:declare-step type="p:validate-with-schematron"&gt;
+  &lt;input port="source" primary="true" content-types="xml html" sequence="false"/&gt;
+  &lt;output port="result" primary="true" content-types="xml html" sequence="false"/&gt;
+  &lt;input port="schema" primary="false" content-types="xml" sequence="false"/&gt;
+  &lt;output port="report" primary="false" content-types="xml json" sequence="true"/&gt;
+  &lt;option name="assert-valid" as="xs:boolean" required="false" select="true()"/&gt;
+  &lt;option name="parameters" as="map(xs:QName,item()*)?" required="false" select="()"/&gt;
+  &lt;option name="phase" as="xs:string" required="false" select="'#DEFAULT'"/&gt;
+  &lt;option name="report-format" as="xs:string" required="false" select="'svrl'"/&gt;
+&lt;/p:declare-step&gt;</pre></div><p class="para">The <code class="code step">p:validate-with-schematron</code> step validates the document appearing on the <code class="code port">source</code> port using Schematron validation. The Schematron schema is
+      supplied through the <code class="code port">schema</code> port. The <code class="code port">result</code> port emits a copy of the source document.</p><p class="para table-header">Ports:</p><div class="table nonumber ports-table"><table class="table nonumber ports-table"><thead><tr><th><p class="para">Port</p></th><th><p class="para">Type</p></th><th><p class="para">Primary?</p></th><th><p class="para">Content types</p></th><th><p class="para">Seq?</p></th><th><p class="para">Description</p></th></tr></thead><tbody><tr><td><p class="para"><code class="code">source</code></p></td><td><p class="para"><code class="code">input</code></p></td><td><p class="para"><code class="code">true</code></p></td><td><p class="para"><code class="code">xml html</code></p></td><td><p class="para"><code class="code">false</code></p></td><td><p class="para">The document to validate.</p></td></tr><tr><td><p class="para"><code class="code">result</code></p></td><td><p class="para"><code class="code">output</code></p></td><td><p class="para"><code class="code">true</code></p></td><td><p class="para"><code class="code">xml html</code></p></td><td><p class="para"><code class="code">false</code></p></td><td><p class="para">A verbatim copy of the document that appeared on the <code class="code port">source</code> port.</p></td></tr><tr><td><p class="para"><code class="code">schema</code></p></td><td><p class="para"><code class="code">input</code></p></td><td><p class="para"><code class="code">false</code></p></td><td><p class="para"><code class="code">xml</code></p></td><td><p class="para"><code class="code">false</code></p></td><td><p class="para">The Schematron schema to validate against.</p></td></tr><tr><td><p class="para"><code class="code">report</code></p></td><td><p class="para"><code class="code">output</code></p></td><td><p class="para"><code class="code">false</code></p></td><td><p class="para"><code class="code">xml json</code></p></td><td><p class="para"><code class="code">true</code></p></td><td><p class="para">A report that describes the validation results, both for valid and invalid source documents. The format for this report is determined by
+          the <code class="code option">report-format</code> option.</p><p class="para">When the <code class="code option">assert-valid</code> option is <code class="code">true</code> and the document is <span class="emphasis italic">invalid</span>, nothing will appear
+          on this port because error <code class="code"><a href="#error-XC0054"><span class="link">XC0054</span></a></code> is raised.</p></td></tr></tbody></table></div><p class="para table-header">Options:</p><div class="table nonumber options-table"><table class="table nonumber options-table"><thead><tr><th><p class="para">Name</p></th><th><p class="para">Type</p></th><th><p class="para">Req?</p></th><th><p class="para">Default</p></th><th><p class="para">Description</p></th></tr></thead><tbody><tr><td><p class="para"><code class="code">assert-valid</code></p></td><td><p class="para"><code class="code">xs:boolean</code></p></td><td><p class="para"><code class="code">false</code></p></td><td><p class="para"><code class="code">true</code></p></td><td><p class="para">Determines what happens if the document is <span class="emphasis italic">invalid</span>:</p><ul class="itemizedlist"><li><p class="para">If <code class="code">true</code>, error <code class="code"><a href="#error-XC0054"><span class="link">XC0054</span></a></code> is raised.</p></li><li><p class="para">If <code class="code">false</code>, the step always succeeds. The validity of the document must be determined by inspecting the document that
+              appears on the <code class="code port">report</code> port.</p></li></ul></td></tr><tr><td><p class="para"><code class="code">parameters</code></p></td><td><p class="para"><code class="code">map(xs:QName,item()*)?</code></p></td><td><p class="para"><code class="code">false</code></p></td><td><p class="para"><code class="code">()</code></p></td><td><p class="para">Parameters controlling the validation. See <a href="#validation-parameters" class="xref">Validation parameters</a> for more information.</p></td></tr><tr><td><p class="para"><code class="code">phase</code></p></td><td><p class="para"><code class="code">xs:string</code></p></td><td><p class="para"><code class="code">false</code></p></td><td><p class="para"><code class="code">#DEFAULT</code></p></td><td><p class="para">The Schematron schema phase to select.</p></td></tr><tr><td><p class="para"><code class="code">report-format</code></p></td><td><p class="para"><code class="code">xs:string</code></p></td><td><p class="para"><code class="code">false</code></p></td><td><p class="para"><code class="code">svrl</code></p></td><td><p class="para">The format for the document on the <code class="code port">report</code> port:</p><ul class="itemizedlist"><li><p class="para">The value <code class="code">svrl</code> (default) produces a report in <a href="https://schematron.com/document/3427.html" target="_blank"><span class="link newpage">SVRL</span></a> (Schematron Validation Report Language).</p></li><li><p class="para">The value <code class="code">xvrl</code> (default) produces a report in <a href="https://spec.xproc.org/master/head/xvrl/" target="_blank"><span class="link newpage">XVRL</span></a> (Extensible Validation Report Language).</p></li><li><p class="para">Whether any other formats are supported is implementation-defined and therefore dependent on the XProc processor used.</p></li></ul></td></tr></tbody></table></div></div><div class="sect2" id="sect2-d574e32199"><a name="sect2-d574e32199"><!----></a><h2 class="sect2">Description</h2><p class="para">The <code class="code step">p:validate-with-schematron</code> step applies <a href="https://schematron.com/" target="_blank"><span class="link newpage">Schematron</span></a> validation to the document appearing on the <code class="code port">source</code> port. The Schematron schema must be supplied using the
+        <code class="code port">schema</code> port. The outcome of the step, what appears on the <code class="code port">result</code> port, is a verbatim copy of the source
+      document.</p><div class="sect3" id="validation-parameters"><a name="validation-parameters"><!----></a><h3 class="sect3">Validation parameters</h3><p class="para">The <code class="code step">p:validate-with-schematron</code> step has a <code class="code port">parameters</code> port of datatype <code class="code">map(xs:QName,&nbsp;item()*)?</code>. This (optional) map passes
+        additional parameters for the validation process to the step, which correspond to Schematron external variables, to parameters that influence
+        code generation, or to parameters that influence SVRL to XVRL conversion.</p><ul class="itemizedlist"><li><p class="para">The parameters in this map, their values and semantics are implementation-defined and therefore dependent on the XProc processor
+            used.</p></li><li><p class="para">A special entry with key <code class="code">c:implementation</code> (the <code class="code">c</code> namespace prefix is bound to the standard XProc namespace
+              <code class="code">http://www.w3.org/ns/xproc-step</code>) is reserved to select a Schematron implementation the XProc processor supports.The list of
+            supported Schematron implementations and their associated values is implementation-defined and therefore dependent on the XProc processor
+            used.</p></li><li><p class="para">A special entry with key <code class="code">c:compile</code> (the <code class="code">c</code> namespace prefix is bound to the standard XProc namespace
+              <code class="code">http://www.w3.org/ns/xproc-step</code>) is reserved for parameters for the schema <span class="emphasis italic">compilation</span> (if
+            applicable). The value of this key must be a map itself.</p><p class="para">For instance, if a code-generating implementation such as <a href="https://github.com/schxslt/schxslt" target="_blank"><span class="link newpage">SchXslt</span></a> is used, the entries of the <code class="code">c:compile</code> map are passed to the code generator.</p></li><li><p class="para">If the <code class="code option">report-format</code> option is set to <code class="code">xvrl</code> (default): Any entries with keys in the <code class="code">xvrl</code>
+            namespace (<code class="code">http://www.xproc.org/ns/xvrl</code>) are passed as parameters to the process that generates the <a href="https://spec.xproc.org/master/head/xvrl/" target="_blank"><span class="link newpage">XVRL</span></a> report appearing on the <code class="code port">report</code> port. All
+              <a href="https://spec.xproc.org/master/head/xvrl/#xvrl-generation" target="_blank"><span class="link newpage">standard XVRL generation parameters</span></a>
+            are supported.</p></li></ul></div></div><div class="sect2" id="sect2-d574e32313"><a name="sect2-d574e32313"><!----></a><h2 class="sect2">Examples</h2><div class="sect3" id="p_validate-with-schematron-v30-basic-valid"><a name="p_validate-with-schematron-v30-basic-valid"><!----></a><h3 class="sect3">Basic usage (valid source document)</h3><p class="para">Assume we have an input document, called <code class="code">input-valid.xml</code>, that looks like this:</p><div class="programlisting"><pre class="programlisting">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;things&gt;
+  &lt;thing id="A"&gt;A thing...&lt;/thing&gt;
+  &lt;thing id="B"&gt;Another thing... referencing &lt;thingref idref="A"/&gt;!&lt;/thing&gt;
+&lt;/things&gt;</pre></div><p class="para">Any <code class="tag">&lt;thingref&gt;</code> elements must reference existing <code class="tag">&lt;thing&gt;</code> elements by identifier. Here is a simple Schematron schema that
+      validates this:</p><div class="programlisting"><pre class="programlisting">&lt;schema xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt2"&gt;
+
+  &lt;pattern&gt;
+    &lt;rule context="thingref/@idref"&gt;
+      &lt;let name="id" value="string(.)"/&gt;
+      &lt;assert test="exists(//thing[@id eq $id])"&gt;Reference to non-existent id: "&lt;value-of select="$id"/&gt;"&lt;/assert&gt;
+    &lt;/rule&gt;
+  &lt;/pattern&gt;
+
+&lt;/schema&gt;</pre></div><p class="para">Performing this validation using the <code class="code step">p:validate-with-schematron</code> step (which, for this example, uses the <a href="https://github.com/schxslt/schxslt" target="_blank"><span class="link newpage">SchXslt</span></a> Schematron processor) returns the following on the <code class="code port">report</code> port:</p><p class="para keep-with-next">Pipeline document:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
+
+  &lt;p:input port="source"/&gt;
+  &lt;p:output port="result" pipe="report@validate"/&gt;
+
+  &lt;p:validate-with-schematron name="validate"&gt;
+    &lt;p:with-input port="schema" href="example.sch"/&gt;
+  &lt;/p:validate-with-schematron&gt;
+
+&lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl"&gt;
+   &lt;svrl:metadata&gt;
+      &lt;dct:creator xmlns:dct="http://purl.org/dc/terms/"&gt;
+         &lt;dct:Agent&gt;
+            &lt;skos:prefLabel xmlns:skos="http://www.w3.org/2004/02/skos/core#"&gt;SAXON/HE 12.4&lt;/skos:prefLabel&gt;
+         &lt;/dct:Agent&gt;
+      &lt;/dct:creator&gt;
+      &lt;dct:created xmlns:dct="http://purl.org/dc/terms/"&gt;2025-02-04T10:19:37.9810795+01:00&lt;/dct:created&gt;
+      &lt;dct:source xmlns:dct="http://purl.org/dc/terms/"&gt;
+         &lt;rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"&gt;
+            &lt;dct:creator&gt;
+               &lt;dct:Agent&gt;
+                  &lt;skos:prefLabel xmlns:skos="http://www.w3.org/2004/02/skos/core#"&gt;SchXslt/1.10.1 SAXON/HE 12.4&lt;/skos:prefLabel&gt;
+                  &lt;schxslt.compile.typed-variables xmlns="https://doi.org/10.5281/zenodo.1495494#"&gt;true&lt;/schxslt.compile.typed-variables&gt;
+               &lt;/dct:Agent&gt;
+            &lt;/dct:creator&gt;
+            &lt;dct:created&gt;2025-02-04T10:19:37.9721098+01:00&lt;/dct:created&gt;
+         &lt;/rdf:Description&gt;
+      &lt;/dct:source&gt;
+   &lt;/svrl:metadata&gt;
+   &lt;svrl:active-pattern documents="file:/…/…/input-valid.xml"/&gt;
+   &lt;svrl:fired-rule context="thingref/@idref"/&gt;
+&lt;/svrl:schematron-output&gt;</pre></div><p class="para">The same example, but now producing a <a href="https://spec.xproc.org/master/head/xvrl/" target="_blank"><span class="link newpage">XVRL</span></a> format report,
+      is as follows: </p><p class="para keep-with-next">Pipeline document:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
+
+  &lt;p:input port="source"/&gt;
+  &lt;p:output port="result" pipe="report@validate"/&gt;
+
+  &lt;p:validate-with-schematron name="validate" report-format="xvrl"&gt;
+    &lt;p:with-input port="schema" href="example.sch"/&gt;
+  &lt;/p:validate-with-schematron&gt;
+
+&lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;report xmlns="http://www.xproc.org/ns/xvrl"&gt;
+   &lt;metadata&gt;
+      &lt;timestamp&gt;2025-02-04T10:19:38.27+01:00&lt;/timestamp&gt;
+      &lt;document href="file:/…/…/input-valid.xml"/&gt;
+      &lt;schema href="file:/…/…/example.sch"
+              schematypens="http://purl.oclc.org/dsdl/schematron"/&gt;
+      &lt;validator name="SchXslt"/&gt;
+   &lt;/metadata&gt;
+   &lt;digest/&gt;
+&lt;/report&gt;</pre></div><p class="para">The exact format of the reports might differ across implementations. Please experiment before using it.</p></div><div class="sect3" id="sect3-d574e32353"><a name="sect3-d574e32353"><!----></a><h3 class="sect3">Basic usage (invalid source document)</h3><p class="para">Using the same Schematron schema as in <a href="#p_validate-with-schematron-v30-basic-valid"><span class="link">Basic usage (valid source document)</span></a>, we’re now going to validate an
+      <span class="emphasis italic">in</span>valid document (called <code class="code">input-invalid.xml</code>). Since we want to have a look at what comes out of the
+        <code class="code port">report</code> port, we have to set the <code class="code option">assert-valid</code> option to <code class="code">false</code>.</p><div class="programlisting"><pre class="programlisting">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;things&gt;
+  &lt;thing id="A"&gt;A thing...&lt;/thing&gt;
+  &lt;thing id="B"&gt;Another thing... referencing &lt;thingref idref="C"/&gt;!&lt;/thing&gt;
+&lt;/things&gt;</pre></div><p class="para">Performing this validation using the <code class="code step">p:validate-with-schematron</code> step (which, for this example, uses the <a href="https://github.com/schxslt/schxslt" target="_blank"><span class="link newpage">SchXslt</span></a> Schematron processor) returns the following on the <code class="code port">report</code> port:</p><p class="para keep-with-next">Pipeline document:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
+
+  &lt;p:input port="source"/&gt;
+  &lt;p:output port="result" pipe="report@validate"/&gt;
+
+  &lt;p:validate-with-schematron assert-valid="false" name="validate"&gt;
+    &lt;p:with-input port="schema" href="example.sch"/&gt;
+  &lt;/p:validate-with-schematron&gt;
+
+&lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl"&gt;
+   &lt;svrl:metadata&gt;
+      &lt;dct:creator xmlns:dct="http://purl.org/dc/terms/"&gt;
+         &lt;dct:Agent&gt;
+            &lt;skos:prefLabel xmlns:skos="http://www.w3.org/2004/02/skos/core#"&gt;SAXON/HE 12.4&lt;/skos:prefLabel&gt;
+         &lt;/dct:Agent&gt;
+      &lt;/dct:creator&gt;
+      &lt;dct:created xmlns:dct="http://purl.org/dc/terms/"&gt;2025-02-04T10:19:38.0768176+01:00&lt;/dct:created&gt;
+      &lt;dct:source xmlns:dct="http://purl.org/dc/terms/"&gt;
+         &lt;rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"&gt;
+            &lt;dct:creator&gt;
+               &lt;dct:Agent&gt;
+                  &lt;skos:prefLabel xmlns:skos="http://www.w3.org/2004/02/skos/core#"&gt;SchXslt/1.10.1 SAXON/HE 12.4&lt;/skos:prefLabel&gt;
+                  &lt;schxslt.compile.typed-variables xmlns="https://doi.org/10.5281/zenodo.1495494#"&gt;true&lt;/schxslt.compile.typed-variables&gt;
+               &lt;/dct:Agent&gt;
+            &lt;/dct:creator&gt;
+            &lt;dct:created&gt;2025-02-04T10:19:38.0668495+01:00&lt;/dct:created&gt;
+         &lt;/rdf:Description&gt;
+      &lt;/dct:source&gt;
+   &lt;/svrl:metadata&gt;
+   &lt;svrl:active-pattern documents="file:/…/…/input-invalid.xml"/&gt;
+   &lt;svrl:fired-rule context="thingref/@idref"/&gt;
+   &lt;svrl:failed-assert location="/Q{}things[1]/Q{}thing[2]/Q{}thingref[1]/@Q{}idref"
+                       test="exists(//thing[@id eq $id])"&gt;
+      &lt;svrl:text&gt;Reference to non-existent id: "C"&lt;/svrl:text&gt;
+   &lt;/svrl:failed-assert&gt;
+&lt;/svrl:schematron-output&gt;</pre></div><p class="para">The same example, but now producing a <a href="https://spec.xproc.org/master/head/xvrl/" target="_blank"><span class="link newpage">XVRL</span></a> format report,
+      is as follows: </p><p class="para keep-with-next">Pipeline document:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
+
+  &lt;p:input port="source"/&gt;
+  &lt;p:output port="result" pipe="report@validate"/&gt;
+
+  &lt;p:validate-with-schematron name="validate" assert-valid="false" report-format="xvrl"&gt;
+    &lt;p:with-input port="schema" href="example.sch"/&gt;
+  &lt;/p:validate-with-schematron&gt;
+
+&lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;report xmlns="http://www.xproc.org/ns/xvrl"&gt;
+   &lt;metadata&gt;
+      &lt;timestamp&gt;2025-02-04T10:19:38.25+01:00&lt;/timestamp&gt;
+      &lt;document href="file:/…/…/input-invalid.xml"/&gt;
+      &lt;schema href="file:/…/…/example.sch"
+              schematypens="http://purl.oclc.org/dsdl/schematron"/&gt;
+      &lt;validator name="SchXslt"/&gt;
+   &lt;/metadata&gt;
+   &lt;detection severity="error"&gt;
+      &lt;location xpath="/Q{}things[1]/Q{}thing[2]/Q{}thingref[1]/@Q{}idref"/&gt;
+      &lt;message&gt;Reference to non-existent id: "C"&lt;/message&gt;
+   &lt;/detection&gt;
+   &lt;digest/&gt;
+&lt;/report&gt;</pre></div><p class="para">Again, the exact format of the reports might differ across implementations. Please experiment before using it.</p><p class="break">&nbsp;</p><p class="para break-before">Another way of handling validation errors is to have <code class="code step">p:validate-with-schematron</code> raise its error <code class="code"><a href="#error-XC0054"><span class="link">XC0054</span></a></code> (by
+          setting the <code class="code option">assert-valid</code> option to <code class="code">true</code>) and catch this in a <code class="tag">&lt;p:try&gt;</code>/<code class="tag">&lt;p:catch&gt;</code> construction.
+          The following pipeline shows you the <code class="tag">&lt;c:errors&gt;</code> result, that is available inside the <code class="tag">&lt;p:catch&gt;</code>:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:err="http://www.w3.org/ns/xproc-error" xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
+  
+  &lt;p:input port="source"/&gt;
+  &lt;p:output port="result"/&gt;
+  
+  &lt;p:try&gt;
+    &lt;p:validate-with-schematron assert-valid="true"&gt;
+      &lt;p:with-input port="schema" href="example.sch"/&gt;
+    &lt;/p:validate-with-schematron&gt;
+    &lt;p:catch code="err:XC0054"&gt;
+      &lt;p:identity/&gt;
+    &lt;/p:catch&gt;
+  &lt;/p:try&gt;
+  
+&lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;c:errors xmlns:c="http://www.w3.org/ns/xproc-step"&gt;
+   &lt;c:error xmlns:err="http://www.w3.org/ns/xproc-error"
+            code="err:XC0054"
+            name="!1.1.1.1"
+            type="p:validate-with-schematron"
+            href="file:/…/…/…"
+            line="7"
+            column="53"&gt;
+      &lt;svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl"&gt;
+         &lt;svrl:metadata&gt;
+            &lt;dct:creator xmlns:dct="http://purl.org/dc/terms/"&gt;
+               &lt;dct:Agent&gt;
+                  &lt;skos:prefLabel xmlns:skos="http://www.w3.org/2004/02/skos/core#"&gt;SAXON/HE 12.4&lt;/skos:prefLabel&gt;
+               &lt;/dct:Agent&gt;
+            &lt;/dct:creator&gt;
+            &lt;dct:created xmlns:dct="http://purl.org/dc/terms/"&gt;2025-02-04T10:19:38.1725648+01:00&lt;/dct:created&gt;
+            &lt;dct:source xmlns:dct="http://purl.org/dc/terms/"&gt;
+               &lt;rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"&gt;
+                  &lt;dct:creator&gt;
+                     &lt;dct:Agent&gt;
+                        &lt;skos:prefLabel xmlns:skos="http://www.w3.org/2004/02/skos/core#"&gt;SchXslt/1.10.1 SAXON/HE 12.4&lt;/skos:prefLabel&gt;
+                        &lt;schxslt.compile.typed-variables xmlns="https://doi.org/10.5281/zenodo.1495494#"&gt;true&lt;/schxslt.compile.typed-variables&gt;
+                     &lt;/dct:Agent&gt;
+                  &lt;/dct:creator&gt;
+                  &lt;dct:created&gt;2025-02-04T10:19:38.1665166+01:00&lt;/dct:created&gt;
+               &lt;/rdf:Description&gt;
+            &lt;/dct:source&gt;
+         &lt;/svrl:metadata&gt;
+         &lt;svrl:active-pattern documents="file:/…/…/input-invalid.xml"/&gt;
+         &lt;svrl:fired-rule context="thingref/@idref"/&gt;
+         &lt;svrl:failed-assert location="/Q{}things[1]/Q{}thing[2]/Q{}thingref[1]/@Q{}idref"
+                             test="exists(//thing[@id eq $id])"&gt;
+            &lt;svrl:text&gt;Reference to non-existent id: "C"&lt;/svrl:text&gt;
+         &lt;/svrl:failed-assert&gt;
+      &lt;/svrl:schematron-output&gt;
+   &lt;/c:error&gt;
+&lt;/c:errors&gt;</pre></div><p class="para">The exact contents of the <code class="tag">&lt;c:errors&gt;</code> element might differ across implementations. Please experiment before using it.</p></div></div><div class="sect2" id="sect2-d574e32432"><a name="sect2-d574e32432"><!----></a><h2 class="sect2">Additional details</h2><ul class="itemizedlist"><li><p class="para"><code class="code step">p:validate-with-schematron</code> preserves all document-properties of the document appearing on its <code class="code port">source</code> port for the document on its
+      <code class="code port">result</code> port.</p></li><li><p class="para">The document appearing on the <code class="code port">report</code> port only has a <code class="code property">content-type</code> property. It has no other
+    document-properties (also no <code class="code property">base-uri</code>).</p></li><li><p class="para">The document appearing on the <code class="code port">result</code> port may have been enriched with PSVI (Post-Schema-Validation-Infoset) annotations (see
+    the <a href="https://www.w3.org/TR/xmlschema-1/" target="_blank"><span class="link newpage">XML Schema recommendation</span></a>).</p></li></ul></div><div class="sect2" id="sect2-d574e32476"><a name="sect2-d574e32476"><!----></a><h2 class="sect2">Errors raised</h2><div class="table nonumber error-codes-table"><table class="table nonumber error-codes-table"><thead><tr><th><p class="para">Error code</p></th><th><p class="para">Description</p></th></tr></thead><tbody><tr><td><p class="para" id="error-XC0054"><a name="error-XC0054"><!----></a><a href="../error-codes.html#error-XC0054"><span class="link"><code class="code">XC0054</code></span></a></p></td><td><p class="para">It is a dynamic error if the <code class="code option">assert-valid</code> option is <code class="literal">true</code> and any Schematron assertions fail.</p></td></tr><tr><td><p class="para" id="error-XC0117"><a name="error-XC0117"><!----></a><a href="../error-codes.html#error-XC0117"><span class="link"><code class="code">XC0117</code></span></a></p></td><td><p class="para">It is a dynamic error if a report-format option was specified that the processor does not support.</p></td></tr><tr><td><p class="para" id="error-XC0151"><a name="error-XC0151"><!----></a><a href="../error-codes.html#error-XC0151"><span class="link"><code class="code">XC0151</code></span></a></p></td><td><p class="para">It is a dynamic error if the document supplied on <code class="code port">schema</code> port is not a valid Schematron document.</p></td></tr></tbody></table></div></div><div class="sect2" id="sect2-d574e32527"><a name="sect2-d574e32527"><!----></a><h2 class="sect2">Reference information</h2><p class="para">This description of the <code class="code step">p:validate-with-schematron</code> step is for XProc version: <a href="../index.html"><span class="link">3.0</span></a>. This is a non-required step (an XProc 3.0 processor does not have to support this).</p><p class="para">The formal specification for the <code class="code step">p:validate-with-schematron</code> step can be found <a href="https://spec.xproc.org/master/head/validation/#c.validate-with-schematron" target="_blank"><span class="link newpage">here</span></a>.</p><p class="para">The <code class="code step">p:validate-with-schematron</code> step is part of categories:</p><ul class="itemizedlist"><li><p class="para"><a href="XProc_validation_related_steps.html"><span class="link">XProc validation related steps</span></a></p></li><li><p class="para"><a href="Additional_standards.html"><span class="link">Additional standards</span></a></p></li></ul><p class="para">The <code class="code step">p:validate-with-schematron</code> step is also present in version:
+                <a href="../3.1/p.validate-with-schematron.html"><span class="link">3.1</span></a>.</p></div></div></div><p>&nbsp;</p></body></html>

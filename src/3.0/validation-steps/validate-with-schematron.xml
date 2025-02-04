@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="validate-with-schematron" version-idref="v30" category-idrefs="validation-steps"
-  short-description="[EDIT] validate-with-schematron short description" required="false" publish="false"
+<step name="validate-with-schematron" version-idref="v30" category-idrefs="validation-steps additional-standards"
+  short-description="Validates a document using Schematron" required="false" publish="true"
   href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-schematron"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
@@ -11,49 +11,74 @@
 
     <input port="source" primary="true" content-types="xml html" sequence="false">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The document to validate.</para>
       </description>
     </input>
 
     <input port="schema" content-types="xml" primary="false" sequence="false">
       <description>
-        <para>[EDIT] input schema</para>
+        <para>The Schematron schema to validate against.</para>
       </description>
     </input>
 
     <output port="result" primary="true" content-types="xml html" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>A verbatim copy of the document that appeared on the <port>source</port> port.</para>
       </description>
     </output>
 
     <output port="report" sequence="true" content-types="xml json" primary="false">
       <description>
-        <para>[EDIT] output report</para>
+        <para>A report that describes the validation results, both for valid and invalid source documents. The format for this report is determined by
+          the <option>report-format</option> option.</para>
+        <para>When the <option>assert-valid</option> option is <code>true</code> and the document is <emphasis>invalid</emphasis>, nothing will appear
+          on this port because error <step-error-ref code="XC0054"/> is raised.</para>
       </description>
     </output>
 
     <option name="parameters" as="map(xs:QName,item()*)?" required="false">
       <description>
-        <para>[EDIT] option parameters</para>
+        <para>Parameters controlling the validation. See <xref linkend="validation-parameters"/> for more information.</para>
       </description>
     </option>
 
     <option name="phase" select="'#DEFAULT'" as="xs:string" required="false">
       <description>
-        <para>[EDIT] option phase</para>
+        <para>The Schematron schema phase to select.</para>
       </description>
     </option>
 
     <option name="assert-valid" select="true()" as="xs:boolean" required="false">
       <description>
-        <para>[EDIT] option assert-valid</para>
+        <para>Determines what happens if the document is <emphasis>invalid</emphasis>:</para>
+        <itemizedlist>
+          <listitem>
+            <para>If <code>true</code>, error <step-error-ref code="XC0054"/> is raised.</para>
+          </listitem>
+          <listitem>
+            <para>If <code>false</code>, the step always succeeds. The validity of the document must be determined by inspecting the document that
+              appears on the <port>report</port> port.</para>
+          </listitem>
+        </itemizedlist>
       </description>
     </option>
 
     <option name="report-format" select="'svrl'" as="xs:string" required="false">
       <description>
-        <para>[EDIT] option report-format</para>
+        <para>The format for the document on the <port>report</port> port:</para>
+        <itemizedlist>
+          <listitem>
+            <para>The value <code>svrl</code> (default) produces a report in <link xlink:href="https://schematron.com/document/3427.html"
+                role="newpage">SVRL</link> (Schematron Validation Report Language).</para>
+          </listitem>
+          <listitem>
+            <para>The value <code>xvrl</code> (default) produces a report in <link xlink:href="https://spec.xproc.org/master/head/xvrl/"
+                role="newpage">XVRL</link> (Extensible Validation Report Language).</para>
+          </listitem>
+          <listitem>
+            <para>Whether any other formats are supported is implementation-defined and therefore dependent on the XProc processor used.</para>
+          </listitem>
+        </itemizedlist>
       </description>
     </option>
 
@@ -62,57 +87,138 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>[EDIT]</para>
-    <para>The <tag>p:validate-with-schematron</tag> step applies <link xlink:href="https://schematron.com/" role="newpage"
-        xmlns:xlink="http://www.w3.org/1999/xlink">Schematron</link> processing to the <port>source</port> document.</para>
+    <para>The <step/> step validates the document appearing on the <port>source</port> port using Schematron validation. The Schematron schema is
+      supplied through the <port>schema</port> port. The <port>result</port> port emits a copy of the source document.</para>
   </summary>
 
   <!-- ======================================================================= -->
 
   <description>
-    <para>[EDIT]</para>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0151"/>]</emphasis>
-    </para>
-    <para>
-      <emphasis role="bold">[ERROR <step-error-ref code="XC0054"/>]</emphasis>
-    </para>
-    <note xml:id="note-assert-valid_schematron">
-      <para>A Schematron validation with <literal>assert-valid="true"</literal> will fail if any validation message is produced by
-          <tag>sch:assert</tag> or <tag>sch:report</tag>, even if the severity level of the failed assertion or the successful report is below a
-        certain threshold, for example if there is only an <literal>info</literal> message. (The severity is conventionally conveyed by the
-          <literal>@role</literal> attribute on <tag>sch:assert</tag> or <tag>sch:report</tag>.) </para>
-    </note>
-    <para>The value of the <option>phase</option> option identifies the Schematron validation phase with which validation begins.</para>
-    <para>The <option>parameters</option> option provides name/value pairs which correspond to Schematron external variables, to parameters that
-      influence code generation, or to parameters that influence SVRL to XVRL conversion.</para>
-    <para>There are multiple Schematron implementations. How the Schematron implementation is selected is implementation-defined. A processor might
-      select an implementation based on the schema’s <code role="attribute">queryBinding</code> attribute and/or provide configuration options. In
-      addition, the special parameter map entry <literal>c:implementation</literal> (value: QName) may be used to select a Schematron implementation
-      that the processor supports. The list of supported Schematron implementations and their associated values is implementation-defined. If a
-      requested implementation is not available, the processor may throw an error or select another implementation.</para>
-    <para>The <option>parameters</option> map may contain two special entries, <literal>c:compile</literal> and <literal>c:xvrl</literal>, both are
-      maps. If a code-generating implementation such as <emphasis>Schematron “Skeleton” implementation 2017</emphasis> is used, the entries of the
-        <literal>c:compile</literal> map, for example <literal>allow-foreign</literal>, will be passed to the code generator. Which parameters the
-        <literal>c:compile</literal> map supports for a given Schematron implementation is implementation-defined.</para>
-    <para>If the Schematron implementation produces SVRL by default, the SVRL to XVRL conversion can be influenced by the entries of the
-        <literal>c:xvrl</literal> map. The same map, with potentially another set of allowed keys and values, can be used to influence XVRL generation
-      from another reporting language. Which parameters this conversion from native reporting format to XVRL supports is
-      implementation-defined.</para>
-    <para>All other parameters of the <option>parameters</option> option will be passed to the generated code if applicable, or to a hypothetical
-      native Schematron validator that does without code generation.</para>
-    <para>The <port>result</port> output from this step is a copy of the input.</para>
-    <para>The output of this step may include PSVI annotations.</para>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="validate-with-schematron-preserves-all">All document properties on the <port>source</port> port are preserved on the
-        <port>result</port> port. No document properties are preserved on the <port>report</port> port.</para>
+
+    <para>The <step/> step applies <link xlink:href="https://schematron.com/" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink"
+        >Schematron</link> validation to the document appearing on the <port>source</port> port. The Schematron schema must be supplied using the
+        <port>schema</port> port. The outcome of the step, what appears on the <port>result</port> port, is a verbatim copy of the source
+      document.</para>
+
+    <section xml:id="validation-parameters">
+      <!-- Main text copied from ../../text-fragments/section-validation-parameters.xml, added c:implementation. -->
+      <title>Validation parameters</title>
+
+      <para>The <step/> step has a <port>parameters</port> port of datatype <code>map(xs:QName,&#160;item()*)?</code>. This (optional) map passes
+        additional parameters for the validation process to the step, which correspond to Schematron external variables, to parameters that influence
+        code generation, or to parameters that influence SVRL to XVRL conversion.</para>
+      <itemizedlist>
+        <listitem>
+          <para>The parameters in this map, their values and semantics are implementation-defined and therefore dependent on the XProc processor
+            used.</para>
+        </listitem>
+        <listitem>
+          <para>A special entry with key <code>c:implementation</code> (the <code>c</code> namespace prefix is bound to the standard XProc namespace
+              <code>http://www.w3.org/ns/xproc-step</code>) is reserved to select a Schematron implementation the XProc processor supports.The list of
+            supported Schematron implementations and their associated values is implementation-defined and therefore dependent on the XProc processor
+            used.</para>
+        </listitem>
+        <listitem>
+          <para>A special entry with key <code>c:compile</code> (the <code>c</code> namespace prefix is bound to the standard XProc namespace
+              <code>http://www.w3.org/ns/xproc-step</code>) is reserved for parameters for the schema <emphasis>compilation</emphasis> (if
+            applicable). The value of this key must be a map itself.</para>
+          <para>For instance, if a code-generating implementation such as <link xlink:href="https://github.com/schxslt/schxslt" role="newpage"
+              >SchXslt</link> is used, the entries of the <code>c:compile</code> map are passed to the code generator.</para>
+        </listitem>
+        <listitem>
+          <para>If the <option>report-format</option> option is set to <code>xvrl</code> (default): Any entries with keys in the <code>xvrl</code>
+            namespace (<code>http://www.xproc.org/ns/xvrl</code>) are passed as parameters to the process that generates the <link
+              xlink:href="https://spec.xproc.org/master/head/xvrl/" role="newpage">XVRL</link> report appearing on the <port>report</port> port. All
+              <link xlink:href="https://spec.xproc.org/master/head/xvrl/#xvrl-generation" role="newpage">standard XVRL generation parameters</link>
+            are supported.</para>
+        </listitem>
+      </itemizedlist>
+
+    </section>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved-for-result.xml"/>
+  </detail>
+  
+  <detail>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type-for-report.xml"/>
+  </detail>
+  
+  <detail>
+    <xi:include href="../../text-fragments/result-port-with-optional-psvi.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage (valid source document)" id="basic-valid">
+
+    <para>Assume we have an input document, called <code>input-valid.xml</code>, that looks like this:</para>
+
+    <example-doc href="../../examples/validate-with-schematron/input-valid.xml"/>
+
+    <para>Any <tag>thingref</tag> elements must reference existing <tag>thing</tag> elements by identifier. Here is a simple Schematron schema that
+      validates this:</para>
+
+    <example-doc href="../../examples/validate-with-schematron/example.sch"/>
+
+    <para>Performing this validation using the <step/> step (which, for this example, uses the <link xlink:href="https://github.com/schxslt/schxslt"
+        role="newpage">SchXslt</link> Schematron processor) returns the following on the <port>report</port> port:</para>
+
+    <xproc-example href="../../examples/validate-with-schematron/validate-with-schematron-01.xpl" show-source="false"/>
+
+    <para>The same example, but now producing a <link xlink:href="https://spec.xproc.org/master/head/xvrl/" role="newpage">XVRL</link> format report,
+      is as follows: </para>
+
+    <xproc-example href="../../examples/validate-with-schematron/validate-with-schematron-02.xpl" show-source="false"/>
+
+    <para>The exact format of the reports might differ across implementations. Please experiment before using it.</para>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Basic usage (invalid source document)">
+
+    <para>Using the same Schematron schema as in <example-ref idref="basic-valid"/>, we&#x2019;re now going to validate an
+      <emphasis>in</emphasis>valid document (called <code>input-invalid.xml</code>). Since we want to have a look at what comes out of the
+        <port>report</port> port, we have to set the <option>assert-valid</option> option to <code>false</code>.</para>
+
+    <example-doc href="../../examples/validate-with-schematron/input-invalid.xml"/>
+
+    <para>Performing this validation using the <step/> step (which, for this example, uses the <link xlink:href="https://github.com/schxslt/schxslt"
+        role="newpage">SchXslt</link> Schematron processor) returns the following on the <port>report</port> port:</para>
+
+    <xproc-example href="../../examples/validate-with-schematron/validate-with-schematron-03.xpl" show-source="false"/>
+
+    <para>The same example, but now producing a <link xlink:href="https://spec.xproc.org/master/head/xvrl/" role="newpage">XVRL</link> format report,
+      is as follows: </para>
+
+    <xproc-example href="../../examples/validate-with-schematron/validate-with-schematron-04.xpl" show-source="false"/>
+
+    <para>Again, the exact format of the reports might differ across implementations. Please experiment before using it.</para>
+
+    <xproc-example href="../../examples/validate-with-schematron/validate-with-schematron-05.xpl" show-source="false" keep-namespace-prefixes="err">
+      <pipeline-header>
+        <para role="break-before">Another way of handling validation errors is to have <step/> raise its error <step-error-ref code="XC0054"/> (by
+          setting the <option>assert-valid</option> option to <code>true</code>) and catch this in a <tag>p:try</tag>/<tag>p:catch</tag> construction.
+          The following pipeline shows you the <tag>c:errors</tag> result, that is available inside the <tag>p:catch</tag>:</para>
+      </pipeline-header>
+    </xproc-example>
+    <para>The exact contents of the <tag>c:errors</tag> element might differ across implementations. Please experiment before using it.</para>
+
+
+  </example>
 
   <!-- ======================================================================= -->
 
   <step-errors>
     <step-error code="XC0151"/>
     <step-error code="XC0054"/>
+    <step-error code="XC0117"/>
   </step-errors>
 
 </step>
