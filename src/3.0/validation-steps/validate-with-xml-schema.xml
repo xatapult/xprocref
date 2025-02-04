@@ -214,11 +214,11 @@
   <detail>
     <xi:include href="../../text-fragments/document-properties-preserved-for-result.xml"/>
   </detail>
-  
+
   <detail>
     <xi:include href="../../text-fragments/no-document-properties-except-content-type-for-report.xml"/>
   </detail>
-  
+
   <detail>
     <para>A schema can contain <tag>xs:include</tag> or <tag>xs:import</tag> elements. It is implementation-defined, and therefore dependent on the
       XProc processor used, if the documents supplied on the <port>schema</port> port are considered when resolving these elements.</para>
@@ -320,6 +320,7 @@
     <step-error code="XC0011"/>
     <step-error code="XC0156"/>
     <step-error code="XC0055"/>
+    <step-error code="XC0117"/>
   </step-errors>
 
 </step>

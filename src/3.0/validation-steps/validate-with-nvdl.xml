@@ -157,6 +157,7 @@
   <step-errors>
     <step-error code="XC0154"/>
     <step-error code="XC0053"/>
+    <step-error code="XC0117"/>
   </step-errors>
 
 </step>

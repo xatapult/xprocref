@@ -171,6 +171,7 @@
   <step-errors>
     <step-error code="XC0153"/>
     <step-error code="XC0155"/>
+    <step-error code="XC0117"/>
   </step-errors>
 
 </step>
