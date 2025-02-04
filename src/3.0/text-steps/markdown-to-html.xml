@@ -1,45 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="markdown-to-html" version-idref="v30" category-idrefs="text-steps" short-description="[EDIT]" required="true" publish="false"
-  href-specification="{$BASELINK-TEXT-STEPS-V30}#c.rename" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+<step name="markdown-to-html" version-idref="v30" category-idrefs="text-steps additional-standards"
+  short-description="Converts a Markdown document into HTML" required="true" publish="true" href-specification="{$BASELINK-TEXT-STEPS-V30}#c.rename"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
   <!-- ======================================================================= -->
 
   <signature>
 
-    <input port="source" content-types="xml html" primary="true" sequence="false">
+    <input port="source" content-types="text" primary="true" sequence="false">
       <description>
-        <para>TBD</para>
+        <para>The <link xlink:href="https://www.markdownguide.org/" role="newpage">Markdown</link> document to transform.</para>
       </description>
     </input>
-    <output port="result" content-types=" html" primary="true" sequence="false">
+
+    <output port="result" content-types="html" primary="true" sequence="false">
       <description>
-        <para>The resulting document.</para>
+        <para>The resulting HTML document.</para>
       </description>
     </output>
+
+    <option name="parameters" as="map(xs:QName,item()*)?" required="false">
+      <description>
+        <para>Parameters used to control the conversion. The XProc specification does not define any parameters for this option. A specific XProc
+          processor (or renderer used) might define its own.</para>
+      </description>
+    </option>
+
   </signature>
 
   <!-- ======================================================================= -->
 
   <summary>
-    <para>TBD ALSO OPTIONS ARE INCOMPLETE!</para>
+    <para>The <step/> step converts a <link xlink:href="https://www.markdownguide.org/" role="newpage">Markdown</link> document appearing on its
+        <port>source</port> port into HTML. The result appears on the <port>result</port> port.</para>
   </summary>
 
   <!-- ======================================================================= -->
 
   <description>
 
-    <para>TBD</para>
+    <para>The <step/> step converts a <link xlink:href="https://www.markdownguide.org/" role="newpage">Markdown</link> document appearing on its
+        <port>source</port> port into HTML. There are several flavors of Markdown, for instance <link xlink:href="https://spec.commonmark.org/0.31.2/"
+        role="newpage">CommonMark</link>. Which Markdown flavors are supported by <step/> is implementation-defined and therefore dependent on the
+      XProc processor used. The resulting HTML appears on the <port>result</port> port.</para>
 
   </description>
 
   <!-- ======================================================================= -->
 
-  <!--<detail>
-    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
-  </detail>-->
+  <detail>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type.xml"/>
+  </detail>
 
   <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <para>Assume we have a Markdown document that looks like this:</para>
+    <example-doc href="../../examples/markdown-to-html/example.md"/>
+
+    <xproc-example href="../../examples/markdown-to-html/markdown-to-html-01.xpl" show-source="false">
+      <pipeline-header>
+        <para>We can convert this into HTL using <step/>:</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
 
 </step>
