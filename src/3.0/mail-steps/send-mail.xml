@@ -1,121 +1,238 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="send-mail" version-idref="v30" category-idrefs="mail-steps" short-description="[EDIT] send-mail short description" required="false"
-  publish="false" href-specification="{$BASELINK-MAIL-STEPS-V30}#c.send-mail"
-  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<step name="send-mail" version-idref="v30" category-idrefs="mail-steps env" short-description="Sends an email message" required="false" publish="true"
+  href-specification="{$BASELINK-MAIL-STEPS-V30}#c.send-mail" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
   <signature>
+
     <input port="source" sequence="true" content-types="any" primary="true">
       <description>
-        <para>[EDIT] input source</para>
+        <para>The email message to send. The <emphasis>first</emphasis> document on this port must be an XML document describing the email message. It
+          must conform to the <link xlink:href="https://datatracker.ietf.org/doc/html/draft-klyne-message-rfc822-xml-03" role="newpage">XML format for
+            mail</link>. </para>
+        <para>The <tag>content</tag> element of this email message specification may contain either text or HTML. To send some other type as message
+          body, you must leave the <tag>content</tag> element out of the first document and supply the body as a second document.</para>
+        <para>Any additional documents are treated as email attachments.</para>
       </description>
     </input>
+
     <output port="result" content-types="application/xml" primary="true" sequence="false">
       <description>
-        <para>[EDIT] output result</para>
+        <para>If the email was sent successfully, this port will emit a short XML document containing just
+            <code><![CDATA[<c:data>true</c:data>]]></code> (the <code>c</code> prefix here is bound to the
+            <code>http://www.w3.org/ns/xproc-step</code> namespace).</para>
+        <para>If something went wrong during the sending operation, error <step-error-ref code="XC0162"/> is raised.</para>
       </description>
     </output>
+
     <option name="serialization" as="map(xs:QName,item()*)?" required="false">
       <description>
-        <para>[EDIT] option serialization</para>
+        <para>This option controls the serialization of any documents involved in constructing the mail.</para>
+        <xi:include href="../../text-fragments/merge-serialization-properties.xml"/>
       </description>
     </option>
+
     <option name="auth" as="map(xs:string, item()+)?" required="false">
       <description>
-        <para>[EDIT] option auth</para>
+        <para>A map containing authentication parameters. See <xref linkend="auth-parameters"/> for more information.</para>
       </description>
     </option>
+
     <option name="parameters" as="map(xs:QName, item()*)?" required="false">
       <description>
-        <para>[EDIT] option parameters</para>
+        <para>a map containing additional information for constructing and sending the email. See <xref linkend="other-parameters"/> for more
+          information.</para>
       </description>
     </option>
+
   </signature>
+
+  <!-- ======================================================================= -->
+
   <summary>
-    <para>[EDIT]</para>
-    <para>The <code>p:send-mail</code> step sends an email message.</para>
+    <para>The <step/> step sends an email message. This message, described in the <link
+        xlink:href="https://datatracker.ietf.org/doc/html/draft-klyne-message-rfc822-xml-03" role="newpage">XML format for mail</link>, must appear on
+      the <port>source</port> port.</para>
   </summary>
+
+  <!-- ======================================================================= -->
+
   <description>
-    <para>[EDIT]</para>
-    <para>The first document on the <port>source</port> port is expected to conform to <link
-        xlink:href="https://datatracker.ietf.org/doc/html/draft-klyne-message-rfc822-xml-03" role="newpage" xmlns:xlink="http://www.w3.org/1999/xlink"
-        >An XML format for mail and other messages</link> . <emphasis role="bold">[ERROR <step-error-ref code="XC0161"/>]</emphasis> Any additional
-      documents are treated as attachments.</para>
-    <para>If the mail was send successfully a single <tag>c:result</tag> document whose content is “<literal>true</literal>” appears on the
-        <port>result</port> port. <emphasis role="bold">[ERROR <step-error-ref code="XC0162"/>]</emphasis></para>
-    <para>The <tag>em:content</tag> may contain either text or HTML. To send some other type as the first message body, you must leave the
-        <tag>em:content</tag> element out of the first document and supply the body as a second document.</para>
-    <para>The <code>p:send-mail</code> step has the following options:</para>
-    <variablelist>
-      <varlistentry>
-        <term>
-          <option>serialization</option>
-        </term>
-        <listitem>
-          <para>The <option>serialization</option> option is used to control the serialization of documents for constructing the mail. If a document
-            has a “<literal>serialization</literal>” document property, the effective value of the serialization options is the union of the two maps,
-            where the entries in the “<literal>serialization</literal>” document property take precedence.</para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>auth</term>
-        <listitem>
-          <para>If the mail service requires an authentication to send mails, these can be supplied using the <option>auth</option> option.</para>
-          <para>The following standard keys are defined:</para>
-          <variablelist>
-            <varlistentry>
-              <term>username (xs:string)</term>
-              <listitem>
-                <para>The username.</para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>password (xs:string)</term>
-              <listitem>
-                <para>The password.</para>
-              </listitem>
-            </varlistentry>
-          </variablelist>
-          <para>Other key value pairs in “<literal>auth</literal>” are implementation-defined.<emphasis role="bold">[ERROR <step-error-ref
-                code="XC0159"/>]</emphasis></para>
-        </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term>parameters</term>
-        <listitem>
-          <para>The <option>parameters</option> option can be used to supply additional information for constructing and sending mails. A number of
-            parameters are defined in this specification. It is implementation-defined which other key/value pairs in the <option>parameters</option>
-            option are supported.</para>
-          <variablelist>
-            <varlistentry>
-              <term>send-authorization (xs:boolean)</term>
-              <listitem>
-                <para>If the key is associated with <literal>false</literal> no authentication will be used when sending a mail.</para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>host (xs:string)</term>
-              <listitem>
-                <para>The SMTP server.</para>
-              </listitem>
-            </varlistentry>
-            <varlistentry>
-              <term>port (xs:unsignedShort)</term>
-              <listitem>
-                <para>The port.</para>
-              </listitem>
-            </varlistentry>
-          </variablelist>
-          <para>Other key value pairs in “<literal>auth</literal>” are implementation-defined.<emphasis role="bold">[ERROR <step-error-ref
-                code="XC0160"/>]</emphasis></para>
-          <para>If no values for “<literal>host</literal>” or “<literal>port</literal>” is specified, it it implementation-defined which server and
-            port is used.</para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
-    <bridgehead>Document properties</bridgehead>
-    <para feature="send-mail-preserves-none">No document properties are preserved.</para>
+
+    <para>The <step/> step attempts to send an email message using <link xlink:href="https://nl.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol"
+        role="newpage">SMTP</link>. The address of the SMTP server and other details can be supplied using the <xref linkend="other-parameters"/> and
+        <xref linkend="auth-parameters"/>. </para>
+
+    <para>The email message itself must be described using the <link
+        xlink:href="https://datatracker.ietf.org/doc/html/draft-klyne-message-rfc822-xml-03" role="newpage">XML format for mail</link>. Examples can
+      be found in the specification or in the <example-ref idref="basic-usage"/> example below.</para>
+
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="other-parameters">
+      <title>Step parameters</title>
+
+      <para>The <option>parameters</option> option contains additional information used for constructing and sending the email message. It is a map
+        that associates parameters (the keys in the map) with values. The following parameters are defined:</para>
+
+      <table role="nonumber">
+        <title/>
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>
+                <para>Parameter</para>
+              </entry>
+              <entry>
+                <para>Datatype</para>
+              </entry>
+              <entry>
+                <para>Description</para>
+              </entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>
+                <para>
+                  <code>send-authorization</code>
+                </para>
+              </entry>
+              <entry>
+                <para>
+                  <code>xs:boolean</code>
+                </para>
+              </entry>
+              <entry>
+                <para>If <code>true</code> (default), the authentication information provided in the <xref linkend="auth-parameters"/> will be used.
+                  If <code>false</code>, no authentication will be used when sending the mail.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>
+                  <code>host</code>
+                </para>
+              </entry>
+              <entry>
+                <para>
+                  <code>xs:string</code>
+                </para>
+              </entry>
+              <entry>
+                <para>The URL of the SMTP server to use.</para>
+                <para>If no value for <code>host</code> is specified, it is implementation-defined which server is used.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>
+                  <code>port</code>
+                </para>
+              </entry>
+              <entry>
+                <para>
+                  <code>xs:unsignedShort</code>
+                </para>
+              </entry>
+              <entry>
+                <para>The IP port to use when sending the mail to the SMTP server.</para>
+                <para>If no value for <code>port</code> is specified, it is implementation-defined which port is used.</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <para>Depending on the XProc processor used, the <option>parameters</option> map may contain other, implementation-defined, keys.</para>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="auth-parameters">
+      <title>Authentication parameters</title>
+
+      <para>The <option>auth</option> option contains additional information used for the authentication with the SMTP server. It is a map that
+        associates parameters (the keys in the map) with values. The following authentication parameters are defined:</para>
+
+      <table role="nonumber">
+        <title/>
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>
+                <para>Parameter</para>
+              </entry>
+              <entry>
+                <para>Datatype</para>
+              </entry>
+              <entry>
+                <para>Description</para>
+              </entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>
+                <para>
+                  <code>username</code>
+                </para>
+              </entry>
+              <entry>
+                <para>
+                  <code>xs:string</code>
+                </para>
+              </entry>
+              <entry>
+                <para>The username used for authentication.</para>
+              </entry>
+            </row>
+            <row>
+              <entry>
+                <para>
+                  <code>password</code>
+                </para>
+              </entry>
+              <entry>
+                <para>
+                  <code>xs:string</code>
+                </para>
+              </entry>
+              <entry>
+                <para>The password used for authentication.</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <para>Depending on the XProc processor used, the <option>auth</option> map may contain other, implementation-defined, keys.</para>
+
+    </section>
+
   </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/no-document-properties-except-content-type.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="basic-usage">
+
+    <para>Below a very basic example of how to construct an email message and use <step/> to send it. I hope I get a lot of messages like
+      this&#160;;).</para>
+    <example-doc href="../../examples/send-mail/send-mail-01.xpl"/>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
   <step-errors>
     <step-error code="XC0161"/>
     <step-error code="XC0162"/>
