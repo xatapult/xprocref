@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element-description xmlns="http://www.xtpxlib.nl/ns/xdoc" xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xdoc
+  ../../../../xatapult/xtpxlib-xdoc/xsd/element-description.xsd" name="p:run" sort-attributes="true">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <attribute name="name">
+    <description>
+      <para>The standard XProc step <code>name</code> attribute.</para>
+    </description>
+    <type name="xs:NCName"/>
+  </attribute>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <choice occurs="*">
+
+    <element name="p:with-input" occurs="1">
+      <description>
+        <para>Anonymous input port that receives the pipeline to run. This is <emphasis>not</emphasis> the step&#x2019;s primary port!</para>
+        <para>Its attributes and child elements are like any other XProc <tag>p:with-input</tag> element, except that, since the port is anonymous, it
+          does not have a <code>port</code> attribute.</para>
+      </description>
+    </element>
+
+    <element name="run-input" occurs="1">
+      <description>
+        <para>Element for passing inputs to the pipeline being run.</para>
+      </description>
+    </element>
+
+    <element name="run-option" occurs="1">
+      <description>
+        <para>Element for passing options to the pipeline being run.</para>
+      </description>
+    </element>
+
+    <element name="output">
+      <description>
+        <para>Element that declares an output port of the pipeline being run.</para>
+        <para>Its attributes and child elements are like any other XProc <tag>p:output</tag> element. Port names used must be the same as for the output
+          ports of the step being run.</para>
+      </description>
+    </element>
+  </choice>
+
+</element-description>

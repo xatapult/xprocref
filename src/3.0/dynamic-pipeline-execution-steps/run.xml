@@ -1,34 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="run" version-idref="v30" category-idrefs="file-steps misc" short-description="Runs a dynamically loaded pipeline" required="false"
-  publish="false" href-specification="{$BASELINK-DYNAMIC-PIPELINE-EXECUTION-STEPS-V30}#c.runt"
+<step name="run" version-idref="v30" category-idrefs="dynamic-pipeline-execution" short-description="Runs a dynamically loaded pipeline"
+  required="false" publish="false" href-specification="{$BASELINK-DYNAMIC-PIPELINE-EXECUTION-STEPS-V30}#c.runt"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" keywords="pipeline dynamic execution ">
 
   <!-- ======================================================================= -->
 
-  <signature>
-
-    <output port="result" content-types="application/xml" primary="true" sequence="false">
-      <description>
-        <para>The resulting XML document bla bla bla</para>
-      </description>
-    </output>
-
-
-  </signature>
+  <!-- No signature… -->
 
   <!-- ======================================================================= -->
 
   <summary>
-    <para>The <step/> step bla bla bla</para>
+    <para>The <step/> step executes a dynamically loaded pipeline within the current pipeline.</para>
   </summary>
 
   <!-- ======================================================================= -->
 
   <description>
-    <para>bla bla bla</para>
 
+    <para>In using XProc, there are cases where it is useful to be able to run a <emphasis>dynamically</emphasis> loaded pipeline. The <step/> step
+      makes this possible. For instance:</para>
+    <itemizedlist>
+      <listitem>
+        <para>Assume you have an XProc pipeline that processes/executes some DSL (Domain Specific Language). This language refers to XProc pipelines
+          (by URI) that need to be executed as part of the DSL processing.</para>
+      </listitem>
+      <listitem>
+        <para>Your pipeline gets so complicated that it becomes easier to dynamically <emphasis>construct</emphasis> another pipeline and run this as
+          part of your main pipeline.</para>
+      </listitem>
+    </itemizedlist>
+    <para>Without <step/>, all this wouldn&#x2019;t be possible. Unfortunately, because various requirements surrounding dynamic pipeline execution,
+      <step/> step is <emphasis>very</emphasis> different from other steps: it has a totally different set of child elements. Therefore, the step will
+      be explained as if it was a separate XML element.</para>
+
+    <para role="break-before">The <step/> step looks like this:</para>
+    <xdoc:transform href="$xdoc/xml-description.xpl">
+      <xi:include href="../../element-descriptions/p-run.description.xml"/>
+    </xdoc:transform>
 
   </description>
 
@@ -41,5 +51,7 @@
 
   <step-errors>
     <step-error code="XC0200"/>
+    <step-error code="XC0206"/>
+    <step-error code="XC0207"/>
   </step-errors>
 </step>

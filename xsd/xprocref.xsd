@@ -216,7 +216,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:group minOccurs="0" ref="xpref:g-macrodefs"/>
-        <xs:element name="signature">
+        <xs:element name="signature" minOccurs="0">
           <xs:annotation>
             <xs:documentation>The step's signature (ports, options, etc.).</xs:documentation>
           </xs:annotation>
