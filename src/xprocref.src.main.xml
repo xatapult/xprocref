@@ -79,17 +79,19 @@
 
   <versions>
 
+    <version id="v31" name="3.1">
+      <description>
+        <para>This is an update of the 3.0 specification. Its core specification can be found <link xlink:href="{$BASELINK-V31}xproc/" role="newpage"
+            >here</link>.</para>
+        <para>Although still under construction, it&#x2019;s considered the most current and up-to-date version. Development is almost
+          finished.</para>
+      </description>
+    </version>
+
     <version id="v30" name="3.0">
       <description>
         <para>This is the first official XProc 3.0 specification (12 September 2022). Its core specification can be found <link
             xlink:href="{$BASELINK-V30}xproc/" role="newpage">here</link>.</para>
-      </description>
-    </version>
-
-    <version id="v31" name="3.1">
-      <description>
-        <para>This is an update of the 3.0 specification, still under construction. Its core specification can be found <link
-            xlink:href="{$BASELINK-V31}xproc/" role="newpage">here</link>.</para>
       </description>
     </version>
 
