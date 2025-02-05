@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step-identity version-idref="v31" name="validate-with-schematron" href-specification="{$BASELINK-STANDARD-STEPS-V31}#c.validate-with-schematron"
+<step-identity version-idref="v31" name="validate-with-schematron" href-specification="{$BASELINK-VALIDATION-STEPS-V31}#c.validate-with-schematron"
   base-version-idref="v30" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xtpxlib.nl/ns/xprocref"/>

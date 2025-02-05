@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="validate-with-dtd" version-idref="v31" category-idrefs="validation-steps additional-standards"
   short-description="Validates a document using a DTD" required="false" publish="true"
-  href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-dtd"
+  href-specification="{$BASELINK-VALIDATION-STEPS-V31}#c.validate-with-dtd"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
