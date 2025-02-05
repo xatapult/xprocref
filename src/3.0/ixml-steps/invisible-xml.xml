@@ -2,7 +2,8 @@
 <step name="invisible-xml" version-idref="v30" category-idrefs="ixml-steps additional-standards" short-description="Performs invisible XML processing"
   required="true" publish="true" href-specification="{$BASELINK-IXML-STEPS-V30}#c.ixml"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="invisible xml">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref"
+  keywords="invisible xml">
 
   <!-- ======================================================================= -->
 
@@ -130,7 +131,8 @@
   <example title="Parsing the invisible XML grammar" id="parse-ixml">
 
     <para>We can parse the text representation of an invisible XML grammar into its XML representation by leaving the <port>grammar</port> port empty
-      and provide the text grammar on the <port>source</port> port. Using the same grammar as in <example-ref idref="basic-usage"/>, the result is:</para>
+      and provide the text grammar on the <port>source</port> port. Using the same grammar as in <example-ref idref="basic-usage"/>, the result
+      is:</para>
 
     <xproc-example href="../../examples/invisible-xml/invisible-xml-02.xpl" show-source="false"/>
 

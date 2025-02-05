@@ -47,8 +47,8 @@
   </attribute>
   <attribute name="*">
     <description>
-      <para>The XProc processor may add other attributes with information about the operating system (in a different namespace). These attributes, their values
-        and meaning are implementation-defined and therefore depend on the XProc processor used.</para>
+      <para>The XProc processor may add other attributes with information about the operating system (in a different namespace). These attributes,
+        their values and meaning are implementation-defined and therefore depend on the XProc processor used.</para>
     </description>
   </attribute>
 

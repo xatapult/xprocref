@@ -9,7 +9,7 @@
     <!-- Change it to keep my privacy. -->
     <p:delete match="@mox:*"/>
     <p:string-replace match="/*/@cwd" replace="'C:\…'"/>
-    <p:delete match="/*/c:environment"></p:delete>
+    <p:delete match="/*/c:environment"/>
     <p:insert match="/*" position="first-child">
       <p:with-input port="insertion">
         <c:environment name="…" value="…"/>
