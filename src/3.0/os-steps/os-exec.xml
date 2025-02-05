@@ -2,7 +2,7 @@
 <step name="os-exec" version-idref="v30" category-idrefs="os-steps env" short-description="Runs an external command" required="false" publish="true"
   href-specification="{$BASELINK-OS-STEPS-V30}#c.os-exec" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="program application execution execute">
 
   <!-- ======================================================================= -->
 

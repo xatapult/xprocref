@@ -2,7 +2,7 @@
 <step name="invisible-xml" version-idref="v30" category-idrefs="ixml-steps additional-standards" short-description="Performs invisible XML processing"
   required="true" publish="true" href-specification="{$BASELINK-IXML-STEPS-V30}#c.ixml"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="invisible xml">
 
   <!-- ======================================================================= -->
 

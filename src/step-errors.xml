@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<errors xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<errors xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
 
   <!-- ======================================================================= -->
@@ -1027,4 +1027,26 @@
       <para>It is a dynamic error if the grammar provided is not a valid Invisible XML grammar.</para>
     </description>
   </error>
+
+  <!-- ======================================================================= -->
+  <!-- Errors for: dynamic pipeline execution steps -->
+
+  <error code="XC0200">
+    <description>
+      <para>It is a dynamic error if the pipeline input to the p:run step is not a valid pipeline.</para>
+    </description>
+  </error>
+  <error code="XC0206">
+    <description>
+      <para>It is a dynamic error if the dynamically executed pipeline implicitly or explicitly declares a primary input port with a different name
+        than implicitly or explicitly specified in the p:run invocation.</para>
+    </description>
+  </error>
+  <error code="XC0207">
+    <description>
+      <para>It is a dynamic error if the dynamically executed pipeline implicitly or explicitly declares a primary output port with a different name
+        than implicitly or explicitly specified in the p:run invocation.</para>
+    </description>
+  </error>
+
 </errors>

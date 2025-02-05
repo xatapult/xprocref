@@ -2,7 +2,7 @@
 <step name="css-formatter" version-idref="v30" category-idrefs="paged-media-steps additional-standards" short-description="Renders a document using CSS formating"
   required="false" publish="true" href-specification="{$BASELINK-PAGED-MEDIA-STEPS-V30}#c.css-formatter"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="css paged-media rendering pdf">
 
   <!-- ======================================================================= -->
 

@@ -3,7 +3,8 @@
   short-description="Validates a document using Schematron" required="false" publish="true"
   href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-schematron"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref"
+  keywords="schematron schema validation">
 
   <!-- ======================================================================= -->
 
@@ -143,11 +144,11 @@
   <detail>
     <xi:include href="../../text-fragments/document-properties-preserved-for-result.xml"/>
   </detail>
-  
+
   <detail>
     <xi:include href="../../text-fragments/no-document-properties-except-content-type-for-report.xml"/>
   </detail>
-  
+
   <detail>
     <xi:include href="../../text-fragments/result-port-with-optional-psvi.xml"/>
   </detail>

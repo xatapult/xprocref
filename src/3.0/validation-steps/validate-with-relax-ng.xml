@@ -3,7 +3,8 @@
   short-description="Validate a document using RELAX&#160;NG" required="false" publish="true"
   href-specification="{$BASELINK-VALIDATION-STEPS-V30}#c.validate-with-relax-ng"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref"
+  keywords="relaxng schema validation">
 
   <!-- ======================================================================= -->
   <signature>
@@ -137,37 +138,36 @@
   <!-- ======================================================================= -->
 
   <example title="Basic usage (valid source document)" id="basic-valid">
-    
+
     <para>Assume we have an input document, called <code>input-valid.xml</code>, that looks like this:</para>
     <example-doc href="../../examples/validate-with-relax-ng/input-valid.xml"/>
-    
-    <para>A RELAX&#160;NG schema to validate this is as
-      follows:</para>
+
+    <para>A RELAX&#160;NG schema to validate this is as follows:</para>
     <example-doc href="../../examples/validate-with-relax-ng/example.rng"/>
-    
+
     <para>Performing this validation using the <step/> step returns the following on the <port>report</port> port:</para>
     <xproc-example href="../../examples/validate-with-relax-ng/validate-with-relax-ng-01.xpl" show-source="false"/>
-    
+
   </example>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
+
   <example title="Basic usage (invalid source document)">
-    
-    <para>Using the same RELAX&#160;NG schema as in <example-ref idref="basic-valid"/>, we&#x2019;re now going to validate an <emphasis>in</emphasis>valid
-      document (called <code>input-invalid.xml</code>). Since we want to have a look at what comes out of the <port>report</port> port, we have to set
-      the <option>assert-valid</option> option to <code>false</code>.</para>
-    
+
+    <para>Using the same RELAX&#160;NG schema as in <example-ref idref="basic-valid"/>, we&#x2019;re now going to validate an
+      <emphasis>in</emphasis>valid document (called <code>input-invalid.xml</code>). Since we want to have a look at what comes out of the
+        <port>report</port> port, we have to set the <option>assert-valid</option> option to <code>false</code>.</para>
+
     <example-doc href="../../examples/validate-with-nvdl/input-invalid.xml"/>
-    
+
     <para>Performing this validation using the <step/> step returns the following on the <port>report</port> port:</para>
-    
+
     <xproc-example href="../../examples/validate-with-relax-ng/validate-with-relax-ng-02.xpl" show-source="false"/>
-    
+
   </example>
-  
-<!-- ======================================================================= -->
-  
+
+  <!-- ======================================================================= -->
+
   <step-errors>
     <step-error code="XC0153"/>
     <step-error code="XC0155"/>

@@ -2,7 +2,7 @@
 <step name="markdown-to-html" version-idref="v30" category-idrefs="text-steps additional-standards"
   short-description="Converts a Markdown document into HTML" required="true" publish="true" href-specification="{$BASELINK-TEXT-STEPS-V30}#c.rename"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="markdown html conversion">
 
   <!-- ======================================================================= -->
 
