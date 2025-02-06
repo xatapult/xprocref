@@ -3,7 +3,7 @@
   required="false" publish="true" href-specification="{$BASELINK-OS-STEPS-V30}#c.os-info"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="os operating-system information properties">
 
   <!-- ======================================================================= -->
 

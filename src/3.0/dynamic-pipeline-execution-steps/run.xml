@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="run" version-idref="v30" category-idrefs="dynamic-pipeline-execution" short-description="Runs a dynamically loaded pipeline"
+  required="false" publish="true" href-specification="{$BASELINK-DYNAMIC-PIPELINE-EXECUTION-STEPS-V30}#c.runt"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" keywords="pipeline dynamic execution ">
+
+  <!-- ======================================================================= -->
+
+  <!-- No signature… -->
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step executes a dynamically loaded pipeline within the current pipeline.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+
+    <para>In using XProc, there are cases where it is useful to be able to run a <emphasis>dynamically</emphasis> loaded pipeline. The <step/> step
+      makes this possible. For instance:</para>
+    <itemizedlist>
+      <listitem>
+        <para>Assume you have an XProc pipeline that processes/executes some DSL (Domain Specific Language). This language refers to XProc pipelines
+          (by URI) that need to be executed as part of the DSL processing.</para>
+      </listitem>
+      <listitem>
+        <para>Your pipeline gets so complicated that it becomes easier to dynamically <emphasis>construct</emphasis> another pipeline and run this as
+          part of your main pipeline.</para>
+      </listitem>
+    </itemizedlist>
+    <para>Without <step/>, all this wouldn&#x2019;t be possible. Unfortunately, because various requirements surrounding dynamic pipeline execution,
+      the <step/> step is <emphasis>very</emphasis> different from other steps: it has a totally different set of child elements. Therefore, the step
+      will be explained as if it was a separate XML element:</para>
+    
+    <xdoc:transform href="$xdoc/xml-description.xpl">
+      <xi:include href="../../element-descriptions/p-run.description.xml"/>
+    </xdoc:transform>
+
+    <para>In handling all this, there are quite a few details involved, which are discussed in the sections below. However, in the vast majority of
+      cases, using <step/> is not very difficult. You may want to look at the examples before diving into the details.</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="details-pipeline">
+      <title>Details specifying the pipeline to run</title>
+
+      <para>The pipeline to run (the dynamically executed pipeline) must be provided on the anonymous input port of <step/> (its
+        &#x201c;pipeline&#x201d; port). This must of course be a valid XProc pipeline and it must have a <code>version</code> attribute. </para>
+
+      <para>You connect this anonymous &#x201c;pipeline&#x201d; port by adding a single <tag>p:with-input</tag> child element to the <step/>, without
+        a <code>port</code> attribute. For example, assume there is a step in my pipeline, named <code>pipeline-generating-step</code>, that produces
+        a pipeline on its primary <port>result</port> port. To execute this pipeline using <step/>, I would have to write:</para>
+
+      <programlisting xml:space="preserve"><![CDATA[<p:run>
+  <p:with-input pipe="result@pipeline-generating-step"/>
+  …
+</p:run>]]></programlisting>
+
+      <para>Take care: this anonymous &#x201c;pipeline&#x201d; port is <emphasis>not</emphasis> the primary port of <step/>. So you must
+          <emphasis>always connect it</emphasis>, even if the pipeline to run flows out of the primary output port of the step right before (in XProc
+        terms: even if it is the DRP, the Default Readable Port).</para>
+    </section>
+
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="details-input">
+      <title>Details connecting input ports</title>
+
+      <para>The <tag>p:run-input</tag> element is used to connect the input ports of the dynamically executed pipeline. Its attributes and child
+        elements are almost similar to the standard XProc <tag>p:with-input</tag> element.</para>
+      <para>For example, to connect the primary <port>source</port> input port of the dynamically executed pipeline to some document on disk, you
+        could write:</para>
+
+      <programlisting xml:space="preserve"><![CDATA[<p:run>
+  <p:with-input href="my-dynamic-pipeline.xpl"/>
+  <p:run-input port="source" href="doc.xml"/>
+  …
+</p:run>]]></programlisting>
+
+      <para>There are a few things you need to keep in mind when connecting the input ports of the dynamically executed pipeline:</para>
+
+      <itemizedlist>
+        <listitem>
+
+          <para>The additional boolean <code>primary</code> attribute of <tag>p:run-input</tag> can be used to declare that this port in the
+            dynamically executed pipeline is primary. Its default value depends:</para>
+          <itemizedlist>
+            <listitem>
+              <para>If there is a single <tag>p:run-input</tag> element, its default value is <code>true</code>.</para>
+            </listitem>
+            <listitem>
+              <para>If there are multiple <tag>p:run-input</tag> elements, its default value is <code>false</code>.</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>If the primary input port of the pipeline to run is not explicitly connected to somewhere (in its <tag>p:run-input</tag> element), it
+            gets connected to the default readable port of <step/>.</para>
+        </listitem>
+        <listitem>
+          <para>The name of the primary input port, as declared by the <tag>p:run-input</tag> element of <step/>, <emphasis>must</emphasis> be the
+            same as the name of the primary input port of the dynamically executed step. If not, error <step-error-ref code="XC0206"/> is
+            raised.</para>
+        </listitem>
+        <listitem>
+          <para>Any input ports of the dynamically executed step for which there is no corresponding <tag>p:run-input</tag> element receive an empty
+            connection (<tag>p:empty/</tag>).</para>
+        </listitem>
+        <listitem>
+          <para>Any input ports mentioned in <tag>p:run-input</tag> elements that do not exist in the dynamically executed pipeline are silently
+            ignored.</para>
+        </listitem>
+
+      </itemizedlist>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="details-options">
+      <title>Details specifying options</title>
+
+      <para>Options for the dynamically executed pipeline can be specified using one or more <tag>p:run-option</tag> elements. Its attributes and
+        child elements are almost similar to the standard XProc <tag>p:with-option</tag> element.</para>
+      <para>There are a few additional details to reckon with:</para>
+      <itemizedlist>
+        <listitem>
+          <para>The <tag>p:run-option</tag> element has an additional boolean attribute <code>static</code>, which defaults to <code>false</code>.
+            Using <code>static="true"</code> allows you to specify static options for the pipeline to run.</para>
+        </listitem>
+        <listitem>
+          <para>Any options of the dynamically executed pipeline that are not specified using <tag>p:run-option</tag> are handled as expected: if they
+            are required, an error will be raised, and if not, their default value applies.</para>
+        </listitem>
+        <listitem>
+          <para>Any options set by <tag>p:run-option</tag> that do not exist in the dynamically executed pipeline are silently ignored.</para>
+        </listitem>
+      </itemizedlist>
+
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section xml:id="details-output">
+      <title>Details specifying output ports</title>
+
+      <para>To be able to access the output ports of the dynamically executed pipeline, you have to declare these ports on the <step/> invocation
+        using <tag>p:output</tag> elements. For example, if your dynamic pipeline has a primary <port>result</port> output port and you want to access
+        what comes out of this port in the pipeline that does the <step/>, you <emphasis>must</emphasis> write something like:</para>
+
+      <programlisting xml:space="preserve"><![CDATA[<p:run>
+  <p:with-input href="my-dynamic-pipeline.xpl"/>
+  <p:output port="result" primary="true"/>
+  …
+</p:run>]]></programlisting>
+
+      <para>A few details to consider:</para>
+      <itemizedlist>
+        <listitem>
+          <para>The <tag>p:output</tag> child element of <step/> has the same definition as a normal <tag>p:output</tag> element, but here it may not
+            establish a connection to another port/step in the pipeline. In other words: you cannot use the <code>pipe</code> attribute or a child
+              <tag>p:pipe</tag> element.</para>
+        </listitem>
+        <listitem>
+          <para>The name of the primary output port, as declared by the <tag>p:output</tag> element of <step/>, <emphasis>must</emphasis> be the same
+            as the name of the primary output port of the dynamically executed step. If not, error <step-error-ref code="XC0207"/> is raised.</para>
+        </listitem>
+        <listitem>
+          <para>If the dynamically executed pipeline has output ports that are not declared in <tag>p:output</tag> elements of <step/>, their outputs
+            will be silently discarded.</para>
+        </listitem>
+        <listitem>
+          <para>If the <step/> step declares additional output ports that are not present in the dynamically executed pipeline, their outputs will be
+            empty (<tag>p:empty/</tag>).</para>
+        </listitem>
+      </itemizedlist>
+
+    </section>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <para>What happens with any document-properties depends entirely on how the dynamically executed pipeline handles these.</para>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage" id="basic-usage">
+    <para>Suppose we have some kind of XML content in which we want to dynamically generate other content using XProc pipelines. For example:</para>
+    <example-doc href="../../examples/run/input.xml"/>
+
+    <para>The <tag>generate</tag> elements invokes another pipeline (named in its <code>href-pipeline</code> attribute) using <step/>:</para>
+    <itemizedlist>
+      <listitem>
+        <para>The input to these generator pipelines, on their primary <port>source</port> port, is the <tag>generate</tag> element itself (so it can
+          access any attributes/child elements).</para>
+      </listitem>
+      <listitem>
+        <para>The output of these generator pipelines, on their primary <port>result</port> port, is inserted back into the original document,
+          replacing the <tag>generate</tag> element. </para>
+      </listitem>
+    </itemizedlist>
+
+    <para>For this example, we only use one generator pipeline, called <code>add-them.xpl</code>. This simply adds the attributes <code>a</code> and
+        <code>b</code> and reports about this:</para>
+    <example-doc href="../../examples/run/add-them.xpl"/>
+
+    <xproc-example href="../../examples/run/run-01.xpl" show-source="false">
+      <pipeline-header>
+        <para>The main pipeline and its output are as follows:</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Using options">
+
+    <para>Building on the <example-ref idref="basic-usage"/> example, we&#x2019;re going to add and use an option that specifies the language of the
+      generator output. For now this will only accept <code>nl</code> for Dutch. Any other language will default to English.</para>
+
+    <para>The extended version of the generator pipeline, called <code>add-them-extended.xpl</code>, looks like this:</para>
+    <example-doc href="../../examples/run/add-them-extended.xpl"/>
+
+    <para>Let&#x2019;s generate a Dutch version of our output:</para>
+    <xproc-example href="../../examples/run/run-02.xpl"/>
+
+  </example>
+
+  <!-- ======================================================================= -->
+
+
+  <step-errors>
+    <step-error code="XC0200"/>
+    <step-error code="XC0206"/>
+    <step-error code="XC0207"/>
+  </step-errors>
+</step>

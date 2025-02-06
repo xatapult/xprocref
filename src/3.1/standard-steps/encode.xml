@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <step name="encode" version-idref="v31" category-idrefs="standard-steps misc" short-description="Encodes a document" required="true" publish="true"
-  href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.identity" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  href-specification="{$BASELINK-STANDARD-STEPS-V31}#c.encode" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns="http://www.xtpxlib.nl/ns/xprocref">
 

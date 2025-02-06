@@ -10,7 +10,7 @@
     <!-- Baselinks to the standard: -->
 
     <macrodef name="BASELINK-V30" value="https://spec.xproc.org/3.0/"/>
-    <macrodef name="BASELINK-V31" value="https://spec.xproc.org/lastcall-2024-08/head/"/>
+    <macrodef name="BASELINK-V31" value="https://spec.xproc.org/master/head/"/>
 
     <macrodef name="BASELINK-STANDARD-STEPS-V30" value="{$BASELINK-V30}steps/"/>
     <macrodef name="BASELINK-STANDARD-STEPS-V31" value="{$BASELINK-V31}steps/"/>
@@ -40,6 +40,10 @@
 
     <macrodef name="BASELINK-IXML-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}ixml/"/>
     <macrodef name="BASELINK-IXML-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}ixml/"/>
+
+    <macrodef name="BASELINK-DYNAMIC-PIPELINE-EXECUTION-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}run/"/>
+    <macrodef name="BASELINK-DYNAMIC-PIPELINE-EXECUTION-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}run/"/>
+
 
   </macrodefs>
 
@@ -121,6 +125,7 @@
     <xi:include href="3.0/text-steps.3.0.stepgroup.xml"/>
     <xi:include href="3.0/validation-steps.3.0.stepgroup.xml"/>
     <xi:include href="3.0/ixml-steps.3.0.stepgroup.xml"/>
+    <xi:include href="3.0/dynamic-pipeline-execution-steps.3.0.stepgroup.xml"/>
 
     <!-- 3.1: -->
     <xi:include href="3.1/standard-steps.3.1.stepgroup.xml"/>
@@ -131,6 +136,7 @@
     <xi:include href="3.1/text-steps.3.1.stepgroup.xml"/>
     <xi:include href="3.1/validation-steps.3.1.stepgroup.xml"/>
     <xi:include href="3.1/ixml-steps.3.1.stepgroup.xml"/>
+    <xi:include href="3.1/dynamic-pipeline-execution-steps.3.1.stepgroup.xml"/>
 
   </steps>
 

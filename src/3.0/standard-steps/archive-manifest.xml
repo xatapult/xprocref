@@ -2,7 +2,7 @@
 <step name="archive-manifest" version-idref="v30" category-idrefs="standard-steps archive compress"
   short-description="Create an XML manifest document describing the contents of an archive file" required="true" publish="true"
   href-specification="{$BASELINK-STANDARD-STEPS-V30}#c.archive-manifest" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" 
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="archive zip manifest description contents">
 

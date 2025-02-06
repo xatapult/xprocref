@@ -1,5 +1,5 @@
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0">
-  
+
   <p:input port="source">
     <p:inline>
       <emx:Message xmlns:emx="URN:ietf:params:email-xml:" xmlns:rfc822="URN:ietf:params:rfc822:">
@@ -27,9 +27,9 @@
       </emx:Message>
     </p:inline>
   </p:input>
-  
+
   <p:output port="result"/>
-  
+
   <p:send-mail>
     <p:with-option name="auth" select="map{
       'username': '…', 
@@ -41,5 +41,5 @@
       'port': …   
     }"/>
   </p:send-mail>
-  
+
 </p:declare-step>

@@ -25,8 +25,7 @@
   <!-- ======================================================================= -->
 
   <summary>
-    <para>The <step/> step makes a verbatim copy of what appears on its <port>source</port> port to its <port>result</port>
-      port.</para>
+    <para>The <step/> step makes a verbatim copy of what appears on its <port>source</port> port to its <port>result</port> port.</para>
   </summary>
 
   <!-- ======================================================================= -->

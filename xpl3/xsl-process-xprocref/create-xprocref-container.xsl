@@ -39,7 +39,7 @@
   <xsl:variable name="namespace-docbook" as="xs:string" select="'http://docbook.org/ns/docbook'"/>
 
   <xsl:variable name="namespaces-leave-unchanged" as="xs:string+" select="($namespace-docbook, $namespace-xdoc)"/>
-  
+
   <xsl:variable name="wip-text" as="xs:string" select="normalize-space(doc('../../data/wip-text.xml')/*)"/>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -383,7 +383,8 @@
       <xsl:with-param name="prev-next" select="local:get-prev-next($stepref-elm)"/>
       <xsl:with-param name="title" select="$step-full-name || ' (' || $version-name || ')'"/>
       <xsl:with-param name="test-version-remark" select="'step published: ' || xtlc:str2bln($step-elm/@publish, false())"/>
-      <xsl:with-param name="keywords" select="('step', $step-full-name, substring-after($step-full-name, $xpref:default-namespace-prefix || ':'), $step-elm/@keywords)"/>
+      <xsl:with-param name="keywords"
+        select="('step', $step-full-name, substring-after($step-full-name, $xpref:default-namespace-prefix || ':'), $step-elm/@keywords)"/>
       <xsl:with-param name="content">
         <!-- The short description to start with: -->
         <db:para>{local:description($step-elm/@short-description)}</db:para>
@@ -585,35 +586,40 @@
   <xsl:template name="create-step-signature">
     <xsl:param name="step-id" as="xs:string" required="true"/>
 
-    <xsl:variable name="signature-elm" as="element(xpref:signature)" select="$step-id-to-elm($step-id)/xpref:signature"/>
+    <xsl:variable name="signature-elm" as="element(xpref:signature)?" select="$step-id-to-elm($step-id)/xpref:signature"/>
 
-    <xsl:variable name="lines" as="xs:string+">
-      <xsl:sequence select="'&lt;p:declare-step type=&quot;' || local:step-full-name($step-id) || '&quot;&gt;'"/>
-      <!-- Primary ports: -->
-      <xsl:for-each select="($signature-elm/(xpref:input | xpref:output))[xs:boolean(@primary)]">
-        <xsl:sort select="local-name(.)"/>
-        <xsl:variable name="add-empty" as="xs:boolean" select="exists(self::xpref:input) and xtlc:str2bln(@empty, false())"/>
-        <xsl:sequence select="local:declare-step-sub-element-to-string(., (@port, @primary), (@empty), $add-empty)"/>
-      </xsl:for-each>
-      <!-- Non-primary ports: -->
-      <xsl:for-each select="($signature-elm/(xpref:input | xpref:output))[not(xs:boolean(@primary))]">
-        <xsl:sort select="local-name(.)"/>
-        <xsl:sort select="xs:string(@port)"/>
-        <xsl:variable name="add-empty" as="xs:boolean" select="exists(self::xpref:input) and xtlc:str2bln(@empty, false())"/>
-        <xsl:sequence select="local:declare-step-sub-element-to-string(., (@port, @primary), (@empty), $add-empty)"/>
-      </xsl:for-each>
-      <!-- Options: -->
-      <xsl:for-each select="$signature-elm/xpref:option">
-        <xsl:sort select="string(@required)" order="descending"/>
-        <xsl:sort select="xs:string(@name)"/>
-        <xsl:sequence select="local:declare-step-sub-element-to-string(., (@name, @as, @required, @select), (@subtype))"/>
-      </xsl:for-each>
-      <xsl:sequence select="'&lt;/p:declare-step&gt;'"/>
-    </xsl:variable>
+    <xsl:if test="exists($signature-elm)">
 
-    <db:programlisting role="step-signature">
-      <xsl:value-of select="string-join($lines, $lf)"/>
-    </db:programlisting>
+      <xsl:variable name="lines" as="xs:string+">
+        <xsl:sequence select="'&lt;p:declare-step type=&quot;' || local:step-full-name($step-id) || '&quot;&gt;'"/>
+        <!-- Primary ports: -->
+        <xsl:for-each select="($signature-elm/(xpref:input | xpref:output))[xs:boolean(@primary)]">
+          <xsl:sort select="local-name(.)"/>
+          <xsl:variable name="add-empty" as="xs:boolean" select="exists(self::xpref:input) and xtlc:str2bln(@empty, false())"/>
+          <xsl:sequence select="local:declare-step-sub-element-to-string(., (@port, @primary), (@empty), $add-empty)"/>
+        </xsl:for-each>
+        <!-- Non-primary ports: -->
+        <xsl:for-each select="($signature-elm/(xpref:input | xpref:output))[not(xs:boolean(@primary))]">
+          <xsl:sort select="local-name(.)"/>
+          <xsl:sort select="xs:string(@port)"/>
+          <xsl:variable name="add-empty" as="xs:boolean" select="exists(self::xpref:input) and xtlc:str2bln(@empty, false())"/>
+          <xsl:sequence select="local:declare-step-sub-element-to-string(., (@port, @primary), (@empty), $add-empty)"/>
+        </xsl:for-each>
+        <!-- Options: -->
+        <xsl:for-each select="$signature-elm/xpref:option">
+          <xsl:sort select="string(@required)" order="descending"/>
+          <xsl:sort select="xs:string(@name)"/>
+          <xsl:sequence select="local:declare-step-sub-element-to-string(., (@name, @as, @required, @select), (@subtype))"/>
+        </xsl:for-each>
+        <xsl:sequence select="'&lt;/p:declare-step&gt;'"/>
+      </xsl:variable>
+
+      <db:programlisting role="step-signature">
+        <xsl:value-of select="string-join($lines, $lf)"/>
+      </db:programlisting>
+
+    </xsl:if>
+
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -669,131 +675,134 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template name="create-step-tables">
-    <xsl:param name="signature-elm" as="element(xpref:signature)" required="true"/>
+    <xsl:param name="signature-elm" as="element(xpref:signature)?" required="true"/>
 
-    <!-- Ports: -->
-    <db:para role="table-header">Ports:</db:para>
-    <db:table role="nonumber ports-table">
-      <db:title/>
-      <db:tgroup cols="6">
-        <db:thead>
-          <db:row>
-            <db:entry>
-              <db:para>Port</db:para>
-            </db:entry>
-            <db:entry>
-              <db:para>Type</db:para>
-            </db:entry>
-            <db:entry>
-              <db:para>Primary?</db:para>
-            </db:entry>
-            <db:entry>
-              <db:para>Content types</db:para>
-            </db:entry>
-            <db:entry>
-              <db:para>Seq?</db:para>
-            </db:entry>
-            <db:entry>
-              <db:para>Description</db:para>
-            </db:entry>
-          </db:row>
-        </db:thead>
-        <db:tbody>
-          <!-- Primary ports: -->
-          <xsl:for-each select="($signature-elm/(xpref:input | xpref:output))[xs:boolean(@primary)]">
-            <xsl:sort select="local-name(.)"/>
-            <xsl:call-template name="create-port-table-row"/>
-          </xsl:for-each>
-          <!-- Non-primary ports: -->
-          <xsl:for-each select="($signature-elm/(xpref:input | xpref:output))[not(xs:boolean(@primary))]">
-            <xsl:sort select="local-name(.)"/>
-            <xsl:sort select="xs:string(@port)"/>
-            <xsl:call-template name="create-port-table-row"/>
-          </xsl:for-each>
-        </db:tbody>
-      </db:tgroup>
-    </db:table>
-
-    <!-- Options (if any): -->
-    <xsl:variable name="option-elms" as="element(xpref:option)*" select="$signature-elm/xpref:option"/>
-    <xsl:if test="exists($option-elms)">
-      <xsl:variable name="has-selects" as="xs:boolean" select="exists($option-elms/@select)"/>
-      <db:para role="table-header">Options:</db:para>
-      <db:table role="nonumber options-table">
+    <xsl:if test="exists($signature-elm)">
+      <!-- Ports: -->
+      <db:para role="table-header">Ports:</db:para>
+      <db:table role="nonumber ports-table">
         <db:title/>
         <db:tgroup cols="6">
           <db:thead>
             <db:row>
               <db:entry>
-                <db:para>Name</db:para>
+                <db:para>Port</db:para>
               </db:entry>
               <db:entry>
                 <db:para>Type</db:para>
               </db:entry>
               <db:entry>
-                <db:para>Req?</db:para>
+                <db:para>Primary?</db:para>
               </db:entry>
-              <xsl:if test="$has-selects">
-                <db:entry>
-                  <db:para>Default</db:para>
-                </db:entry>
-              </xsl:if>
+              <db:entry>
+                <db:para>Content types</db:para>
+              </db:entry>
+              <db:entry>
+                <db:para>Seq?</db:para>
+              </db:entry>
               <db:entry>
                 <db:para>Description</db:para>
               </db:entry>
             </db:row>
           </db:thead>
           <db:tbody>
-
-            <xsl:for-each select="$option-elms">
-              <xsl:sort select="string(@required)" order="descending"/>
-              <xsl:sort select="xs:string(@name)"/>
-              <db:row>
-                <db:entry>
-                  <db:para>
-                    <db:code>
-                      <xsl:value-of select="@name"/>
-                    </db:code>
-                  </db:para>
-                </db:entry>
-                <db:entry>
-                  <db:para>
-                    <db:code>
-                      <xsl:value-of select="@as"/>
-                    </db:code>
-                    <xsl:if test="exists(@subtype)">
-                      <xsl:text> (</xsl:text>
-                      <xsl:value-of select="local:option-subtype-description(@subtype)"/>
-                      <xsl:text>)</xsl:text>
-                    </xsl:if>
-                  </db:para>
-                </db:entry>
-                <db:entry>
-                  <db:para>
-                    <db:code>
-                      <xsl:value-of select="@required"/>
-                    </db:code>
-                  </db:para>
-                </db:entry>
-                <xsl:if test="$has-selects">
-                  <db:entry>
-                    <db:para>
-                      <db:code>
-                        <xsl:value-of select="(local:polish-default-option-value(@select), '&#160;')[1]"/>
-                      </db:code>
-                    </db:para>
-                  </db:entry>
-                </xsl:if>
-                <db:entry>
-                  <xsl:call-template name="process-text">
-                    <xsl:with-param name="surrounding-elm" select="xpref:description"/>
-                  </xsl:call-template>
-                </db:entry>
-              </db:row>
+            <!-- Primary ports: -->
+            <xsl:for-each select="($signature-elm/(xpref:input | xpref:output))[xs:boolean(@primary)]">
+              <xsl:sort select="local-name(.)"/>
+              <xsl:call-template name="create-port-table-row"/>
+            </xsl:for-each>
+            <!-- Non-primary ports: -->
+            <xsl:for-each select="($signature-elm/(xpref:input | xpref:output))[not(xs:boolean(@primary))]">
+              <xsl:sort select="local-name(.)"/>
+              <xsl:sort select="xs:string(@port)"/>
+              <xsl:call-template name="create-port-table-row"/>
             </xsl:for-each>
           </db:tbody>
         </db:tgroup>
       </db:table>
+
+      <!-- Options (if any): -->
+      <xsl:variable name="option-elms" as="element(xpref:option)*" select="$signature-elm/xpref:option"/>
+      <xsl:if test="exists($option-elms)">
+        <xsl:variable name="has-selects" as="xs:boolean" select="exists($option-elms/@select)"/>
+        <db:para role="table-header">Options:</db:para>
+        <db:table role="nonumber options-table">
+          <db:title/>
+          <db:tgroup cols="6">
+            <db:thead>
+              <db:row>
+                <db:entry>
+                  <db:para>Name</db:para>
+                </db:entry>
+                <db:entry>
+                  <db:para>Type</db:para>
+                </db:entry>
+                <db:entry>
+                  <db:para>Req?</db:para>
+                </db:entry>
+                <xsl:if test="$has-selects">
+                  <db:entry>
+                    <db:para>Default</db:para>
+                  </db:entry>
+                </xsl:if>
+                <db:entry>
+                  <db:para>Description</db:para>
+                </db:entry>
+              </db:row>
+            </db:thead>
+            <db:tbody>
+
+              <xsl:for-each select="$option-elms">
+                <xsl:sort select="string(@required)" order="descending"/>
+                <xsl:sort select="xs:string(@name)"/>
+                <db:row>
+                  <db:entry>
+                    <db:para>
+                      <db:code>
+                        <xsl:value-of select="@name"/>
+                      </db:code>
+                    </db:para>
+                  </db:entry>
+                  <db:entry>
+                    <db:para>
+                      <db:code>
+                        <xsl:value-of select="@as"/>
+                      </db:code>
+                      <xsl:if test="exists(@subtype)">
+                        <xsl:text> (</xsl:text>
+                        <xsl:value-of select="local:option-subtype-description(@subtype)"/>
+                        <xsl:text>)</xsl:text>
+                      </xsl:if>
+                    </db:para>
+                  </db:entry>
+                  <db:entry>
+                    <db:para>
+                      <db:code>
+                        <xsl:value-of select="@required"/>
+                      </db:code>
+                    </db:para>
+                  </db:entry>
+                  <xsl:if test="$has-selects">
+                    <db:entry>
+                      <db:para>
+                        <db:code>
+                          <xsl:value-of select="(local:polish-default-option-value(@select), '&#160;')[1]"/>
+                        </db:code>
+                      </db:para>
+                    </db:entry>
+                  </xsl:if>
+                  <db:entry>
+                    <xsl:call-template name="process-text">
+                      <xsl:with-param name="surrounding-elm" select="xpref:description"/>
+                    </xsl:call-template>
+                  </db:entry>
+                </db:row>
+              </xsl:for-each>
+            </db:tbody>
+          </db:tgroup>
+        </db:table>
+      </xsl:if>
+      
     </xsl:if>
 
   </xsl:template>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<step name="xsl-formatter" version-idref="v30" category-idrefs="paged-media-steps additional-standards" short-description="Renders an XSL-FO document" required="false"
-  publish="true" href-specification="{$BASELINK-PAGED-MEDIA-STEPS-V30}#c.xsl-formatter"
+<step name="xsl-formatter" version-idref="v30" category-idrefs="paged-media-steps additional-standards" short-description="Renders an XSL-FO document"
+  required="false" publish="true" href-specification="{$BASELINK-PAGED-MEDIA-STEPS-V30}#c.xsl-formatter"
   xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref"
+  keywords="xsl-fo paged-media formatting-objects rendering pdf">
 
   <!-- ======================================================================= -->
 

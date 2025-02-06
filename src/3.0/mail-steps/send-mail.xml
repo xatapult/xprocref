@@ -2,7 +2,7 @@
 <step name="send-mail" version-idref="v30" category-idrefs="mail-steps env" short-description="Sends an email message" required="false" publish="true"
   href-specification="{$BASELINK-MAIL-STEPS-V30}#c.send-mail" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns="http://www.xtpxlib.nl/ns/xprocref">
+  xmlns="http://www.xtpxlib.nl/ns/xprocref" keywords="mail smtp">
 
   <signature>
 

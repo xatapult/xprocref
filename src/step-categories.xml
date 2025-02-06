@@ -41,6 +41,10 @@
     <description>XProc steps that deal with the processing of Invisible XML. An XProc processor is not required to support these.</description>
   </category>
 
+  <category id="dynamic-pipeline-execution" name="XProc dynamic pipeline execution steps" primary="true" keywords="dynamic pipeline">
+    <description>XProc steps that deal with dynamic execution of pipelines (running pipelines inside another pipeline).</description>
+  </category>
+  
   <!-- ======================================================================= -->
   <!-- SECONDARY CATEGORIES: -->
 
