@@ -98,10 +98,12 @@
       <menu-entry caption="home" href="{xpref:href-combine($homedir-path, (), $xpref:name-home-page)}"/>
       <menu-entry caption="categories" href="{xpref:href-combine($homedir-path, $last-version-name, $xpref:name-categories-overview-page)}"/>
       <menu-entry caption="info">
-        <submenu-entry caption="versions" href="{xpref:href-combine($homedir-path, (), $xpref:name-versions-overview-page)}"/>
-        <submenu-entry caption="error codes" href="{xpref:href-combine($homedir-path, (), $xpref:name-error-codes-overview-page)}"/>
-        <submenu-entry caption="namespaces" href="{xpref:href-combine($homedir-path, (), $xpref:name-namespaces-overview-page)}"/>
+        <submenu-entry caption="Versions" href="{xpref:href-combine($homedir-path, (), $xpref:name-versions-overview-page)}"/>
+        <submenu-entry caption="Error codes" href="{xpref:href-combine($homedir-path, (), $xpref:name-error-codes-overview-page)}"/>
+        <submenu-entry caption="Namespaces" href="{xpref:href-combine($homedir-path, (), $xpref:name-namespaces-overview-page)}"/>
         <submenu-entry caption="XProc" href="https://xproc.org"/>
+        <submenu-entry caption="Site GitHub" href="https://github.com/xatapult/xprocref"/>
+        <submenu-entry caption="Site issues" href="https://github.com/xatapult/xprocref/issues"/>
       </menu-entry>
       <menu-entry caption="about" href="{xpref:href-combine($homedir-path, (), $xpref:name-about-page)}"/>
     </menu>
