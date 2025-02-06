@@ -14,33 +14,39 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <choice occurs="*">
+  <choice occurs="1">
 
     <element name="p:with-input" occurs="1">
       <description>
         <para>Anonymous input port that receives the pipeline to run. This is <emphasis>not</emphasis> the step&#x2019;s primary port!</para>
-        <para>Its attributes and child elements are like any other XProc <tag>p:with-input</tag> element, except that, since the port is anonymous, it
-          does not have a <code>port</code> attribute.</para>
+        <para>Its attributes and child elements are similar to the standard XProc <tag>p:with-input</tag> element, except that, since the port is
+          anonymous, it does not have a <code>port</code> attribute.</para>
+        <para>See also <xref linkend="details-pipeline"/>.</para>
       </description>
     </element>
 
-    <element name="run-input" occurs="1">
+    <element name="run-input" occurs="*">
       <description>
-        <para>Element for passing inputs to the pipeline being run.</para>
+        <para>Element for connecting the input ports of the pipeline being run.</para>
+        <para>Its attributes and child elements are similar to the standard XProc <tag>p:with-input</tag> element, except that it has an additional
+          boolean <code>primary</code> attribute.</para>
+        <para>See also <xref linkend="details-input"/>.</para>
       </description>
     </element>
 
-    <element name="run-option" occurs="1">
+    <element name="run-option" occurs="*">
       <description>
         <para>Element for passing options to the pipeline being run.</para>
+        <para>Its attributes and child elements are similar to the standard XProc <tag>p:with-option</tag> element, except that it has an additional
+          boolean <code>static</code> attribute.</para>
+        <para>See also <xref linkend="details-options"/>.</para>
       </description>
     </element>
 
-    <element name="output">
+    <element name="output" occurs="*">
       <description>
         <para>Element that declares an output port of the pipeline being run.</para>
-        <para>Its attributes and child elements are like any other XProc <tag>p:output</tag> element. Port names used must be the same as for the output
-          ports of the step being run.</para>
+        <para>See also <xref linkend="details-output"/>.</para>
       </description>
     </element>
   </choice>
