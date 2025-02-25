@@ -87,7 +87,8 @@
 
     <para>The <step/> step provides you with an overview of the contents of a directory, similar to a Windows <code>dir</code> or a Unix/Linux/macOS
         <code>ls</code> command. This often comes in handy, for instance when you need to perform some operation on <emphasis>all</emphasis> files in
-      a directory (or a directory tree). The <example-ref idref="handling-all"/> example gives an example of how to do this.</para>
+      a directory (or a directory tree). The examples <example-ref idref="handling-all-A"/> and <example-ref idref="handling-all-B"/> show how you
+      could do this.</para>
 
     <para>The <step/> step takes a directory path as its main input in the <option>path</option> option. The <port>result</port> port emits a document
       (see <xref linkend="result-doc"/>) that describes this directory by listing its contents (files and subdirectories). What happens exactly
@@ -273,17 +274,35 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <example title="Handling all files in a directory" id="handling-all">
+  <example title="Handling all files in a directory (A)" id="handling-all-A">
 
     <para>Again, the following examples work on the same directory structure as described in <example-ref idref="example-basic"/>. Assume we need to
       do something with all XML documents in the <code>data</code> directory. Using <step/> we can easily get the names of these files. However, to
-      process them we will need to load them, and for that its handy if we have their full absolute URIs. These can be added using the <step-ref
-        name="p:make-absolute-uris"/> step and change the <code>name</code> attributes into full URIs:</para>
+      process them we will need to load them, and for that its handy if we have their full absolute URIs. </para>
+
+    <para>There are several ways to do this. One, using the <step-ref name="p:make-absolute-uris"/> step, is shown in this example. Another one is
+      shown in the <example-ref idref="handling-all-B"/> example below.</para>
+
+    <para role="break-before">Using the <step-ref name="p:make-absolute-uris"/> step we can change the <code>name</code> attributes into full
+      URIs:</para>
     <xproc-example href="../../examples/directory-list/directory-list-08.xpl" show-source="false" keep-from="data"/>
 
     <para>We can now use this result to process all the XML documents. The following pipeline simply loads them (using <step-ref name="p:load"/>), and
       wraps all contents (using <step-ref name="p:wrap-sequence"/>) in an <tag>all-xml-documents</tag> element:</para>
     <xproc-example href="../../examples/directory-list/directory-list-09.xpl" show-source="false" keep-from="data"/>
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Handling all files in a directory (B)" id="handling-all-B">
+
+    <para>Another way to approach the problem in example <example-ref idref="handling-all-A"/> is using the XPath <link role="newpage"
+        xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-base-uri"><code>base-uri()</code></link> function on the <tag>c:file</tag>
+      elements. This works because all <tag>c:directory</tag> and <tag>c:file</tag> elements in the result of <step/> have an <code>xml:base</code>
+      attribute. These together make the base URIs of the <tag>c:file</tag> elements the URIs of the documents referenced.</para>
+
+    <xproc-example href="../../examples/directory-list/directory-list-10.xpl" show-source="false" keep-from="data"/>
+
   </example>
 
   <!-- ======================================================================= -->

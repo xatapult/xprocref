@@ -419,14 +419,11 @@
     </meta>
     <projectTree name="xprocref.xpr">
         <folder path="../"/>
+        <folder path="../../xtools/"/>
         <folder path="../../xtpxlib-common/"/>
         <folder path="../../xtpxlib-container/"/>
         <folder path="../../xtpxlib-xdoc/"/>
         <folder path="../../../xproc-3/3.0-steps/"/>
         <folder path="../../../../../../xdata/"/>
-        <file name="../src/3.0/os-steps/os-exec.xml"/>
-        <file name="../src/3.0/os-steps/os-info.xml"/>
-        <file name="../src/3.0/os-steps.3.0.stepgroup.xml"/>
-        <file name="../../../xproc-3/xproc-wikipedia.txt"/>
     </projectTree>
 </project>

@@ -44,7 +44,8 @@
         <para>This option can supply a map with <link xlink:href="https://www.w3.org/TR/xslt-xquery-serialization-31/" role="newpage">serialization
             properties</link> for serializing the document on the <port>source</port> port, before encoding takes place.</para>
         <xi:include href="../../text-fragments/merge-serialization-properties.xml"/>
-        <para>Example: <code>serialization="map{'indent':&#160;false()}"</code></para>
+        <para>Example: <code>serialization="map{'indent':&#160;false()}"</code>. See also the <example-ref idref="effect-serialization"/>
+          example.</para>
       </description>
     </option>
 
@@ -65,8 +66,8 @@
         <tag>c:data</tag> element can be found <link xlink:href="https://xprocref.org/3.1/p.cast-content-type.html#c-data" role="newpage"
       >here</link>.</para>
 
-    <para>There is no <code>p:decode</code> step. Decoding (of <tag>c:data</tag> elements) is performed by the <step-ref name="p:cast-content-type"
-      />.</para>
+    <para>There is no <code>p:decode</code> step. Decoding (of <tag>c:data</tag> elements) is performed by the <step-ref name="p:cast-content-type"/>
+      step.</para>
   </description>
 
   <!-- ======================================================================= -->
@@ -74,6 +75,42 @@
   <detail>
     <xi:include href="../../text-fragments/no-document-properties-except-content-type.xml"/>
   </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <para>Assume we have a simple input text document that looks like this:</para>
+    <example-doc href="../../examples/encode/input-01.txt"/>
+
+    <xproc-example href="../../examples/encode/encode-01.xpl" show-source="false">
+      <pipeline-header>
+        <para>Feeding this to <step/> results in the following:</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <example title="Effect of serialization" id="effect-serialization">
+
+    <para>When encoding an XML document, this is serialized first (as if written to disk). The result of the serialization therefore has an effect on
+      the outcome, as shown in the two examples below.</para>
+    
+    <xproc-example href="../../examples/encode/encode-02.xpl">
+      <pipeline-header>
+        <para>Encoding <emphasis>with</emphasis> indenting:</para>
+      </pipeline-header>
+    </xproc-example>
+    
+    <xproc-example href="../../examples/encode/encode-03.xpl" show-source="false">
+      <pipeline-header>
+        <para>Encoding <emphasis>without</emphasis> indenting (using the same input document as in the example above):</para>
+      </pipeline-header>
+    </xproc-example>
+
+  </example>
 
   <!-- ======================================================================= -->
 
