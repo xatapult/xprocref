@@ -21,9 +21,9 @@
 
   <!-- ================================================================== -->
 
-  <p:variable name="limit-to-steps" as="xs:string*" select="('run')"/>
+  <p:variable name="limit-to-steps" as="xs:string*" select="('directory-list')"/>
 
-  <xpref:process-xprocref production-version="false" wip="false">
+  <xpref:process-xprocref production-version="false" wip="false" >
     <p:with-option name="limit-to-steps" select="$limit-to-steps"/>
     <p:with-option name="href-build-location" select="resolve-uri('../build', static-base-uri())"/>
   </xpref:process-xprocref>
