@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step name="message" version-idref="v31" category-idrefs="standard-steps misc" short-description="Produces a message" required="true" publish="true"
+  href-specification="{$BASELINK-STANDARD-STEPS-V31}#c.message" xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.xtpxlib.nl/ns/xprocref">
+
+  <!-- ======================================================================= -->
+
+  <signature>
+
+    <input port="source" sequence="true" content-types="any" primary="true">
+      <description>
+        <para>The source document(s)</para>
+      </description>
+    </input>
+
+    <output port="result" sequence="true" content-types="any" primary="true">
+      <description>
+        <para>The resulting document(s). These will be exactly the same as what appeared on the <port>source</port> port.</para>
+      </description>
+    </output>
+
+    <option name="select" required="true" as="item()*" subtype="XPathExpression">
+      <description>
+        <para>The message to produce</para>
+      </description>
+    </option>
+
+    <option name="test" required="false" as="xs:boolean" select="true()">
+      <description>
+        <para>If <code>true</code>, the message in the <option>select</option> attribute is produced.</para>
+      </description>
+    </option>
+
+  </signature>
+
+  <!-- ======================================================================= -->
+
+  <summary>
+    <para>The <step/> step produces a message that is, usually, printed on the console. The effect (when the <option>test</option> option is
+        <code>true</code>) is the same as using a <code>message</code>/<code>p:message</code> attribute on a step.</para>
+  </summary>
+
+  <!-- ======================================================================= -->
+
+  <description>
+    <para>Steps in general can produce messages by using the <code>message</code> (for steps in the XProc namespace) or <code>p:message</code> (for
+      steps in other namespaces) attribute. What &#x201c;produce&#x201d; here actually means is implementation-defined and therefore depends on the
+      XProc processor used. However, usually it means &#x201c;printed on the console&#x201d; and/or &#x201c;output through
+      <code>stdout</code>&#x201d;: a command-line message appears when the processor executes the step.</para>
+
+    <para>The <step/> step is an alternative way to produce these messages. When the <option>test</option> option is <code>true</code> (default), the
+      expression in the <code>select</code> option is evaluated and the result is produced/shown, as a message. If the <option>test</option> option is
+        <code>false</code>, nothing happens.</para>
+
+    <para>The step itself, irrespective of the value of the <option>test</option> option, simply passes what it gets on its <port>source</port> port
+      unaltered to its <port>result</port> port. In other words, it acts as a <step-ref name="p:identity"/> step.</para>
+
+  </description>
+
+  <!-- ======================================================================= -->
+
+  <detail>
+    <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
+  </detail>
+
+  <!-- ======================================================================= -->
+
+  <example title="Basic usage">
+
+    <para>Assume you have a pipeline that does some preliminary things (getting documents, computing variables, etc.) and then starts the real
+      computation of something. In-between you want a message that says the computation has started, but only when enabled by an option. Here is an
+      example of how to do this using the <step/> step:</para>
+
+    <example-doc href="../../examples/message/message-01.xpl"/>
+
+    <para role="break-before">It is certainly possible to implement this without the <step/> step, using a <step-ref name="p:identity"/> step with a
+        <code>message</code> attribute:</para>
+
+    <example-doc href="../../examples/message/message-02.xpl"/>
+
+    <para role="break-before">Please notice the differences between the two examples:</para>
+    <itemizedlist>
+      <listitem>
+        <para>In the first example the on/off switch for the message, here the <code>debug-messages-on</code> option, is <emphasis>dynamic</emphasis>.
+          It can be computed/set during run-time, if necessary.</para>
+        <para>However, in the second example, this on/off switch is referenced in a <code>use-when</code> attribute. All <code>use-when</code>
+          attributes are evaluated during compile-time, and therefore the <code>debug-messages-on</code> option must be <emphasis>static</emphasis>
+          (hence its <code>static="true"</code> attribute). The only time you can change/set this option, and turn messages on/off, is when invoking
+          the pipeline.</para>
+      </listitem>
+      <listitem>
+        <para>The <option>select</option> option of the <step/> step is an XPath expression. The value of the <code>message</code> attribute is an AVT
+          (Attribute-Value Template). This results in a very different syntax, while the result is identical.</para>
+      </listitem>
+    </itemizedlist>
+  </example>
+
+</step>

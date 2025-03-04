@@ -28,6 +28,7 @@
   <xi:include href="standard-steps/label-elements.xml"/>
   <xi:include href="standard-steps/load.xml"/>
   <xi:include href="standard-steps/make-absolute-uris.xml"/>
+  <xi:include href="standard-steps/message.xml"/>
   <xi:include href="standard-steps/namespace-delete.xml"/>
   <xi:include href="standard-steps/namespace-rename.xml"/>
   <xi:include href="standard-steps/pack.xml"/>
