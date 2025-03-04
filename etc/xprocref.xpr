@@ -419,6 +419,7 @@
     </meta>
     <projectTree name="xprocref.xpr">
         <folder path="../"/>
+        <folder path="../../xtools/"/>
         <folder path="../../xtpxlib-common/"/>
         <folder path="../../xtpxlib-container/"/>
         <folder path="../../xtpxlib-xdoc/"/>
