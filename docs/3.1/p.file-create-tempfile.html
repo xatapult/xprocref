@@ -27,7 +27,7 @@
   
   &lt;p:file-create-tempfile href="build/" delete-on-exit="true"/&gt;
 
-&lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;c:result xmlns:c="http://www.w3.org/ns/xproc-step"&gt;file:/…/…/build/5795085554717387848.tmp&lt;/c:result&gt;</pre></div></div><div class="sect3" id="p_file-create-tempfile-v31-set-extension"><a name="p_file-create-tempfile-v31-set-extension"><!----></a><h3 class="sect3">Specifying the temporary file’s extension</h3><p class="para">The following example creates a temporary file with a specific <code class="code">.xml</code> extension in the (existing) <code class="code">build/</code>
+&lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;c:result xmlns:c="http://www.w3.org/ns/xproc-step"&gt;file:/…/…/build/8504649232452315974.tmp&lt;/c:result&gt;</pre></div></div><div class="sect3" id="p_file-create-tempfile-v31-set-extension"><a name="p_file-create-tempfile-v31-set-extension"><!----></a><h3 class="sect3">Specifying the temporary file’s extension</h3><p class="para">The following example creates a temporary file with a specific <code class="code">.xml</code> extension in the (existing) <code class="code">build/</code>
       subdirectory. In this case we don’t specify that the file must get deleted after the pipeline finishes. Because of the explicit
         <code class="code">.xml</code> extension, it will be easy to open and inspect the file using your XML editor, if needed.</p><p class="para keep-with-next">Pipeline document:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
 
@@ -35,7 +35,7 @@
   
   &lt;p:file-create-tempfile href="build/" suffix=".xml"/&gt;
 
-&lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;c:result xmlns:c="http://www.w3.org/ns/xproc-step"&gt;file:/…/…/build/9701337432831039157.xml&lt;/c:result&gt;</pre></div></div><div class="sect3" id="sect3-d645e12982"><a name="sect3-d645e12982"><!----></a><h3 class="sect3">Using a temporary file</h3><p class="para">Of course, just creating a temporary file is not very useful. You’ll want to write some data to it. The following example shows you
+&lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;c:result xmlns:c="http://www.w3.org/ns/xproc-step"&gt;file:/…/…/build/5306578919459089791.xml&lt;/c:result&gt;</pre></div></div><div class="sect3" id="sect3-d645e12982"><a name="sect3-d645e12982"><!----></a><h3 class="sect3">Using a temporary file</h3><p class="para">Of course, just creating a temporary file is not very useful. You’ll want to write some data to it. The following example shows you
       how to do this: the document appearing on the <code class="code port">source</code> port is written to the temporary file. This is not very useful in itself but
       it shows how you can “catch” the created temporary file URI and use this in a subsequent step.</p><p class="para keep-with-next">Pipeline document:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0" name="example-pipeline"&gt;
 

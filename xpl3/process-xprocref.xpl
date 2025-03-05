@@ -336,19 +336,21 @@
   </p:xslt>
 
   <!-- Write the container to disk: -->
-  <xtlcon:container-to-disk remove-target="false" p:message="  * Writing to target">
+  <xtlcon:container-to-disk remove-target="false" p:message="  * Writing to target" name="container-to-disk">
     <p:with-option name="href-target-path" select="$href-build-location"/>
   </xtlcon:container-to-disk>
 
-  <p:variable name="duration" as="xs:dayTimeDuration" select="current-dateTime() - $start-timestamp"/>
-  <p:variable name="duration-string" as="xs:string"
-    select="string($duration) => replace('P', '') => replace('T', ' ') => normalize-space() => lower-case()"/>
-  <p:identity message="* XprocRef processing done ({$type-string}; {$step-count-2}/{$step-count-1}) ({$duration-string})">
-    <p:with-input>
-      <process-xprocref timestamp="{$start-timestamp}" duration="{$duration}" build-location="{$href-build-location}"
-        production-version="{$production-version}" wip-marker="{$wip}" steps-processed="{$step-count-2}" steps-total="{$step-count-1}"
-        limit-to="{string-join($limit-to-steps, ' ')}">{$type-string}</process-xprocref>
-    </p:with-input>
-  </p:identity>
+  <p:group depends="container-to-disk">
+    <p:variable name="duration" as="xs:dayTimeDuration" select="current-dateTime() - $start-timestamp"/>
+    <p:variable name="duration-string" as="xs:string"
+      select="string($duration) => replace('P', '') => replace('T', ' ') => normalize-space() => lower-case()"/>
+    <p:identity message="* XprocRef processing done ({$type-string}; {$step-count-2}/{$step-count-1}) ({$duration-string})">
+      <p:with-input>
+        <process-xprocref timestamp="{$start-timestamp}" duration="{$duration}" build-location="{$href-build-location}"
+          production-version="{$production-version}" wip-marker="{$wip}" steps-processed="{$step-count-2}" steps-total="{$step-count-1}"
+          limit-to="{string-join($limit-to-steps, ' ')}">{$type-string}</process-xprocref>
+      </p:with-input>
+    </p:identity>
+  </p:group>
 
 </p:declare-step>
