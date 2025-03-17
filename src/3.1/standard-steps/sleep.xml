@@ -20,7 +20,7 @@
       </description>
     </output>
 
-    <option name="duration" required="true" as="xs:nonNegativeInteger">
+    <option name="duration" required="true" as="xs:string">
       <description>
         <para>The duration of the delay, expressed as either:</para>
         <itemizedlist>
