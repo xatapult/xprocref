@@ -6,7 +6,7 @@
   exclude-result-prefixes="#all" expand-text="true">
   <!-- ================================================================== -->
   <!-- 
-       TBD
+       Creates the main xtpxlib container for XProcRef.
        
        Input is the (normalized and enhanced) XProcRef definition.
   -->
@@ -70,7 +70,7 @@
   </xsl:variable>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  <!-- Latest version info. We need this decide where to put stuff and where top point links to. -->
+  <!-- Latest version info. We need this decide where to put stuff and where to point links to. -->
 
   <xsl:variable name="latest-version-versionref-elm" as="element(xpref:versionref)" select="($xprocref-index/*/xpref:versionref)[1]"/>
   <xsl:variable name="last-version-id" as="xs:string" select="xs:string($latest-version-versionref-elm/@id)"/>
@@ -91,7 +91,14 @@
 
   <xsl:template match="/">
     <xtlcon:document-container timestamp="{current-dateTime()}">
-
+      
+      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+      <!-- Index: -->
+      
+      <xtlcon:document type="{$xpref:type-index}">
+        <xsl:sequence select="$xprocref-index/*"/>
+      </xtlcon:document>
+      
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <!-- All the main pages (home, about, versions overview, etc.): -->
 
@@ -128,6 +135,7 @@
             </xsl:for-each>
           </db:itemizedlist>
         </xsl:with-param>
+        <xsl:with-param name="type" select="$xpref:type-versions-overview"/>
       </xsl:call-template>
 
       <!-- Error codes page: -->
@@ -177,6 +185,7 @@
             </db:tgroup>
           </db:table>
         </xsl:with-param>
+        <xsl:with-param name="type" select="$xpref:type-error-codes"/>
       </xsl:call-template>
 
       <!-- Namespaces page: -->
@@ -196,6 +205,7 @@
             </xsl:for-each>
           </db:itemizedlist>
         </xsl:with-param>
+        <xsl:with-param name="type" select="$xpref:type-namespaces"/>
       </xsl:call-template>
 
       <!-- About page -->
@@ -211,6 +221,7 @@
           <db:para role="site-remark">Site published {if ($production-version) then () else ' [TEST VERSION]'}: {xs:string(current-dateTime()) =>
             substring(1, 16) => replace('T', ' ')}</db:para>
         </xsl:with-param>
+        <xsl:with-param name="type" select="$xpref:type-about"/>
       </xsl:call-template>
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -274,6 +285,7 @@
         </db:section>
       </xsl:with-param>
       <xsl:with-param name="version-id" select="$version-id"/>
+      <xsl:with-param name="type" select="$xpref:type-categories-overview"/>
     </xsl:call-template>
 
     <!-- Page per category for this version: -->
@@ -361,6 +373,7 @@
       </xsl:with-param>
       <xsl:with-param name="version-id" select="$version-id"/>
       <xsl:with-param name="create-wip-remark" select="true()"/>
+      <xsl:with-param name="type" select="$xpref:type-all-steps-for-version"/>
     </xsl:call-template>
 
   </xsl:template>
@@ -507,7 +520,7 @@
         </xsl:if>
 
         <!-- Reference information: -->
-        <db:sect2>
+        <db:sect2 role="{$xpref:role-reference-section}">
           <db:title>Reference information</db:title>
 
           <xsl:variable name="step-is-required" as="xs:boolean" select="xtlc:str2bln($step-elm/@required, false())"/>
@@ -528,7 +541,7 @@
               xlink:href="{$version-link}">{$version-name}</db:link>. {$required-text}</db:para>
 
           <db:para>The formal specification for the <db:step>{$step-full-name}</db:step> step can be found <db:link
-              xlink:href="{$step-elm/@href-specification}" role="newpage">here</db:link>.</db:para>
+              xlink:href="{$step-elm/@href-specification}" role="newpage {$xpref:role-specification-link}">here</db:link>.</db:para>
 
           <xsl:variable name="category-refs" as="element(xpref:categoryref)*" select="$stepref-elm/xpref:categoryref"/>
           <xsl:choose>
@@ -868,7 +881,7 @@
     <xsl:param name="type" as="xs:string?" required="false" select="()"/>
     <xsl:param name="version-id" as="xs:string?" required="false" select="()"/>
     <xsl:param name="ref" as="xs:string?" required="false" select="()">
-      <!-- This is the string/name to find it back. For instance, the step name of the category id. -->
+      <!-- This is the string/name to find it back. For instance, the step name or the category id. -->
     </xsl:param>
     <xsl:param name="name" as="xs:string?" required="false" select="()">
       <!-- The name to use when this document is linked to. -->

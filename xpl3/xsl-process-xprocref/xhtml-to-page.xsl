@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:map="http://www.w3.org/2005/xpath-functions/map"
   xmlns:array="http://www.w3.org/2005/xpath-functions/array" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:local="#local.acq_h3j_5bc"
-  xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:xtlcon="http://www.xtpxlib.nl/ns/container"
   xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref" exclude-result-prefixes="#all" expand-text="true">
   <!-- ================================================================== -->
   <!-- 
@@ -25,8 +25,8 @@
 
   <xsl:param name="href-template" as="xs:string" required="true"/>
   <xsl:param name="href-target" as="xs:string" required="true"/>
-
-  <xsl:param name="xprocref-index" as="document-node()" required="true"/>
+  
+  <xsl:param name="xprocref-index" as="element(xpref:xprocref-index)" required="true"/>
 
   <xsl:param name="keywords" as="xs:string?" required="true"/>
 
@@ -47,7 +47,7 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:variable name="latest-version-versionref-elm" as="element(xpref:versionref)" select="($xprocref-index/*/xpref:versionref)[1]"/>
+  <xsl:variable name="latest-version-versionref-elm" as="element(xpref:versionref)" select="($xprocref-index/xpref:versionref)[1]"/>
   <xsl:variable name="last-version-name" as="xs:string" select="xs:string($latest-version-versionref-elm/@name)"/>
 
   <!-- ======================================================================= -->

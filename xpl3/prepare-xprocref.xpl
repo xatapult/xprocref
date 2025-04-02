@@ -3,11 +3,12 @@
   xmlns:array="http://www.w3.org/2005/xpath-functions/array" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:local="#local.y4s_1jd_5bc"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref" xmlns:xtlc="http://www.xtpxlib.nl/ns/common"
   xmlns:db="http://docbook.org/ns/docbook" xmlns:xtlcon="http://www.xtpxlib.nl/ns/container" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" version="3.0"
-  exclude-inline-prefixes="#all" name="process-xprocref" type="xpref:process-xprocref">
+  exclude-inline-prefixes="#all" name="prepare-xprocref" type="xpref:prepare-xprocref">
 
   <p:documentation>
-    TBD 
-    Processes an XProcRef specification into a website.
+    Pipeline that prepares the XProcRef sources into an xtpxlib container with (mainly) DocBook sources for the pages.
+    Because of historical reasons, this container is primarily intended for converting stuff to the XProcRef HTML pages.
+    However, there is additional data added so we can more easily create other output formats as well.
   </p:documentation>
 
   <!-- ======================================================================= -->
@@ -15,12 +16,6 @@
 
   <p:import href="../../xtpxlib-common/xpl3mod/validate/validate.xpl"/>
   <p:import href="../../xtpxlib-common/xpl3mod/expand-macro-definitions/expand-macro-definitions.xpl"/>
-  <p:import href="../../xtpxlib-common/xpl3mod/create-clear-directory/create-clear-directory.xpl"/>
-
-  <p:import href="../../xtpxlib-xdoc/xpl3/xdoc-to-xhtml.xpl"/>
-  <p:import href="../../xtpxlib-xdoc/xpl3/docbook-to-xhtml.xpl"/>
-
-  <p:import href="../../xtpxlib-container/xpl3mod/container-to-disk/container-to-disk.xpl"/>
 
   <p:import href="../../xtpxlib-xdoc/xpl3mod/xtpxlib-xdoc.mod/xtpxlib-xdoc.mod.xpl"/>
 
@@ -32,30 +27,17 @@
   </p:input>
 
   <p:output port="result" primary="true" sequence="false" content-types="xml" serialization="map{'method': 'xml', 'indent': true()}">
-    <p:documentation>Some report thingie.</p:documentation>
+    <p:documentation>The resulting xtpxlib container.</p:documentation>
   </p:output>
 
   <!-- ======================================================================= -->
   <!-- DEBUG SETTINGS -->
 
-  <p:option static="true" name="write-intermediate-results" as="xs:boolean" required="false" select="true()"/>
-  <p:option static="true" name="href-intermediate-results" as="xs:string" required="false" select="resolve-uri('../tmp', static-base-uri())"/>
+  <p:option name="write-intermediate-results" as="xs:boolean" required="false" select="true()"/>
+  <p:option name="href-intermediate-results" as="xs:string" required="false" select="resolve-uri('../tmp', static-base-uri())"/>
 
   <!-- ======================================================================= -->
   <!-- OPTIONS: -->
-
-  <p:option name="href-build-location" as="xs:string" required="false" select="resolve-uri('../build', static-base-uri())">
-    <p:documentation>The location where the website is built.</p:documentation>
-  </p:option>
-
-  <p:option name="href-web-resources" as="xs:string" required="false" select="resolve-uri('../web-resources', static-base-uri())">
-    <p:documentation>Directory with web-resources (like CSS, JavaScript, etc.). All sub-directories underneath this directory are 
-      copied verbatim to the build location.</p:documentation>
-  </p:option>
-
-  <p:option name="href-web-template" as="xs:string" required="false" select="resolve-uri('../web-templates/default-template.html', static-base-uri())">
-    <p:documentation>URI of the web template used to build the pages.</p:documentation>
-  </p:option>
 
   <p:option name="production-version" as="xs:boolean" required="false" select="false()">
     <p:documentation>Whether to create a production version . For a production version, all steps with @publish="false" will not appear in the output. 
@@ -71,41 +53,12 @@
     <p:documentation>Limit the output to the steps mentioned here. Use the step names *without* a namespace prefix!</p:documentation>
   </p:option>
 
-  <p:option name="cname" as="xs:string?" required="false" select="'xprocref.org'">
-    <p:documentation>The URI under which the pages are published (for GitHub pages). If empty no CNAME entry is created.</p:documentation>
+  <p:option name="limit-to-latest-version" as="xs:boolean" required="false" select="false()">
+    <p:documentation>Whether to limit the output to the latest version only.</p:documentation>
   </p:option>
 
   <!-- ======================================================================= -->
-  <!-- SUBSTEPS: -->
-
-  <p:declare-step type="local:copy-web-resources" name="copy-web-resources">
-    <!-- Copies the web resources to the appropriate location on the website. Acts as an identity step. -->
-
-    <p:import href="../../xtpxlib-common/xpl3mod/subdir-list/subdir-list.xpl"/>
-    <p:import href="../../xtpxlib-common/xpl3mod/copy-dir/copy-dir.xpl"/>
-
-    <p:input port="source" primary="true" sequence="true" content-types="any"/>
-    <p:output port="result" primary="true" sequence="true" content-types="any" pipe="source@copy-web-resources"/>
-
-    <p:option name="href-web-resources" as="xs:string" required="true"/>
-    <p:option name="href-build-location" as="xs:string" required="true"/>
-
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-    <xtlc:subdir-list path="{$href-web-resources}"/>
-    <p:for-each>
-      <p:with-input select="/*/subdir"/>
-      <p:variable name="source-dir" as="xs:string" select="/*/@href"/>
-      <p:variable name="target-dir" as="xs:string" select="string-join(($href-build-location, /*/@name), '/')"/>
-      <xtlc:copy-dir href-source="{$source-dir}" href-target="{$target-dir}"/>
-    </p:for-each>
-
-  </p:declare-step>
-
-  <!-- ======================================================================= -->
   <!-- GLOBAL SETTINGS: -->
-
-  <p:variable name="xprocref-base-uri" as="xs:string" select="base-uri(/)"/>
 
   <p:variable name="href-xprocref-schema" as="xs:string" select="resolve-uri('../xsd/xprocref.xsd', static-base-uri())"/>
   <p:variable name="href-xprocref-schematron" as="xs:string" select="resolve-uri('../sch/xprocref.sch', static-base-uri())"/>
@@ -113,20 +66,12 @@
   <!-- ================================================================== -->
   <!-- MAIN: -->
 
-  <p:variable name="start-timestamp" as="xs:dateTime" select="current-dateTime()"/>
-
-  <p:variable name="limit-to-steps-sequence" as="xs:string"
-    select="'(' || string-join(for $s in $limit-to-steps return ('''' || $s || ''''), ', ') || ')'"/>
-  <p:variable name="type-string" as="xs:string" select="(if ($production-version) then 'Production' else 'Test') || ' version' || 
-    (if ($wip) then '; marked as WIP)' else ()) ||
-    (if (exists($limit-to-steps)) then ('; Limit to ' || $limit-to-steps-sequence) else ())"/>
-
-  <p:identity message="* XProcRef processing ({$type-string})"/>
-  <p:identity message="  * Source document: {$xprocref-base-uri}"/>
-  <p:identity message="  * Build location: {$href-build-location}"/>
-
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Preparations: -->
+
+  <p:identity message="  * Preparations:"/>
+  <p:variable name="limit-to-steps-sequence" as="xs:string"
+    select="'(' || string-join(for $s in $limit-to-steps return ('''' || $s || ''''), ', ') || ')'"/>
 
   <!-- Process any XIncludes and record the original base URIs: -->
   <p:xinclude/>
@@ -138,23 +83,29 @@
   <p:delete match="processing-instruction(xml-model)"/>
 
   <!-- Validate: -->
-  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/10-xprocref-after-xinclude.xml"/>
-  <xtlc:validate simplify-error-messages="true" p:message="  * Validating primary source">
+  <p:if test="$write-intermediate-results">
+    <p:store href="{$href-intermediate-results}/10-xprocref-after-xinclude.xml"/>
+  </p:if>
+  <xtlc:validate simplify-error-messages="true" p:message="    * Validating primary source">
     <p:with-option name="href-schema" select="$href-xprocref-schema"/>
     <p:with-option name="href-schematron" select="$href-xprocref-schematron"/>
   </xtlc:validate>
 
   <!-- Handle the step-identity elements: -->
   <p:if test="exists(/*/xpref:steps//xpref:step-identity)">
-    <p:xslt message="  * Handling step identities">
+    <p:xslt message="    * Handling step identities">
       <p:with-input port="stylesheet" href="xsl-process-xprocref/handle-step-identities.xsl"/>
     </p:xslt>
-    <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/20-xprocref-after-step-identities.xml"/>
+    <p:if test="$write-intermediate-results">
+      <p:store href="{$href-intermediate-results}/20-xprocref-after-step-identities.xml"/>
+    </p:if>
   </p:if>
 
   <!-- Expand any macros: -->
   <xtlc:expand-macro-definitions/>
-  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/30-xprocref-after-expand-macro-definitions.xml"/>
+  <p:if test="$write-intermediate-results">
+    <p:store href="{$href-intermediate-results}/30-xprocref-after-expand-macro-definitions.xml"/>
+  </p:if>
 
   <!-- Just to be sure, re-validate -->
   <xtlc:validate simplify-error-messages="true">
@@ -168,11 +119,20 @@
     <p:with-input port="stylesheet" href="xsl-process-xprocref/prepare-xprocref-specification.xsl"/>
   </p:xslt>
 
+  <!-- Limit things to the latest version if requested: -->
+  <p:if test="$limit-to-latest-version">
+    <p:variable name="latest-version-id" as="xs:string" select="xs:string(/*/xpref:versions/xpref:version[1]/@id)"/>
+    <p:variable name="latest-version-name" as="xs:string" select="xs:string(/*/xpref:versions/xpref:version[1]/@name)"/>
+    <p:identity message="    * Limiting to latest version {$latest-version-name}"/>
+    <p:delete match="xpref:versions/xpref:version[@id ne '{$latest-version-id}']"/>
+    <p:delete match="xpref:steps/xpref:step[@version-idref ne '{$latest-version-id}']"/>
+  </p:if>
+
   <!-- Remove the unpublished steps when creating a production version: -->
   <p:variable name="step-count-1" as="xs:integer" select="count(/*/xpref:steps/xpref:step)"/>
   <p:if test="exists($limit-to-steps)">
     <p:delete match="xpref:steps/xpref:step[not(xs:string(@name) = {$limit-to-steps-sequence})]"
-      message="  * WARNING: Limiting to steps: {$limit-to-steps-sequence}"/>
+      message="    * Limiting to steps: {$limit-to-steps-sequence}"/>
   </p:if>
   <p:if test="$production-version">
     <p:delete match="xpref:steps/xpref:step[not(xs:boolean((@publish, false())[1]))]"/>
@@ -186,56 +146,41 @@
       </p:with-input>
     </p:error>
   </p:if>
-  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/40-xprocref-prepared.xml"/>
-  <p:identity name="prepared-xprocref-specification" message="  * Step count: {$step-count-2}/{$step-count-1}"/>
-
-  <!-- Clean the result directory: -->
-  <xtlc:create-clear-directory clear="true">
-    <p:with-option name="href-dir" select="$href-build-location"/>
-  </xtlc:create-clear-directory>
-
-  <!-- Copy the web resources: -->
-  <local:copy-web-resources p:message="  * Copying web resources">
-    <p:with-option name="href-web-resources" select="$href-web-resources"/>
-    <p:with-option name="href-build-location" select="$href-build-location"/>
-  </local:copy-web-resources>
-
-  <!-- Create a CNAME document (for the GitHub pages): -->
-  <p:if test="$production-version and exists($cname)">
-    <p:store href="{$href-build-location}/CNAME" serialization="map{'method': 'text'}" message="  * Creating CNAME ({$cname})">
-      <p:with-input>
-        <p:inline xml:space="preserve" content-type="text/plain">{$cname}</p:inline>
-      </p:with-input>
-    </p:store>
+  <p:if test="$write-intermediate-results">
+    <p:store href="{$href-intermediate-results}/40-xprocref-prepared.xml"/>
   </p:if>
+  <p:identity name="prepared-xprocref-specification" message="    * Step count: {$step-count-2}/{$step-count-1}"/>
 
   <!-- Create an index document: -->
   <p:xslt>
     <p:with-input pipe="@prepared-xprocref-specification"/>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/create-xprocref-index.xsl"/>
   </p:xslt>
-  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/50-xprocref-index.xml"/>
+  <p:if test="$write-intermediate-results">
+    <p:store href="{$href-intermediate-results}/50-xprocref-index.xml"/>
+  </p:if>
   <p:variable name="xprocref-index" as="document-node()" select="."/>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Create container: -->
 
   <!-- Create a container (all text still in DocBook/Markdown): -->
-  <p:xslt message="  * Creating pages">
+  <p:xslt message="    * Creating pages">
     <p:with-input pipe="@prepared-xprocref-specification"/>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/create-xprocref-container.xsl"/>
     <p:with-option name="parameters" select="map{'xprocref-index': $xprocref-index, 'production-version': $production-version, 'wip': $wip}"/>
   </p:xslt>
 
+  <!-- Handle all kinds of XProcRef specific markup into DocBook: -->
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-texts.xsl"/>
   </p:xslt>
 
   <!-- Do the XProc example stuff: -->
   <p:variable name="example-count" as="xs:integer" select="count(//db:xproc-example)"/>
-  <p:viewport match="db:xproc-example" name="process-xproc-example" message="  * Handling {$example-count} examples">
+  <p:viewport match="db:xproc-example" name="process-xproc-example" message="    * Handling {$example-count} examples">
     <p:if test="(p:iteration-position() mod 10) eq 0">
-      <p:identity message="    * Example {p:iteration-position()}/{$example-count}"/>
+      <p:identity message="      * Example {p:iteration-position()}/{$example-count}"/>
     </p:if>
 
     <p:variable name="xproc-example-elm" as="element(db:xproc-example)" select="/*"/>
@@ -296,61 +241,27 @@
   </p:viewport>
 
   <!-- Process any Markdown (into DocBook): -->
-  <xdoc:markdown-to-docbook p:message="  * Finalizing pages"/>
+  <xdoc:markdown-to-docbook p:message="    * Finalizing pages"/>
 
   <!-- Add a ToC to the steps: -->
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl-process-xprocref/add-toc-to-steps.xsl"/>
   </p:xslt>
 
-  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/60-xprocref-raw-container-docbook.xml"/>
+  <!-- Add some additional information to the container root: -->
+  <p:set-attributes match="/*">
+    <p:with-option name="attributes" select="map{
+      'production-version': $production-version,
+      'limit-to-steps': string-join($limit-to-steps, ' '),
+      'wip': $wip,
+      'limit-to-latest-version': $limit-to-latest-version,
+      'all-steps-count': $step-count-1,
+      'processed-steps-count': $step-count-2
+    }"/>
+  </p:set-attributes>
 
-  <!-- Process the resulting DocBook/xdoc into XHTML: -->
-  <p:variable name="html-page-count" as="xs:integer" select="count(/*/xtlcon:document[exists(db:article)])"/>
-  <p:viewport match="xtlcon:document[exists(db:article)]" message="  * Converting {$html-page-count} pages to HTML">
-    <p:if test="(p:iteration-position() mod 10) eq 0">
-      <p:identity message="    * Page {p:iteration-position()}/{$html-page-count}"/>
-    </p:if>
-    <p:variable name="href-target" as="xs:string" select="xs:string(/*/@href-target)"/>
-    <p:variable name="keywords" as="xs:string?" select="string(/*/@keywords)[.]"/>
-    <p:viewport match="db:article[1]">
-      <xdoc:xdoc-to-xhtml add-numbering="false" add-identifiers="false" create-header="false"/>
-      <p:xslt>
-        <p:with-input port="stylesheet" href="xsl-process-xprocref/xhtml-to-page.xsl"/>
-        <p:with-option name="parameters"
-          select="map{'href-template': $href-web-template, 'href-target': $href-target, 'xprocref-index': $xprocref-index, 'keywords': $keywords}"/>
-      </p:xslt>
-      <p:xslt>
-        <p:with-input port="stylesheet" href="xsl-process-xprocref/convert-menu.xsl"/>
-      </p:xslt>
-    </p:viewport>
-  </p:viewport>
-  <p:store use-when="$write-intermediate-results" href="{$href-intermediate-results}/70-xprocref-final-container-html.xml"/>
-
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  <!-- Finishing: -->
-
-  <!-- Check for any markup errors and report these: -->
-  <p:xslt>
-    <p:with-input port="stylesheet" href="xsl-process-xprocref/check-for-markup-errors.xsl"/>
-  </p:xslt>
-
-  <!-- Write the container to disk: -->
-  <xtlcon:container-to-disk remove-target="false" p:message="  * Writing to target" name="container-to-disk">
-    <p:with-option name="href-target-path" select="$href-build-location"/>
-  </xtlcon:container-to-disk>
-
-  <p:group depends="container-to-disk">
-    <p:variable name="duration" as="xs:dayTimeDuration" select="current-dateTime() - $start-timestamp"/>
-    <p:variable name="duration-string" as="xs:string"
-      select="string($duration) => replace('P', '') => replace('T', ' ') => normalize-space() => lower-case()"/>
-    <p:identity message="* XprocRef processing done ({$type-string}; {$step-count-2}/{$step-count-1}) ({$duration-string})">
-      <p:with-input>
-        <process-xprocref timestamp="{$start-timestamp}" duration="{$duration}" build-location="{$href-build-location}"
-          production-version="{$production-version}" wip-marker="{$wip}" steps-processed="{$step-count-2}" steps-total="{$step-count-1}"
-          limit-to="{string-join($limit-to-steps, ' ')}">{$type-string}</process-xprocref>
-      </p:with-input>
-    </p:identity>
-  </p:group>
+  <p:if test="$write-intermediate-results">
+    <p:store href="{$href-intermediate-results}/60-xprocref-raw-container-docbook.xml"/>
+  </p:if>
 
 </p:declare-step>

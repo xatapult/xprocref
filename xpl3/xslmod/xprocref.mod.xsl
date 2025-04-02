@@ -46,7 +46,22 @@
   <!-- Types set on the container document elements, so we can find things back when dereferencing references: -->
   <xsl:variable name="xpref:type-step" as="xs:string" select="'step'"/>
   <xsl:variable name="xpref:type-category" as="xs:string" select="'category'"/>
-
+  <xsl:variable name="xpref:type-index" as="xs:string" select="'index'"/>
+  <xsl:variable name="xpref:type-all-steps-for-version" as="xs:string" select="'all-steps-for-version'"/>
+  <xsl:variable name="xpref:type-versions-overview" as="xs:string" select="'versions-overview'"/>
+  <xsl:variable name="xpref:type-error-codes" as="xs:string" select="'error-codes'"/>
+  <xsl:variable name="xpref:type-namespaces" as="xs:string" select="'namespaces'"/>
+  <xsl:variable name="xpref:type-about" as="xs:string" select="'about'"/>
+  <xsl:variable name="xpref:type-categories-overview" as="xs:string" select="'categories-overview'"/>
+  
+  <!-- We set some roles on elements to be able to identify them in subsequent processing steps: -->
+  <xsl:variable name="xpref:role-reference-section" as="xs:string" select="'reference-section'"/>
+  <xsl:variable name="xpref:role-specification-link" as="xs:string" select="'specification-link'"/>
+  
+  <!-- ======================================================================= -->
+  <!-- PAGE TYPES (USED IN THE INTERMEDIATE XTPXLIB CONTAINER): -->
+  
+  
   <!-- ======================================================================= -->
 
   <xsl:template name="xpref:markup-error">
@@ -144,7 +159,6 @@
       </xsl:variable>
       <db:programlisting xml:space="preserve"><xsl:value-of select="$contents"/></db:programlisting>
     </xsl:for-each>
-
 
   </xsl:template>
 
