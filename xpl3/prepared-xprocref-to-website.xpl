@@ -41,12 +41,12 @@
     <p:documentation>The location where the website is built.</p:documentation>
   </p:option>
 
-  <p:option name="href-web-resources" as="xs:string" required="false" select="resolve-uri('../web-resources', static-base-uri())">
+  <p:option name="href-web-resources" as="xs:string" required="false" select="resolve-uri('../resources/web', static-base-uri())">
     <p:documentation>Directory with web-resources (like CSS, JavaScript, etc.). All sub-directories underneath this directory are 
       copied verbatim to the build location.</p:documentation>
   </p:option>
 
-  <p:option name="href-web-template" as="xs:string" required="false" select="resolve-uri('../web-templates/default-template.html', static-base-uri())">
+  <p:option name="href-web-template" as="xs:string" required="false" select="resolve-uri('../templates/web/default-template.html', static-base-uri())">
     <p:documentation>URI of the web template used to build the pages.</p:documentation>
   </p:option>
 

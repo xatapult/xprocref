@@ -15,7 +15,11 @@
 
   <xsl:mode on-no-match="shallow-copy"/>
 
-  <!--<xsl:include href="../xslmod/xprocref.mod.xsl"/>-->
+  <xsl:include href="../xslmod/xprocref.mod.xsl"/>
+  
+  <!-- ======================================================================= -->
+  
+  <xsl:param name="href-dir-images" as="xs:string" required="true"/>
 
   <!-- ======================================================================= -->
 
@@ -26,23 +30,23 @@
       <xsl:namespace name="xtlcon" select="'http://www.xtpxlib.nl/ns/container'"></xsl:namespace>
 
       <info>
-        <title>TBD</title>
-        <subtitle>TBD Subtitle</subtitle>
-        <pubdate>TBD datetime</pubdate>
+        <title>XProc {{$XPROCVERSION}} Steps</title>
+        <!--<subtitle>A description of all steps in XProc {{$XPROCVERSION}}</subtitle>-->
+        <pubdate>{{$DATE}}</pubdate>
         <author>
           <personname>Erik Siegel</personname>
         </author>
         <orgname>Xatapult</orgname>
-        <!--<mediaobject role="top-logo">
+        <mediaobject role="top-logo">
           <imageobject>
-            <imagedata fileref="figures/logo-xatapult.jpg" width="10%"/>
+            <imagedata fileref="{xtlc:href-concat(($href-dir-images, 'logo-xatapult.jpg'))}" role="altwidth:10%" width="10%"/>
           </imageobject>
         </mediaobject>
         <mediaobject role="center-page">
           <imageobject>
-            <imagedata fileref="figures/schematroll-1.svg" width="100%"/>
+            <imagedata fileref="{xtlc:href-concat(($href-dir-images, 'xproc-logo.jpg'))}" role="altwidth:20%" width="20%"/>
           </imageobject>
-        </mediaobject>-->
+        </mediaobject>
       </info>
 
       <xsl:for-each select="/*/xtlcon:document/db:article">

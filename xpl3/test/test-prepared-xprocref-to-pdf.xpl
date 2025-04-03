@@ -11,7 +11,7 @@
   <!-- ======================================================================= -->
 
   <xpref:prepared-xprocref-to-pdf>
-    <p:with-option name="href-pdf" select="resolve-uri('tmp/xprocref.pdf', static-base-uri())"/>
+    <p:with-option name="href-pdf" select="resolve-uri('../../tmp/xprocref.pdf', static-base-uri())"/>
     <p:with-option name="write-intermediate-results" select="true()"/>
     <p:with-option name="href-intermediate-results" select="resolve-uri('../../tmp/', static-base-uri())"/>
   </xpref:prepared-xprocref-to-pdf>

@@ -425,6 +425,7 @@
             <folder path="../../xtpxlib-container/"/>
             <folder path="../../xtpxlib-xdoc/"/>
             <folder path="../../../xproc-3/3.0-steps/"/>
+            <folder path="../../../xproc-3/XProc-book/"/>
         </folder>
         <folder path="../"/>
         <folder path="../../../../../../xdata/"/>

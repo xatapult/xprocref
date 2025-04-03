@@ -12,6 +12,7 @@
   <!-- ======================================================================= -->
   <!-- IMPORTS: -->
 
+  <p:import href="../../xtpxlib-common/xpl3mod/expand-macro-definitions/expand-macro-definitions.xpl"></p:import>
   <p:import href="../../xtpxlib-xdoc/xpl3/xdoc-to-pdf.xpl"/>
 
   <!-- ======================================================================= -->
@@ -37,7 +38,11 @@
   <p:option name="href-pdf" as="xs:string" required="true">
     <p:documentation>The URI for the PDF</p:documentation>
   </p:option>
-
+  
+  <p:option name="href-dir-images" as="xs:string" required="false" select="resolve-uri('../resources/pdf/images/', static-base-uri())">
+    <p:documentation>The directory where the images for the PDF are residing.</p:documentation>
+  </p:option>
+  
   <!-- ======================================================================= -->
 
   <p:identity message="  * Building PDF:"/>
@@ -54,7 +59,8 @@
       </p:with-input>
     </p:error>
   </p:if>
-  <p:identity message="    * XProc version: {$version-element/@name}"/>
+  <p:variable name="xproc-version" as="xs:string" select="xs:string($version-element/@name)"/>
+  <p:identity message="    * XProc version: {$xproc-version}"/>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Preparations: -->
@@ -81,7 +87,13 @@
   <!-- Turn into a full DocBook/xdoc construction: -->
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl-prepared-xprocref-to-pdf/create-docbook-source.xsl"/>
+    <p:with-option name="parameters" select="map{'href-dir-images': $href-dir-images}"/>
   </p:xslt>
+  <!-- Run the macro expansion again to get version and dates on the right locations: -->
+  <xtlc:expand-macro-definitions use-standard-macrodefs="true" expand-in-text="true" expand-in-attributes="false" use-local-macrodefs="false">
+    <p:with-option name="macrodefs" select="map{'XPROCVERSION': $xproc-version}"/>
+    <p:with-option name="ignore-elements" select="('programlisting')"/>
+  </xtlc:expand-macro-definitions>
   
   <p:if test="$write-intermediate-results">
     <p:store href="{$href-intermediate-results}/210-pdf-docbook-source.xml"/>
