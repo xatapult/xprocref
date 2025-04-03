@@ -418,12 +418,15 @@
         </options>
     </meta>
     <projectTree name="xprocref.xpr">
+        <folder name="reference">
+            <folder path="../../../schematron/schematron-book/"/>
+            <folder path="../../xtools/"/>
+            <folder path="../../xtpxlib-common/"/>
+            <folder path="../../xtpxlib-container/"/>
+            <folder path="../../xtpxlib-xdoc/"/>
+            <folder path="../../../xproc-3/3.0-steps/"/>
+        </folder>
         <folder path="../"/>
-        <folder path="../../xtools/"/>
-        <folder path="../../xtpxlib-common/"/>
-        <folder path="../../xtpxlib-container/"/>
-        <folder path="../../xtpxlib-xdoc/"/>
-        <folder path="../../../xproc-3/3.0-steps/"/>
         <folder path="../../../../../../xdata/"/>
     </projectTree>
 </project>

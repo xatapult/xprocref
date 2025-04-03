@@ -130,17 +130,17 @@
     <p:viewport match="db:article[1]">
       <xdoc:xdoc-to-xhtml add-numbering="false" add-identifiers="false" create-header="false"/>
       <p:xslt>
-        <p:with-input port="stylesheet" href="xsl-process-xprocref/xhtml-to-page.xsl"/>
+        <p:with-input port="stylesheet" href="xsl-prepared-xprocref-to-website/xhtml-to-page.xsl"/>
         <p:with-option name="parameters"
           select="map{'xprocref-index': $xprocref-index, 'href-template': $href-web-template, 'href-target': $href-target, 'keywords': $keywords}"/>
       </p:xslt>
       <p:xslt>
-        <p:with-input port="stylesheet" href="xsl-process-xprocref/convert-menu.xsl"/>
+        <p:with-input port="stylesheet" href="xsl-prepared-xprocref-to-website/convert-menu.xsl"/>
       </p:xslt>
     </p:viewport>
   </p:viewport>
   <p:if test="$write-intermediate-results">
-    <p:store href="{$href-intermediate-results}/70-xprocref-final-container-html.xml"/>
+    <p:store href="{$href-intermediate-results}/100-xprocref-final-container-html.xml"/>
   </p:if>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -148,7 +148,7 @@
 
   <!-- Check for any markup errors and report these: -->
   <p:xslt>
-    <p:with-input port="stylesheet" href="xsl-process-xprocref/check-for-markup-errors.xsl"/>
+    <p:with-input port="stylesheet" href="xsl-prepared-xprocref-to-website/check-for-markup-errors.xsl"/>
   </p:xslt>
 
   <!-- Write the container to disk: -->

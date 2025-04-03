@@ -218,7 +218,7 @@
         <xsl:with-param name="content">
           <xsl:sequence select="$about-page-content"/>
           <db:para>&#160;</db:para>
-          <db:para role="site-remark">Site published {if ($production-version) then () else ' [TEST VERSION]'}: {xs:string(current-dateTime()) =>
+          <db:para role="{$xpref:role-site-remark}">Site published {if ($production-version) then () else ' [TEST VERSION]'}: {xs:string(current-dateTime()) =>
             substring(1, 16) => replace('T', ' ')}</db:para>
         </xsl:with-param>
         <xsl:with-param name="type" select="$xpref:type-about"/>
@@ -937,10 +937,10 @@
           <db:title/>
         </db:info>
         <xsl:if test="$wip and $create-wip-remark">
-          <db:para role="page-banner">{$wip-text}</db:para>
+          <db:para role="{$xpref:role-page-banner}">{$wip-text}</db:para>
         </xsl:if>
         <xsl:if test="not($production-version)">
-          <db:para role="page-banner">You are looking at the TEST version!{if (exists($test-version-remark)) then (' (' || $test-version-remark ||
+          <db:para role="{$xpref:role-page-banner}">You are looking at the TEST version!{if (exists($test-version-remark)) then (' (' || $test-version-remark ||
             ')') else ()}</db:para>
         </xsl:if>
         <db:sect1>

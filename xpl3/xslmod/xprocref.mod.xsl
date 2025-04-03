@@ -57,6 +57,13 @@
   <!-- We set some roles on elements to be able to identify them in subsequent processing steps: -->
   <xsl:variable name="xpref:role-reference-section" as="xs:string" select="'reference-section'"/>
   <xsl:variable name="xpref:role-specification-link" as="xs:string" select="'specification-link'"/>
+  <xsl:variable name="xpref:role-page-banner" as="xs:string" select="'page-banner'"/>
+  <xsl:variable name="xpref:role-toc" as="xs:string" select="'toc'"/>
+  <xsl:variable name="xpref:role-tocentry" as="xs:string" select="'tocentry'"/>
+  <xsl:variable name="xpref:role-site-remark" as="xs:string" select="'site-remark'"/>
+  
+  <!-- Character used to separate identifier parts: -->
+  <xsl:variable name="xpref:identifier-separator" as="xs:string" select="'_'"/>
   
   <!-- ======================================================================= -->
   <!-- PAGE TYPES (USED IN THE INTERMEDIATE XTPXLIB CONTAINER): -->

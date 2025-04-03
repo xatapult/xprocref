@@ -84,7 +84,7 @@
 
   <!-- Validate: -->
   <p:if test="$write-intermediate-results">
-    <p:store href="{$href-intermediate-results}/10-xprocref-after-xinclude.xml"/>
+    <p:store href="{$href-intermediate-results}/010-xprocref-after-xinclude.xml"/>
   </p:if>
   <xtlc:validate simplify-error-messages="true" p:message="    * Validating primary source">
     <p:with-option name="href-schema" select="$href-xprocref-schema"/>
@@ -94,17 +94,17 @@
   <!-- Handle the step-identity elements: -->
   <p:if test="exists(/*/xpref:steps//xpref:step-identity)">
     <p:xslt message="    * Handling step identities">
-      <p:with-input port="stylesheet" href="xsl-process-xprocref/handle-step-identities.xsl"/>
+      <p:with-input port="stylesheet" href="xsl-prepare-xprocref/handle-step-identities.xsl"/>
     </p:xslt>
     <p:if test="$write-intermediate-results">
-      <p:store href="{$href-intermediate-results}/20-xprocref-after-step-identities.xml"/>
+      <p:store href="{$href-intermediate-results}/020-xprocref-after-step-identities.xml"/>
     </p:if>
   </p:if>
 
   <!-- Expand any macros: -->
   <xtlc:expand-macro-definitions/>
   <p:if test="$write-intermediate-results">
-    <p:store href="{$href-intermediate-results}/30-xprocref-after-expand-macro-definitions.xml"/>
+    <p:store href="{$href-intermediate-results}/030-xprocref-after-expand-macro-definitions.xml"/>
   </p:if>
 
   <!-- Just to be sure, re-validate -->
@@ -116,7 +116,7 @@
   <!-- Prepare some attributes and unwrap the step-groups: -->
   <p:unwrap match="xpref:step-group"/>
   <p:xslt>
-    <p:with-input port="stylesheet" href="xsl-process-xprocref/prepare-xprocref-specification.xsl"/>
+    <p:with-input port="stylesheet" href="xsl-prepare-xprocref/prepare-xprocref-specification.xsl"/>
   </p:xslt>
 
   <!-- Limit things to the latest version if requested: -->
@@ -147,17 +147,17 @@
     </p:error>
   </p:if>
   <p:if test="$write-intermediate-results">
-    <p:store href="{$href-intermediate-results}/40-xprocref-prepared.xml"/>
+    <p:store href="{$href-intermediate-results}/040-xprocref-prepared.xml"/>
   </p:if>
   <p:identity name="prepared-xprocref-specification" message="    * Step count: {$step-count-2}/{$step-count-1}"/>
 
   <!-- Create an index document: -->
   <p:xslt>
     <p:with-input pipe="@prepared-xprocref-specification"/>
-    <p:with-input port="stylesheet" href="xsl-process-xprocref/create-xprocref-index.xsl"/>
+    <p:with-input port="stylesheet" href="xsl-prepare-xprocref/create-xprocref-index.xsl"/>
   </p:xslt>
   <p:if test="$write-intermediate-results">
-    <p:store href="{$href-intermediate-results}/50-xprocref-index.xml"/>
+    <p:store href="{$href-intermediate-results}/050-xprocref-index.xml"/>
   </p:if>
   <p:variable name="xprocref-index" as="document-node()" select="."/>
 
@@ -167,13 +167,13 @@
   <!-- Create a container (all text still in DocBook/Markdown): -->
   <p:xslt message="    * Creating pages">
     <p:with-input pipe="@prepared-xprocref-specification"/>
-    <p:with-input port="stylesheet" href="xsl-process-xprocref/create-xprocref-container.xsl"/>
+    <p:with-input port="stylesheet" href="xsl-prepare-xprocref/create-xprocref-container.xsl"/>
     <p:with-option name="parameters" select="map{'xprocref-index': $xprocref-index, 'production-version': $production-version, 'wip': $wip}"/>
   </p:xslt>
 
   <!-- Handle all kinds of XProcRef specific markup into DocBook: -->
   <p:xslt>
-    <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-texts.xsl"/>
+    <p:with-input port="stylesheet" href="xsl-prepare-xprocref/fixup-texts.xsl"/>
   </p:xslt>
 
   <!-- Do the XProc example stuff: -->
@@ -222,7 +222,7 @@
       <p:cast-content-type content-type="text/plain"/>
     </p:if>
     <p:xslt>
-      <p:with-input port="stylesheet" href="xsl-process-xprocref/fixup-example-results.xsl"/>
+      <p:with-input port="stylesheet" href="xsl-prepare-xprocref/fixup-example-results.xsl"/>
       <p:with-option name="parameters" select="map{'xproc-example-elm': $xproc-example-elm}"/>
     </p:xslt>
     <p:wrap match="/*" wrapper="_RESULT" name="wrapped-pipeline-result"/>
@@ -234,7 +234,7 @@
 
     <!-- Use the now enhanced xproc-example element to create the final output for the examples: -->
     <p:xslt name="create-examples">
-      <p:with-input port="stylesheet" href="xsl-process-xprocref/create-examples.xsl"/>
+      <p:with-input port="stylesheet" href="xsl-prepare-xprocref/create-examples.xsl"/>
       <p:with-option name="parameters" select="map{'xproc-example-elm': $xproc-example-elm, 'has-source-port': $has-source-port}"/>
     </p:xslt>
 
@@ -245,7 +245,7 @@
 
   <!-- Add a ToC to the steps: -->
   <p:xslt>
-    <p:with-input port="stylesheet" href="xsl-process-xprocref/add-toc-to-steps.xsl"/>
+    <p:with-input port="stylesheet" href="xsl-prepare-xprocref/add-toc-to-steps.xsl"/>
   </p:xslt>
 
   <!-- Add some additional information to the container root: -->
@@ -261,7 +261,7 @@
   </p:set-attributes>
 
   <p:if test="$write-intermediate-results">
-    <p:store href="{$href-intermediate-results}/60-xprocref-raw-container-docbook.xml"/>
+    <p:store href="{$href-intermediate-results}/060-xprocref-raw-container-docbook.xml"/>
   </p:if>
 
 </p:declare-step>
