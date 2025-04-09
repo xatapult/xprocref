@@ -25,7 +25,7 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="db:para[$xpref:role-page-banner = xtlc:str2seq(@role)]">
+  <xsl:template match="db:para[local:contains-role(., ($xpref:role-page-banner, $xpref:role-step-start-character-list))]">
     <!-- Remove warning messages, etc. -->
   </xsl:template>
 
@@ -33,7 +33,7 @@
 
   <xsl:template match="db:sect1/db:title">
     <!-- Remove the next/prev markers and remove anything between brackets (usually a version remark/marker): -->
-    
+
     <xsl:variable name="title-text" as="xs:string" select="(text()[normalize-space(.) ne ''])[1]"/>
     <xsl:comment> == Original title: "{$title-text}" == </xsl:comment>
     <xsl:copy>
@@ -41,23 +41,28 @@
       <xsl:value-of select="replace($title-text, '\(.+\)', '') => translate('&#160;', ' ') => normalize-space()"/>
     </xsl:copy>
   </xsl:template>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
-  <xsl:template match="db:sect1/db:itemizedlist[$xpref:role-toc = xtlc:str2seq(@role)]">
+
+  <xsl:template match="db:sect1/db:itemizedlist[local:contains-role(., ($xpref:role-toc))]">
     <!-- Remove the page ToC entries. -->
   </xsl:template>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
-  <xsl:template match="db:sect2[$xpref:role-reference-section = xtlc:str2seq(@role)]">
+
+  <xsl:template match="db:sect2[local:contains-role(., ($xpref:role-reference-section, $xpref:role-site-remark))]">
     <!-- We don't need this in a PDF. -->
   </xsl:template>
-  
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
-  <xsl:template match="db:sect2[$xpref:role-site-remark = xtlc:str2seq(@role)]">
-    <!-- We don't need this in a PDF. -->
-  </xsl:template>
-  
+
+  <!-- ======================================================================= -->
+
+  <xsl:function name="local:contains-role" as="xs:boolean">
+    <!-- Returns true if $elm/@role contains one of the $roles values. -->
+    <xsl:param name="elm" as="element()"/>
+    <xsl:param name="roles" as="xs:string*"/>
+
+    <xsl:variable name="role-attribute-values" as="xs:string*" select="xtlc:str2seq($elm/@role)"/>
+    <xsl:sequence select="some $r in $roles satisfies $r = $role-attribute-values"/>
+  </xsl:function>
+
 </xsl:stylesheet>

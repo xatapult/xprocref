@@ -95,6 +95,11 @@
     <p:with-option name="ignore-elements" select="('programlisting')"/>
   </xtlc:expand-macro-definitions>
   
+  <!-- Do the postprocessing for widows/orphanes, tables, etc. -->
+  <p:xslt>
+    <p:with-input port="stylesheet" href="xsl-prepared-xprocref-to-pdf/postprocess-docbook-1.xsl"/>
+  </p:xslt>
+  
   <p:if test="$write-intermediate-results">
     <p:store href="{$href-intermediate-results}/210-pdf-docbook-source.xml"/>
   </p:if>

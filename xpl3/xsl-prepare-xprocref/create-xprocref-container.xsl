@@ -400,7 +400,7 @@
         select="('step', $step-full-name, substring-after($step-full-name, $xpref:default-namespace-prefix || ':'), $step-elm/@keywords)"/>
       <xsl:with-param name="content">
         <!-- The short description to start with: -->
-        <db:para>{local:description($step-elm/@short-description)}</db:para>
+        <db:para role="keep-with-next">{local:description($step-elm/@short-description)}</db:para>
 
         <!-- Summary: -->
         <db:sect2>
@@ -692,7 +692,7 @@
 
     <xsl:if test="exists($signature-elm)">
       <!-- Ports: -->
-      <db:para role="table-header">Ports:</db:para>
+      <db:para role="table-header keep-with-next">Ports:</db:para>
       <db:table role="nonumber ports-table">
         <db:title/>
         <db:tgroup cols="6">
@@ -738,7 +738,7 @@
       <xsl:variable name="option-elms" as="element(xpref:option)*" select="$signature-elm/xpref:option"/>
       <xsl:if test="exists($option-elms)">
         <xsl:variable name="has-selects" as="xs:boolean" select="exists($option-elms/@select)"/>
-        <db:para role="table-header">Options:</db:para>
+        <db:para role="table-header keep-with-next">Options:</db:para>
         <db:table role="nonumber options-table">
           <db:title/>
           <db:tgroup cols="6">
@@ -977,7 +977,7 @@
 
     <!-- Create character choose list: -->
     <xsl:if test="$group-by-start-character">
-      <db:para role="step-start-character-list">
+      <db:para role="{$xpref:role-step-start-character-list}">
         <xsl:for-each select="map:keys($grouped-referenced-steps)">
           <xsl:sort select="."/>
           <xsl:variable name="current-character" as="xs:string" select="."/>
