@@ -89,10 +89,15 @@
     <p:with-input port="stylesheet" href="xsl-prepared-xprocref-to-pdf/create-docbook-source.xsl"/>
     <p:with-option name="parameters" select="map{'href-dir-images': $href-dir-images}"/>
   </p:xslt>
+  
+  <p:if test="$write-intermediate-results">
+    <p:store href="{$href-intermediate-results}/205-xxxx.xml"/>
+  </p:if>
+  
   <!-- Run the macro expansion again to get version and dates on the right locations: -->
   <xtlc:expand-macro-definitions use-standard-macrodefs="true" expand-in-text="true" expand-in-attributes="false" use-local-macrodefs="false">
     <p:with-option name="macrodefs" select="map{'XPROCVERSION': $xproc-version}"/>
-    <p:with-option name="ignore-elements" select="('programlisting')"/>
+    <p:with-option name="ignore-elements" select="('programlisting', 'tag', 'code')"/>
   </xtlc:expand-macro-definitions>
   
   <!-- Do the postprocessing for widows/orphanes, tables, etc. -->

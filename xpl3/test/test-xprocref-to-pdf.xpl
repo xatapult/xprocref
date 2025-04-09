@@ -12,7 +12,8 @@
   <!-- ======================================================================= -->
   
   <xpref:prepare-xprocref limit-to-latest-version="true">
-    <p:with-option name="limit-to-steps" as="xs:string*" select="('message', 'identity', 'rename')"/>
+    <!--<p:with-option name="limit-to-steps" as="xs:string*" select="('message', 'identity', 'rename')"/>-->
+    <p:with-option name="limit-to-steps" as="xs:string*" select="('archive-manifest')"/>
   </xpref:prepare-xprocref>
 
   <xpref:prepared-xprocref-to-pdf>

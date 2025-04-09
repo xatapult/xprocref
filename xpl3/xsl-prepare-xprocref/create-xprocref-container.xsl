@@ -91,14 +91,14 @@
 
   <xsl:template match="/">
     <xtlcon:document-container timestamp="{current-dateTime()}">
-      
+
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <!-- Index: -->
-      
+
       <xtlcon:document type="{$xpref:type-index}">
         <xsl:sequence select="$xprocref-index/*"/>
       </xtlcon:document>
-      
+
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <!-- All the main pages (home, about, versions overview, etc.): -->
 
@@ -148,7 +148,7 @@
         <xsl:with-param name="content">
           <db:para role="break-after">All errors are in the <db:code>{$error-namespace-elm/@uri}</db:code> namespace (recommended prefix:
               <db:code>{$error-namespace-elm/@prefix}</db:code>).</db:para>
-          <db:table role="nonumber error-codes-table">
+          <db:table role="nonumber {$xpref:role-error-codes-table}">
             <db:title/>
             <db:tgroup cols="2">
               <db:thead>
@@ -218,8 +218,8 @@
         <xsl:with-param name="content">
           <xsl:sequence select="$about-page-content"/>
           <db:para>&#160;</db:para>
-          <db:para role="{$xpref:role-site-remark}">Site published {if ($production-version) then () else ' [TEST VERSION]'}: {xs:string(current-dateTime()) =>
-            substring(1, 16) => replace('T', ' ')}</db:para>
+          <db:para role="{$xpref:role-site-remark}">Site published {if ($production-version) then () else ' [TEST VERSION]'}:
+            {xs:string(current-dateTime()) => substring(1, 16) => replace('T', ' ')}</db:para>
         </xsl:with-param>
         <xsl:with-param name="type" select="$xpref:type-about"/>
       </xsl:call-template>
@@ -467,7 +467,7 @@
           <xsl:variable name="href-error-codes-page" as="xs:string" select="xpref:href-combine('..', (), $xpref:name-error-codes-overview-page)"/>
           <db:sect2>
             <db:title>Errors raised</db:title>
-            <db:table role="nonumber error-codes-table">
+            <db:table role="nonumber {$xpref:role-error-codes-table}">
               <db:title/>
               <db:tgroup cols="2">
                 <db:thead>
@@ -693,7 +693,7 @@
     <xsl:if test="exists($signature-elm)">
       <!-- Ports: -->
       <db:para role="table-header keep-with-next">Ports:</db:para>
-      <db:table role="nonumber ports-table">
+      <db:table role="nonumber {$xpref:role-ports-table}">
         <db:title/>
         <db:tgroup cols="6">
           <db:thead>
@@ -739,9 +739,9 @@
       <xsl:if test="exists($option-elms)">
         <xsl:variable name="has-selects" as="xs:boolean" select="exists($option-elms/@select)"/>
         <db:para role="table-header keep-with-next">Options:</db:para>
-        <db:table role="nonumber options-table">
+        <db:table role="nonumber {$xpref:role-options-table}">
           <db:title/>
-          <db:tgroup cols="6">
+          <db:tgroup cols="{if ($has-selects) then 5 else 4}">
             <db:thead>
               <db:row>
                 <db:entry>
@@ -815,7 +815,7 @@
           </db:tgroup>
         </db:table>
       </xsl:if>
-      
+
     </xsl:if>
 
   </xsl:template>
@@ -940,8 +940,8 @@
           <db:para role="{$xpref:role-page-banner}">{$wip-text}</db:para>
         </xsl:if>
         <xsl:if test="not($production-version)">
-          <db:para role="{$xpref:role-page-banner}">You are looking at the TEST version!{if (exists($test-version-remark)) then (' (' || $test-version-remark ||
-            ')') else ()}</db:para>
+          <db:para role="{$xpref:role-page-banner}">You are looking at the TEST version!{if (exists($test-version-remark)) then (' (' ||
+            $test-version-remark || ')') else ()}</db:para>
         </xsl:if>
         <db:sect1>
           <db:title>
@@ -1027,8 +1027,8 @@
         <xsl:variable name="step-elm" as="element(xpref:step)" select="$step-id-to-elm($step-id)"/>
         <xsl:variable name="step-short-description" as="xs:string" select="local:description($step-elm/@short-description)"/>
         <db:listitem>
-          <db:para><db:link xlink:href="{local:href-result-file($version-id-for-links, local:step-page-name($step-id))}"
-              >{local:step-full-name($step-id)}</db:link> - {$step-short-description}</db:para>
+          <db:para><db:link xlink:href="{local:href-result-file($version-id-for-links, local:step-page-name($step-id))}"><db:code role="step"
+                >{local:step-full-name($step-id)}</db:code></db:link> - {$step-short-description}</db:para>
         </db:listitem>
       </xsl:for-each>
     </db:itemizedlist>

@@ -62,6 +62,9 @@
   <xsl:variable name="xpref:role-tocentry" as="xs:string" select="'tocentry'"/>
   <xsl:variable name="xpref:role-site-remark" as="xs:string" select="'site-remark'"/>
   <xsl:variable name="xpref:role-step-start-character-list" as="xs:string" select="'step-start-character-list'"/>
+  <xsl:variable name="xpref:role-ports-table" as="xs:string" select="'ports-table'"/>
+  <xsl:variable name="xpref:role-options-table" as="xs:string" select="'options-table'"/>
+  <xsl:variable name="xpref:role-error-codes-table" as="xs:string" select="'error-codes-tablee'"/>
   
   <!-- Character used to separate identifier parts: -->
   <xsl:variable name="xpref:identifier-separator" as="xs:string" select="'_'"/>
