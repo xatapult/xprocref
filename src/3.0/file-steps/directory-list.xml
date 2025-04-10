@@ -63,7 +63,7 @@
       </description>
     </option>
 
-    <option name="override-content-types" as="array(array(xs:string))?" required="false">
+    <option name="override-content-types" as="array(array&#x200B;(xs:string))?" required="false">
       <description>
         <para>Use this to override the content-type determination of files. Determining the content-type of a file happens when you ask for detailed
           information (the <option>detailed</option> option is set to <code>true</code>).</para>

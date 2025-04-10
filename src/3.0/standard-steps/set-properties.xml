@@ -21,7 +21,7 @@
       </description>
     </output>
 
-    <option name="properties" required="true" as="map(xs:QName,item()*)">
+    <option name="properties" required="true" as="map(xs:QName, item()*)">
       <description>
         <para>A map containing the document-properties to adjust. The keys are the document-property names, the values their values.</para>
       </description>

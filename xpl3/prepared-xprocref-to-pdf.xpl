@@ -114,7 +114,7 @@
 
   <p:identity message="    * Creating PDF"/>
 
-  <xdoc:xdoc-to-pdf>
+  <xdoc:xdoc-to-pdf max-toc-level="1" link-color="black" output-type="a4">
     <p:with-option name="href-pdf" select="$href-pdf"/>
     <p:with-option name="href-xsl-fo" select="if ($write-intermediate-results) then ($href-intermediate-results || '/220-pdf-xsl-fo.xml') else ()"/>
   </xdoc:xdoc-to-pdf>

@@ -63,6 +63,7 @@
       <table role="nonumber">
         <title/>
         <tgroup cols="2">
+          <colspec colwidth="18%"/>
           <thead>
             <row>
               <entry>

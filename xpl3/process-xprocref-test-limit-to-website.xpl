@@ -21,7 +21,7 @@
 
   <!-- ================================================================== -->
 
-  <p:variable name="limit-to-steps" as="xs:string*" select="('message', 'identity', 'rename')"/>
+  <p:variable name="limit-to-steps" as="xs:string*" select="('add-xml-base')"/>
 
   <xpref:process-xprocref-to-website production-version="false" wip="false" >
     <p:with-option name="limit-to-steps" select="$limit-to-steps"/>

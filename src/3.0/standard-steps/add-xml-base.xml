@@ -47,13 +47,19 @@
     <table role="nonumber">
       <title/>
       <tgroup cols="3">
+        <colspec colwidth="10%"/>
+        <colspec colwidth="10%"/>
         <thead>
           <row>
             <entry>
-              <para>all</para>
+              <para>
+                <option>all</option>
+              </para>
             </entry>
             <entry>
-              <para>relative</para>
+              <para>
+                <option>relative</option>
+              </para>
             </entry>
             <entry>
               <para>Operation</para>

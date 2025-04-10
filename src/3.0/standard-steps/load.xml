@@ -26,7 +26,7 @@
       </description>
     </option>
 
-    <option name="parameters" as="map(xs:QName,item()*)?" required="false">
+    <option name="parameters" as="map(xs:QName, item()*)?" required="false">
       <description>
         <para>Parameters controlling the loading of the document. Some keys and values are determined by the type of document loaded (see below). Any
           additional parameters are implementation-defined and therefore dependent on the XProc processor used.</para>

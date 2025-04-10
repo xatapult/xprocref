@@ -81,8 +81,8 @@
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
       <xsl:variable name="cols" as="xs:integer" select="xs:integer(@cols)"/>
-      <db:colspec colwidth="{local:compute-code-column-width(., 1, 10)}%"/>
-      <db:colspec colwidth="20%"/>
+      <db:colspec colwidth="{local:compute-code-column-width(., 1, 10, 20)}%"/>
+      <db:colspec colwidth="{local:compute-code-column-width(., 2, 10, 20)}%"/>
       <db:colspec colwidth="9%"/>
       <xsl:if test="$cols gt 4">
         <db:colspec colwidth="{local:compute-code-column-width(., 4, 9, 20)}%"/>
@@ -107,7 +107,7 @@
     <xsl:variable name="max-length" as="xs:integer" select="max(for $c in $contents return string-length($c))"/>
     
     <!-- Compute some width: -->
-    <xsl:variable name="width" as="xs:integer" select="(xs:double($max-length) * 1.35) => ceiling() => xs:integer()"/>
+    <xsl:variable name="width" as="xs:integer" select="(xs:double($max-length) * 1.3) => ceiling() => xs:integer()"/>
     <xsl:choose>
       <xsl:when test="$width le $minwidth">
         <xsl:sequence select="$minwidth"/>

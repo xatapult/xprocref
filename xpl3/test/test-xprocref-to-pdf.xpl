@@ -13,8 +13,10 @@
   
   <xpref:prepare-xprocref limit-to-latest-version="true">
     <!--<p:with-option name="limit-to-steps" as="xs:string*" select="('message', 'identity', 'rename')"/>-->
-    <p:with-option name="limit-to-steps" as="xs:string*" select="('archive-manifest')"/>
+<!--    <p:with-option name="limit-to-steps" as="xs:string*" select="('archive')"/>-->
   </xpref:prepare-xprocref>
+  
+<!--  <p:load href="../../tmp/060-xprocref-raw-container-docbook.xml"></p:load>-->
 
   <xpref:prepared-xprocref-to-pdf>
     <p:with-option name="href-pdf" select="resolve-uri('../../tmp/xprocref.pdf', static-base-uri())"/>

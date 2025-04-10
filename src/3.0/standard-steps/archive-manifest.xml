@@ -52,7 +52,7 @@
       </description>
     </option>
 
-    <option name="override-content-types" as="array(array(xs:string))?" required="false" select="()">
+    <option name="override-content-types" as="array(array&#x200B;(xs:string))?" required="false" select="()">
       <description>
         <para>Use this to override the content-type determination of the files in the archive (see <xref linkend="override-content-type"/>).</para>
       </description>

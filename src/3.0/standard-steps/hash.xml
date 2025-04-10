@@ -21,7 +21,7 @@
       </description>
     </output>
 
-    <option name="parameters" as="map(xs:QName,item()*)?" required="false">
+    <option name="parameters" as="map(xs:QName, item()*)?" required="false">
       <description>
         <para>Parameters controlling the hash code computation. Keys, values and their meaning are dependent on the XProc processor used.</para>
       </description>
@@ -78,6 +78,8 @@
     <table role="nonumber">
       <title/>
       <tgroup cols="3">
+        <colspec colwidth="15%"/>
+        <colspec colwidth="10%"/>
         <thead>
           <row>
             <entry>

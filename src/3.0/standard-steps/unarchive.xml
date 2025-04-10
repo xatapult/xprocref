@@ -55,7 +55,7 @@
       </description>
     </option>
 
-    <option name="override-content-types" as="array(array(xs:string))?" required="false">
+    <option name="override-content-types" as="array(array&#x200B;(xs:string))?" required="false">
       <description>
         <para>Use this to override the content-type determination for the extracted files (the value of their <property>content-type</property>
           document-property). This mechanism works the same as for the <step-ref name="p:archive-manifest"/> step. See <example-ref
