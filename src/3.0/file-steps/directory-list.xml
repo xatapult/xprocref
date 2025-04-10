@@ -102,12 +102,12 @@
     <section xml:id="include-exclude">
       <title>Including and excluding files and directories</title>
 
-      <para>The <option>include-filter</option> and <option>exclude-filter</option> determine which files and directories are included/excluded in the
+      <para role="keep-with-next">The <option>include-filter</option> and <option>exclude-filter</option> determine which files and directories are included/excluded in the
         result. Both options are a sequence of (zero or more) XPath regular expression strings.</para>
 
       <itemizedlist>
         <listitem>
-          <para>If the <option>include-filter</option> is not specified (or the empty sequence), <emphasis>all</emphasis> files/directories are
+          <para role="keep-with-next">If the <option>include-filter</option> is not specified (or the empty sequence), <emphasis>all</emphasis> files/directories are
             included.</para>
           <para>Otherwise, every regular expression string in the option value is matched against the <emphasis>relative</emphasis> file/directory
             paths (relative to the path that was given in the <option>path</option> option). A match means the file/directory is included.</para>
@@ -264,7 +264,7 @@
             include-filter="\.(xml|txt)$" max-depth="unbounded"/</tag></para>
       </listitem>
       <listitem>
-        <para>Or we could pass a regular expression for each file type. If we do it this way we can no longer pass the <option>include-filter</option>
+        <para role="keep-with-next">Or we could pass a regular expression for each file type. If we do it this way we can no longer pass the <option>include-filter</option>
           option as an attribute. We have to use a <tag>p:with-option</tag> child element:</para>
       </listitem>
     </itemizedlist>
@@ -287,7 +287,7 @@
       URIs:</para>
     <xproc-example href="../../examples/directory-list/directory-list-08.xpl" show-source="false" keep-from="data"/>
 
-    <para>We can now use this result to process all the XML documents. The following pipeline simply loads them (using <step-ref name="p:load"/>), and
+    <para role="keep-with-next">We can now use this result to process all the XML documents. The following pipeline simply loads them (using <step-ref name="p:load"/>), and
       wraps all contents (using <step-ref name="p:wrap-sequence"/>) in an <tag>all-xml-documents</tag> element:</para>
     <xproc-example href="../../examples/directory-list/directory-list-09.xpl" show-source="false" keep-from="data"/>
   </example>

@@ -95,7 +95,7 @@
 
   <example title="Basic usage">
 
-    <para>The following example copies a file <code>data/x1.xml</code> to <code>build/x1-copied</code>:</para>
+    <para role="keep-with-next">The following example copies a file <code>data/x1.xml</code> to <code>build/x1-copied</code>:</para>
     <xproc-example href="../../examples/file-copy/file-copy-02.xpl" show-source="false" keep-from="build"/>
 
   </example>
@@ -104,7 +104,7 @@
 
   <example title="Copying a directory under a different name" id="dir-copy-rename">
 
-    <para>If you&#x2019;re copying a directory, the <step/> step always copies this <emphasis>into</emphasis> the designated target directory. This
+    <para role="keep-with-next">If you&#x2019;re copying a directory, the <step/> step always copies this <emphasis>into</emphasis> the designated target directory. This
       means that you cannot copy a directory to another location under a different name. In order to achieve this, you subsequently must rename the
       copied result using <step-ref name="p:file-move"/>:</para>
     <xproc-example href="../../examples/file-copy/file-copy-03.xpl" show-source="false" keep-from="build">

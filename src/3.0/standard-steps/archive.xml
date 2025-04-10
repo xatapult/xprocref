@@ -465,8 +465,8 @@
 
   <example title="Using the report port">
 
-    <para>The <step/> step also has a <port>report</port> port that outputs the manifest of the resulting archive. So, building on the <example-ref
-        idref="basic-example"/> example, we could also have shown what&#x2019;s inside the created archive like this:</para>
+    <para role="keep-with-next">The <step/> step also has a <port>report</port> port that outputs the manifest of the resulting archive. So, building
+      on the <example-ref idref="basic-example"/> example, we could also have shown what&#x2019;s inside the created archive like this:</para>
 
     <xproc-example href="../../examples/archive/archive-02.xpl" show-source="false" fixup-pipeline-input="false" keep-from="test"/>
 

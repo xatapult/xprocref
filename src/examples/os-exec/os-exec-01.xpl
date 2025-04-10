@@ -3,7 +3,8 @@
 
   <p:output port="result"/>
 
-  <p:variable name="cwd" select="static-base-uri() => replace('^file:/+', '') => replace('[^/\\]+$', '')"/>
+  <p:variable name="cwd" 
+    select="static-base-uri() => replace('^file:/+', '') => replace('[^/\\]+$', '')"/>
 
   <p:os-exec command="cmd" cwd="{$cwd}">
     <p:with-option name="args" select="('/C', 'dir', 'data')"/>

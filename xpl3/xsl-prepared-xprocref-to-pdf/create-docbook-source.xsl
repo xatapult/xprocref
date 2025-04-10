@@ -43,7 +43,7 @@
         <orgname>Xatapult</orgname>
         <mediaobject role="top-logo">
           <imageobject>
-            <imagedata fileref="{xtlc:href-concat(($href-dir-images, 'logo-xatapult.jpg'))}" role="altwidth:10%" width="10%"/>
+            <imagedata fileref="{xtlc:href-concat(($href-dir-images, 'xprocref-logo.png'))}" role="altwidth:10%" width="20%"/>
           </imageobject>
         </mediaobject>
         <mediaobject role="center-page">
@@ -178,17 +178,13 @@
 
     <xsl:choose>
       <xsl:when test="exists($sect1/db:sect2)">
-        <xsl:for-each select="$sect1/db:sect2">
-          <bridgehead>{db:title}</bridgehead>
-          <xsl:copy-of select="db:* except db:title"/>
-        </xsl:for-each>
+        <xsl:copy-of select="$sect1/db:sect2"/>
       </xsl:when>
       <xsl:otherwise>
-        <!-- No alphabetical sections, this is is just a simple itemized list: -->
         <xsl:copy-of select="$sect1/db:itemizedlist[1]"/>
       </xsl:otherwise>
     </xsl:choose>
-
+    
   </xsl:template>
   
 </xsl:stylesheet>

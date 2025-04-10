@@ -44,9 +44,16 @@
     <!-- Make sure all external referenced links are visible in print. -->
     <xsl:copy>
       <xsl:apply-templates select="@* | node()"/>
-      <xsl:text> (</xsl:text>
-      <xsl:value-of select="@xlink:href"/>
-      <xsl:text>)</xsl:text>
+      <xsl:choose>
+        <xsl:when test="normalize-space(.) eq ''">
+          <xsl:value-of select="@xlink:href"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text> (</xsl:text>
+          <xsl:value-of select="@xlink:href"/>
+          <xsl:text>)</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:copy>
   </xsl:template>
 
@@ -74,9 +81,9 @@
       <xsl:apply-templates select="db:*"/>
     </xsl:copy>
   </xsl:template>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
+
   <xsl:template match="db:table[contains-token(@role, $xpref:role-options-table)]/db:tgroup">
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
@@ -90,9 +97,9 @@
       <xsl:apply-templates select="db:*"/>
     </xsl:copy>
   </xsl:template>
-  
+
   <!-- ======================================================================= -->
-  
+
   <xsl:function name="local:compute-code-column-width" as="xs:integer">
     <!-- Computes the width (in approximate percents) of a column containing code entries. Minimum is always 10.-->
     <xsl:param name="tgroup" as="element(db:tgroup)"/>
@@ -101,11 +108,11 @@
     <xsl:param name="maxwidth" as="xs:integer">
       <!-- If le 0, there is no maxwidth -->
     </xsl:param>
-    
+
     <!-- Get all the column contents (the words) and find the length of the longest: -->
     <xsl:variable name="contents" as="xs:string*" select="for $e in $tgroup/db:tbody/db:row/db:entry[$colnr]/string() return tokenize($e, '\s+')[.]"/>
     <xsl:variable name="max-length" as="xs:integer" select="max(for $c in $contents return string-length($c))"/>
-    
+
     <!-- Compute some width: -->
     <xsl:variable name="width" as="xs:integer" select="(xs:double($max-length) * 1.3) => ceiling() => xs:integer()"/>
     <xsl:choose>
@@ -117,21 +124,21 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:sequence select="$width"/>
-      </xsl:otherwise>  
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
+
   <xsl:function name="local:compute-code-column-width" as="xs:integer">
     <!-- Computes the width (in approximate percents) of a column containing code entries. Minimum is always 10.-->
     <xsl:param name="tgroup" as="element(db:tgroup)"/>
     <xsl:param name="colnr" as="xs:integer"/>
     <xsl:param name="minwidth" as="xs:integer"/>
-    
+
     <xsl:sequence select="local:compute-code-column-width($tgroup, $colnr, $minwidth, -1)"/>
   </xsl:function>
-  
+
 
 
 </xsl:stylesheet>

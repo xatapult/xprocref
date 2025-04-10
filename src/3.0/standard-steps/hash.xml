@@ -153,7 +153,7 @@
 
   <detail>
     <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
-    <para>The exception is when the <option>match</option> option matches the document-node <code>/</code>. In that case the resulting document will
+    <para role="keep-with-previous">The exception is when the <option>match</option> option matches the document-node <code>/</code>. In that case the resulting document will
       be of type text, the <property>content-type</property> document-property will become <code>text/plain</code> and a
         <property>serialization</property> document-property is removed. Any other document-property is preserved. </para>
   </detail>

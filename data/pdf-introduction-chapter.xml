@@ -1,15 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xml:id="index.html" xmlns="http://docbook.org/ns/docbook" version="5.0">
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
   <!-- ================================================================== -->
   <!--
-    This is the introductory chapter for the PDF.
+    Contents of the Introduction chapter of the PDF version.
   -->
   <!-- ================================================================== -->
-  
+
   <title>Introduction</title>
-  
-  <!-- ======================================================================= -->
-  
-  <para>TBD</para>
-  
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <para>XProc is a programming language for processing XML, JSON, and other documents in pipelines. XProc chains conversions and other steps, allowing
+    for potentially complex processing. XProc is especially useful for applications, such as publishing, where content may come from multiple input
+    sources, pass through multiple processing steps and result in multiple output streams. More information, including lots of learning materials, can
+    be found at <link xlink:href="https://xproc.org"/>.</para>
+
+  <para>The basic building blocks of XProc are its <emphasis>steps</emphasis>. A step is something that processes the document(s) flowing through it
+    in some way. For instance by changing some attributes, deleting stuff, or using it for accessing resources by HTTP. XProc has many built-in steps
+    and you need to know, in detail, what they do to be able to write an XProc program. This book is a reference guide to all defined XProc
+    steps.</para>
+
+  <para role="break-before">In 2020 I published a book called <link xlink:href="https://xmlpress.net/publications/xproc-3-0/">“XProc 3.0 - Programmer
+      Reference”</link>:</para>
+
+  <figure role="nonumber">
+    <title/>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="../resources/pdf/images/bookcover.png" width="20%"/>
+      </imageobject>
+    </mediaobject>
+  </figure>
+
+  <para>Appendices A and B in the book describe all the steps. However, due to time constraints, the step descriptions were copied from the formal
+    XProc specification. This leaves much to be desired for users of the language: the specification is aimed at XProc processor
+      <emphasis>implementers</emphasis>, not at language <emphasis>users</emphasis>. To correct this, I created the website <link
+      xlink:href="https://xprocref.org" role="newpage"><code>xprocref.org</code></link>, containing reference information about all the XProc steps,
+    written from a more user-oriented perspective.</para>
+
+  <para>Also, since the book was written, the specification was updated to version&#160;3.1. And although the changes are relative minor, details
+    count! Both the <link xlink:href="https://xprocref.org" role="newpage"><code>xprocref.org</code></link> website and this book are up-to-date with
+    version&#160;3.1.</para>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <para role="break-before">Erik&#160;Siegel (erik@xatapult.nl)</para>
+  <para>
+    <link xlink:href="https://www.xatapult.com" role="newpage">Xatapult&#160;Content&#160;Engineering</link>
+  </para>
+
+  <figure role="nonumber left">
+    <title/>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="../resources/pdf/images/logo-xatapult.jpg" width="10%"/>
+      </imageobject>
+    </mediaobject>
+  </figure>
+
 </chapter>

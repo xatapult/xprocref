@@ -229,7 +229,7 @@
 
   <example title="Basic usage (valid source document)" id="basic-valid">
 
-    <para>We&#x2019;re going to use a schema, that validates simple XML documents, consisting of a <tag>things</tag> root element and zero or more
+    <para role="keep-with-next">We&#x2019;re going to use a schema, that validates simple XML documents, consisting of a <tag>things</tag> root element and zero or more
         <tag>thing</tag> children. The root element has an optional attribute called <code>status</code> with default value
       <code>normal</code>.</para>
 
@@ -253,7 +253,7 @@
       </pipeline-header>
     </xproc-example>
 
-    <para>The exact format of the report might differ across implementations. Please experiment before using it.</para>
+    <para role="keep-with-previous">The exact format of the report might differ across implementations. Please experiment before using it.</para>
 
   </example>
 
@@ -272,7 +272,7 @@
           error <step-error-ref code="XC0156"/> would have been raised.</para>
       </pipeline-header>
     </xproc-example>
-    <para>Again, the exact format of the report might differ across implementations. Please experiment before using it.</para>
+    <para role="keep-with-previous">Again, the exact format of the report might differ across implementations. Please experiment before using it.</para>
 
     <xproc-example href="../../examples/validate-with-xml-schema/validate-with-xml-schema-04.xpl" show-source="false" keep-namespace-prefixes="err">
       <pipeline-header>
@@ -281,7 +281,7 @@
           available inside the <tag>p:catch</tag>:</para>
       </pipeline-header>
     </xproc-example>
-    <para>The exact contents of the <tag>c:errors</tag> element might differ across implementations. Please experiment before using it.</para>
+    <para role="keep-with-previous">The exact contents of the <tag>c:errors</tag> element might differ across implementations. Please experiment before using it.</para>
 
   </example>
 
@@ -305,7 +305,7 @@
 
   <example title="Validating in lax mode" id="validate-lax">
 
-    <para>Usually you want a document to completely validate against a schema. However, there are use-cases where the documents to validate are
+    <para role="keep-with-next">Usually you want a document to completely validate against a schema. However, there are use-cases where the documents to validate are
         <emphasis>wrapped</emphasis> inside some root element. This happens, for instance, when in XProc you have a sequence of documents and use
         <step-ref name="p:wrap-sequence"/> to wrap these results into a single XML document. The <step/> step allows you to disregard the root element
       and validate its child elements only by setting the <option>mode</option> option to <code>lax</code>.</para>

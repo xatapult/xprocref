@@ -163,7 +163,7 @@
 
   <example title="Basic usage" id="basic-usage">
 
-    <para>This simple example shows how to insert a (for the example, fixed) document into another, as a first child of a match:</para>
+    <para role="keep-with-next">This simple example shows how to insert a (for the example, fixed) document into another, as a first child of a match:</para>
     <xproc-example href="../../examples/insert/insert-01.xpl"/>
 
     <xproc-example href="../../examples/insert/insert-02.xpl" show-source="false">
@@ -185,7 +185,7 @@
 
   <example title="Inserting multiple times" id="multiple-inserts">
 
-    <para>The following example shows that when the <option>match</option> option matches multiple times, the insertion occurs multiple times:</para>
+    <para role="keep-with-next">The following example shows that when the <option>match</option> option matches multiple times, the insertion occurs multiple times:</para>
     <xproc-example href="../../examples/insert/insert-04.xpl"/>
 
   </example>
