@@ -26,11 +26,11 @@
           <code class="code">http://www.w3.org/ns/xproc-step</code>) is reserved for parameters for the schema <span class="emphasis italic">compilation</span> (if applicable).
         The value of this key must be a map itself.</p></li><li><p class="para">If the <code class="code option">report-format</code> option is set to <code class="code">xvrl</code> (default): Any entries with keys in the <code class="code">xvrl</code>
         namespace (<code class="code">http://www.xproc.org/ns/xvrl</code>) are passed as parameters to the process that generates the <a href="https://spec.xproc.org/master/head/xvrl/" target="_blank"><span class="link newpage">XVRL</span></a> report appearing on the <code class="code port">report</code> port. All <a href="https://spec.xproc.org/master/head/xvrl/#xvrl-generation" target="_blank"><span class="link newpage">standard XVRL generation parameters</span></a> are
-        supported.</p></li></ul></div></div><div class="sect2" id="sect2-d626e75203"><a name="sect2-d626e75203"><!----></a><h2 class="sect2">Examples</h2><div class="sect3" id="p_validate-with-nvdl-v30-basic-valid"><a name="p_validate-with-nvdl-v30-basic-valid"><!----></a><h3 class="sect3">Basic usage (valid source document)</h3><p class="para">Assume we have an input document, called <code class="code">input-valid.xml</code>, that looks like this:</p><div class="programlisting"><pre class="programlisting">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+        supported.</p></li></ul></div></div><div class="sect2" id="sect2-d626e75203"><a name="sect2-d626e75203"><!----></a><h2 class="sect2">Examples</h2><div class="sect3" id="p_validate-with-nvdl-v30-basic-valid"><a name="p_validate-with-nvdl-v30-basic-valid"><!----></a><h3 class="sect3">Basic usage (valid source document)</h3><p class="para keep-with-next">Assume we have an input document, called <code class="code">input-valid.xml</code>, that looks like this:</p><div class="programlisting"><pre class="programlisting">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;things xmlns:thingies="https://www.xprocref.org/ns/thingies"&gt;
   &lt;thingies:thing id="A"&gt;A thing...&lt;/thingies:thing&gt;
   &lt;thingies:thing id="B"&gt;Another thing...&lt;/thingies:thing&gt;
-&lt;/things&gt;</pre></div><p class="para">Since this document mixes namespaces, we want to validate it using NVDL. An NVDL schema for this, called <code class="code">example.nvdl</code>, is as
+&lt;/things&gt;</pre></div><p class="para keep-with-next">Since this document mixes namespaces, we want to validate it using NVDL. An NVDL schema for this, called <code class="code">example.nvdl</code>, is as
       follows:</p><div class="programlisting"><pre class="programlisting">&lt;rules xmlns="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"&gt;
   &lt;namespace ns="https://www.xprocref.org/ns/thingies"&gt;
     &lt;validate schema="thingies.xsd"/&gt;
@@ -38,7 +38,7 @@
   &lt;anyNamespace&gt;
     &lt;allow/&gt;
   &lt;/anyNamespace&gt;
-&lt;/rules&gt;</pre></div><p class="para">The <code class="tag">&lt;thing&gt;</code> elements in the <code class="code">https://www.xprocref.org/ns/thingies</code> namespace are validated using the following simple
+&lt;/rules&gt;</pre></div><p class="para keep-with-next">The <code class="tag">&lt;thing&gt;</code> elements in the <code class="code">https://www.xprocref.org/ns/thingies</code> namespace are validated using the following simple
       XML schema called <code class="code">thingies.xsd</code>. It says that the only thing allowed is a <code class="tag">&lt;thing&gt;</code> element with a required <code class="code">id</code>
       attribute:</p><div class="programlisting"><pre class="programlisting">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="https://www.xprocref.org/ns/thingies"
@@ -52,7 +52,7 @@
       &lt;/xs:simpleContent&gt;
     &lt;/xs:complexType&gt;
   &lt;/xs:element&gt;
-&lt;/xs:schema&gt;</pre></div><p class="para">Performing this validation using the <code class="code step">p:validate-with-nvdl</code> step returns the following on the <code class="code port">report</code> port:</p><p class="para keep-with-next">Pipeline document:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
+&lt;/xs:schema&gt;</pre></div><p class="para keep-with-next">Performing this validation using the <code class="code step">p:validate-with-nvdl</code> step returns the following on the <code class="code port">report</code> port:</p><p class="para keep-with-next">Pipeline document:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
 
   &lt;p:input port="source"/&gt;
   &lt;p:output port="result" pipe="report@validate"/&gt;
@@ -63,7 +63,7 @@
 
 &lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;report xmlns="http://www.xproc.org/ns/xvrl"&gt;
    &lt;metadata&gt;
-      &lt;timestamp&gt;2025-04-10T11:08:33.46+02:00&lt;/timestamp&gt;
+      &lt;timestamp&gt;2025-04-10T16:32:43.92+02:00&lt;/timestamp&gt;
       &lt;document href="file:/…/…/input-valid.xml"/&gt;
       &lt;schema href="file:/…/…/example.nvdl"
               schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"/&gt;
@@ -74,13 +74,13 @@
            warning-count="0"
            info-count="0"
            valid="true"/&gt;
-&lt;/report&gt;</pre></div></div><div class="sect3" id="sect3-d626e75247"><a name="sect3-d626e75247"><!----></a><h3 class="sect3">Basic usage (invalid source document)</h3><p class="para">Using the same NVDL schema as in <a href="#p_validate-with-nvdl-v30-basic-valid"><span class="link">Basic usage (valid source document)</span></a>, we’re now going to validate an <span class="emphasis italic">in</span>valid
+&lt;/report&gt;</pre></div></div><div class="sect3" id="sect3-d626e75247"><a name="sect3-d626e75247"><!----></a><h3 class="sect3">Basic usage (invalid source document)</h3><p class="para keep-with-next">Using the same NVDL schema as in <a href="#p_validate-with-nvdl-v30-basic-valid"><span class="link">Basic usage (valid source document)</span></a>, we’re now going to validate an <span class="emphasis italic">in</span>valid
       document (called <code class="code">input-invalid.xml</code>). Since we want to have a look at what comes out of the <code class="code port">report</code> port, we have to set
       the <code class="code option">assert-valid</code> option to <code class="code">false</code>.</p><div class="programlisting"><pre class="programlisting">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;things xmlns:thingies="https://www.xprocref.org/ns/thingies"&gt;
   &lt;thingies:thing id="A" invalid-attribute="true"&gt;A thing...&lt;/thingies:thing&gt;
   &lt;thingies:thing id="B"&gt;Another thing...&lt;/thingies:thing&gt;
-&lt;/things&gt;</pre></div><p class="para">Performing this validation using the <code class="code step">p:validate-with-nvdl</code> step returns the following on the <code class="code port">report</code> port:</p><p class="para keep-with-next">Pipeline document:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
+&lt;/things&gt;</pre></div><p class="para keep-with-next">Performing this validation using the <code class="code step">p:validate-with-nvdl</code> step returns the following on the <code class="code port">report</code> port:</p><p class="para keep-with-next">Pipeline document:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
 
   &lt;p:input port="source"/&gt;
   &lt;p:output port="result" pipe="report@validate"/&gt;
@@ -91,7 +91,7 @@
 
 &lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;report xmlns="http://www.xproc.org/ns/xvrl"&gt;
    &lt;metadata&gt;
-      &lt;timestamp&gt;2025-04-10T11:08:33.77+02:00&lt;/timestamp&gt;
+      &lt;timestamp&gt;2025-04-10T16:32:43.29+02:00&lt;/timestamp&gt;
       &lt;document href="file:/…/…/input-invalid.xml"/&gt;
       &lt;schema href="file:/…/…/example.nvdl"
               schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"/&gt;

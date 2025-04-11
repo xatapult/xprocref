@@ -70,9 +70,9 @@
     <section xml:id="details-input">
       <title>Details connecting input ports</title>
 
-      <para>The <tag>p:run-input</tag> element is used to connect the input ports of the dynamically executed pipeline. Its attributes and child
+      <para role="keep-with-next">The <tag>p:run-input</tag> element is used to connect the input ports of the dynamically executed pipeline. Its attributes and child
         elements are almost similar to the standard XProc <tag>p:with-input</tag> element.</para>
-      <para>For example, to connect the primary <port>source</port> input port of the dynamically executed pipeline to some document on disk, you
+      <para role="keep-with-next">For example, to connect the primary <port>source</port> input port of the dynamically executed pipeline to some document on disk, you
         could write:</para>
 
       <programlisting xml:space="preserve"><![CDATA[<p:run>

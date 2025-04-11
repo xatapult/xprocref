@@ -19,8 +19,8 @@
       could do this.</p><p class="para">The <code class="code step">p:directory-list</code> step takes a directory path as its main input in the <code class="code option">path</code> option. The <code class="code port">result</code> port emits a document
       (see <a href="#result-doc" class="xref">The result document</a>) that describes this directory by listing its contents (files and subdirectories). What happens exactly
       depends on the settings of the other options. The step has no input port(s).</p><p class="para">The directory to describe, as specified in the <code class="code option">path</code> option, <span class="emphasis italic">must</span> exist. Otherwise, error
-        <a href="#error-XC0017"><span class="link"><code class="code">XC0017</code></span></a> is raised.</p><div class="sect3" id="include-exclude"><a name="include-exclude"><!----></a><h3 class="sect3">Including and excluding files and directories</h3><p class="para">The <code class="code option">include-filter</code> and <code class="code option">exclude-filter</code> determine which files and directories are included/excluded in the
-        result. Both options are a sequence of (zero or more) XPath regular expression strings.</p><ul class="itemizedlist"><li><p class="para">If the <code class="code option">include-filter</code> is not specified (or the empty sequence), <span class="emphasis italic">all</span> files/directories are
+        <a href="#error-XC0017"><span class="link"><code class="code">XC0017</code></span></a> is raised.</p><div class="sect3" id="include-exclude"><a name="include-exclude"><!----></a><h3 class="sect3">Including and excluding files and directories</h3><p class="para keep-with-next">The <code class="code option">include-filter</code> and <code class="code option">exclude-filter</code> determine which files and directories are included/excluded in the
+        result. Both options are a sequence of (zero or more) XPath regular expression strings.</p><ul class="itemizedlist"><li><p class="para keep-with-next">If the <code class="code option">include-filter</code> is not specified (or the empty sequence), <span class="emphasis italic">all</span> files/directories are
             included.</p><p class="para">Otherwise, every regular expression string in the option value is matched against the <span class="emphasis italic">relative</span> file/directory
             paths (relative to the path that was given in the <code class="code option">path</code> option). A match means the file/directory is included.</p></li><li><p class="para">If the <code class="code option">exclude-filter</code> is not specified (or the empty sequence), <span class="emphasis italic">no</span> files/directories are
             excluded.</p><p class="para">Otherwise, every regular expression string in the option value is matched against the <span class="emphasis italic">relative</span> file/directory
@@ -173,7 +173,7 @@
    &lt;/c:directory&gt;
 &lt;/c:directory&gt;</pre></div><p class="para">Finally, assume we both need the XML and text files in the directory tree, but not anything else. For this we could do two things:</p><ul class="itemizedlist"><li><p class="para">Create a regular expression that incorporates both, and pass it as an <code class="code">include-filter</code> attribute on the
             <code class="tag">&lt;p:directory-list&gt;</code> element, just like we did in the examples above: <code class="tag">&lt;p:directory list path="data"
-            include-filter="\.(xml|txt)$" max-depth="unbounded"/&gt;</code></p></li><li><p class="para">Or we could pass a regular expression for each file type. If we do it this way we can no longer pass the <code class="code option">include-filter</code>
+            include-filter="\.(xml|txt)$" max-depth="unbounded"/&gt;</code></p></li><li><p class="para keep-with-next">Or we could pass a regular expression for each file type. If we do it this way we can no longer pass the <code class="code option">include-filter</code>
           option as an attribute. We have to use a <code class="tag">&lt;p:with-option&gt;</code> child element:</p></li></ul><p class="para keep-with-next">Pipeline document:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
 
   &lt;p:output port="result"/&gt;
@@ -211,7 +211,7 @@
       &lt;c:file xml:base="sub1-x1.xml" name="file:/…/…/data/sub1/sub1-x1.xml"/&gt;
    &lt;/c:directory&gt;
    &lt;c:file xml:base="x1.xml" name="file:/…/…/data/x1.xml"/&gt;
-&lt;/c:directory&gt;</pre></div><p class="para">We can now use this result to process all the XML documents. The following pipeline simply loads them (using <a href="p.load.html"><span class="link"><code class="code step">p:load</code></span></a>), and
+&lt;/c:directory&gt;</pre></div><p class="para keep-with-next">We can now use this result to process all the XML documents. The following pipeline simply loads them (using <a href="p.load.html"><span class="link"><code class="code step">p:load</code></span></a>), and
       wraps all contents (using <a href="p.wrap-sequence.html"><span class="link"><code class="code step">p:wrap-sequence</code></span></a>) in an <code class="tag">&lt;all-xml-documents&gt;</code> element:</p><p class="para keep-with-next">Pipeline document:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
 
   &lt;p:output port="result"/&gt;

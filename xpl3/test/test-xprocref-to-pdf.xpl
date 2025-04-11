@@ -12,7 +12,7 @@
   <!-- ======================================================================= -->
   
   <xpref:prepare-xprocref limit-to-latest-version="true">
-<!--    <p:with-option name="limit-to-steps" as="xs:string*" select="('message', 'identity', 'rename')"/>-->
+    <p:with-option name="limit-to-steps" as="xs:string*" select="('message', 'identity', 'rename')"/>
 <!--    <p:with-option name="limit-to-steps" as="xs:string*" select="('archive')"/>-->
   </xpref:prepare-xprocref>
   
@@ -22,6 +22,7 @@
     <p:with-option name="href-pdf" select="resolve-uri('../../tmp/xprocref.pdf', static-base-uri())"/>
     <p:with-option name="write-intermediate-results" select="true()"/>
     <p:with-option name="href-intermediate-results" select="resolve-uri('../../tmp/', static-base-uri())"/>
+    <p:with-option name="process-for-binding" select="true()"/>
   </xpref:prepared-xprocref-to-pdf>
 
   <p:variable name="empty-map" as="map(*)" select="map{}"/>

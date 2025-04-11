@@ -12,7 +12,7 @@
   <!-- ======================================================================= -->
   <!-- IMPORTS: -->
 
-  <p:import href="../../xtpxlib-common/xpl3mod/expand-macro-definitions/expand-macro-definitions.xpl"></p:import>
+  <p:import href="../../xtpxlib-common/xpl3mod/expand-macro-definitions/expand-macro-definitions.xpl"/>
   <p:import href="../../xtpxlib-xdoc/xpl3/xdoc-to-pdf.xpl"/>
 
   <!-- ======================================================================= -->
@@ -38,11 +38,15 @@
   <p:option name="href-pdf" as="xs:string" required="true">
     <p:documentation>The URI for the PDF</p:documentation>
   </p:option>
-  
+
   <p:option name="href-dir-images" as="xs:string" required="false" select="resolve-uri('../resources/pdf/images/', static-base-uri())">
     <p:documentation>The directory where the images for the PDF are residing.</p:documentation>
   </p:option>
-  
+
+  <p:option name="process-for-binding" as="xs:boolean" required="false" select="false()">
+    <p:documentation>If true, odd and even pages are handled differently, to create page margins for bindings.</p:documentation>
+  </p:option>
+
   <!-- ======================================================================= -->
 
   <p:identity message="  * Building PDF:"/>
@@ -89,22 +93,22 @@
     <p:with-input port="stylesheet" href="xsl-prepared-xprocref-to-pdf/create-docbook-source.xsl"/>
     <p:with-option name="parameters" select="map{'href-dir-images': $href-dir-images}"/>
   </p:xslt>
-  
+
   <p:if test="$write-intermediate-results">
     <p:store href="{$href-intermediate-results}/205-xxxx.xml"/>
   </p:if>
-  
+
   <!-- Run the macro expansion again to get version and dates on the right locations: -->
   <xtlc:expand-macro-definitions use-standard-macrodefs="true" expand-in-text="true" expand-in-attributes="false" use-local-macrodefs="false">
     <p:with-option name="macrodefs" select="map{'XPROCVERSION': $xproc-version}"/>
     <p:with-option name="ignore-elements" select="('programlisting', 'tag', 'code')"/>
   </xtlc:expand-macro-definitions>
-  
+
   <!-- Do the postprocessing for widows/orphanes, tables, etc. -->
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl-prepared-xprocref-to-pdf/postprocess-docbook-1.xsl"/>
   </p:xslt>
-  
+
   <p:if test="$write-intermediate-results">
     <p:store href="{$href-intermediate-results}/210-pdf-docbook-source.xml"/>
   </p:if>
@@ -117,6 +121,12 @@
   <xdoc:xdoc-to-pdf max-toc-level="1" link-color="black" output-type="a4" left-indent-section-numbers="false" suppress-section-numbering="2">
     <p:with-option name="href-pdf" select="$href-pdf"/>
     <p:with-option name="href-xsl-fo" select="if ($write-intermediate-results) then ($href-intermediate-results || '/220-pdf-xsl-fo.xml') else ()"/>
+    <p:with-option name="process-for-binding" select="$process-for-binding"/>
   </xdoc:xdoc-to-pdf>
+
+  <!-- Massage the result a little to get an appropriate report XML: -->
+  <p:delete match="/*/@create-pdf"/>
+  <p:add-attribute attribute-name="process-for-binding" attribute-value="{$process-for-binding}"/>
+  <p:rename match="/*" new-name="xprocref-to-pdf"/>
 
 </p:declare-step>

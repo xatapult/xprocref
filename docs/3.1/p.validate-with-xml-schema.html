@@ -53,7 +53,7 @@
           <code class="code">http://www.w3.org/ns/xproc-step</code>) is reserved for parameters for the schema <span class="emphasis italic">compilation</span> (if applicable).
         The value of this key must be a map itself.</p></li><li><p class="para">If the <code class="code option">report-format</code> option is set to <code class="code">xvrl</code> (default): Any entries with keys in the <code class="code">xvrl</code>
         namespace (<code class="code">http://www.xproc.org/ns/xvrl</code>) are passed as parameters to the process that generates the <a href="https://spec.xproc.org/master/head/xvrl/" target="_blank"><span class="link newpage">XVRL</span></a> report appearing on the <code class="code port">report</code> port. All <a href="https://spec.xproc.org/master/head/xvrl/#xvrl-generation" target="_blank"><span class="link newpage">standard XVRL generation parameters</span></a> are
-        supported.</p></li></ul></div></div><div class="sect2" id="sect2-d626e38760"><a name="sect2-d626e38760"><!----></a><h2 class="sect2">Examples</h2><div class="sect3" id="p_validate-with-xml-schema-v31-basic-valid"><a name="p_validate-with-xml-schema-v31-basic-valid"><!----></a><h3 class="sect3">Basic usage (valid source document)</h3><p class="para">We’re going to use a schema, that validates simple XML documents, consisting of a <code class="tag">&lt;things&gt;</code> root element and zero or more
+        supported.</p></li></ul></div></div><div class="sect2" id="sect2-d626e38760"><a name="sect2-d626e38760"><!----></a><h2 class="sect2">Examples</h2><div class="sect3" id="p_validate-with-xml-schema-v31-basic-valid"><a name="p_validate-with-xml-schema-v31-basic-valid"><!----></a><h3 class="sect3">Basic usage (valid source document)</h3><p class="para keep-with-next">We’re going to use a schema, that validates simple XML documents, consisting of a <code class="tag">&lt;things&gt;</code> root element and zero or more
         <code class="tag">&lt;thing&gt;</code> children. The root element has an optional attribute called <code class="code">status</code> with default value
       <code class="code">normal</code>.</p><div class="programlisting"><pre class="programlisting">&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"&gt;
   &lt;xs:element name="things"&gt;
@@ -94,7 +94,7 @@
 
 &lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;report xmlns="http://www.xproc.org/ns/xvrl"&gt;
    &lt;metadata&gt;
-      &lt;timestamp&gt;2025-04-10T11:08:26.73+02:00&lt;/timestamp&gt;
+      &lt;timestamp&gt;2025-04-10T16:32:37.21+02:00&lt;/timestamp&gt;
       &lt;document href="file:/…/…/input-valid.xml"/&gt;
       &lt;schema href="file:/…/…/example.xsd"
               schematypens="http://www.w3.org/2001/XMLSchema"/&gt;
@@ -105,7 +105,7 @@
            warning-count="0"
            info-count="0"
            valid="true"/&gt;
-&lt;/report&gt;</pre></div><p class="para">The exact format of the report might differ across implementations. Please experiment before using it.</p></div><div class="sect3" id="sect3-d626e38822"><a name="sect3-d626e38822"><!----></a><h3 class="sect3">Basic usage (invalid source document)</h3><p class="para">We’re going to use the same schema as in <a href="#p_validate-with-xml-schema-v31-basic-valid"><span class="link">Basic usage (valid source document)</span></a>, but now provide an <span class="emphasis italic">invalid</span>
+&lt;/report&gt;</pre></div><p class="para keep-with-previous">The exact format of the report might differ across implementations. Please experiment before using it.</p></div><div class="sect3" id="sect3-d626e38822"><a name="sect3-d626e38822"><!----></a><h3 class="sect3">Basic usage (invalid source document)</h3><p class="para">We’re going to use the same schema as in <a href="#p_validate-with-xml-schema-v31-basic-valid"><span class="link">Basic usage (valid source document)</span></a>, but now provide an <span class="emphasis italic">invalid</span>
           source document (called <code class="code">input-invalid.xml</code>):</p><div class="programlisting"><pre class="programlisting">&lt;things&gt;
    &lt;thing&gt;A thing...&lt;/thing&gt;
    &lt;thing-error&gt;Another thing...&lt;/thing-error&gt;
@@ -122,7 +122,7 @@
 
 &lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;report xmlns="http://www.xproc.org/ns/xvrl"&gt;
    &lt;metadata&gt;
-      &lt;timestamp&gt;2025-04-10T11:08:26.04+02:00&lt;/timestamp&gt;
+      &lt;timestamp&gt;2025-04-10T16:32:37.56+02:00&lt;/timestamp&gt;
       &lt;document href="file:/…/…/input-invalid.xml"/&gt;
       &lt;schema href="file:/…/…/example.xsd"
               schematypens="http://www.w3.org/2001/XMLSchema"/&gt;
@@ -137,7 +137,7 @@
            warning-count="0"
            info-count="0"
            valid="false"/&gt;
-&lt;/report&gt;</pre></div><p class="para">Again, the exact format of the report might differ across implementations. Please experiment before using it.</p><p class="break">&nbsp;</p><p class="para break-before">Another way of handling validation errors is to have <code class="code step">p:validate-with-xml-schema</code> raise its error <a href="#error-XC0156"><span class="link"><code class="code">XC0156</code></span></a> and
+&lt;/report&gt;</pre></div><p class="para keep-with-previous">Again, the exact format of the report might differ across implementations. Please experiment before using it.</p><p class="break">&nbsp;</p><p class="para break-before">Another way of handling validation errors is to have <code class="code step">p:validate-with-xml-schema</code> raise its error <a href="#error-XC0156"><span class="link"><code class="code">XC0156</code></span></a> and
           catch this in a <code class="tag">&lt;p:try&gt;</code>/<code class="tag">&lt;p:catch&gt;</code> construction. The following pipeline shows you the <code class="tag">&lt;c:errors&gt;</code> result, that is
           available inside the <code class="tag">&lt;p:catch&gt;</code>:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:err="http://www.w3.org/ns/xproc-error" xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
 
@@ -163,7 +163,7 @@
             column="33"&gt;
       &lt;report xmlns="http://www.xproc.org/ns/xvrl"&gt;
          &lt;metadata&gt;
-            &lt;timestamp&gt;2025-04-10T11:08:26.37+02:00&lt;/timestamp&gt;
+            &lt;timestamp&gt;2025-04-10T16:32:37.88+02:00&lt;/timestamp&gt;
             &lt;document href="file:/…/…/input-invalid.xml"/&gt;
             &lt;schema href="file:/…/…/example.xsd"
                     schematypens="http://www.w3.org/2001/XMLSchema"/&gt;
@@ -180,7 +180,7 @@
                  valid="false"/&gt;
       &lt;/report&gt;
    &lt;/c:error&gt;
-&lt;/c:errors&gt;</pre></div><p class="para">The exact contents of the <code class="tag">&lt;c:errors&gt;</code> element might differ across implementations. Please experiment before using it.</p></div><div class="sect3" id="p_validate-with-xml-schema-v31-use-location-hints"><a name="p_validate-with-xml-schema-v31-use-location-hints"><!----></a><h3 class="sect3">Using location hints</h3><p class="para">Sometimes you have source documents that already contain schema references, for instance:</p><div class="programlisting"><pre class="programlisting">&lt;things&gt;
+&lt;/c:errors&gt;</pre></div><p class="para keep-with-previous">The exact contents of the <code class="tag">&lt;c:errors&gt;</code> element might differ across implementations. Please experiment before using it.</p></div><div class="sect3" id="p_validate-with-xml-schema-v31-use-location-hints"><a name="p_validate-with-xml-schema-v31-use-location-hints"><!----></a><h3 class="sect3">Using location hints</h3><p class="para">Sometimes you have source documents that already contain schema references, for instance:</p><div class="programlisting"><pre class="programlisting">&lt;things&gt;
    &lt;thing&gt;A thing...&lt;/thing&gt;
    &lt;thing&gt;Another thing...&lt;/thing&gt;
 &lt;/things&gt;</pre></div><p class="para">If we want the <code class="code step">p:validate-with-xml-schema</code> step to use this reference, we have to set the <code class="code option">try-location-hints</code> to <code class="code">true</code>. We
@@ -196,7 +196,7 @@
 &lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;things status="normal"&gt;
    &lt;thing&gt;A thing...&lt;/thing&gt;
    &lt;thing&gt;Another thing...&lt;/thing&gt;
-&lt;/things&gt;</pre></div></div><div class="sect3" id="p_validate-with-xml-schema-v31-validate-lax"><a name="p_validate-with-xml-schema-v31-validate-lax"><!----></a><h3 class="sect3">Validating in lax mode</h3><p class="para">Usually you want a document to completely validate against a schema. However, there are use-cases where the documents to validate are
+&lt;/things&gt;</pre></div></div><div class="sect3" id="p_validate-with-xml-schema-v31-validate-lax"><a name="p_validate-with-xml-schema-v31-validate-lax"><!----></a><h3 class="sect3">Validating in lax mode</h3><p class="para keep-with-next">Usually you want a document to completely validate against a schema. However, there are use-cases where the documents to validate are
         <span class="emphasis italic">wrapped</span> inside some root element. This happens, for instance, when in XProc you have a sequence of documents and use
         <a href="p.wrap-sequence.html"><span class="link"><code class="code step">p:wrap-sequence</code></span></a> to wrap these results into a single XML document. The <code class="code step">p:validate-with-xml-schema</code> step allows you to disregard the root element
       and validate its child elements only by setting the <code class="code option">mode</code> option to <code class="code">lax</code>.</p><p class="para keep-with-next">Source document:</p><div class="programlisting"><pre class="programlisting">&lt;weird-root-element&gt;
