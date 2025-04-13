@@ -10,7 +10,7 @@
   <!-- ======================================================================= -->
   <!-- IMPORTS: -->
 
-  <p:import href="process-xprocref-to-website.xpl"/>
+  <p:import href="../xpl3mod/process-xprocref-to-website.xpl"/>
 
   <!-- ======================================================================= -->
   <!-- PORTS: -->
@@ -21,7 +21,7 @@
 
   <!-- ================================================================== -->
 
-  <xpref:process-xprocref-to-website production-version="false" wip="false">
+  <xpref:process-xprocref-to-website production-version="false" wip="false" build-pdf="false">
     <p:with-option name="href-build-location" select="resolve-uri('../build', static-base-uri())"/>
   </xpref:process-xprocref-to-website>
 

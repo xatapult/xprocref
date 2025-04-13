@@ -21,8 +21,8 @@
   …
 &lt;/p:run&gt;</pre></div><p class="para">Take care: this anonymous “pipeline” port is <span class="emphasis italic">not</span> the primary port of <code class="code step">p:run</code>. So you must
           <span class="emphasis italic">always connect it</span>, even if the pipeline to run flows out of the primary output port of the step right before (in XProc
-        terms: even if it is the DRP, the Default Readable Port).</p></div><div class="sect3" id="details-input"><a name="details-input"><!----></a><h3 class="sect3">Details connecting input ports</h3><p class="para">The <code class="tag">&lt;p:run-input&gt;</code> element is used to connect the input ports of the dynamically executed pipeline. Its attributes and child
-        elements are almost similar to the standard XProc <code class="tag">&lt;p:with-input&gt;</code> element.</p><p class="para">For example, to connect the primary <code class="code port">source</code> input port of the dynamically executed pipeline to some document on disk, you
+        terms: even if it is the DRP, the Default Readable Port).</p></div><div class="sect3" id="details-input"><a name="details-input"><!----></a><h3 class="sect3">Details connecting input ports</h3><p class="para keep-with-next">The <code class="tag">&lt;p:run-input&gt;</code> element is used to connect the input ports of the dynamically executed pipeline. Its attributes and child
+        elements are almost similar to the standard XProc <code class="tag">&lt;p:with-input&gt;</code> element.</p><p class="para keep-with-next">For example, to connect the primary <code class="code port">source</code> input port of the dynamically executed pipeline to some document on disk, you
         could write:</p><div class="programlisting"><pre class="programlisting">&lt;p:run&gt;
   &lt;p:with-input href="my-dynamic-pipeline.xpl"/&gt;
   &lt;p:run-input port="source" href="doc.xml"/&gt;

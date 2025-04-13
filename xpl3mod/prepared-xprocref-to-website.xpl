@@ -158,7 +158,7 @@
 
   <p:identity>
     <p:with-input>
-      <process-xprocref build-location="{$href-build-location}" production-version="{$production-version}" wip="{$wip}"
+      <xprocref-to-website build-location="{$href-build-location}" production-version="{$production-version}" wip="{$wip}"
         limit-to-steps="{$limit-to-steps}" limit-to-latest-version="{$limit-to-latest-version}"/>
     </p:with-input>
   </p:identity>

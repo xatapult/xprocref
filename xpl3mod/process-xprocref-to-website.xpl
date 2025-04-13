@@ -7,6 +7,10 @@
 
   <p:documentation>
     Processes an XProcRef specification into a website.
+    
+    This is the main, overarching, pipeline that can, by setting options, do it all! 
+    The idea is that this is called from pipelines in ../xpl3/ that use certain settings to 
+    get the desired effect (like creating a test version, a limited version, etc.).
   </p:documentation>
 
   <!-- ======================================================================= -->
@@ -14,6 +18,7 @@
 
   <p:import href="prepare-xprocref.xpl"/>
   <p:import href="prepared-xprocref-to-website.xpl"/>
+  <p:import href="prepared-xprocref-to-pdf.xpl"/>
 
   <!-- ======================================================================= -->
   <!-- PORTS: -->
@@ -49,10 +54,6 @@
     <p:documentation>Limit the output to the steps mentioned here. Use the step names *without* a namespace prefix!</p:documentation>
   </p:option>
 
-  <p:option name="limit-to-latest-version" as="xs:boolean" required="false" select="false()">
-    <p:documentation>Whether to limit the output to the latest version only.</p:documentation>
-  </p:option>
-
   <!-- ======================================================================= -->
   <!-- OPTIONS FOR WEBSITE BUILDING: -->
 
@@ -74,6 +75,13 @@
   </p:option>
 
   <!-- ======================================================================= -->
+  <!-- OPTIONS FOR PDF CREATION: -->
+
+  <p:option name="build-pdf" as="xs:boolean" required="false" select="$production-version">
+    <p:documentation>Whether to also add a PDF to the site (might be turned off for testing purposes).</p:documentation>
+  </p:option>
+
+  <!-- ======================================================================= -->
 
   <p:variable name="start-timestamp" as="xs:dateTime" select="current-dateTime()"/>
 
@@ -81,13 +89,18 @@
   <p:identity message="* XProcRef to website processing"/>
   <p:identity message="  * Source document: {$xprocref-base-uri}"/>
 
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- Create the website: -->
+
   <xpref:prepare-xprocref>
+    <p:with-input pipe="source@process-xprocref-to-website"/>
+    <p:with-option name="prompt" select="'Preparations for building website:'"/>
     <p:with-option name="write-intermediate-results" select="$write-intermediate-results"/>
     <p:with-option name="href-intermediate-results" select="$href-intermediate-results"/>
     <p:with-option name="production-version" select="$production-version"/>
     <p:with-option name="wip" select="$wip"/>
     <p:with-option name="limit-to-steps" select="$limit-to-steps"/>
-    <p:with-option name="limit-to-latest-version" select="$limit-to-latest-version"/>
+    <p:with-option name="limit-to-latest-version" select="false()"/>
   </xpref:prepare-xprocref>
 
   <xpref:prepared-xprocref-to-website>
@@ -98,7 +111,46 @@
     <p:with-option name="href-web-template" select="$href-web-template"/>
     <p:with-option name="cname" select="$cname"/>
   </xpref:prepared-xprocref-to-website>
+  <p:identity name="website-build-result"/>
 
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- Create the PDF: -->
+
+  <p:if test="$build-pdf">
+    <xpref:prepare-xprocref>
+      <p:with-input pipe="source@process-xprocref-to-website"/>
+      <p:with-option name="prompt" select="'Preparations for building PDF:'"/>
+      <p:with-option name="write-intermediate-results" select="$write-intermediate-results"/>
+      <p:with-option name="href-intermediate-results" select="$href-intermediate-results"/>
+      <p:with-option name="production-version" select="$production-version"/>
+      <p:with-option name="wip" select="$wip"/>
+      <p:with-option name="limit-to-steps" select="$limit-to-steps"/>
+      <p:with-option name="limit-to-latest-version" select="true()"/>
+    </xpref:prepare-xprocref>
+
+    <xpref:prepared-xprocref-to-pdf>
+      <p:with-option name="href-pdf" select="$href-build-location || '/resources/xprocref.pdf'"/>
+      <p:with-option name="write-intermediate-results" select="$write-intermediate-results"/>
+      <p:with-option name="href-intermediate-results" select="$href-intermediate-results"/>
+      <p:with-option name="process-for-binding" select="false()"/>
+    </xpref:prepared-xprocref-to-pdf>
+  </p:if>
+  <p:identity name="pdf-build-result"/>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- Done, finalize: -->
+
+  <p:insert position="first-child">
+    <p:with-input>
+      <process-xprocref-to-website/>
+    </p:with-input>
+    <p:with-input port="insertion" pipe="@website-build-result"/>
+  </p:insert>
+  <p:if test="$build-pdf">
+    <p:insert position="last-child">
+      <p:with-input port="insertion" pipe="@pdf-build-result"/>
+    </p:insert>
+  </p:if>
   <p:variable name="duration" as="xs:dayTimeDuration" select="current-dateTime() - $start-timestamp"/>
   <p:add-attribute attribute-name="timestamp" attribute-value="{string($start-timestamp)}"/>
   <p:add-attribute attribute-name="duration" attribute-value="{string($duration)}"/>

@@ -56,7 +56,11 @@
   <p:option name="limit-to-latest-version" as="xs:boolean" required="false" select="false()">
     <p:documentation>Whether to limit the output to the latest version only.</p:documentation>
   </p:option>
-
+  
+  <p:option name="prompt" as="xs:string" required="false" select="'Preparations:'">
+    <p:documentation>The main/first prompt in the message output</p:documentation>
+  </p:option>
+  
   <!-- ======================================================================= -->
   <!-- GLOBAL SETTINGS: -->
 
@@ -69,7 +73,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Preparations: -->
 
-  <p:identity message="  * Preparations:"/>
+  <p:identity message="  * {$prompt}"/>
   <p:variable name="limit-to-steps-sequence" as="xs:string"
     select="'(' || string-join(for $s in $limit-to-steps return ('''' || $s || ''''), ', ') || ')'"/>
 
