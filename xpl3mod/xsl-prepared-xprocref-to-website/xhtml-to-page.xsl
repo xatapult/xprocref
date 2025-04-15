@@ -97,6 +97,7 @@
     <menu xmlns="http://www.xtpxlib.nl/ns/xprocref">
       <menu-entry caption="home" href="{xpref:href-combine($homedir-path, (), $xpref:name-home-page)}"/>
       <menu-entry caption="categories" href="{xpref:href-combine($homedir-path, $last-version-name, $xpref:name-categories-overview-page)}"/>
+      <menu-entry caption="pdf" href="{xpref:href-combine($homedir-path, (), $xpref:name-pdf-page)}"/>
       <menu-entry caption="info">
         <submenu-entry caption="Versions" href="{xpref:href-combine($homedir-path, (), $xpref:name-versions-overview-page)}"/>
         <submenu-entry caption="Error codes" href="{xpref:href-combine($homedir-path, (), $xpref:name-error-codes-overview-page)}"/>

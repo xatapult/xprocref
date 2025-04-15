@@ -36,6 +36,7 @@
   <xsl:variable name="xpref:name-home-page" as="xs:string" select="'index.' || $xpref:page-extension"/>
   <xsl:variable name="xpref:name-versions-overview-page" as="xs:string" select="'versions.' || $xpref:page-extension"/>
   <xsl:variable name="xpref:name-about-page" as="xs:string" select="'about.' || $xpref:page-extension"/>
+  <xsl:variable name="xpref:name-pdf-page" as="xs:string" select="'pdf.' || $xpref:page-extension"/>
 
   <!-- Pages within a specific version (will be in a subdirectory for this version): -->
   <xsl:variable name="xpref:name-version-home-page" as="xs:string" select="$xpref:name-home-page"/>
@@ -53,6 +54,7 @@
   <xsl:variable name="xpref:type-namespaces" as="xs:string" select="'namespaces'"/>
   <xsl:variable name="xpref:type-about" as="xs:string" select="'about'"/>
   <xsl:variable name="xpref:type-categories-overview" as="xs:string" select="'categories-overview'"/>
+  <xsl:variable name="xpref:type-pdf" as="xs:string" select="'pdf'"/>
   
   <!-- We set some roles on elements to be able to identify them in subsequent processing steps: -->
   <xsl:variable name="xpref:role-reference-section" as="xs:string" select="'reference-section'"/>

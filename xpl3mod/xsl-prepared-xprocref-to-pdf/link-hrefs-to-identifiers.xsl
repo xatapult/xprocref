@@ -47,8 +47,10 @@
     <xsl:variable name="uri" as="xs:string" select="if ($contains-anchor) then substring-before($href-link, $anchor-character) else $href-link"/>
     <xsl:variable name="anchor" as="xs:string?" select="if($contains-anchor) then substring-after($href-link, $anchor-character) else ()"/>
 
-    <xsl:variable name="document-identifier" as="xs:string" select="/*/xtlcon:document[@href-target eq $uri]/@xml:id"/>
-    <xsl:attribute name="linkend" select="$document-identifier || (if ($contains-anchor) then ($xpref:identifier-separator || xtlc:str2id($anchor)) else ())"/>
+    <xsl:variable name="document-identifier" as="xs:string?" select="/*/xtlcon:document[@href-target eq $uri]/@xml:id"/>
+    <xsl:if test="exists($document-identifier)">
+      <xsl:attribute name="linkend" select="$document-identifier || (if ($contains-anchor) then ($xpref:identifier-separator || xtlc:str2id($anchor)) else ())"/>
+    </xsl:if>
   </xsl:template>
   
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

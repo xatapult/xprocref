@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<about-page xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <!-- ================================================================== -->
+  <!--
+    Contents of the pdf page (in DocBook).
+  -->
+  <!-- ================================================================== -->
+
+  <para>The contents of the XProcRef site (latest XProc version only) is available as a PDF. You can view/download it <link role="newpage"
+      xlink:href="pdf/xprocref.pdf">here</link>.</para>
+
+  <para role="break-before keep-with-next">For those that prefer reading from paper, a printed and bound version is for sale:</para>
+
+  <para> &#160;&#160;<inlinemediaobject>
+      <imageobject>
+        <imagedata fileref="../resources/pdf/images/bookcover-xprocref.png" width="20%"/>
+      </imageobject>
+    </inlinemediaobject>
+  </para>
+
+  <para role="break-before">Send me a mail (<code>erik@xatapult.nl</code>) and I'll get it to you. Costs are €30 + shipping costs (depending on where
+    you reside in the world).</para>
+
+</about-page>

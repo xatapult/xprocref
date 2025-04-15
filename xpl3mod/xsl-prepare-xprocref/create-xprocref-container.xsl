@@ -223,6 +223,18 @@
         </xsl:with-param>
         <xsl:with-param name="type" select="$xpref:type-about"/>
       </xsl:call-template>
+      
+      <!-- PDF page: -->
+      <xsl:variable name="href-pdf-page-content" as="xs:string" select="resolve-uri('../../data/pdf-page.xml', static-base-uri())"/>
+      <xsl:variable name="pdf-page-content" as="element()*" select="doc($href-pdf-page-content)/*/db:*"/>
+      <xsl:call-template name="create-docbook-article">
+        <xsl:with-param name="href-target" select="$xpref:name-pdf-page"/>
+        <xsl:with-param name="title" select="'XProcRef as PDF'"/>
+        <xsl:with-param name="content">
+          <xsl:sequence select="$pdf-page-content"/>
+        </xsl:with-param>
+        <xsl:with-param name="type" select="$xpref:type-pdf"/>
+      </xsl:call-template>
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <!-- All the pages for the different versions: -->

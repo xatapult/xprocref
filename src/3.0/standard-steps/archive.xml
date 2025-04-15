@@ -122,7 +122,8 @@
       <xdoc:transform href="$xdoc/xml-description.xpl">
         <xi:include href="../../element-descriptions/c-archive.description.xml"/>
       </xdoc:transform>
-      <para>A <tag>c:entry</tag> element describes a single entry (a file) in the archive:</para>
+      
+      <para role="keep-with-next">A <tag>c:entry</tag> element describes a single entry (a file) in the archive:</para>
       <xdoc:transform href="$xdoc/xml-description.xpl">
         <xi:include href="../../element-descriptions/c-archive-entry.description.xml"/>
       </xdoc:transform>

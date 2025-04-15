@@ -128,11 +128,10 @@
       <p:with-option name="limit-to-latest-version" select="true()"/>
     </xpref:prepare-xprocref>
 
-    <xpref:prepared-xprocref-to-pdf>
-      <p:with-option name="href-pdf" select="$href-build-location || '/resources/xprocref.pdf'"/>
+    <xpref:prepared-xprocref-to-pdf process-for-binding="false">
+      <p:with-option name="href-pdf" select="$href-build-location || '/pdf/xprocref.pdf'"/>
       <p:with-option name="write-intermediate-results" select="$write-intermediate-results"/>
       <p:with-option name="href-intermediate-results" select="$href-intermediate-results"/>
-      <p:with-option name="process-for-binding" select="false()"/>
     </xpref:prepared-xprocref-to-pdf>
   </p:if>
   <p:identity name="pdf-build-result"/>

@@ -48,6 +48,7 @@
   <para>
     <link xlink:href="https://www.xatapult.com" role="newpage">Xatapult&#160;Content&#160;Engineering</link>
   </para>
+  <para>{$DATE}</para>
 
   <figure role="nonumber left">
     <title/>
