@@ -34,7 +34,7 @@
     <para>Without <step/>, all this wouldn&#x2019;t be possible. Unfortunately, because various requirements surrounding dynamic pipeline execution,
       the <step/> step is <emphasis>very</emphasis> different from other steps: it has a totally different set of child elements. Therefore, the step
       will be explained as if it was a separate XML element:</para>
-    
+
     <xdoc:transform href="$xdoc/xml-description.xpl">
       <xi:include href="../../element-descriptions/p-run.description.xml"/>
     </xdoc:transform>
@@ -70,10 +70,10 @@
     <section xml:id="details-input">
       <title>Details connecting input ports</title>
 
-      <para>The <tag>p:run-input</tag> element is used to connect the input ports of the dynamically executed pipeline. Its attributes and child
-        elements are almost similar to the standard XProc <tag>p:with-input</tag> element.</para>
-      <para>For example, to connect the primary <port>source</port> input port of the dynamically executed pipeline to some document on disk, you
-        could write:</para>
+      <para role="keep-with-next">The <tag>p:run-input</tag> element is used to connect the input ports of the dynamically executed pipeline. Its
+        attributes and child elements are almost similar to the standard XProc <tag>p:with-input</tag> element.</para>
+      <para role="keep-with-next">For example, to connect the primary <port>source</port> input port of the dynamically executed pipeline to some
+        document on disk, you could write:</para>
 
       <programlisting xml:space="preserve"><![CDATA[<p:run>
   <p:with-input href="my-dynamic-pipeline.xpl"/>
@@ -192,10 +192,12 @@
   <!-- ======================================================================= -->
 
   <example title="Basic usage" id="basic-usage">
-    <para>Suppose we have some kind of XML content in which we want to dynamically generate other content using XProc pipelines. For example:</para>
+    <para role="keep-with-next">Suppose we have some kind of XML content in which we want to dynamically generate other content using XProc pipelines.
+      For example:</para>
     <example-doc href="../../examples/run/input.xml"/>
 
-    <para>The <tag>generate</tag> elements invokes another pipeline (named in its <code>href-pipeline</code> attribute) using <step/>:</para>
+    <para role="keep-with-next">The <tag>generate</tag> elements invokes another pipeline (named in its <code>href-pipeline</code> attribute) using
+      <step/>:</para>
     <itemizedlist>
       <listitem>
         <para>The input to these generator pipelines, on their primary <port>source</port> port, is the <tag>generate</tag> element itself (so it can
@@ -207,8 +209,8 @@
       </listitem>
     </itemizedlist>
 
-    <para>For this example, we only use one generator pipeline, called <code>add-them.xpl</code>. This simply adds the attributes <code>a</code> and
-        <code>b</code> and reports about this:</para>
+    <para role="keep-with-next">For this example, we only use one generator pipeline, called <code>add-them.xpl</code>. This simply adds the
+      attributes <code>a</code> and <code>b</code> and reports about this:</para>
     <example-doc href="../../examples/run/add-them.xpl"/>
 
     <xproc-example href="../../examples/run/run-01.xpl" show-source="false">
@@ -223,13 +225,14 @@
 
   <example title="Using options">
 
-    <para>Building on the <example-ref idref="basic-usage"/> example, we&#x2019;re going to add and use an option that specifies the language of the
-      generator output. For now this will only accept <code>nl</code> for Dutch. Any other language will default to English.</para>
+    <para role="keep-with-next">Building on the <example-ref idref="basic-usage"/> example, we&#x2019;re going to add and use an option that specifies
+      the language of the generator output. For now this will only accept <code>nl</code> for Dutch. Any other language will default to
+      English.</para>
 
-    <para>The extended version of the generator pipeline, called <code>add-them-extended.xpl</code>, looks like this:</para>
+    <para role="keep-with-next">The extended version of the generator pipeline, called <code>add-them-extended.xpl</code>, looks like this:</para>
     <example-doc href="../../examples/run/add-them-extended.xpl"/>
 
-    <para>Let&#x2019;s generate a Dutch version of our output:</para>
+    <para role="keep-with-next">Let&#x2019;s generate a Dutch version of our output:</para>
     <xproc-example href="../../examples/run/run-02.xpl"/>
 
   </example>

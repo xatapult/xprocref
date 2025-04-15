@@ -36,6 +36,7 @@
   <xsl:variable name="xpref:name-home-page" as="xs:string" select="'index.' || $xpref:page-extension"/>
   <xsl:variable name="xpref:name-versions-overview-page" as="xs:string" select="'versions.' || $xpref:page-extension"/>
   <xsl:variable name="xpref:name-about-page" as="xs:string" select="'about.' || $xpref:page-extension"/>
+  <xsl:variable name="xpref:name-pdf-page" as="xs:string" select="'pdf.' || $xpref:page-extension"/>
 
   <!-- Pages within a specific version (will be in a subdirectory for this version): -->
   <xsl:variable name="xpref:name-version-home-page" as="xs:string" select="$xpref:name-home-page"/>
@@ -46,7 +47,34 @@
   <!-- Types set on the container document elements, so we can find things back when dereferencing references: -->
   <xsl:variable name="xpref:type-step" as="xs:string" select="'step'"/>
   <xsl:variable name="xpref:type-category" as="xs:string" select="'category'"/>
-
+  <xsl:variable name="xpref:type-index" as="xs:string" select="'index'"/>
+  <xsl:variable name="xpref:type-all-steps-for-version" as="xs:string" select="'all-steps-for-version'"/>
+  <xsl:variable name="xpref:type-versions-overview" as="xs:string" select="'versions-overview'"/>
+  <xsl:variable name="xpref:type-error-codes" as="xs:string" select="'error-codes'"/>
+  <xsl:variable name="xpref:type-namespaces" as="xs:string" select="'namespaces'"/>
+  <xsl:variable name="xpref:type-about" as="xs:string" select="'about'"/>
+  <xsl:variable name="xpref:type-categories-overview" as="xs:string" select="'categories-overview'"/>
+  <xsl:variable name="xpref:type-pdf" as="xs:string" select="'pdf'"/>
+  
+  <!-- We set some roles on elements to be able to identify them in subsequent processing steps: -->
+  <xsl:variable name="xpref:role-reference-section" as="xs:string" select="'reference-section'"/>
+  <xsl:variable name="xpref:role-specification-link" as="xs:string" select="'specification-link'"/>
+  <xsl:variable name="xpref:role-page-banner" as="xs:string" select="'page-banner'"/>
+  <xsl:variable name="xpref:role-toc" as="xs:string" select="'toc'"/>
+  <xsl:variable name="xpref:role-tocentry" as="xs:string" select="'tocentry'"/>
+  <xsl:variable name="xpref:role-site-remark" as="xs:string" select="'site-remark'"/>
+  <xsl:variable name="xpref:role-step-start-character-list" as="xs:string" select="'step-start-character-list'"/>
+  <xsl:variable name="xpref:role-ports-table" as="xs:string" select="'ports-table'"/>
+  <xsl:variable name="xpref:role-options-table" as="xs:string" select="'options-table'"/>
+  <xsl:variable name="xpref:role-error-codes-table" as="xs:string" select="'error-codes-tablee'"/>
+  
+  <!-- Character used to separate identifier parts: -->
+  <xsl:variable name="xpref:identifier-separator" as="xs:string" select="'_'"/>
+  
+  <!-- ======================================================================= -->
+  <!-- PAGE TYPES (USED IN THE INTERMEDIATE XTPXLIB CONTAINER): -->
+  
+  
   <!-- ======================================================================= -->
 
   <xsl:template name="xpref:markup-error">
@@ -144,7 +172,6 @@
       </xsl:variable>
       <db:programlisting xml:space="preserve"><xsl:value-of select="$contents"/></db:programlisting>
     </xsl:for-each>
-
 
   </xsl:template>
 

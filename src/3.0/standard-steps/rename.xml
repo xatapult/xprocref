@@ -73,7 +73,7 @@
 
   <example title="Basic usage">
 
-    <para>The following example renames an element, an attribute and a processing-instruction in the source document:</para>
+    <para role="keep-with-next">The following example renames an element, an attribute and a processing-instruction in the source document.</para>
     <xproc-example href="../../examples/rename/rename-01.xpl"/>
 
   </example>
@@ -82,7 +82,7 @@
 
   <example title="Renaming to an existing attribute" id="existing-attribute">
 
-    <para>This example shows that when an attribute is renamed to one that is already present, the existing attribute is deleted:</para>
+    <para role="keep-with-next">This example shows that when an attribute is renamed to one that is already present, the existing attribute is deleted.</para>
     <xproc-example href="../../examples/rename/rename-02.xpl"/>
 
   </example>

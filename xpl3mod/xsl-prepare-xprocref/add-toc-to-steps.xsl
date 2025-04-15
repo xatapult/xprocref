@@ -43,10 +43,10 @@
     <xsl:variable name="subsect-element-name" as="xs:string" select="'sect' || $level"/>
     <xsl:variable name="subsects" as="element()*" select="$root/db:*[local-name(.) eq $subsect-element-name]"/>
     <xsl:if test="exists($subsects)">
-      <itemizedlist role="toc toc-{$level}">
+      <itemizedlist role="{$xpref:role-toc} {$xpref:role-toc}-{$level}">
         <xsl:for-each select="$subsects">
-          <listitem role="toc toc-{$level}">
-            <para role="tocentry tocentry-{$level}">
+          <listitem role="{$xpref:role-toc} {$xpref:role-toc}-{$level}">
+            <para role="{$xpref:role-tocentry} {$xpref:role-tocentry}-{$level}">
               <link xlink:href="#{@xml:id}">{normalize-space(db:title)}</link>
             </para>
             <xsl:if test="$level lt $xpref:max-section-level">

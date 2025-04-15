@@ -6,7 +6,7 @@
   exclude-result-prefixes="#all" expand-text="true">
   <!-- ================================================================== -->
   <!-- 
-       TBD
+       Creates the main xtpxlib container for XProcRef.
        
        Input is the (normalized and enhanced) XProcRef definition.
   -->
@@ -70,7 +70,7 @@
   </xsl:variable>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  <!-- Latest version info. We need this decide where to put stuff and where top point links to. -->
+  <!-- Latest version info. We need this decide where to put stuff and where to point links to. -->
 
   <xsl:variable name="latest-version-versionref-elm" as="element(xpref:versionref)" select="($xprocref-index/*/xpref:versionref)[1]"/>
   <xsl:variable name="last-version-id" as="xs:string" select="xs:string($latest-version-versionref-elm/@id)"/>
@@ -91,6 +91,13 @@
 
   <xsl:template match="/">
     <xtlcon:document-container timestamp="{current-dateTime()}">
+
+      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+      <!-- Index: -->
+
+      <xtlcon:document type="{$xpref:type-index}">
+        <xsl:sequence select="$xprocref-index/*"/>
+      </xtlcon:document>
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <!-- All the main pages (home, about, versions overview, etc.): -->
@@ -128,6 +135,7 @@
             </xsl:for-each>
           </db:itemizedlist>
         </xsl:with-param>
+        <xsl:with-param name="type" select="$xpref:type-versions-overview"/>
       </xsl:call-template>
 
       <!-- Error codes page: -->
@@ -140,7 +148,7 @@
         <xsl:with-param name="content">
           <db:para role="break-after">All errors are in the <db:code>{$error-namespace-elm/@uri}</db:code> namespace (recommended prefix:
               <db:code>{$error-namespace-elm/@prefix}</db:code>).</db:para>
-          <db:table role="nonumber error-codes-table">
+          <db:table role="nonumber {$xpref:role-error-codes-table}">
             <db:title/>
             <db:tgroup cols="2">
               <db:thead>
@@ -177,6 +185,7 @@
             </db:tgroup>
           </db:table>
         </xsl:with-param>
+        <xsl:with-param name="type" select="$xpref:type-error-codes"/>
       </xsl:call-template>
 
       <!-- Namespaces page: -->
@@ -196,6 +205,7 @@
             </xsl:for-each>
           </db:itemizedlist>
         </xsl:with-param>
+        <xsl:with-param name="type" select="$xpref:type-namespaces"/>
       </xsl:call-template>
 
       <!-- About page -->
@@ -208,9 +218,22 @@
         <xsl:with-param name="content">
           <xsl:sequence select="$about-page-content"/>
           <db:para>&#160;</db:para>
-          <db:para role="site-remark">Site published {if ($production-version) then () else ' [TEST VERSION]'}: {xs:string(current-dateTime()) =>
-            substring(1, 16) => replace('T', ' ')}</db:para>
+          <db:para role="{$xpref:role-site-remark}">Site published {if ($production-version) then () else ' [TEST VERSION]'}:
+            {xs:string(current-dateTime()) => substring(1, 16) => replace('T', ' ')}</db:para>
         </xsl:with-param>
+        <xsl:with-param name="type" select="$xpref:type-about"/>
+      </xsl:call-template>
+      
+      <!-- PDF page: -->
+      <xsl:variable name="href-pdf-page-content" as="xs:string" select="resolve-uri('../../data/pdf-page.xml', static-base-uri())"/>
+      <xsl:variable name="pdf-page-content" as="element()*" select="doc($href-pdf-page-content)/*/db:*"/>
+      <xsl:call-template name="create-docbook-article">
+        <xsl:with-param name="href-target" select="$xpref:name-pdf-page"/>
+        <xsl:with-param name="title" select="'XProcRef as PDF'"/>
+        <xsl:with-param name="content">
+          <xsl:sequence select="$pdf-page-content"/>
+        </xsl:with-param>
+        <xsl:with-param name="type" select="$xpref:type-pdf"/>
       </xsl:call-template>
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -274,6 +297,7 @@
         </db:section>
       </xsl:with-param>
       <xsl:with-param name="version-id" select="$version-id"/>
+      <xsl:with-param name="type" select="$xpref:type-categories-overview"/>
     </xsl:call-template>
 
     <!-- Page per category for this version: -->
@@ -361,6 +385,7 @@
       </xsl:with-param>
       <xsl:with-param name="version-id" select="$version-id"/>
       <xsl:with-param name="create-wip-remark" select="true()"/>
+      <xsl:with-param name="type" select="$xpref:type-all-steps-for-version"/>
     </xsl:call-template>
 
   </xsl:template>
@@ -387,7 +412,7 @@
         select="('step', $step-full-name, substring-after($step-full-name, $xpref:default-namespace-prefix || ':'), $step-elm/@keywords)"/>
       <xsl:with-param name="content">
         <!-- The short description to start with: -->
-        <db:para>{local:description($step-elm/@short-description)}</db:para>
+        <db:para role="keep-with-next">{local:description($step-elm/@short-description)}</db:para>
 
         <!-- Summary: -->
         <db:sect2>
@@ -454,7 +479,7 @@
           <xsl:variable name="href-error-codes-page" as="xs:string" select="xpref:href-combine('..', (), $xpref:name-error-codes-overview-page)"/>
           <db:sect2>
             <db:title>Errors raised</db:title>
-            <db:table role="nonumber error-codes-table">
+            <db:table role="nonumber {$xpref:role-error-codes-table}">
               <db:title/>
               <db:tgroup cols="2">
                 <db:thead>
@@ -507,7 +532,7 @@
         </xsl:if>
 
         <!-- Reference information: -->
-        <db:sect2>
+        <db:sect2 role="{$xpref:role-reference-section}">
           <db:title>Reference information</db:title>
 
           <xsl:variable name="step-is-required" as="xs:boolean" select="xtlc:str2bln($step-elm/@required, false())"/>
@@ -528,7 +553,7 @@
               xlink:href="{$version-link}">{$version-name}</db:link>. {$required-text}</db:para>
 
           <db:para>The formal specification for the <db:step>{$step-full-name}</db:step> step can be found <db:link
-              xlink:href="{$step-elm/@href-specification}" role="newpage">here</db:link>.</db:para>
+              xlink:href="{$step-elm/@href-specification}" role="newpage {$xpref:role-specification-link}">here</db:link>.</db:para>
 
           <xsl:variable name="category-refs" as="element(xpref:categoryref)*" select="$stepref-elm/xpref:categoryref"/>
           <xsl:choose>
@@ -679,8 +704,8 @@
 
     <xsl:if test="exists($signature-elm)">
       <!-- Ports: -->
-      <db:para role="table-header">Ports:</db:para>
-      <db:table role="nonumber ports-table">
+      <db:para role="table-header keep-with-next">Ports:</db:para>
+      <db:table role="nonumber {$xpref:role-ports-table}">
         <db:title/>
         <db:tgroup cols="6">
           <db:thead>
@@ -725,10 +750,10 @@
       <xsl:variable name="option-elms" as="element(xpref:option)*" select="$signature-elm/xpref:option"/>
       <xsl:if test="exists($option-elms)">
         <xsl:variable name="has-selects" as="xs:boolean" select="exists($option-elms/@select)"/>
-        <db:para role="table-header">Options:</db:para>
-        <db:table role="nonumber options-table">
+        <db:para role="table-header keep-with-next">Options:</db:para>
+        <db:table role="nonumber {$xpref:role-options-table}">
           <db:title/>
-          <db:tgroup cols="6">
+          <db:tgroup cols="{if ($has-selects) then 5 else 4}">
             <db:thead>
               <db:row>
                 <db:entry>
@@ -802,7 +827,7 @@
           </db:tgroup>
         </db:table>
       </xsl:if>
-      
+
     </xsl:if>
 
   </xsl:template>
@@ -868,7 +893,7 @@
     <xsl:param name="type" as="xs:string?" required="false" select="()"/>
     <xsl:param name="version-id" as="xs:string?" required="false" select="()"/>
     <xsl:param name="ref" as="xs:string?" required="false" select="()">
-      <!-- This is the string/name to find it back. For instance, the step name of the category id. -->
+      <!-- This is the string/name to find it back. For instance, the step name or the category id. -->
     </xsl:param>
     <xsl:param name="name" as="xs:string?" required="false" select="()">
       <!-- The name to use when this document is linked to. -->
@@ -924,11 +949,11 @@
           <db:title/>
         </db:info>
         <xsl:if test="$wip and $create-wip-remark">
-          <db:para role="page-banner">{$wip-text}</db:para>
+          <db:para role="{$xpref:role-page-banner}">{$wip-text}</db:para>
         </xsl:if>
         <xsl:if test="not($production-version)">
-          <db:para role="page-banner">You are looking at the TEST version!{if (exists($test-version-remark)) then (' (' || $test-version-remark ||
-            ')') else ()}</db:para>
+          <db:para role="{$xpref:role-page-banner}">You are looking at the TEST version!{if (exists($test-version-remark)) then (' (' ||
+            $test-version-remark || ')') else ()}</db:para>
         </xsl:if>
         <db:sect1>
           <db:title>
@@ -964,7 +989,7 @@
 
     <!-- Create character choose list: -->
     <xsl:if test="$group-by-start-character">
-      <db:para role="step-start-character-list">
+      <db:para role="{$xpref:role-step-start-character-list}">
         <xsl:for-each select="map:keys($grouped-referenced-steps)">
           <xsl:sort select="."/>
           <xsl:variable name="current-character" as="xs:string" select="."/>
@@ -1014,8 +1039,8 @@
         <xsl:variable name="step-elm" as="element(xpref:step)" select="$step-id-to-elm($step-id)"/>
         <xsl:variable name="step-short-description" as="xs:string" select="local:description($step-elm/@short-description)"/>
         <db:listitem>
-          <db:para><db:link xlink:href="{local:href-result-file($version-id-for-links, local:step-page-name($step-id))}"
-              >{local:step-full-name($step-id)}</db:link> - {$step-short-description}</db:para>
+          <db:para><db:link xlink:href="{local:href-result-file($version-id-for-links, local:step-page-name($step-id))}"><db:code role="step"
+                >{local:step-full-name($step-id)}</db:code></db:link> - {$step-short-description}</db:para>
         </db:listitem>
       </xsl:for-each>
     </db:itemizedlist>

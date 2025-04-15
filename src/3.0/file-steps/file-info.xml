@@ -28,7 +28,7 @@
       </description>
     </option>
 
-    <option name="override-content-types" as="array(array(xs:string))?" required="false">
+    <option name="override-content-types" as="array(array&#x200B;(xs:string))?" required="false">
       <description>
         <para>Use this to override the content-type determination of files.</para>
         <para>This works just like the mechanism for the <option>override-content-types</option> option of <step-ref name="p:archive-manifest"/>,

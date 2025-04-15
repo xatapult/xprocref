@@ -45,7 +45,7 @@
       </description>
     </option>
 
-    <option name="serialization" as="map(xs:QName,item()*)?" required="false">
+    <option name="serialization" as="map(xs:QName, item()*)?" required="false">
       <description>
         <para>Before the document(s) on the <port>source</port> port are used, they are first serialized (as if written to disk). This option can
           supply a map with <link xlink:href="https://www.w3.org/TR/xslt-xquery-serialization-31/" role="newpage">serialization properties</link>,
@@ -100,7 +100,7 @@
       this or fill in some page with a form in the background. Although the step is generic, it will probably be used most (exclusively?) using the
       HTTP(S) protocol, so we&#x2019;ll concentrate on this. </para>
 
-    <para>The HTTP(s) protocol is rather complex and, to support this, <step/> is also complex. As a result of this, the description of <step/> is
+    <para>The HTTP(S) protocol is rather complex and, to support this, <step/> is also complex. As a result of this, the description of <step/> is
       long and may appear intimidating to users who are not familiar with the finer details of the HTTP(S) protocol. Luckily, simple interactions,
       like just requesting a single web page, are easy (see <example-ref idref="basic-usage"/>) Let&#x2019;s take it step by step (if there are parts
       you don't understand, chances are you don't need them). The HTTP(S) protocol itself is not explained, if you need more information about this, a
@@ -199,9 +199,9 @@
               <para><emphasis>and</emphasis> this <option>serialization</option> document-property has an entry called <code>encoding</code>,</para>
             </listitem>
           </itemizedlist>
-          <para>a <code>charset</code> is appended to the created <code>content-type</code> header of the HTTP request (for more information about
-            this <code>charset</code> parameter, see for instance <link xlink:href="https://www.w3.org/International/articles/http-charset/index"
-              role="newpage">here</link>).</para>
+          <para role="keep-with-previous">a <code>charset</code> is appended to the created <code>content-type</code> header of the HTTP request (for
+            more information about this <code>charset</code> parameter, see for instance <link
+              xlink:href="https://www.w3.org/International/articles/http-charset/index" role="newpage">here</link>).</para>
         </listitem>
 
         <listitem>
@@ -275,6 +275,8 @@
       <table role="nonumber">
         <title/>
         <tgroup cols="3">
+          <colspec colwidth="25%"/>
+          <colspec colwidth="15%"/>
           <thead>
             <row>
               <entry>
@@ -384,6 +386,8 @@
       <table role="nonumber">
         <title/>
         <tgroup cols="3">
+          <colspec colwidth="25%"/>
+          <colspec colwidth="15%"/>
           <thead>
             <row>
               <entry>
@@ -654,11 +658,13 @@
       <para>In case of a multipart response, each part will become a separate document appearing on the <port>result</port> port. Any response headers
         associated with a specific part are added to the document-properties of the resulting document.</para>
 
-      <para>The <port>report</port> port always returns a map with the following keys/entries:</para>
+      <para role="keep-with-next">The <port>report</port> port always returns a map with the following keys/entries:</para>
 
       <table role="nonumber">
         <title/>
         <tgroup cols="3">
+          <colspec colwidth="20%"/>
+          <colspec colwidth="18%"/>
           <thead>
             <row>
               <entry>

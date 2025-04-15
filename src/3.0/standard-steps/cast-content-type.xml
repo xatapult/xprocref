@@ -29,7 +29,7 @@
       </description>
     </option>
 
-    <option name="parameters" as="map(xs:QName,item()*)?" required="false" select="()">
+    <option name="parameters" as="map(xs:QName, item()*)?" required="false" select="()">
       <description>
         <para>Parameters controlling the casting/transformation of the document. Keys, values and their meaning are dependent on the XProc processor
           used.</para>
@@ -307,8 +307,8 @@
       <table role="nonumber">
         <title/>
         <tgroup cols="3">
-          <colspec colname="c1" colnum="1"/>
-          <colspec colname="c2" colnum="2"/>
+          <colspec colname="c1" colnum="1" colwidth="10%"/>
+          <colspec colname="c2" colnum="2" colwidth="25%"/>
           <colspec colname="c3" colnum="3"/>
           <thead>
             <row>

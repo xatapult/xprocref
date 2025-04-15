@@ -21,7 +21,7 @@
       </description>
     </output>
 
-    <option name="parameters" as="map(xs:QName,item()*)?" required="false">
+    <option name="parameters" as="map(xs:QName, item()*)?" required="false">
       <description>
         <para>Parameters used to control the rendering. The XProc specification does not define any parameters for this option. A specific XProc
           processor (or renderer used) might define its own.</para>

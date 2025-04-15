@@ -42,7 +42,7 @@
       </description>
     </option>
 
-    <option name="parameters" as="map(xs:QName,item()*)?" required="false">
+    <option name="parameters" as="map(xs:QName, item()*)?" required="false">
       <description>
         <para>Parameters controlling the uncompression. Keys, values and their meaning depend on the value of the <option>method</option> option and
           the XProc processor used.</para>

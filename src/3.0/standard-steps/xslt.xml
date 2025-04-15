@@ -33,13 +33,13 @@
       </description>
     </output>
 
-    <option name="parameters" as="map(xs:QName,item()*)?" required="false">
+    <option name="parameters" as="map(xs:QName, item()*)?" required="false">
       <description>
         <para>A map with parameter-names and corresponding values to pass as global parameters to the XSLT stylesheet.</para>
       </description>
     </option>
 
-    <option name="static-parameters" as="map(xs:QName,item()*)?" required="false">
+    <option name="static-parameters" as="map(xs:QName, item()*)?" required="false">
       <description>
         <para>A map with parameter-names and corresponding values to pass as static parameters to the XSLT stylesheet.</para>
         <para>Static stylesheet parameters are supported starting XSLT version&#160;3.0.</para>

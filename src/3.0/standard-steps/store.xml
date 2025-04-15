@@ -40,7 +40,7 @@
       </description>
     </option>
 
-    <option name="serialization" as="map(xs:QName,item()*)?" required="false">
+    <option name="serialization" as="map(xs:QName, item()*)?" required="false">
       <description>
         <para>This option can supply a map with <link xlink:href="https://www.w3.org/TR/xslt-xquery-serialization-31/" role="newpage">serialization
             properties</link> for storing the document.</para>

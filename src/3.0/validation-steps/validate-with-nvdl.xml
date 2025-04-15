@@ -66,7 +66,7 @@
       </description>
     </option>
 
-    <option name="parameters" as="map(xs:QName,item()*)?" required="false">
+    <option name="parameters" as="map(xs:QName, item()*)?" required="false">
       <description>
         <para>Parameters controlling the validation. See <xref linkend="validation-parameters"/> for more information.</para>
       </description>
@@ -120,19 +120,19 @@
 
   <example title="Basic usage (valid source document)" id="basic-valid">
 
-    <para>Assume we have an input document, called <code>input-valid.xml</code>, that looks like this:</para>
+    <para role="keep-with-next">Assume we have an input document, called <code>input-valid.xml</code>, that looks like this:</para>
     <example-doc href="../../examples/validate-with-nvdl/input-valid.xml"/>
 
-    <para>Since this document mixes namespaces, we want to validate it using NVDL. An NVDL schema for this, called <code>example.nvdl</code>, is as
+    <para role="keep-with-next">Since this document mixes namespaces, we want to validate it using NVDL. An NVDL schema for this, called <code>example.nvdl</code>, is as
       follows:</para>
     <example-doc href="../../examples/validate-with-nvdl/example.nvdl"/>
 
-    <para>The <tag>thing</tag> elements in the <code>https://www.xprocref.org/ns/thingies</code> namespace are validated using the following simple
+    <para role="keep-with-next">The <tag>thing</tag> elements in the <code>https://www.xprocref.org/ns/thingies</code> namespace are validated using the following simple
       XML schema called <code>thingies.xsd</code>. It says that the only thing allowed is a <tag>thing</tag> element with a required <code>id</code>
       attribute:</para>
     <example-doc href="../../examples/validate-with-nvdl/thingies.xsd"/>
 
-    <para>Performing this validation using the <step/> step returns the following on the <port>report</port> port:</para>
+    <para role="keep-with-next">Performing this validation using the <step/> step returns the following on the <port>report</port> port:</para>
     <xproc-example href="../../examples/validate-with-nvdl/validate-with-nvdl-01.xpl" show-source="false"/>
 
   </example>
@@ -141,13 +141,13 @@
 
   <example title="Basic usage (invalid source document)">
 
-    <para>Using the same NVDL schema as in <example-ref idref="basic-valid"/>, we&#x2019;re now going to validate an <emphasis>in</emphasis>valid
+    <para role="keep-with-next">Using the same NVDL schema as in <example-ref idref="basic-valid"/>, we&#x2019;re now going to validate an <emphasis>in</emphasis>valid
       document (called <code>input-invalid.xml</code>). Since we want to have a look at what comes out of the <port>report</port> port, we have to set
       the <option>assert-valid</option> option to <code>false</code>.</para>
 
     <example-doc href="../../examples/validate-with-nvdl/input-invalid.xml"/>
 
-    <para>Performing this validation using the <step/> step returns the following on the <port>report</port> port:</para>
+    <para role="keep-with-next">Performing this validation using the <step/> step returns the following on the <port>report</port> port:</para>
 
     <xproc-example href="../../examples/validate-with-nvdl/validate-with-nvdl-02.xpl" show-source="false"/>
 

@@ -26,7 +26,7 @@
       </description>
     </output>
 
-    <option name="serialization" as="map(xs:QName,item()*)?" required="false">
+    <option name="serialization" as="map(xs:QName, item()*)?" required="false">
       <description>
         <para>This option controls the serialization of any documents involved in constructing the mail.</para>
         <xi:include href="../../text-fragments/merge-serialization-properties.xml"/>
@@ -79,7 +79,9 @@
 
       <table role="nonumber">
         <title/>
-        <tgroup cols="2">
+        <tgroup cols="3">
+          <colspec colwidth="18%"/>
+          <colspec colwidth="20%"/>
           <thead>
             <row>
               <entry>
@@ -160,7 +162,9 @@
 
       <table role="nonumber">
         <title/>
-        <tgroup cols="2">
+        <tgroup cols="3">
+          <colspec colwidth="15%"/>
+          <colspec colwidth="15%"/>
           <thead>
             <row>
               <entry>

@@ -29,7 +29,7 @@
       </description>
     </option>
 
-    <option name="serialization" as="map(xs:QName,item()*)?" required="false">
+    <option name="serialization" as="map(xs:QName, item()*)?" required="false">
       <description>
         <para>Before the document is compressed, it is first serialized (as if written to disk). This option can supply a map with <link
             xlink:href="https://www.w3.org/TR/xslt-xquery-serialization-31/" role="newpage">serialization properties</link>, controlling this
@@ -62,7 +62,7 @@
       port.</para>
     <para>The only compression format that must be supported is <link xlink:href="https://datatracker.ietf.org/doc/html/rfc1952" role="newpage"
         >GZIP</link>. Support for any other compression format is implementation-defined and therefore dependent on the XProc processor used.</para>
-    <para>The reverse uncompress operation is supported by the <step-ref name="p:uncompress"/> step.</para>
+    <para role="keep-with-previous">The reverse uncompress operation is supported by the <step-ref name="p:uncompress"/> step.</para>
   </description>
 
   <!-- ======================================================================= -->

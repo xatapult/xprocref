@@ -21,7 +21,7 @@
       </description>
     </output>
 
-    <option name="parameters" as="map(xs:QName,item()*)?" required="false">
+    <option name="parameters" as="map(xs:QName, item()*)?" required="false">
       <description>
         <para>Parameters controlling the hash code computation. Keys, values and their meaning are dependent on the XProc processor used.</para>
       </description>
@@ -78,6 +78,8 @@
     <table role="nonumber">
       <title/>
       <tgroup cols="3">
+        <colspec colwidth="15%"/>
+        <colspec colwidth="10%"/>
         <thead>
           <row>
             <entry>
@@ -151,8 +153,8 @@
 
   <detail>
     <xi:include href="../../text-fragments/document-properties-preserved.xml"/>
-    <para>The exception is when the <option>match</option> option matches the document-node <code>/</code>. In that case the resulting document will
-      be of type text, the <property>content-type</property> document-property will become <code>text/plain</code> and a
+    <para role="keep-with-previous">The exception is when the <option>match</option> option matches the document-node <code>/</code>. In that case the
+      resulting document will be of type text, the <property>content-type</property> document-property will become <code>text/plain</code> and a
         <property>serialization</property> document-property is removed. Any other document-property is preserved. </para>
   </detail>
 
@@ -171,9 +173,9 @@
 
   <example title="Basic usage">
 
-    <para>The following example illustrates what happens when we compute a hash value and use the default value for the <option>match</option> option
-        (<code>/*/node()</code>): all child nodes of the root element (in this example just the <tag>hash</tag> element) are replaced with the
-      computed hash value.</para>
+    <para role="keep-with-next">The following example illustrates what happens when we compute a hash value and use the default value for the
+        <option>match</option> option (<code>/*/node()</code>): all child nodes of the root element (in this example just the <tag>hash</tag> element)
+      are replaced with the computed hash value.</para>
 
     <xproc-example href="../../examples/hash/hash-01.xpl"/>
 

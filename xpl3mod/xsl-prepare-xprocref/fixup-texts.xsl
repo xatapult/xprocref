@@ -55,9 +55,9 @@
 
   <xsl:template match="db:step-error-ref">
     <xsl:variable name="code" as="xs:string" select="xs:string(@code)"/>
-    <code>
-      <link xlink:href="#{xpref:error-code-anchor($code)}">{$code}</link>
-    </code>
+    <link xlink:href="#{xpref:error-code-anchor($code)}">
+      <code>{$code}</code>
+    </link>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -120,17 +120,19 @@
       <xsl:variable name="referred-href-target" as="xs:string" select="xs:string($referred-container-document-elm/@href-target)"/>
       <xsl:variable name="referred-name" as="xs:string" select="xs:string(($referred-container-document-elm/@name, $referred-ref)[1])"/>
 
-      <xsl:variable name="link-elm" as="element(db:link)">
-        <link xlink:href="{xtlc:href-relative($current-href-target, $referred-href-target)}">{$referred-name}</link>
-      </xsl:variable>
+      <xsl:variable name="link" as="xs:string" select="xtlc:href-relative($current-href-target, $referred-href-target)"/>
       <xsl:choose>
         <xsl:when test="$referred-type eq $xpref:type-step">
-          <code role="step">
-            <xsl:sequence select="$link-elm"/>
-          </code>
+          <db:link xlink:href="{$link}">
+            <code role="step">
+              <xsl:value-of select="$referred-name"/>
+            </code>
+          </db:link>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:sequence select="$link-elm"/>
+          <db:link xlink:href="{$link}">
+            <xsl:value-of select="$referred-name"/>
+          </db:link>
         </xsl:otherwise>
       </xsl:choose>
 
@@ -172,9 +174,9 @@
       <link xlink:href="{$href-link-to-target}#{$referred-anchor}">{normalize-space($referred-example-section/db:title)}</link>
       <xsl:if test="not($in-own-step)">
         <xsl:text> in step </xsl:text>
-        <code role="step">
-          <link xlink:href="{$href-link-to-target}">{$referred-step-name}</link>
-        </code>
+        <link xlink:href="{$href-link-to-target}">
+          <code role="step"> {$referred-step-name}</code>
+        </link>
       </xsl:if>
 
       <xsl:catch>

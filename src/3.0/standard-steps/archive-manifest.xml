@@ -52,7 +52,7 @@
       </description>
     </option>
 
-    <option name="override-content-types" as="array(array(xs:string))?" required="false" select="()">
+    <option name="override-content-types" as="array(array&#x200B;(xs:string))?" required="false" select="()">
       <description>
         <para>Use this to override the content-type determination of the files in the archive (see <xref linkend="override-content-type"/>).</para>
       </description>
@@ -204,7 +204,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <example title="Using the relative-to option" id="relative-to-option">
-    <para>This example uses the same ZIP archive as in <example-ref idref="basic-usage"/>. It sets the <option>relative-to</option> to
+    <para role="keep-with-next">This example uses the same ZIP archive as in <example-ref idref="basic-usage"/>. It sets the <option>relative-to</option> to
         <code>file:///test/</code>. This is reflected in the <code>c:entry/@href</code> attributes:</para>
 
     <xproc-example href="../../examples/archive-manifest/archive-manifest-03.xpl" show-source="false" fixup-uris="false">

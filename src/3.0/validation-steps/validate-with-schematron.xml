@@ -37,7 +37,7 @@
       </description>
     </output>
 
-    <option name="parameters" as="map(xs:QName,item()*)?" required="false">
+    <option name="parameters" as="map(xs:QName, item()*)?" required="false">
       <description>
         <para>Parameters controlling the validation. See <xref linkend="validation-parameters"/> for more information.</para>
       </description>
@@ -157,26 +157,24 @@
 
   <example title="Basic usage (valid source document)" id="basic-valid">
 
-    <para>Assume we have an input document, called <code>input-valid.xml</code>, that looks like this:</para>
+    <para role="keep-with-next">Assume we have an input document, called <code>input-valid.xml</code>, that looks like this:</para>
 
     <example-doc href="../../examples/validate-with-schematron/input-valid.xml"/>
 
-    <para>Any <tag>thingref</tag> elements must reference existing <tag>thing</tag> elements by identifier. Here is a simple Schematron schema that
+    <para role="keep-with-next">Any <tag>thingref</tag> elements must reference existing <tag>thing</tag> elements by identifier. Here is a simple Schematron schema that
       validates this:</para>
-
     <example-doc href="../../examples/validate-with-schematron/example.sch"/>
 
-    <para>Performing this validation using the <step/> step (which, for this example, uses the <link xlink:href="https://github.com/schxslt/schxslt"
+    <para role="keep-with-next">Performing this validation using the <step/> step (which, for this example, uses the <link xlink:href="https://github.com/schxslt/schxslt"
         role="newpage">SchXslt</link> Schematron processor) returns the following on the <port>report</port> port:</para>
 
     <xproc-example href="../../examples/validate-with-schematron/validate-with-schematron-01.xpl" show-source="false"/>
 
-    <para>The same example, but now producing a <link xlink:href="https://spec.xproc.org/master/head/xvrl/" role="newpage">XVRL</link> format report,
+    <para role="keep-with-next">The same example, but now producing a <link xlink:href="https://spec.xproc.org/master/head/xvrl/" role="newpage">XVRL</link> format report,
       is as follows: </para>
-
     <xproc-example href="../../examples/validate-with-schematron/validate-with-schematron-02.xpl" show-source="false"/>
 
-    <para>The exact format of the reports might differ across implementations. Please experiment before using it.</para>
+    <para role="keep-with-previous">The exact format of the reports might differ across implementations. Please experiment before using it.</para>
 
   </example>
 
@@ -184,24 +182,21 @@
 
   <example title="Basic usage (invalid source document)">
 
-    <para>Using the same Schematron schema as in <example-ref idref="basic-valid"/>, we&#x2019;re now going to validate an
+    <para role="keep-with-next">Using the same Schematron schema as in <example-ref idref="basic-valid"/>, we&#x2019;re now going to validate an
       <emphasis>in</emphasis>valid document (called <code>input-invalid.xml</code>). Since we want to have a look at what comes out of the
         <port>report</port> port, we have to set the <option>assert-valid</option> option to <code>false</code>.</para>
 
     <example-doc href="../../examples/validate-with-schematron/input-invalid.xml"/>
 
-    <para>Performing this validation using the <step/> step (which, for this example, uses the <link xlink:href="https://github.com/schxslt/schxslt"
+    <para role="keep-with-next">Performing this validation using the <step/> step (which, for this example, uses the <link xlink:href="https://github.com/schxslt/schxslt"
         role="newpage">SchXslt</link> Schematron processor) returns the following on the <port>report</port> port:</para>
-
     <xproc-example href="../../examples/validate-with-schematron/validate-with-schematron-03.xpl" show-source="false"/>
 
-    <para>The same example, but now producing a <link xlink:href="https://spec.xproc.org/master/head/xvrl/" role="newpage">XVRL</link> format report,
+    <para role="keep-with-next">The same example, but now producing a <link xlink:href="https://spec.xproc.org/master/head/xvrl/" role="newpage">XVRL</link> format report,
       is as follows: </para>
-
     <xproc-example href="../../examples/validate-with-schematron/validate-with-schematron-04.xpl" show-source="false"/>
 
-    <para>Again, the exact format of the reports might differ across implementations. Please experiment before using it.</para>
-
+    <para role="keep-with-next">Again, the exact format of the reports might differ across implementations. Please experiment before using it.</para>
     <xproc-example href="../../examples/validate-with-schematron/validate-with-schematron-05.xpl" show-source="false" keep-namespace-prefixes="err">
       <pipeline-header>
         <para role="break-before">Another way of handling validation errors is to have <step/> raise its error <step-error-ref code="XC0054"/> (by
@@ -209,7 +204,7 @@
           The following pipeline shows you the <tag>c:errors</tag> result, that is available inside the <tag>p:catch</tag>:</para>
       </pipeline-header>
     </xproc-example>
-    <para>The exact contents of the <tag>c:errors</tag> element might differ across implementations. Please experiment before using it.</para>
+    <para role="keep-with-previous">The exact contents of the <tag>c:errors</tag> element might differ across implementations. Please experiment before using it.</para>
 
 
   </example>

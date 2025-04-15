@@ -122,7 +122,8 @@
       <xdoc:transform href="$xdoc/xml-description.xpl">
         <xi:include href="../../element-descriptions/c-archive.description.xml"/>
       </xdoc:transform>
-      <para>A <tag>c:entry</tag> element describes a single entry (a file) in the archive:</para>
+      
+      <para role="keep-with-next">A <tag>c:entry</tag> element describes a single entry (a file) in the archive:</para>
       <xdoc:transform href="$xdoc/xml-description.xpl">
         <xi:include href="../../element-descriptions/c-archive-entry.description.xml"/>
       </xdoc:transform>
@@ -223,6 +224,7 @@
           <table role="nonumber">
             <title/>
             <tgroup cols="2">
+              <colspec colwidth="15%"/>
               <thead>
                 <row>
                   <entry>
@@ -315,6 +317,7 @@
           <table role="nonumber">
             <title/>
             <tgroup cols="2">
+              <colspec colwidth="15%"/>
               <thead>
                 <row>
                   <entry>
@@ -463,8 +466,8 @@
 
   <example title="Using the report port">
 
-    <para>The <step/> step also has a <port>report</port> port that outputs the manifest of the resulting archive. So, building on the <example-ref
-        idref="basic-example"/> example, we could also have shown what&#x2019;s inside the created archive like this:</para>
+    <para role="keep-with-next">The <step/> step also has a <port>report</port> port that outputs the manifest of the resulting archive. So, building
+      on the <example-ref idref="basic-example"/> example, we could also have shown what&#x2019;s inside the created archive like this:</para>
 
     <xproc-example href="../../examples/archive/archive-02.xpl" show-source="false" fixup-pipeline-input="false" keep-from="test"/>
 

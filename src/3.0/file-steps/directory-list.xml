@@ -63,10 +63,10 @@
       </description>
     </option>
 
-    <option name="override-content-types" as="array(array(xs:string))?" required="false">
+    <option name="override-content-types" as="array(array&#x200B;(xs:string))?" required="false">
       <description>
-        <para>Use this to override the content-type determination of files. Determining the content-type of a file happens when you ask for detailed
-          information (the <option>detailed</option> option is set to <code>true</code>).</para>
+        <para role="keep-with-next">Use this to override the content-type determination of files. Determining the content-type of a file happens when
+          you ask for detailed information (the <option>detailed</option> option is set to <code>true</code>).</para>
         <para>This works just like the mechanism for the <option>override-content-types</option> option of <step-ref name="p:archive-manifest"/>,
           except that the regular expression matching is done against the paths as used for the matching of the <option>include-filter</option> and
             <option>exclude-filter</option> options. For more information see <xref linkend="include-exclude"/>.</para>
@@ -94,21 +94,21 @@
       (see <xref linkend="result-doc"/>) that describes this directory by listing its contents (files and subdirectories). What happens exactly
       depends on the settings of the other options. The step has no input port(s).</para>
 
-    <para>The directory to describe, as specified in the <option>path</option> option, <emphasis>must</emphasis> exist. Otherwise, error
-        <step-error-ref code="XC0017"/> is raised.</para>
+    <para role="keep-with-previous">The directory to describe, as specified in the <option>path</option> option, <emphasis>must</emphasis> exist.
+      Otherwise, error <step-error-ref code="XC0017"/> is raised.</para>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <section xml:id="include-exclude">
       <title>Including and excluding files and directories</title>
 
-      <para>The <option>include-filter</option> and <option>exclude-filter</option> determine which files and directories are included/excluded in the
-        result. Both options are a sequence of (zero or more) XPath regular expression strings.</para>
+      <para role="keep-with-next">The <option>include-filter</option> and <option>exclude-filter</option> determine which files and directories are
+        included/excluded in the result. Both options are a sequence of (zero or more) XPath regular expression strings.</para>
 
       <itemizedlist>
         <listitem>
-          <para>If the <option>include-filter</option> is not specified (or the empty sequence), <emphasis>all</emphasis> files/directories are
-            included.</para>
+          <para role="keep-with-next">If the <option>include-filter</option> is not specified (or the empty sequence), <emphasis>all</emphasis>
+            files/directories are included.</para>
           <para>Otherwise, every regular expression string in the option value is matched against the <emphasis>relative</emphasis> file/directory
             paths (relative to the path that was given in the <option>path</option> option). A match means the file/directory is included.</para>
         </listitem>
@@ -123,7 +123,7 @@
         </listitem>
       </itemizedlist>
 
-      <para>Matching the regular expressions behaves like applying the XPath <code><link
+      <para role="keep-with-previous">Matching the regular expressions behaves like applying the XPath <code><link
             xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-matches" role="newpage">matches()</link></code> function (like in
           <code>matches($relative-path, $regular-expression)</code>).</para>
 
@@ -134,21 +134,21 @@
     <section xml:id="result-doc">
       <title>The result document</title>
 
-      <para>The root element of the resulting XML document is <tag>c:directory</tag> (the <code>c</code> prefix here is bound to the
-          <code>http://www.w3.org/ns/xproc-step</code> namespace):</para>
+      <para role="keep-with-next">The root element of the resulting XML document is <tag>c:directory</tag> (the <code>c</code> prefix here is bound to
+        the <code>http://www.w3.org/ns/xproc-step</code> namespace):</para>
       <xdoc:transform href="$xdoc/xml-description.xpl">
         <xi:include href="../../element-descriptions/c-directory.description.xml"/>
       </xdoc:transform>
 
-      <para>Every file in a directory is described using a <tag>c:file</tag> element:</para>
+      <para role="keep-with-next">Every file in a directory is described using a <tag>c:file</tag> element:</para>
       <xdoc:transform href="$xdoc/xml-description.xpl">
         <xi:include href="../../element-descriptions/c-file.description.xml"/>
       </xdoc:transform>
 
-      <para>Anything else in a directory is described using the <tag>c:other</tag> element. This looks just like the <tag>c:file</tag> element, but
-        without a <code>content-type</code> attribute.</para>
+      <para role="keep-with-previous">Anything else in a directory is described using the <tag>c:other</tag> element. This looks just like the
+          <tag>c:file</tag> element, but without a <code>content-type</code> attribute.</para>
 
-      <para role="break-before">About the optional attributes on the result elements:</para>
+      <para role="break-before keep-with-next">About the optional attributes on the result elements:</para>
       <itemizedlist>
         <listitem>
           <para>If the <option>detailed</option> option is <code>false</code> (default), only the <code>name</code> and <code>xml:base</code>
@@ -158,9 +158,9 @@
           <para>If the <option>detailed</option> option is <code>true</code>, the other, optional, attributes will be present also.</para>
         </listitem>
       </itemizedlist>
-      <para>What the values of the various attributes actually mean is implementation defined and therefore depends on the XProc processor used. For
-        most attributes there will be no surprises, but what, for instance, is the size of a directory? It may take some experiments to get things
-        right.</para>
+      <para role="keep-with-previous">What the values of the various attributes actually mean is implementation defined and therefore depends on the
+        XProc processor used. For most attributes there will be no surprises, but what, for instance, is the size of a directory? It may take some
+        experiments to get things right.</para>
 
 
     </section>
@@ -205,7 +205,7 @@
 
   <example title="Basic usage" id="example-basic">
 
-    <para>Assume we have a disk layout that looks like this:</para>
+    <para role="keep-with-next">Assume we have a disk layout that looks like this:</para>
 
     <programlisting>
 -- data -- + -- x1.txt
@@ -220,12 +220,12 @@
                         
 </programlisting>
 
-    <para>For the examples to come we assume this <code>data</code> directory is in the same location as our pipeline. Simply asking for the directory
-      listing, using the default values for the options of <step/>, is as follows:</para>
+    <para role="keep-with-next">For the examples to come we assume this <code>data</code> directory is in the same location as our pipeline. Simply
+      asking for the directory listing, using the default values for the options of <step/>, is as follows:</para>
 
     <xproc-example href="../../examples/directory-list/directory-list-01.xpl" show-source="false" keep-from="data"/>
 
-    <para>When we ask for details, the following happens:</para>
+    <para role="keep-with-next">When we ask for details, the following happens:</para>
     <xproc-example href="../../examples/directory-list/directory-list-02.xpl" show-source="false" keep-from="data"/>
 
   </example>
@@ -247,13 +247,13 @@
 
   <example title="Including and excluding files" id="example-inex">
 
-    <para>The following examples work on the same directory structure as described in <example-ref idref="example-basic"/>. Assume we only need the
-      text files in the directory tree: all files ending with <code>.txt</code>. A regular expression that matches this is <code>\.txt$</code>, so we
-      have to pass this as the value of the <option>include-filter</option> option:</para>
+    <para role="keep-with-next">The following examples work on the same directory structure as described in <example-ref idref="example-basic"/>.
+      Assume we only need the text files in the directory tree: all files ending with <code>.txt</code>. A regular expression that matches this is
+        <code>\.txt$</code>, so we have to pass this as the value of the <option>include-filter</option> option:</para>
     <xproc-example href="../../examples/directory-list/directory-list-05.xpl" show-source="false" keep-from="data"/>
 
-    <para>Assume that we know that all files that start with an <code>x</code> are not interesting. We can exclude these by passing the regular
-      expression <code>^x</code> as the value of the <option>exclude-filter</option> option:</para>
+    <para role="keep-with-next">Assume that we know that all files that start with an <code>x</code> are not interesting. We can exclude these by
+      passing the regular expression <code>^x</code> as the value of the <option>exclude-filter</option> option:</para>
     <xproc-example href="../../examples/directory-list/directory-list-06.xpl" show-source="false" keep-from="data"/>
 
     <para>Finally, assume we both need the XML and text files in the directory tree, but not anything else. For this we could do two things:</para>
@@ -264,8 +264,8 @@
             include-filter="\.(xml|txt)$" max-depth="unbounded"/</tag></para>
       </listitem>
       <listitem>
-        <para>Or we could pass a regular expression for each file type. If we do it this way we can no longer pass the <option>include-filter</option>
-          option as an attribute. We have to use a <tag>p:with-option</tag> child element:</para>
+        <para role="keep-with-next">Or we could pass a regular expression for each file type. If we do it this way we can no longer pass the
+            <option>include-filter</option> option as an attribute. We have to use a <tag>p:with-option</tag> child element:</para>
       </listitem>
     </itemizedlist>
     <xproc-example href="../../examples/directory-list/directory-list-07.xpl" show-source="false" keep-from="data"/>
@@ -287,8 +287,8 @@
       URIs:</para>
     <xproc-example href="../../examples/directory-list/directory-list-08.xpl" show-source="false" keep-from="data"/>
 
-    <para>We can now use this result to process all the XML documents. The following pipeline simply loads them (using <step-ref name="p:load"/>), and
-      wraps all contents (using <step-ref name="p:wrap-sequence"/>) in an <tag>all-xml-documents</tag> element:</para>
+    <para role="keep-with-next">We can now use this result to process all the XML documents. The following pipeline simply loads them (using <step-ref
+        name="p:load"/>), and wraps all contents (using <step-ref name="p:wrap-sequence"/>) in an <tag>all-xml-documents</tag> element:</para>
     <xproc-example href="../../examples/directory-list/directory-list-09.xpl" show-source="false" keep-from="data"/>
   </example>
 
@@ -296,10 +296,11 @@
 
   <example title="Handling all files in a directory (B)" id="handling-all-B">
 
-    <para>Another way to approach the problem in example <example-ref idref="handling-all-A"/> is using the XPath <link role="newpage"
-        xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-base-uri"><code>base-uri()</code></link> function on the <tag>c:file</tag>
-      elements. This works because all <tag>c:directory</tag> and <tag>c:file</tag> elements in the result of <step/> have an <code>xml:base</code>
-      attribute. These together make the base URIs of the <tag>c:file</tag> elements the URIs of the documents referenced.</para>
+    <para role="keep-with-next">Another way to approach the problem in example <example-ref idref="handling-all-A"/> is using the XPath <link
+        role="newpage" xlink:href="https://www.w3.org/TR/xpath-functions-31/#func-base-uri"><code>base-uri()</code></link> function on the
+        <tag>c:file</tag> elements. This works because all <tag>c:directory</tag> and <tag>c:file</tag> elements in the result of <step/> have an
+        <code>xml:base</code> attribute. These together make the base URIs of the <tag>c:file</tag> elements the URIs of the documents
+      referenced.</para>
 
     <xproc-example href="../../examples/directory-list/directory-list-10.xpl" show-source="false" keep-from="data"/>
 
