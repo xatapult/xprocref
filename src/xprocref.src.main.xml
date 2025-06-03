@@ -10,15 +10,15 @@
     <!-- Baselinks to the standard: -->
 
     <macrodef name="BASELINK-V30" value="https://spec.xproc.org/3.0/"/>
-    <macrodef name="BASELINK-V31" value="https://spec.xproc.org/master/head/"/>
+    <macrodef name="BASELINK-V31" value="https://spec.xproc.org/3.1/"/>
 
     <macrodef name="BASELINK-STANDARD-STEPS-V30" value="{$BASELINK-V30}steps/"/>
     <macrodef name="BASELINK-STANDARD-STEPS-V31" value="{$BASELINK-V31}steps/"/>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <macrodef name="BASELINK-NONSTANDARD-STEPS-V30" value="https://spec.xproc.org/master/head/"/>
-    <macrodef name="BASELINK-NONSTANDARD-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V30}"/>
+    <macrodef name="BASELINK-NONSTANDARD-STEPS-V31" value="{$BASELINK-V31}"/>
+    <macrodef name="BASELINK-NONSTANDARD-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V31}"/>
 
     <macrodef name="BASELINK-FILE-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}file/"/>
     <macrodef name="BASELINK-FILE-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}file/"/>
@@ -85,17 +85,16 @@
 
     <version id="v31" name="3.1">
       <description>
-        <para>This is an update of the 3.0 specification. Its core specification can be found <link xlink:href="{$BASELINK-V31}xproc/" role="newpage"
-            >here</link>.</para>
-        <para>Although still under construction, it&#x2019;s considered the most current and up-to-date version. Development is almost
-          finished.</para>
+        <para>This is an update of the 3.0 specification, released May&#160;2025, and the current latest version. Its core specification can be found
+            <link xlink:href="{$BASELINK-V31}xproc/" role="newpage">here</link>.</para>
       </description>
     </version>
 
     <version id="v30" name="3.0">
       <description>
-        <para>This is the first official XProc 3.0 specification (12 September 2022). Its core specification can be found <link
+        <para>This is the first XProc 3.0 specification, released September&#160;2022. Its core specification can be found <link
             xlink:href="{$BASELINK-V30}xproc/" role="newpage">here</link>.</para>
+        <para>The 3.0 specification is succeeded by the 3.1 specification.</para>
       </description>
     </version>
 
