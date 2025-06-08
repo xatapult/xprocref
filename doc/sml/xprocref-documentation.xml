@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sml xmlns="http://www.eriksiegel.nl/ns/sml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.eriksiegel.nl/ns/sml file:/xatapult/xtpxlib-sml/xsd/sml.xsd" toc="true">
+  <title>XProcRef - Internal Documentation</title>
+
+  <!-- ======================================================================= -->
+
+  <section>
+    <title>Introduction</title>
+    <image href="../../resources/web/images/logo.png" scale="20%"/>
+
+    <para>XprocRef is an initiative to publish a website with descriptions for the XProc (3.0 and later) steps in a more user-friendly way than in the
+      official specification. It is an initiative of Erik Siegel (<link href="https://www.xatapult.nl">Xatapult Content Engineering</link>).</para>
+
+    <para>There is an underlying reason for this. In 2020 I published a book called &#x201c;XProc 3.0 - Programmer Reference&#x201d; (for sale <link
+        href="https://xmlpress.net/publications/xproc-3-0/">here</link>):</para>
+
+    <image href="../../resources/web/images/bookcover.png" scale="15%"/>
+
+    <para>Appendices A and B in the book describe the step library. However, due to time constraints, the step descriptions were copied from the
+      formal XProc specification. This leaves much to be desired for users of the language: the specification is aimed at XProc processor
+        <emphasis>implementers</emphasis>, not at language <emphasis>users</emphasis>. To correct this, this site contains reference information about
+      the XProc steps, written from a more user-oriented perspective. With the increasing popularity of XProc, I hope this fills a need.</para>
+
+  </section>
+
+  <!-- ======================================================================= -->
+
+  <section>
+    <title>Technical overview</title>
+
+    <subheading>The website</subheading>
+    <itemizedlist>
+      <listitem>
+        <para>XProcRef (<link href="https://xprocref.org">https://xprocref.org</link>) is a static website containing descriptions of XProc steps. It
+          is hosted as a GitHub Pages site from its GitHub repository <link href="https://github.com/xatapult/xprocref"
+            >https://github.com/xatapult/xprocref</link>.</para>
+      </listitem>
+      <listitem>
+        <para>It uses Bootstrap 5.2.2</para>
+      </listitem>
+      <listitem>
+        <para>All static website resources (CSS, JavaScript, etc.) can be found underneath <code>xprocref/web-resources/</code>. This all is copied
+          verbatim to the final website.</para>
+      </listitem>
+      <listitem>
+        <para>The template used to produce the actual web pages is: <code>xprocref/web-templates/default-template.html</code>.</para>
+      </listitem>
+    </itemizedlist>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <subheading>The markup language</subheading>
+    <itemizedlist>
+      <listitem>
+        <para>All is generated from an XML source: <code>xprocref/src/xprocref.src.main.xml</code></para>
+      </listitem>
+      <listitem>
+        <para>This source uses an XProcRef specific markup language that is, more or less, described in this document.</para>
+        <itemizedlist>
+          <listitem>
+            <para>A W3C XML Schema for the markup language is in: <code>xprocref/xsd/xprocref.xsd</code></para>
+          </listitem>
+          <listitem>
+            <para>A Schematron Schema for the markup language with additional validations is in: <code>xprocref/sch/xprocref.sch</code></para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>For the content/text parts of the markup, DocBook 5 is used. XprocRef adds several extension elements to provide for things like step
+          cross-references, special markup, etc.</para>
+      </listitem>
+    </itemizedlist>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <subheading>Processing the markup into the website and PDF</subheading>
+    <itemizedlist>
+
+      <listitem>
+        <para>The markup language is processed into a static website and/or a PDF by an XProc&#160;3.0 pipeline:
+          <code>xprocref/xpl3mod/process-xprocref-to-website.xpl</code>.</para>
+        <para><emphasis bold="true" italic="false">Note:</emphasis> The pipelines are currently ({$DATE}) processed by the MorganaXproc-III EE
+          (Enterprise Edition) processor. The SE (Standard Edition) processor will not do the job because some steps are used that are available in
+          the EE version only.</para>
+      </listitem>
+      <listitem>
+        <para>Processing makes heavy use of the facilities provided some other open source components published by <link
+            href="https://www.xatapult.nl">Xatapult</link>:</para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <link href="https://common.xtpxlib.org/">Xtpxlib Common</link>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <link href="https://container.xtpxlib.org/">Xtpxlib Container</link>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <link href="https://xdoc.xtpxlib.org/">Xtpxlib Xdoc</link>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>The  pipelines that drive the main <code>process-xprocref-to-website.xpl</code> with the right set of
+          options and port connections:</para>
+        <itemizedlist>
+          <listitem>
+            <para>To produce a <emphasis>test</emphasis> version of the website (with all steps, also the unpublished ones):
+                <code>xprocref/xpl3/process-xprocref-test.xpl</code></para>
+            <para>The test version is build in <code>xprocref/build</code> (which Git will ignore).</para>
+          </listitem>
+          <listitem>
+            <para>To produce a <emphasis>production</emphasis> version of the website (only the published steps):
+                <code>xprocref/xpl3/process-xprocref-production.xpl</code></para>
+            <para>The production version is build in <code>xprocref/docs</code> (the default directory used for the GitHub Pages site).</para>
+            <para><emphasis bold="true" italic="false">Note:</emphasis> The production pipeline currently ({$DATE}) sets an option <code>wip</code> to
+                <code>true</code>, causing a &#x201c;work in progress&#x201d; warning on every page. Turn this off when the website is complete (if
+              ever…).</para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+    </itemizedlist>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <subheading>Testing/Playing</subheading>
+    <itemizedlist>
+      <listitem>
+        <para>Facilities to play around with the markup language and for testing features are in <code>xprocref/test</code>.</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <!-- ======================================================================= -->
+
+</sml>
