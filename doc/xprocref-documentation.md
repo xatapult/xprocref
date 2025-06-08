@@ -3,15 +3,15 @@
 
 * [Introduction](#section-d16e8)
 * [Technical overview](#section-d16e42)
-* [The XProcRef markup language](#section-d16e223)
+* [The XProcRef markup language](#section-d16e220)
 
-  * [Overall structure](#section-d16e230)
-  * [Describing a step](#section-d16e244)
-  * [XprocRef DocBook sections](#section-d16e262)
+  * [Overall structure](#section-d16e227)
+  * [Describing a step](#section-d16e241)
+  * [XprocRef DocBook sections](#section-d16e259)
 
     * [XprocRef specific DocBook extensions](#xprocref-docbook-extensions)
 
-      * [Adding an XProc example with auto-execute ](#section-d16e495)
+      * [Adding an XProc example with auto-execute ](#section-d16e492)
 
 
 
@@ -65,7 +65,7 @@ Appendices A and B in the book describe the step library. However, due to time c
 ***Processing the markup into the website and PDF***
 
 
-* Everything is based on XProc 3.0 pipelines (using XSLT 3.0 under the hood).<br/>**Note:** **Note:** The pipelines are currently (2025-06-08) processed by the MorganaXproc-III EE (Enterprise Edition) processor. The SE (Standard Edition) processor will not do the job because some steps are used that are available in the EE version only.
+* Everything is based on XProc 3.0 pipelines (using XSLT 3.0 under the hood).<br/>**Note:** The pipelines are currently (2025-06-08) processed by the MorganaXproc-III EE (Enterprise Edition) processor. The SE (Standard Edition) processor will not do the job because some steps are used that are available in the EE version only.
 * The pipelines to run are in the `xprocref/xpl3/` directory. Their names should be reasonably self-explaining. If not, read the header documentation.
 * Underlying pipelines are in `xprocref/xpl3mod/`. The main one is `xprocref/xpl3mod/process-xprocref-to-website.xpl` that takes care of everything.
 * Processing makes heavy use of the facilities provided some other open source components published by [Xatapult](https://www.xatapult.nl):
@@ -77,17 +77,17 @@ Appendices A and B in the book describe the step library. However, due to time c
 
 -----
 
-## The XProcRef markup language<a name="section-d16e223"/>
+## The XProcRef markup language<a name="section-d16e220"/>
 
-### Overall structure<a name="section-d16e230"/>
+### Overall structure<a name="section-d16e227"/>
 
 This is not documented (yet). Please refer to the schema in `xprocref/xsd/xprocref.xsd`.
 
-### Describing a step<a name="section-d16e244"/>
+### Describing a step<a name="section-d16e241"/>
 
 This is not documented (yet). Please refer to the schema (`<step>` element) in `xprocref/xsd/xprocref.xsd`.
 
-### XprocRef DocBook sections<a name="section-d16e262"/>
+### XprocRef DocBook sections<a name="section-d16e259"/>
 
 **Warning:** DocBook sections are *not* validated (yet)! 
 
@@ -111,9 +111,52 @@ For any element in the XprocRef markup that can contain text, the following appl
 |  `<example-ref idref=…" step-name?=…">`  | Adds a reference to an example. The text of the reference is the name of the example. | 
 |  `<example-doc href="…">`  | Inserts some example document. This is done as (unparsed) text, so make sure XML documents have no XML header! | 
 
-##### Adding an XProc example with auto-execute <a name="section-d16e495"/>
+##### Adding an XProc example with auto-execute <a name="section-d16e492"/>
 
 
 * It is possible to add XProc example pipelines that execute automatically. The result of this execution is available and shown as the result of the example pipeline.
 * The XProc example pipeline must be self-running. That is, the input document must either be referenced (`@href`) on the `source` port or must be inlined. It will be presented for the example as a *separate* document. The reference or inlined document is removed from the pipeline in the example text.
+
+
+```
+<xproc-example href = xs:anyURI
+               show-source? = xs:boolean
+               show-pipeline? = xs:boolean
+               show-result? = xs:boolean
+               fixup-uris? = xs:boolean
+               keep-from? = xs:string
+               fixup-pipeline-input? = xs:boolean
+               keep-namespace-prefixes? = list of xs:string
+               keep-namespace-prefixes-source? = list of xs:string
+               keep-namespace-prefixes-pipeline? = list of xs:string
+               keep-namespace-prefixes-result? = list of xs:string
+               output-is-text? = xs:boolean >
+  <source-header>?
+  <pipeline-header>?
+  <result-header>?
+</xproc-example>
+```
+
+
+| Attribute | # | Type | Description | 
+| ----- | ----- | ----- | ----- | 
+| `href` | 1 | `xs:anyURI` | The URI of the example pipeline. | 
+| `show-source` | ? | `xs:boolean` | Default: `true`<br/>Whether to show the source document for the example pipeline. | 
+| `show-pipeline` | ? | `xs:boolean` | Default: `true`<br/>Whether to show the source code of the example pipeline. | 
+| `show-result` | ? | `xs:boolean` | Default: `true`<br/>Whether to show the result document of the example pipeline. | 
+| `fixup-uris` | ? | `xs:boolean` | Default: `true`<br/>Whether to fixup any URIs (change the path to something bogus so source disk layout stays hidden). | 
+| `keep-from` | ? | `xs:string` | When fixing up URIs, use the path including and after this string. If not set only the filename is used. | 
+| `fixup-pipeline-input` | ? | `xs:boolean` | Default: `true`<br/>Whether to fixup the pipeline’s input (that is, remove any references to it). | 
+| `keep-namespace-prefixes` | ? | `list of xs:string` | A whitespace separated list of namespace-prefixes to keep, for all documents. | 
+| `keep-namespace-prefixes-source` | ? | `list of xs:string` | A whitespace separated list of namespace-prefixes to keep for the source document. | 
+| `keep-namespace-prefixes-pipeline` | ? | `list of xs:string` | A whitespace separated list of namespace-prefixes to keep for the pipeline document. | 
+| `keep-namespace-prefixes-result` | ? | `list of xs:string` | A whitespace separated list of namespace-prefixes to keep for the result document. | 
+| `output-is-text` | ? | `xs:boolean` | Default: `false`<br/>Whether to treat the step’s output as text and not as XML. | 
+
+
+| Child element | # | Description | 
+| ----- | ----- | ----- | 
+| `source-header` | ? | DocBook text for the header above the source document. If absent, a default text is used. If empty, there will be no header. | 
+| `pipeline-header` | ? | DocBook text for the header above the pipeline document. If absent, a default text is used. If empty, there will be no header. | 
+| `result-header` | ? | DocBook text for the header above the result document. If absent, a default text is used. If empty, there will be no header. | 
 

@@ -268,14 +268,65 @@
             </listitem>
           </itemizedlist>
 
-          <!-- <xdoc:transform href="$xdoc/xml-description.xpl">
-            <xi:include href="descriptions/xproc-example.description.xml"/>
-          </xdoc:transform>-->
+          <element name="xproc-example">
 
+            <attributes>
+              <attribute name="href" required="true" type="xs:anyURI">
+                <para>The URI of the example pipeline.</para>
+              </attribute>
+              <attribute name="show-source" required="false" default="true" type="xs:boolean">
+                <para>Whether to show the source document for the example pipeline.</para>
+              </attribute>
+              <attribute name="show-pipeline" required="false" default="true" type="xs:boolean">
+                <para>Whether to show the source code of the example pipeline.</para>
+              </attribute>
+              <attribute name="show-result" required="false" default="true" type="xs:boolean">
+                <para>Whether to show the result document of the example pipeline.</para>
+              </attribute>
+              <attribute name="fixup-uris" default="true" type="xs:boolean">
+                <para>Whether to fixup any URIs (change the path to something bogus so source disk layout stays hidden).</para>
+              </attribute>
+              <attribute name="keep-from" type="xs:string">
+                <para>When fixing up URIs, use the path including and after this string. If not set only the filename is used.</para>
+              </attribute>
+              <attribute name="fixup-pipeline-input" default="true" type="xs:boolean">
+                <para>Whether to fixup the pipeline&#x2019;s input (that is, remove any references to it).</para>
+              </attribute>
+              <attribute name="keep-namespace-prefixes" type="list of xs:string">
+                <para>A whitespace separated list of namespace-prefixes to keep, for all documents.</para>
+              </attribute>
+              <attribute name="keep-namespace-prefixes-source" type="list of xs:string">
+                <para>A whitespace separated list of namespace-prefixes to keep for the source document.</para>
+              </attribute>
+              <attribute name="keep-namespace-prefixes-pipeline" type="list of xs:string">
+                <para>A whitespace separated list of namespace-prefixes to keep for the pipeline document.</para>
+              </attribute>
+              <attribute name="keep-namespace-prefixes-result" type="list of xs:string">
+                <para>A whitespace separated list of namespace-prefixes to keep for the result document.</para>
+              </attribute>
+              <attribute name="output-is-text" default="false" type="xs:boolean">
+                <para>Whether to treat the step&#x2019;s output as text and not as XML.</para>
+              </attribute>
+            </attributes>
 
+            <children>
+              <element name="source-header" occurrences="?">
+                <para>DocBook text for the header above the source document. If absent, a default text is used. If empty, there will be no
+                  header.</para>
+              </element>
+              <element name="pipeline-header" occurrences="?">
+                <para>DocBook text for the header above the pipeline document. If absent, a default text is used. If empty, there will be no
+                  header.</para>
+              </element>
+              <element name="result-header" occurrences="?">
+                <para>DocBook text for the header above the result document. If absent, a default text is used. If empty, there will be no
+                  header.</para>
+              </element>
+            </children>
+
+          </element>
 
         </section>
-
 
       </section>
 

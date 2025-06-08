@@ -531,7 +531,6 @@
             <folder path="../../../xproc-3/XProc-book/"/>
         </folder>
         <folder path="../"/>
-        <folder path="../../xtpxlib-sml/"/>
         <folder path="../../../../../../xdata/"/>
     </projectTree>
 </project>
