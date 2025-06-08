@@ -4,7 +4,7 @@
   xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref" version="3.0" exclude-inline-prefixes="#all" name="proces-xprocref-to-book-pdf">
 
   <p:documentation>
-    Takes the most current XProcRef sources and processes these into a PDF for a book.
+    Takes the most current XProcRef sources and processes these into a PDF for a print version of the book (with mirrored left margins).
   </p:documentation>
 
   <!-- ======================================================================= -->

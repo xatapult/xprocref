@@ -1,0 +1,97 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:sml="http://www.eriksiegel.nl/ns/sml">
+  
+  
+  
+
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>XProcRef - Internal Documentation</title>
+    <style>
+       body {
+        font-family: sans-serif;
+        font-size: 90%;
+        padding-top: 2em;
+        padding-left: 2em;
+
+       }
+       p {
+        margin-top: 0.4em;
+        margin-bottom: 0;
+       }
+       ul, ol {
+        margin-left: -1em;
+        list-style-type: square;
+       }
+       code, pre {
+        font-family: Consolas, monospace;
+        background-color: #f1f2f3;
+        padding-left: 0.1em;
+        padding-right: 0.1em;
+       }
+       table {
+        text-align: left;
+        border-spacing: 0;
+        border: 1px solid darkgrey;
+        margin-bottom: 1em;
+       }
+       td, th {
+        vertical-align: top;
+        border: 1px solid black;
+        padding: 0.5em;
+        font-size: 90%;        
+       }
+       th {
+        background-color: lightgrey;       
+       }
+     </style>
+  </head>
+
+  <body>
+    <div class="sml"><h1 class="title">XProcRef - Internal Documentation</h1><div class="itemizedlist"><ul><li><p class="para"><a href="#section-d16e8" class="link">Introduction</a></p></li><li><p class="para"><a href="#section-d16e42" class="link">Technical overview</a></p></li><li><p class="para"><a href="#section-d16e223" class="link">The XProcRef markup language</a></p><div class="itemizedlist"><ul><li><p class="para"><a href="#section-d16e230" class="link">Overall structure</a></p></li><li><p class="para"><a href="#section-d16e244" class="link">Describing a step</a></p></li><li><p class="para"><a href="#section-d16e262" class="link">XprocRef DocBook sections</a></p><div class="itemizedlist"><ul><li><p class="para"><a href="#xprocref-docbook-extensions" class="link">XprocRef specific DocBook extensions</a></p><div class="itemizedlist"><ul><li><p class="para"><a href="#section-d16e495" class="link">Adding an XProc example with auto-execute </a></p></li></ul></div></li></ul></div></li></ul></div></li></ul></div><p class="emptyline"> </p><div class="section" id="section-d16e8"><a name="section-d16e8"/><hr class="main-section-divider-line"/><h2 class="title">Introduction</h2><div class="image"><img src="../resources/web/images/logo.png" width="20%"/></div><p class="para">XprocRef is an initiative to publish a website with descriptions for the XProc (3.0 and later) steps in a more user-friendly way than in the
+      official specification. It is an initiative of Erik Siegel (<a href="https://www.xatapult.nl" class="link">Xatapult Content Engineering</a>).</p><p class="para">There is an underlying reason for this. In 2020 I published a book called “XProc 3.0 - Programmer Reference” (for sale <a href="https://xmlpress.net/publications/xproc-3-0/" class="link">here</a>):</p><div class="image"><img src="../resources/web/images/bookcover.png" width="15%"/></div><p class="para">Appendices A and B in the book describe the step library. However, due to time constraints, the step descriptions were copied from the
+      formal XProc specification. This leaves much to be desired for users of the language: the specification is aimed at XProc processor
+        <span class="emphasis">implementers</span>, not at language <span class="emphasis">users</span>. To correct this, this site contains reference information about
+      the XProc steps, written from a more user-oriented perspective. With the increasing popularity of XProc, I hope this fills a need.</p></div><div class="section" id="section-d16e42"><a name="section-d16e42"/><hr class="main-section-divider-line"/><h2 class="title">Technical overview</h2><p class="subheading"><b><u>The website</u></b></p><div class="itemizedlist"><ul><li><p class="para">XProcRef (<a href="https://xprocref.org" class="link">https://xprocref.org</a>) is a static website containing descriptions of XProc steps. It
+          is hosted as a GitHub Pages site from its GitHub repository <a href="https://github.com/xatapult/xprocref" class="link">https://github.com/xatapult/xprocref</a>.</p></li><li><p class="para">It uses Bootstrap 5.2.2</p></li><li><p class="para">All static website resources (CSS, JavaScript, etc.) can be found underneath <code class="code">xprocref/web-resources/</code>. This all is copied
+          verbatim to the final website.</p></li><li><p class="para">The template used to produce the actual web pages is: <code class="code">xprocref/web-templates/default-template.html</code>.</p></li></ul></div><p class="subheading"><b><u>The markup language</u></b></p><div class="itemizedlist"><ul><li><p class="para">All is generated from an XML source: <code class="code">xprocref/src/xprocref.src.main.xml</code></p></li><li><p class="para">This source uses an XProcRef specific markup language that is, more or less, described in this document.</p><div class="itemizedlist"><ul><li><p class="para">A W3C XML Schema for the markup language is in: <code class="code">xprocref/xsd/xprocref.xsd</code></p></li><li><p class="para">A Schematron Schema for the markup language with additional validations is in: <code class="code">xprocref/sch/xprocref.sch</code></p></li></ul></div></li><li><p class="para">For the content/text parts of the markup, DocBook 5 is used. XprocRef adds several extension elements to provide for things like step
+          cross-references, special markup, etc.</p></li></ul></div><p class="subheading"><b><u>Processing the markup into the website and PDF</u></b></p><div class="itemizedlist"><ul><li><p class="para">Everything is based on XProc 3.0 pipelines (using XSLT 3.0 under the hood).</p><p class="para"><span class="emphasis"><b>Note:</b></span> <span class="emphasis"><b>Note:</b></span> The pipelines are currently (2025-06-08) processed by the MorganaXproc-III EE
+          (Enterprise Edition) processor. The SE (Standard Edition) processor will not do the job because some steps are used that are available in
+          the EE version only.</p></li><li><p class="para">The pipelines to run are in the <code class="code">xprocref/xpl3/</code> directory. Their names should be reasonably self-explaining. If not, read
+          the header documentation.</p></li><li><p class="para">Underlying pipelines are in <code class="code">xprocref/xpl3mod/</code>. The main one is
+            <code class="code">xprocref/xpl3mod/process-xprocref-to-website.xpl</code> that takes care of everything.</p></li><li><p class="para">Processing makes heavy use of the facilities provided some other open source components published by <a href="https://www.xatapult.nl" class="link">Xatapult</a>:</p><div class="itemizedlist"><ul><li><p class="para">
+              <a href="https://common.xtpxlib.org/" class="link">Xtpxlib Common</a>
+            </p></li><li><p class="para">
+              <a href="https://container.xtpxlib.org/" class="link">Xtpxlib Container</a>
+            </p></li><li><p class="para">
+              <a href="https://xdoc.xtpxlib.org/" class="link">Xtpxlib Xdoc</a>
+            </p></li></ul></div></li></ul></div></div><div class="section" id="section-d16e223"><a name="section-d16e223"/><hr class="main-section-divider-line"/><h2 class="title">The XProcRef markup language</h2><div class="section" id="section-d16e230"><a name="section-d16e230"/><h3 class="title">Overall structure</h3><p class="para">This is not documented (yet). Please refer to the schema in <code class="code">xprocref/xsd/xprocref.xsd</code>.</p></div><div class="section" id="section-d16e244"><a name="section-d16e244"/><h3 class="title">Describing a step</h3><p class="para">This is not documented (yet). Please refer to the schema (<code class="tag">&lt;step&gt;</code> element) in <code class="code">xprocref/xsd/xprocref.xsd</code>.</p></div><div class="section" id="section-d16e262"><a name="section-d16e262"/><h3 class="title">XprocRef DocBook sections</h3><p class="para"><span class="emphasis"><b>Warning:</b></span> DocBook sections are <span class="emphasis">not</span> validated (yet)! </p><p class="para">For any element in the XprocRef markup that can contain text, the following applies:</p><div class="itemizedlist"><ul><li><p class="para">The basic language is DocBook 5 (the <a href="https://xdoc.xtpxlib.org/6_DocBook_dialect.html" class="link">xtpxlib-xdoc dialect</a>),
+            with <a href="https://xdoc.xtpxlib.org/" class="link">xtpxlib-xdoc</a> extensions. These extensions can be used to, for instance, create
+            descriptions of XML elements.</p></li><li><p class="para">Elements do <span class="emphasis">not</span> have to be in the DocBook namespace. Any element that is not in the DocBook 5
+              (<code class="code">http://docbook.org/ns/docbook</code>) or xtpxlib-xdoc (<code class="code">http://www.xtpxlib.nl/ns/xdoc</code>) namespace is automatically
+            changed into the DOcBook namespace. </p></li><li><p class="para">Any non-empty text element that is a direct child of the encompassing element is supposed to be in simple Markdown (see <a href="https://xdoc.xtpxlib.org/5_XProc_3.0_support.html#xpl3-xtpxlib-xdoc.mod.xpl" class="link">here</a>) and transformed into DocBook
+            automatically. </p></li><li><p class="para">There are several additional elements that can be used on top of the normal DocBook and xtpxlib-xdoc elements. See <a href="#xprocref-docbook-extensions" class="link">XprocRef specific DocBook extensions</a>.</p></li></ul></div><div class="section" id="xprocref-docbook-extensions"><a name="xprocref-docbook-extensions"/><h4 class="title">XprocRef specific DocBook extensions</h4><div class="table"><table><tr><th><p class="para">Element</p></th><th><p class="para">Description</p></th></tr><tr><td><p class="para">
+                    <code class="tag">&lt;step&gt;</code>
+                  </p><p class="para">
+                    <code class="tag">&lt;port&gt;</code>
+                  </p><p class="para">
+                    <code class="tag">&lt;option&gt;</code>
+                  </p><p class="para">
+                    <code class="tag">&lt;property&gt;</code>
+                  </p></td><td><p class="para">Adds some special markup for the name of the step, port, option or (document) property (an HTML class with the same value). </p><p class="para">An empty <code class="tag emptytag">&lt;step&gt;</code> element in a step description results in the step name itself.</p></td></tr><tr><td><p class="para">
+                    <code class="tag emptytag">&lt;step-error-ref code="…"&gt;</code>
+                  </p></td><td><p class="para">Adds a reference to one of the step errors. The text of the reference is the error <span class="emphasis">code</span>.</p></td></tr><tr><td><p class="para">
+                    <code class="tag emptytag">&lt;step-ref name="…" version-id?=…"&gt;</code>
+                  </p></td><td><p class="para">Adds a reference to a step. The name of the step must be including the namespace prefix (e.g.
+                    <code class="code">name="p:identity"</code>).</p><p class="para">You can optionally refer to a step in another version by adding the <code class="code">version-id</code> attribute.</p></td></tr><tr><td><p class="para">
+                    <code class="tag emptytag">&lt;category-ref idref="…"&gt;</code>
+                  </p></td><td><p class="para">Adds a reference to a category. The text of the reference is the name of the category.</p></td></tr><tr><td><p class="para">
+                    <code class="tag emptytag">&lt;example-ref idref=…" step-name?=…"&gt;</code>
+                  </p></td><td><p class="para">Adds a reference to an example. The text of the reference is the name of the example.</p></td></tr><tr><td><p class="para">
+                    <code class="tag emptytag">&lt;example-doc href="…"&gt;</code>
+                  </p></td><td><p class="para">Inserts some example document. This is done as (unparsed) text, so make sure XML documents have no XML header!</p></td></tr></table></div><div class="section" id="section-d16e495"><a name="section-d16e495"/><h5 class="title">Adding an XProc example with auto-execute </h5><div class="itemizedlist"><ul><li><p class="para">It is possible to add XProc example pipelines that execute automatically. The result of this execution is available and shown as
+                the result of the example pipeline.</p></li><li><p class="para">The XProc example pipeline must be self-running. That is, the input document must either be referenced (<code class="code">@href</code>) on the
+                  <code class="code">source</code> port or must be inlined. It will be presented for the example as a <span class="emphasis">separate</span> document. The
+                reference or inlined document is removed from the pipeline in the example text.</p></li></ul></div></div></div></div></div></div>
+  </body>
+</html>

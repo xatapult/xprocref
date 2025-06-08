@@ -4,7 +4,7 @@
   xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref" version="3.0" exclude-inline-prefixes="#all" name="test-process-xprocref-to-website">
 
   <p:documentation>
-    Produces a test version of the XProcRef site (with all unpublished steps included)
+    Produces a test version of the XProcRef site (with all unpublished steps included).
   </p:documentation>
 
   <!-- ======================================================================= -->
