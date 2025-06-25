@@ -4,7 +4,7 @@
   xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref" version="3.0" exclude-inline-prefixes="#all" name="process-xprocref-production-to-website">
 
   <p:documentation>
-    Produces a production version of the XProcRef site (with only published steps)
+    Produces a production version of the XProcRef site (with only published steps). This includes creating a downloadable PDF.
   </p:documentation>
 
   <!-- ======================================================================= -->

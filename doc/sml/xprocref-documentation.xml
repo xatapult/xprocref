@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sml xmlns="http://www.eriksiegel.nl/ns/sml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.eriksiegel.nl/ns/sml file:/xatapult/xtpxlib-sml/xsd/sml.xsd" toc="true">
+  <title>XProcRef - Internal Documentation</title>
+
+  <!-- ======================================================================= -->
+
+  <section>
+    <title>Introduction</title>
+    <image href="../../resources/web/images/logo.png" scale="20%"/>
+
+    <para>XprocRef is an initiative to publish a website with descriptions for the XProc (3.0 and later) steps in a more user-friendly way than in the
+      official specification. It is an initiative of Erik Siegel (<link href="https://www.xatapult.nl">Xatapult Content Engineering</link>).</para>
+
+    <para>There is an underlying reason for this. In 2020 I published a book called &#x201c;XProc 3.0 - Programmer Reference&#x201d; (for sale <link
+        href="https://xmlpress.net/publications/xproc-3-0/">here</link>):</para>
+
+    <image href="../../resources/web/images/bookcover.png" scale="15%"/>
+
+    <para>Appendices A and B in the book describe the step library. However, due to time constraints, the step descriptions were copied from the
+      formal XProc specification. This leaves much to be desired for users of the language: the specification is aimed at XProc processor
+        <emphasis>implementers</emphasis>, not at language <emphasis>users</emphasis>. To correct this, this site contains reference information about
+      the XProc steps, written from a more user-oriented perspective. With the increasing popularity of XProc, I hope this fills a need.</para>
+
+  </section>
+
+  <!-- ======================================================================= -->
+
+  <section>
+    <title>Technical overview</title>
+
+    <subheading>The website</subheading>
+    <itemizedlist>
+      <listitem>
+        <para>XProcRef (<link href="https://xprocref.org">https://xprocref.org</link>) is a static website containing descriptions of XProc steps. It
+          is hosted as a GitHub Pages site from its GitHub repository <link href="https://github.com/xatapult/xprocref"
+            >https://github.com/xatapult/xprocref</link>.</para>
+      </listitem>
+      <listitem>
+        <para>It uses Bootstrap 5.2.2</para>
+      </listitem>
+      <listitem>
+        <para>All static website resources (CSS, JavaScript, etc.) can be found underneath <code>xprocref/web-resources/</code>. This all is copied
+          verbatim to the final website.</para>
+      </listitem>
+      <listitem>
+        <para>The template used to produce the actual web pages is: <code>xprocref/web-templates/default-template.html</code>.</para>
+      </listitem>
+    </itemizedlist>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <subheading>The markup language</subheading>
+    <itemizedlist>
+      <listitem>
+        <para>All is generated from an XML source: <code>xprocref/src/xprocref.src.main.xml</code></para>
+      </listitem>
+      <listitem>
+        <para>This source uses an XProcRef specific markup language that is, more or less, described in this document.</para>
+        <itemizedlist>
+          <listitem>
+            <para>A W3C XML Schema for the markup language is in: <code>xprocref/xsd/xprocref.xsd</code></para>
+          </listitem>
+          <listitem>
+            <para>A Schematron Schema for the markup language with additional validations is in: <code>xprocref/sch/xprocref.sch</code></para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>For the content/text parts of the markup, DocBook 5 is used. XprocRef adds several extension elements to provide for things like step
+          cross-references, special markup, etc.</para>
+      </listitem>
+    </itemizedlist>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <subheading>Processing the markup into the website and PDF</subheading>
+    <itemizedlist>
+      <listitem>
+        <para>Everything is based on XProc&#160;3.0 pipelines (using XSLT 3.0 under the hood).</para>
+        <note>The pipelines are currently ({$DATE}) processed by the MorganaXproc-III EE (Enterprise Edition) processor. The SE (Standard Edition)
+          processor will not do the job because some steps are used that are available in the EE version only.</note>
+      </listitem>
+      <listitem>
+        <para>The pipelines to run are in the <code>xprocref/xpl3/</code> directory. Their names should be reasonably self-explaining. If not, read
+          the header documentation.</para>
+      </listitem>
+      <listitem>
+        <para>Underlying pipelines are in <code>xprocref/xpl3mod/</code>. The main one is
+            <code>xprocref/xpl3mod/process-xprocref-to-website.xpl</code> that takes care of everything.</para>
+      </listitem>
+      <listitem>
+        <para>Processing makes heavy use of the facilities provided some other open source components published by <link
+            href="https://www.xatapult.nl">Xatapult</link>:</para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <link href="https://common.xtpxlib.org/">Xtpxlib Common</link>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <link href="https://container.xtpxlib.org/">Xtpxlib Container</link>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <link href="https://xdoc.xtpxlib.org/">Xtpxlib Xdoc</link>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+
+    </itemizedlist>
+
+  </section>
+
+  <!-- ======================================================================= -->
+
+  <section>
+    <title>The XProcRef markup language</title>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section>
+      <title>Overall structure</title>
+      <para>This is not documented (yet). Please refer to the schema in <code>xprocref/xsd/xprocref.xsd</code>.</para>
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section>
+      <title>Describing a step</title>
+      <para>This is not documented (yet). Please refer to the schema (<tag>step</tag> element) in <code>xprocref/xsd/xprocref.xsd</code>.</para>
+    </section>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <section>
+      <title>XprocRef DocBook sections</title>
+
+      <note type="Warning">DocBook sections are <emphasis>not</emphasis> validated (yet)! </note>
+
+      <para>For any element in the XprocRef markup that can contain text, the following applies:</para>
+      <itemizedlist>
+        <listitem>
+          <para>The basic language is DocBook 5 (the <link href="https://xdoc.xtpxlib.org/6_DocBook_dialect.html">xtpxlib-xdoc dialect</link>), with
+              <link href="https://xdoc.xtpxlib.org/">xtpxlib-xdoc</link> extensions. These extensions can be used to, for instance, create
+            descriptions of XML elements.</para>
+        </listitem>
+        <listitem>
+          <para>Elements do <emphasis>not</emphasis> have to be in the DocBook namespace. Any element that is not in the DocBook 5
+              (<code>http://docbook.org/ns/docbook</code>) or xtpxlib-xdoc (<code>http://www.xtpxlib.nl/ns/xdoc</code>) namespace is automatically
+            changed into the DOcBook namespace. </para>
+        </listitem>
+        <listitem>
+          <para>Any non-empty text element that is a direct child of the encompassing element is supposed to be in simple Markdown (see <link
+              href="https://xdoc.xtpxlib.org/5_XProc_3.0_support.html#xpl3-xtpxlib-xdoc.mod.xpl">here</link>) and transformed into DocBook
+            automatically. </para>
+        </listitem>
+        <listitem>
+          <para>There are several additional elements that can be used on top of the normal DocBook and xtpxlib-xdoc elements. See <link
+              href="#xprocref-docbook-extensions"/>.</para>
+        </listitem>
+      </itemizedlist>
+
+      <section id="xprocref-docbook-extensions">
+        <title>XprocRef specific DocBook extensions</title>
+
+        <table>
+          <header>
+            <entry>
+              <para>Element</para>
+            </entry>
+            <entry>
+              <para>Description</para>
+            </entry>
+          </header>
+          <row>
+            <entry>
+              <para>
+                <tag>step</tag>
+              </para>
+              <para>
+                <tag>port</tag>
+              </para>
+              <para>
+                <tag>option</tag>
+              </para>
+              <para>
+                <tag>property</tag>
+              </para>
+            </entry>
+            <entry>
+              <para>Adds some special markup for the name of the step, port, option or (document) property (an HTML class with the same value). </para>
+              <para>An empty <tag class="emptytag">step</tag> element in a step description results in the step name itself.</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <tag class="emptytag">step-error-ref code="…"</tag>
+              </para>
+            </entry>
+            <entry>
+              <para>Adds a reference to one of the step errors. The text of the reference is the error <emphasis>code</emphasis>.</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <tag class="emptytag">step-ref name="…" version-id?=…"</tag>
+              </para>
+            </entry>
+            <entry>
+              <para>Adds a reference to a step. The name of the step must be including the namespace prefix (e.g.
+                <code>name="p:identity"</code>).</para>
+              <para>You can optionally refer to a step in another version by adding the <code>version-id</code> attribute.</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <tag class="emptytag">category-ref idref="…"</tag>
+              </para>
+            </entry>
+            <entry>
+              <para>Adds a reference to a category. The text of the reference is the name of the category.</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <tag class="emptytag">example-ref idref=…" step-name?=…"</tag>
+              </para>
+            </entry>
+            <entry>
+              <para>Adds a reference to an example. The text of the reference is the name of the example.</para>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <tag class="emptytag">example-doc href="…"</tag>
+              </para>
+            </entry>
+            <entry>
+              <para>Inserts some example document. This is done as (unparsed) text, so make sure XML documents have no XML header!</para>
+            </entry>
+          </row>
+        </table>
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <section>
+          <title>Adding an XProc example with auto-execute </title>
+
+
+          <itemizedlist>
+            <listitem>
+              <para>It is possible to add XProc example pipelines that execute automatically. The result of this execution is available and shown as
+                the result of the example pipeline.</para>
+            </listitem>
+            <listitem>
+              <para>The XProc example pipeline must be self-running. That is, the input document must either be referenced (<code>@href</code>) on the
+                  <code>source</code> port or must be inlined. It will be presented for the example as a <emphasis>separate</emphasis> document. The
+                reference or inlined document is removed from the pipeline in the example text.</para>
+            </listitem>
+          </itemizedlist>
+
+          <element name="xproc-example">
+
+            <attributes>
+              <attribute name="href" required="true" type="xs:anyURI">
+                <para>The URI of the example pipeline.</para>
+              </attribute>
+              <attribute name="show-source" required="false" default="true" type="xs:boolean">
+                <para>Whether to show the source document for the example pipeline.</para>
+              </attribute>
+              <attribute name="show-pipeline" required="false" default="true" type="xs:boolean">
+                <para>Whether to show the source code of the example pipeline.</para>
+              </attribute>
+              <attribute name="show-result" required="false" default="true" type="xs:boolean">
+                <para>Whether to show the result document of the example pipeline.</para>
+              </attribute>
+              <attribute name="fixup-uris" default="true" type="xs:boolean">
+                <para>Whether to fixup any URIs (change the path to something bogus so source disk layout stays hidden).</para>
+              </attribute>
+              <attribute name="keep-from" type="xs:string">
+                <para>When fixing up URIs, use the path including and after this string. If not set only the filename is used.</para>
+              </attribute>
+              <attribute name="fixup-pipeline-input" default="true" type="xs:boolean">
+                <para>Whether to fixup the pipeline&#x2019;s input (that is, remove any references to it).</para>
+              </attribute>
+              <attribute name="keep-namespace-prefixes" type="list of xs:string">
+                <para>A whitespace separated list of namespace-prefixes to keep, for all documents.</para>
+              </attribute>
+              <attribute name="keep-namespace-prefixes-source" type="list of xs:string">
+                <para>A whitespace separated list of namespace-prefixes to keep for the source document.</para>
+              </attribute>
+              <attribute name="keep-namespace-prefixes-pipeline" type="list of xs:string">
+                <para>A whitespace separated list of namespace-prefixes to keep for the pipeline document.</para>
+              </attribute>
+              <attribute name="keep-namespace-prefixes-result" type="list of xs:string">
+                <para>A whitespace separated list of namespace-prefixes to keep for the result document.</para>
+              </attribute>
+              <attribute name="output-is-text" default="false" type="xs:boolean">
+                <para>Whether to treat the step&#x2019;s output as text and not as XML.</para>
+              </attribute>
+            </attributes>
+
+            <children>
+              <element name="source-header" occurrences="?">
+                <para>DocBook text for the header above the source document. If absent, a default text is used. If empty, there will be no
+                  header.</para>
+              </element>
+              <element name="pipeline-header" occurrences="?">
+                <para>DocBook text for the header above the pipeline document. If absent, a default text is used. If empty, there will be no
+                  header.</para>
+              </element>
+              <element name="result-header" occurrences="?">
+                <para>DocBook text for the header above the result document. If absent, a default text is used. If empty, there will be no
+                  header.</para>
+              </element>
+            </children>
+
+          </element>
+
+        </section>
+
+      </section>
+
+    </section>
+
+  </section>
+
+</sml>

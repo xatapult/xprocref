@@ -4,7 +4,7 @@
   xmlns:xpref="http://www.xtpxlib.nl/ns/xprocref" version="3.0" exclude-inline-prefixes="#all" name="process-xprocref-test-limit-to-website">
 
   <p:documentation>
-    Produces a test version of the XProcRef site (with all unpublished steps included)
+    Produces a test version of the XProcRef site for a limited number of steps.
   </p:documentation>
 
   <!-- ======================================================================= -->
@@ -21,8 +21,12 @@
 
   <!-- ================================================================== -->
 
-  <p:variable name="limit-to-steps" as="xs:string*" select="('add-xml-base')"/>
-
+  <p:option name="limit-to-steps" as="xs:string*" select="('add-xml-base')">
+    <p:documentation>The steps to process.</p:documentation>
+  </p:option>
+  
+  <!-- ======================================================================= -->
+  
   <xpref:process-xprocref-to-website production-version="false" wip="false" build-pdf="false">
     <p:with-option name="limit-to-steps" select="$limit-to-steps"/>
     <p:with-option name="href-build-location" select="resolve-uri('../build', static-base-uri())"/>
