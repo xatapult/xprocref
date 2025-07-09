@@ -183,6 +183,7 @@
    &lt;request-header name="User-Agent" value="Apache-HttpClient/4.5.10 (Java/17.0.11)"/&gt;
    &lt;request-header name="Accept" value="*/*"/&gt;
    &lt;request-header name="Accept-Encoding" value="gzip,deflate"/&gt;
+   &lt;request-header name="Via" value="1.1 Caddy"/&gt;
 &lt;/http-request-headers&gt;</pre></div></div><div class="sect3" id="p_http-request-v30-adding-rh"><a name="p_http-request-v30-adding-rh"><!----></a><h3 class="sect3">Adding a request header</h3><p class="para">The <code class="code option">headers</code> option can be used for additional request headers. In this example we add the bogus request header called
             <code class="code">xyz</code> and set it to the value <code class="code">123</code>. The code to view the request headers is identical to that of <a href="#p_http-request-v30-viewing-rh"><span class="link">Viewing the request headers</span></a>:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:map="http://www.w3.org/2005/xpath-functions/map" xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
 
@@ -210,6 +211,7 @@
    &lt;request-header name="User-Agent" value="Apache-HttpClient/4.5.10 (Java/17.0.11)"/&gt;
    &lt;request-header name="Accept" value="*/*"/&gt;
    &lt;request-header name="Accept-Encoding" value="gzip,deflate"/&gt;
+   &lt;request-header name="Via" value="1.1 Caddy"/&gt;
    &lt;request-header name="Xyz" value="123"/&gt;
 &lt;/http-request-headers&gt;</pre></div><p class="para">Notice that the name of the request header is capitalized into <code class="code">Xyz</code>. Request header names are case-insensitive, but it is custom
       to capitalize them (start with an upper-case character).</p></div><div class="sect3" id="p_http-request-v30-viewing-response-h"><a name="p_http-request-v30-viewing-response-h"><!----></a><h3 class="sect3">Viewing the response headers</h3><p class="para">Inspecting the response headers can be done by using the map returned on the <code class="code port">report</code> port (see <a href="#http-report" class="xref">The response result and report</a>). The code to view the response headers is almost identical to that of <a href="#p_http-request-v30-viewing-rh"><span class="link">Viewing the request headers</span></a>:</p><div class="programlisting"><pre class="programlisting">&lt;p:declare-step xmlns:map="http://www.w3.org/2005/xpath-functions/map" xmlns:p="http://www.w3.org/ns/xproc" version="3.0"&gt;
@@ -237,8 +239,9 @@
    &lt;response-header name="access-control-allow-origin" value="*"/&gt;
    &lt;response-header name="alt-svc" value="h3=&amp;#34;:443&amp;#34;; ma=2592000"/&gt;
    &lt;response-header name="content-type" value="application/json"/&gt;
-   &lt;response-header name="date" value="Wed, 25 Jun 2025 11:24:05 GMT"/&gt;
+   &lt;response-header name="date" value="Wed, 09 Jul 2025 07:52:20 GMT"/&gt;
    &lt;response-header name="vary" value="Accept-Encoding"/&gt;
+   &lt;response-header name="via" value="1.1 Caddy"/&gt;
    &lt;response-header name="transfer-encoding" value="chunked"/&gt;
 &lt;/http-response-headers&gt;</pre></div></div></div><div class="sect2" id="sect2-d593e59451"><a name="sect2-d593e59451"><!----></a><h2 class="sect2">Additional details</h2><ul class="itemizedlist"><li><p class="para">A relative value for the <code class="code option">href</code> option is resolved against the base URI of the element on which this option is specified. In
       most cases this will be the static base URI of your pipeline (the path where the XProc source containing the <code class="code step">p:http-request</code> is stored). This is very
