@@ -73,7 +73,7 @@
                 role="newpage">SVRL</link> (Schematron Validation Report Language).</para>
           </listitem>
           <listitem>
-            <para>The value <code>xvrl</code> (default) produces a report in <link xlink:href="https://spec.xproc.org/master/head/xvrl/"
+            <para>The value <code>xvrl</code> produces a report in <link xlink:href="https://spec.xproc.org/master/head/xvrl/"
                 role="newpage">XVRL</link> (Extensible Validation Report Language).</para>
           </listitem>
           <listitem>
