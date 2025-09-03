@@ -9,7 +9,7 @@
 
     <input port="source" sequence="true" content-types="any" primary="true">
       <description>
-        <para>The source document(s)</para>
+        <para>The source document(s).</para>
       </description>
     </input>
 
@@ -19,9 +19,11 @@
       </description>
     </output>
 
-    <option name="select" required="true" as="item()*" subtype="XPathExpression">
+    <option name="select" required="true" as="item()*">
       <description>
-        <para>The message to produce</para>
+        <para>The message to produce.</para>
+        <para>The name of the option suggests that its value is interpreted as an XPath expression. However, it is not. Its value is turned into a
+          string and used as the message.</para>
       </description>
     </option>
 
@@ -49,7 +51,7 @@
       <code>stdout</code>&#x201d;: a command-line message appears when the processor executes the step.</para>
 
     <para>The <step/> step is an alternative way to produce these messages. When the <option>test</option> option is <code>true</code> (default), the
-      expression in the <code>select</code> option is evaluated and the result is produced/shown, as a message. If the <option>test</option> option is
+      value of the <code>select</code> option is turned into a string and produced/shown, as a message. If the <option>test</option> option is
         <code>false</code>, nothing happens.</para>
 
     <para>The step itself, irrespective of the value of the <option>test</option> option, simply passes what it gets on its <port>source</port> port
@@ -78,21 +80,13 @@
 
     <example-doc href="../../examples/message/message-02.xpl"/>
 
-    <para role="break-before">Please notice the differences between the two examples:</para>
-    <itemizedlist>
-      <listitem>
-        <para>In the first example the on/off switch for the message, here the <code>debug-messages-on</code> option, is <emphasis>dynamic</emphasis>.
-          It can be computed/set during run-time, if necessary.</para>
-        <para>However, in the second example, this on/off switch is referenced in a <code>use-when</code> attribute. All <code>use-when</code>
-          attributes are evaluated during compile-time, and therefore the <code>debug-messages-on</code> option must be <emphasis>static</emphasis>
-          (hence its <code>static="true"</code> attribute). The only time you can change/set this option, and turn messages on/off, is when invoking
-          the pipeline.</para>
-      </listitem>
-      <listitem>
-        <para>The <option>select</option> option of the <step/> step is an XPath expression. The value of the <code>message</code> attribute is an AVT
-          (Attribute-Value Template). This results in a very different syntax, while the result is identical.</para>
-      </listitem>
-    </itemizedlist>
+    <para>Please notice that in the first example the on/off switch for the message, here the <code>debug-messages-on</code> option, is
+        <emphasis>dynamic</emphasis>. It can be computed/set during run-time, if necessary.</para>
+    <para>However, in the second example, this on/off switch is referenced in a <code>use-when</code> attribute. All <code>use-when</code> attributes
+      are evaluated during compile-time, and therefore the <code>debug-messages-on</code> option must be <emphasis>static</emphasis> (hence its
+        <code>static="true"</code> attribute). The only time you can change/set this option, and turn messages on/off, is when invoking the
+      pipeline.</para>
+
   </example>
 
 </step>
