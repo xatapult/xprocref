@@ -63,7 +63,7 @@
 
 &lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;report xmlns="http://www.xproc.org/ns/xvrl"&gt;
    &lt;metadata&gt;
-      &lt;timestamp&gt;2025-09-03T14:56:06.72+02:00&lt;/timestamp&gt;
+      &lt;timestamp&gt;2025-11-10T09:58:55.73+01:00&lt;/timestamp&gt;
       &lt;document href="file:/…/…/input-valid.xml"/&gt;
       &lt;schema href="file:/…/…/example.sch"
               schematypens="http://purl.oclc.org/dsdl/schematron"/&gt;
@@ -108,7 +108,7 @@
 
 &lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;report xmlns="http://www.xproc.org/ns/xvrl"&gt;
    &lt;metadata&gt;
-      &lt;timestamp&gt;2025-09-03T14:56:06.42+02:00&lt;/timestamp&gt;
+      &lt;timestamp&gt;2025-11-10T09:58:55.42+01:00&lt;/timestamp&gt;
       &lt;document href="file:/…/…/input-invalid.xml"/&gt;
       &lt;schema href="file:/…/…/example.sch"
               schematypens="http://purl.oclc.org/dsdl/schematron"/&gt;
@@ -118,7 +118,8 @@
       &lt;location xpath="/Q{}things[1]/Q{}thing[2]/Q{}thingref[1]/@idref"/&gt;
       &lt;message&gt;Reference to non-existent id: "C"&lt;/message&gt;
    &lt;/detection&gt;
-   &lt;digest fatal-error-count="0"
+   &lt;digest worst="error"
+           fatal-error-count="0"
            error-count="1"
            warning-count="0"
            info-count="0"

@@ -193,31 +193,31 @@
 
         <listitem>
           <para>Finally, the base URIs of the resulting documents (their <property>base-uri</property> document-property values) are determined. For
-            this we first need to determine the <emphasis>base-output-URI</emphasis>:</para>
+            this we first need to determine the <emphasis>output base URI</emphasis>:</para>
           <itemizedlist>
             <listitem>
-              <para>If the <option>base-output-uri</option> option is set, this value is used as base-output-URI.</para>
+              <para>If the <option>output-base-uri</option> option is set, this value is used as output base URI.</para>
             </listitem>
             <listitem>
-              <para>If the <option>base-output-uri</option> option is <emphasis>not</emphasis> set <emphasis>and</emphasis> there are documents on the
+              <para>If the <option>output-base-uri</option> option is <emphasis>not</emphasis> set <emphasis>and</emphasis> there are documents on the
                   <port>source</port> port, the base URI of the <emphasis>first</emphasis> document on the <port>source</port> port is used as base
                 output URI.</para>
             </listitem>
             <listitem>
-              <para>If the <option>base-output-uri</option> option is <emphasis>not</emphasis> set <emphasis>and</emphasis> there are
-                  <emphasis>no</emphasis> documents on the <port>source</port> port, the base URI of the stylesheet is used as base-output-URI.</para>
+              <para>If the <option>output-base-uri</option> option is <emphasis>not</emphasis> set <emphasis>and</emphasis> there are
+                  <emphasis>no</emphasis> documents on the <port>source</port> port, the base URI of the stylesheet is used as output base URI.</para>
             </listitem>
           </itemizedlist>
           <para>The base URIs of the resulting documents (their <property>base-uri</property> document-property values) are now computed using this
-            base-output-URI:</para>
+            output base URI:</para>
           <itemizedlist>
             <listitem>
-              <para>The base URI of the principal output document(s) becomes the base-output-URI. This means that when there are multiple principal
+              <para>The base URI of the principal output document(s) becomes the output base URI. This means that when there are multiple principal
                 documents, they all have the same base URI!</para>
             </listitem>
             <listitem>
               <para>For all documents appearing on the <port>secondary</port> port, the base URI is determined by the
-                  <code>xsl:result-document/@href</code> attribute. A relative value is made absolute against the base-output-URI.</para>
+                  <code>xsl:result-document/@href</code> attribute. A relative value is made absolute against the output base URI.</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -292,30 +292,30 @@
 
         <listitem>
           <para>Finally, the base URIs of the resulting documents (their <property>base-uri</property> document-property values) are determined. For
-            this we first need to determine the <emphasis>base-output-URI</emphasis>:</para>
+            this we first need to determine the <emphasis>output base URI</emphasis>:</para>
           <itemizedlist>
             <listitem>
-              <para>If the <option>base-output-uri</option> option is set, this value is used as base-output-URI.</para>
+              <para>If the <option>output-base-uri</option> option is set, this value is used as output base URI.</para>
             </listitem>
             <listitem>
-              <para>If the <option>base-output-uri</option> option is <emphasis>not</emphasis> set <emphasis>and</emphasis> there are documents on the
+              <para>If the <option>output-base-uri</option> option is <emphasis>not</emphasis> set <emphasis>and</emphasis> there are documents on the
                   <port>source</port> port, the base URI of the <emphasis>first</emphasis> document on the <port>source</port> port is used as base
                 output URI.</para>
             </listitem>
             <listitem>
-              <para>If the <option>base-output-uri</option> option is <emphasis>not</emphasis> set <emphasis>and</emphasis> there are
-                  <emphasis>no</emphasis> documents on the <port>source</port> port, the base URI of the stylesheet is used as base-output-URI.</para>
+              <para>If the <option>output-base-uri</option> option is <emphasis>not</emphasis> set <emphasis>and</emphasis> there are
+                  <emphasis>no</emphasis> documents on the <port>source</port> port, the base URI of the stylesheet is used as output base URI.</para>
             </listitem>
           </itemizedlist>
           <para>The base URIs of the resulting documents (their <property>base-uri</property> document-property values) are now computed using this
-            base-output-URI:</para>
+            output base URI:</para>
           <itemizedlist>
             <listitem>
-              <para>The base URI of the principal output document becomes the base-output-URI.</para>
+              <para>The base URI of the principal output document becomes the output base URI.</para>
             </listitem>
             <listitem>
               <para>For all documents appearing on the <port>secondary</port> port, the base URI is determined by the
-                  <code>xsl:result-document/@href</code> attribute. A relative value is made absolute against the base-output-URI.</para>
+                  <code>xsl:result-document/@href</code> attribute. A relative value is made absolute against the output base URI.</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -351,17 +351,17 @@
 
         <listitem>
           <para>Finally, the base URI of the resulting document (its <property>base-uri</property> document-property value) is determined. For this we
-            first need to determine the <emphasis>base-output-URI</emphasis>:</para>
+            first need to determine the <emphasis>output base URI</emphasis>:</para>
           <itemizedlist>
             <listitem>
-              <para>If the <option>base-output-uri</option> option is set, this value is used as base-output-URI.</para>
+              <para>If the <option>output-base-uri</option> option is set, this value is used as output base URI.</para>
             </listitem>
             <listitem>
-              <para>If the <option>base-output-uri</option> option is <emphasis>not</emphasis> set, the base URI of the <emphasis>first</emphasis>
-                document on the <port>source</port> port is used as base-output-URI.</para>
+              <para>If the <option>output-base-uri</option> option is <emphasis>not</emphasis> set, the base URI of the <emphasis>first</emphasis>
+                document on the <port>source</port> port is used as output base URI.</para>
             </listitem>
           </itemizedlist>
-          <para>The base URI of the output document becomes the base-output-URI.</para>
+          <para>The base URI of the output document becomes the output base URI.</para>
         </listitem>
 
       </itemizedlist>

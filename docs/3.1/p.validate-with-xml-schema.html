@@ -94,7 +94,7 @@
 
 &lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;report xmlns="http://www.xproc.org/ns/xvrl"&gt;
    &lt;metadata&gt;
-      &lt;timestamp&gt;2025-09-03T14:56:00.79+02:00&lt;/timestamp&gt;
+      &lt;timestamp&gt;2025-11-10T09:58:49.55+01:00&lt;/timestamp&gt;
       &lt;document href="file:/…/…/input-valid.xml"/&gt;
       &lt;schema href="file:/…/…/example.xsd"
               schematypens="http://www.w3.org/2001/XMLSchema"/&gt;
@@ -122,7 +122,7 @@
 
 &lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;report xmlns="http://www.xproc.org/ns/xvrl"&gt;
    &lt;metadata&gt;
-      &lt;timestamp&gt;2025-09-03T14:56:00.16+02:00&lt;/timestamp&gt;
+      &lt;timestamp&gt;2025-11-10T09:58:49.86+01:00&lt;/timestamp&gt;
       &lt;document href="file:/…/…/input-invalid.xml"/&gt;
       &lt;schema href="file:/…/…/example.xsd"
               schematypens="http://www.w3.org/2001/XMLSchema"/&gt;
@@ -132,7 +132,8 @@
       &lt;location line="3" xpath="/Q{}things[1]/Q{}thing-error[1]"/&gt;
       &lt;message&gt;cvc-complex-type.2.4.a: Invalid content was found starting with element 'thing-error'. One of '{thing}' is expected.&lt;/message&gt;
    &lt;/detection&gt;
-   &lt;digest fatal-error-count="0"
+   &lt;digest worst="error"
+           fatal-error-count="0"
            error-count="1"
            warning-count="0"
            info-count="0"
@@ -163,7 +164,7 @@
             column="33"&gt;
       &lt;report xmlns="http://www.xproc.org/ns/xvrl"&gt;
          &lt;metadata&gt;
-            &lt;timestamp&gt;2025-09-03T14:56:00.5+02:00&lt;/timestamp&gt;
+            &lt;timestamp&gt;2025-11-10T09:58:49.22+01:00&lt;/timestamp&gt;
             &lt;document href="file:/…/…/input-invalid.xml"/&gt;
             &lt;schema href="file:/…/…/example.xsd"
                     schematypens="http://www.w3.org/2001/XMLSchema"/&gt;
@@ -173,7 +174,8 @@
             &lt;location line="3" xpath="/Q{}things[1]/Q{}thing-error[1]"/&gt;
             &lt;message&gt;cvc-complex-type.2.4.a: Invalid content was found starting with element 'thing-error'. One of '{thing}' is expected.&lt;/message&gt;
          &lt;/detection&gt;
-         &lt;digest fatal-error-count="0"
+         &lt;digest worst="error"
+                 fatal-error-count="0"
                  error-count="1"
                  warning-count="0"
                  info-count="0"

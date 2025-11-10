@@ -50,7 +50,7 @@
 
 &lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;report xmlns="http://www.xproc.org/ns/xvrl"&gt;
    &lt;metadata&gt;
-      &lt;timestamp&gt;2025-09-03T14:55:59.25+02:00&lt;/timestamp&gt;
+      &lt;timestamp&gt;2025-11-10T09:58:48.83+01:00&lt;/timestamp&gt;
       &lt;document href="file:/…/…/input-valid.json"/&gt;
       &lt;schema href="file:/…/…/example-json-schema.json" schematypens="JsonSchema"/&gt;
       &lt;validator name="networknt/json-schema-validator"/&gt;
@@ -73,7 +73,7 @@
 
 &lt;/p:declare-step&gt;</pre></div><p class="para keep-with-next">Result document:</p><div class="programlisting"><pre class="programlisting">&lt;report xmlns="http://www.xproc.org/ns/xvrl"&gt;
    &lt;metadata&gt;
-      &lt;timestamp&gt;2025-09-03T14:56:00.14+02:00&lt;/timestamp&gt;
+      &lt;timestamp&gt;2025-11-10T09:58:49.09+01:00&lt;/timestamp&gt;
       &lt;document href="file:/…/…/input-invalid.json"/&gt;
       &lt;schema href="file:/…/…/example-json-schema.json" schematypens="JsonSchema"/&gt;
       &lt;validator name="networknt/json-schema-validator"/&gt;
@@ -82,7 +82,8 @@
       &lt;location jsonpath="$"/&gt;
       &lt;message&gt;$.first_name: is missing but it is required&lt;/message&gt;
    &lt;/detection&gt;
-   &lt;digest fatal-error-count="0"
+   &lt;digest worst="error"
+           fatal-error-count="0"
            error-count="1"
            warning-count="0"
            info-count="0"
