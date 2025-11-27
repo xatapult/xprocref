@@ -108,7 +108,12 @@
     <step-error code="XC0134"/>
     <step-error code="XD0064"/>
     <step-error code="XC0135"/>
-    <step-error code="XD0011"/>
+    <step-error code="XD0011">
+      <description>
+        <para>It is a dynamic error if the resource referenced by the href option does not exist, cannot be accessed or is not a file, directory or
+          other file system object.</para>
+      </description>
+    </step-error>
   </step-errors>
 
 </step>
