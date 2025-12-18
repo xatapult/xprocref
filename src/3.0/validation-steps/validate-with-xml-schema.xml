@@ -124,9 +124,9 @@
         <para>If this option is set, the specified version of XML Schema must be used for validation. Likely values are <code>1.0</code> or
             <code>1.1</code>. Which XML Schema versions are supported is implementation-defined and therefore dependent on the XProc processor used.
           In all likelihood, version <code>1.0</code> will always be supported.</para>
-        <para>If this option is <emphasis>not</emphasis> set, the XML schema version use and therefore dependent on the XProc processor used. For
-          instance, it might be simply <code>1.0</code>, or the XProc processor might take a look at the XML schema itself to determine the
-          version.</para>
+        <para>If this option is <emphasis>not</emphasis> set, the XML schema version used is implementation-defined and therefore dependent on the
+          XProc processor. For instance, it might be simply <code>1.0</code>, or the XProc processor might take a look at the XML schema itself to
+          determine the version.</para>
       </description>
     </option>
 
@@ -229,9 +229,9 @@
 
   <example title="Basic usage (valid source document)" id="basic-valid">
 
-    <para role="keep-with-next">We&#x2019;re going to use a schema, that validates simple XML documents, consisting of a <tag>things</tag> root element and zero or more
-        <tag>thing</tag> children. The root element has an optional attribute called <code>status</code> with default value
-      <code>normal</code>.</para>
+    <para role="keep-with-next">We&#x2019;re going to use a schema, that validates simple XML documents, consisting of a <tag>things</tag> root
+      element and zero or more <tag>thing</tag> children. The root element has an optional attribute called <code>status</code> with default value
+        <code>normal</code>.</para>
 
     <example-doc href="../../examples/validate-with-xml-schema/example.xsd"/>
 
@@ -272,7 +272,8 @@
           error <step-error-ref code="XC0156"/> would have been raised.</para>
       </pipeline-header>
     </xproc-example>
-    <para role="keep-with-previous">Again, the exact format of the report might differ across implementations. Please experiment before using it.</para>
+    <para role="keep-with-previous">Again, the exact format of the report might differ across implementations. Please experiment before using
+      it.</para>
 
     <xproc-example href="../../examples/validate-with-xml-schema/validate-with-xml-schema-04.xpl" show-source="false" keep-namespace-prefixes="err">
       <pipeline-header>
@@ -281,7 +282,8 @@
           available inside the <tag>p:catch</tag>:</para>
       </pipeline-header>
     </xproc-example>
-    <para role="keep-with-previous">The exact contents of the <tag>c:errors</tag> element might differ across implementations. Please experiment before using it.</para>
+    <para role="keep-with-previous">The exact contents of the <tag>c:errors</tag> element might differ across implementations. Please experiment
+      before using it.</para>
 
   </example>
 
@@ -305,10 +307,10 @@
 
   <example title="Validating in lax mode" id="validate-lax">
 
-    <para role="keep-with-next">Usually you want a document to completely validate against a schema. However, there are use-cases where the documents to validate are
-        <emphasis>wrapped</emphasis> inside some root element. This happens, for instance, when in XProc you have a sequence of documents and use
-        <step-ref name="p:wrap-sequence"/> to wrap these results into a single XML document. The <step/> step allows you to disregard the root element
-      and validate its child elements only by setting the <option>mode</option> option to <code>lax</code>.</para>
+    <para role="keep-with-next">Usually you want a document to completely validate against a schema. However, there are use-cases where the documents
+      to validate are <emphasis>wrapped</emphasis> inside some root element. This happens, for instance, when in XProc you have a sequence of
+      documents and use <step-ref name="p:wrap-sequence"/> to wrap these results into a single XML document. The <step/> step allows you to disregard
+      the root element and validate its child elements only by setting the <option>mode</option> option to <code>lax</code>.</para>
 
     <xproc-example href="../../examples/validate-with-xml-schema/validate-with-xml-schema-06.xpl"/>
 
