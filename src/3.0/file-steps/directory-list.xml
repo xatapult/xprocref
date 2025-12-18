@@ -23,7 +23,7 @@
 
     <option name="detailed" as="xs:boolean" select="false()" required="false">
       <description>
-        <para>Whether detailed information about the directory and its contents is returned. See TBD</para>
+        <para>Whether detailed information about the directory and its contents is returned. See <xref linkend="result-doc"/>.</para>
       </description>
     </option>
 
