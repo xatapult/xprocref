@@ -40,18 +40,18 @@
     <xsl:param name="root" as="element()" required="false" select="."/>
     <xsl:param name="level" as="xs:integer" required="true"/>
 
-    <xsl:variable name="subsect-element-name" as="xs:string" select="'sect' || $level"/>
+    <xsl:variable name="subsect-element-name" as="xs:string" select="'sect' || $page-level"/>
     <xsl:variable name="subsects" as="element()*" select="$root/db:*[local-name(.) eq $subsect-element-name]"/>
     <xsl:if test="exists($subsects)">
-      <itemizedlist role="{$xpref:role-toc} {$xpref:role-toc}-{$level}">
+      <itemizedlist role="{$xpref:role-toc} {$xpref:role-toc}-{$page-level}">
         <xsl:for-each select="$subsects">
-          <listitem role="{$xpref:role-toc} {$xpref:role-toc}-{$level}">
-            <para role="{$xpref:role-tocentry} {$xpref:role-tocentry}-{$level}">
+          <listitem role="{$xpref:role-toc} {$xpref:role-toc}-{$page-level}">
+            <para role="{$xpref:role-tocentry} {$xpref:role-tocentry}-{$page-level}">
               <link xlink:href="#{@xml:id}">{normalize-space(db:title)}</link>
             </para>
-            <xsl:if test="$level lt $xpref:max-section-level">
+            <xsl:if test="$page-level lt $xpref:max-section-level">
               <xsl:call-template name="add-toc-list-for-level">
-                <xsl:with-param name="level" select="$level + 1"/>
+                <xsl:with-param name="level" select="$page-level + 1"/>
               </xsl:call-template>
             </xsl:if>
           </listitem>
