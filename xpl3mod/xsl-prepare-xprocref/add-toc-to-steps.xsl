@@ -27,7 +27,7 @@
       <xsl:apply-templates select="db:*[position() le 2]"/>
 
       <xsl:call-template name="add-toc-list-for-level">
-        <xsl:with-param name="level" select="2"/>
+        <xsl:with-param name="page-level" select="2"/>
       </xsl:call-template>
 
       <xsl:apply-templates select="db:*[position() gt 2]"/>
@@ -38,7 +38,7 @@
 
   <xsl:template name="add-toc-list-for-level">
     <xsl:param name="root" as="element()" required="false" select="."/>
-    <xsl:param name="level" as="xs:integer" required="true"/>
+    <xsl:param name="page-level" as="xs:integer" required="true"/>
 
     <xsl:variable name="subsect-element-name" as="xs:string" select="'sect' || $page-level"/>
     <xsl:variable name="subsects" as="element()*" select="$root/db:*[local-name(.) eq $subsect-element-name]"/>
@@ -51,7 +51,7 @@
             </para>
             <xsl:if test="$page-level lt $xpref:max-section-level">
               <xsl:call-template name="add-toc-list-for-level">
-                <xsl:with-param name="level" select="$page-level + 1"/>
+                <xsl:with-param name="page-level" select="$page-level + 1"/>
               </xsl:call-template>
             </xsl:if>
           </listitem>
