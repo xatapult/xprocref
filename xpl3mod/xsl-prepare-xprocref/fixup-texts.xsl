@@ -74,10 +74,10 @@
 
   <xsl:template match="db:section">
     <!-- Change a <section> element into a numbered one (<sect…>) or a bridgehead if nested too deep: -->
-    <xsl:variable name="level" as="xs:integer" select="count(ancestor-or-self::*[matches(local-name(.), 'section|sect[0-9]+')])"/>
+    <xsl:variable name="page-level" as="xs:integer" select="count(ancestor-or-self::*[matches(local-name(.), 'section|sect[0-9]+')])"/>
     <xsl:choose>
-      <xsl:when test="$level le $xpref:max-section-level">
-        <xsl:variable name="element-name" as="xs:string" select="'sect' || $level"/>
+      <xsl:when test="$page-level le $xpref:max-section-level">
+        <xsl:variable name="element-name" as="xs:string" select="'sect' || $page-level"/>
         <xsl:element name="{$element-name}">
           <xsl:if test="empty(@xml:id)">
             <xsl:attribute name="xml:id" select="$element-name || '-' || generate-id(.)"/>

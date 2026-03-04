@@ -9,13 +9,13 @@
 
   <signature>
 
-    <input port="source" content-types="xml html" primary="true" sequence="true">
+    <input port="source" content-types="xml html" primary="true" sequence="false">
       <description>
         <para>The document to apply the XInclude processing to.</para>
       </description>
     </input>
 
-    <output port="result" content-types="xml html" primary="true" sequence="true">
+    <output port="result" content-types="xml html" primary="true" sequence="false">
       <description>
         <para>The resulting document.</para>
       </description>
