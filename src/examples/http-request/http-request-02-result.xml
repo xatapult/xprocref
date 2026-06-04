@@ -1,0 +1,7 @@
+<http-request-headers>
+  <request-header name="Host" value="echo.free.beeceptor.com"/>
+  <request-header name="User-Agent" value="Apache-HttpClient/4.5.10 (Java/21.0.10)"/>
+  <request-header name="Accept" value="*/*"/>
+  <request-header name="Accept-Encoding" value="gzip,deflate"/>
+  <request-header name="Via" value="1.1 Caddy"/>
+</http-request-headers>

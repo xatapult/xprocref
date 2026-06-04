@@ -1,0 +1,9 @@
+<http-response-headers>
+  <response-header name="access-control-allow-origin" value="*"/>
+  <response-header name="alt-svc" value="h3=&#34;:443&#34;; ma=2592000"/>
+  <response-header name="content-type" value="application/json"/>
+  <response-header name="date" value="Wed, 27 May 2026 09:20:27 GMT"/>
+  <response-header name="vary" value="Accept-Encoding"/>
+  <response-header name="via" value="1.1 Caddy"/>
+  <response-header name="transfer-encoding" value="chunked"/>
+</http-response-headers>
