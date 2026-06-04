@@ -911,9 +911,14 @@
       </listitem>
     </itemizedlist>
 
-    <xproc-example href="../../examples/http-request/http-request-02.xpl" keep-namespace-prefixes-pipeline="map">
+    <example-doc href="../../examples/http-request/http-request-02.xpl"/>
+    <para>Result document:</para>
+    <example-doc href="../../examples/http-request/http-request-02-result.xml"/>
+
+    <!-- Does  ot work properly because the website says too many calls (most of the time). So we trick it. -->
+    <!--<xproc-example href="../../examples/http-request/http-request-02.xpl" keep-namespace-prefixes-pipeline="map">
       <pipeline-header/>
-    </xproc-example>
+    </xproc-example>-->
 
   </example>
 
@@ -921,13 +926,22 @@
 
   <example title="Adding a request header" id="adding-rh">
 
-    <xproc-example href="../../examples/http-request/http-request-03.xpl" keep-namespace-prefixes-pipeline="map">
+    <para>The <option>headers</option> option can be used for additional request headers. In this example we add the bogus request header called
+        <code>xyz</code> and set it to the value <code>123</code>. The code to view the request headers is identical to that of <example-ref
+        idref="viewing-rh"/>:</para>
+
+    <example-doc href="../../examples/http-request/http-request-03.xpl"/>
+    <para>Result document:</para>
+    <example-doc href="../../examples/http-request/http-request-03-result.xml"/>
+
+    <!-- Does  ot work properly because the website says too many calls (most of the time). So we trick it. -->
+    <!--<xproc-example href="../../examples/http-request/http-request-03.xpl" keep-namespace-prefixes-pipeline="map">
       <pipeline-header>
         <para>The <option>headers</option> option can be used for additional request headers. In this example we add the bogus request header called
             <code>xyz</code> and set it to the value <code>123</code>. The code to view the request headers is identical to that of <example-ref
             idref="viewing-rh"/>:</para>
       </pipeline-header>
-    </xproc-example>
+    </xproc-example>-->
 
     <para>Notice that the name of the request header is capitalized into <code>Xyz</code>. Request header names are case-insensitive, but it is custom
       to capitalize them (start with an upper-case character).</para>
@@ -938,12 +952,17 @@
 
   <example title="Viewing the response headers" id="viewing-response-h">
 
-    <xproc-example href="../../examples/http-request/http-request-04.xpl" keep-namespace-prefixes-pipeline="map">
-      <pipeline-header>
-        <para>Inspecting the response headers can be done by using the map returned on the <port>report</port> port (see <xref linkend="http-report"
-          />). The code to view the response headers is almost identical to that of <example-ref idref="viewing-rh"/>:</para>
-      </pipeline-header>
-    </xproc-example>
+    <para>Inspecting the response headers can be done by using the map returned on the <port>report</port> port (see <xref linkend="http-report"/>).
+      The code to view the response headers is almost identical to that of <example-ref idref="viewing-rh"/>:</para>
+
+    <example-doc href="../../examples/http-request/http-request-04.xpl"/>
+    <para>Result document:</para>
+    <example-doc href="../../examples/http-request/http-request-04-result.xml"/>
+
+    <!-- Does  ot work properly because the website says too many calls (most of the time). So we trick it. -->
+    <!--<xproc-example href="../../examples/http-request/http-request-04.xpl" keep-namespace-prefixes-pipeline="map">
+      <pipeline-header> </pipeline-header>
+    </xproc-example>-->
 
   </example>
 

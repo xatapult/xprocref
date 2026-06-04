@@ -21,7 +21,7 @@
 
   <!-- ================================================================== -->
 
-  <p:option name="limit-to-steps" as="xs:string*" select="('add-xml-base')">
+  <p:option name="limit-to-steps" as="xs:string*" select="('validate-with-xml-schema')">
     <p:documentation>The steps to process.</p:documentation>
   </p:option>
   

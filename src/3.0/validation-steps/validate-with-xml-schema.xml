@@ -291,12 +291,12 @@
 
   <example title="Using location hints" id="use-location-hints">
 
-    <xproc-example href="../../examples/validate-with-xml-schema/validate-with-xml-schema-05.xpl">
+    <xproc-example href="../../examples/validate-with-xml-schema/validate-with-xml-schema-07.xpl">
       <source-header>
         <para>Sometimes you have source documents that already contain schema references, for instance:</para>
       </source-header>
       <pipeline-header>
-        <para>If we want the <step/> step to use this reference, we have to set the <option>try-location-hints</option> to <code>true</code>. We
+        <para>If we want the <step/> step to use this reference, we have to set the <option>use-location-hints</option> to <code>true</code>. We
           don&#x2019;t need to validate against any other schemas, so we set the <port>schema</port> port to empty.</para>
       </pipeline-header>
     </xproc-example>
