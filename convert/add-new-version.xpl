@@ -52,21 +52,51 @@
 
   <p:identity message="* Creating version {$target-version} from {$source-version}">
     <p:with-input>
-      <p:empty></p:empty>
+      <p:empty/>
     </p:with-input>
   </p:identity>
 
   <!-- Setup: -->
   <p:variable name="href-source-dir" as="xs:string" select="xtlc:href-concat(($href-source-base-dir, $source-version))"/>
   <p:variable name="href-target-dir" as="xs:string" select="xtlc:href-concat(($href-target-base-dir, $target-version))"/>
-  
+
   <xtlc:create-clear-directory clear="true" p:message="* Clearing target dir {$href-target-dir}">
-    <p:with-option name="href-dir" select="$href-target-dir" />
+    <p:with-option name="href-dir" select="$href-target-dir"/>
   </xtlc:create-clear-directory>
-  
+
   <!-- Get the contents of the source directory: -->
   <xtlc:recursive-directory-list flatten="true" include-filter="\.xml$" p:message="* Source directory {$href-source-dir}">
     <p:with-option name="path" select="$href-source-dir"/>
   </xtlc:recursive-directory-list>
-  
+
+  <!-- Iterate over all files: -->
+  <p:variable name="document-count" as="xs:integer" select="count(/*/c:file)"/>
+  <p:for-each name="file-loop">
+    <p:with-input select="/*/c:file"/>
+
+    <p:variable name="href-source" as="xs:string" select="xs:string(/*/@href-abs)"/>
+    <p:variable name="href-rel" as="xs:string" select="xs:string(/*/@href-rel)"/>
+    <p:variable name="href-target" as="xs:string" select="xtlc:href-concat(($href-target-dir, $href-rel))"/>
+
+    <p:xslt message="  * Converting {$href-rel}">
+      <p:with-input href="{$href-source}"/>
+      <p:with-input port="stylesheet" href="xsl-add-new-version/convert-document-for-new-version.xsl"/>
+      <p:with-option name="parameters" select="map{'source-version': $source-version, 'target-version': $target-version}"/>
+    </p:xslt>
+
+    <p:store>
+      <p:with-option name="href" select="$href-target"/>
+    </p:store>
+    <p:sink/>
+    
+  </p:for-each>
+
+  <!-- Issue some report XML: -->
+  <p:identity depends="file-loop">
+    <p:with-input>
+      <add-new-version timestamp="{current-dateTime()}" href-source-dir="{$href-source-dir}" href-target-dir="{$href-target-dir}"
+        source-version="{$source-version}" target-version="{$target-version}" document-count="{$document-count}"/>
+    </p:with-input>
+  </p:identity>
+
 </p:declare-step>
