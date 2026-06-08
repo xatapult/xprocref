@@ -7,7 +7,7 @@
   <!-- MACRODEFS: -->
 
   <macrodefs>
-    <!-- Baselinks to the standard: -->
+    <!-- Base links to the main standard/specification and the standard steps: -->
 
     <macrodef name="BASELINK-V30" value="https://spec.xproc.org/3.0/"/>
     <macrodef name="BASELINK-V31" value="https://spec.xproc.org/3.1/"/>
@@ -16,7 +16,9 @@
     <macrodef name="BASELINK-STANDARD-STEPS-V31" value="{$BASELINK-V31}steps/"/>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Base links to the other specs: -->
 
+  <!-- TBD: CHECK THIS! AND EXPLAIN THE WEIRD FIRST TWO DEFS -->
     <macrodef name="BASELINK-NONSTANDARD-STEPS-V31" value="{$BASELINK-V31}"/>
     <macrodef name="BASELINK-NONSTANDARD-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V31}"/>
 
@@ -43,7 +45,6 @@
 
     <macrodef name="BASELINK-DYNAMIC-PIPELINE-EXECUTION-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}run/"/>
     <macrodef name="BASELINK-DYNAMIC-PIPELINE-EXECUTION-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}run/"/>
-
 
   </macrodefs>
 

@@ -618,8 +618,8 @@
     <xs:sequence>
       <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##any" processContents="skip"/>
     </xs:sequence>
-    <xs:attributeGroup ref="xml:space-default"/>
     <xs:attributeGroup ref="xpref:ag-id-optional"/>
+    <xs:attribute ref="xml:space"/>
   </xs:complexType>
   <xs:simpleType name="identifier">
     <xs:restriction base="xs:NCName"/>

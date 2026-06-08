@@ -3,7 +3,7 @@
   xmlns="http://www.xtpxlib.nl/ns/xprocref" xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <macrodefs>
-    <macrodef name="BASELINK-CURRENT" value="{$BASELINK-V30}"/>
+    <macrodef name="BASELINK-CURRENT" value="{$BASELINK-V31}"/>
   </macrodefs>
 
   <!-- == Step group for: file steps == -->
