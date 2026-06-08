@@ -13,6 +13,7 @@
   <!-- ======================================================================= -->
   <!-- IMPORTS: -->
 
+  <p:import-functions href="file:/xatapult/xtpxlib-common/xslmod/general.mod.xsl"/>
   <p:import-functions href="file:/xatapult/xtpxlib-common/xslmod/href.mod.xsl"/>
 
   <p:import href="file:/xatapult/xtpxlib-common/xpl3mod/create-clear-directory/create-clear-directory.xpl"/>
@@ -33,7 +34,7 @@
       It must have sub-directories with the same names as the versions!</p:documentation>
   </p:option>
 
-  <p:option name="href-target-base-dir" as="xs:string" required="false" select="resolve-uri('../build/', static-base-uri())">
+  <p:option name="href-target-base-dir" as="xs:string" required="false" select="resolve-uri('../src/', static-base-uri())">
     <p:documentation>The base directory for writing the new version stuff to. A sub-directory with the name of this version is created.
       Usually not the final target (which would be the same as $href-source-base-dir), so you don't accidentally overwrite stuff.
     </p:documentation>
@@ -59,6 +60,8 @@
   <!-- Setup: -->
   <p:variable name="href-source-dir" as="xs:string" select="xtlc:href-concat(($href-source-base-dir, $source-version))"/>
   <p:variable name="href-target-dir" as="xs:string" select="xtlc:href-concat(($href-target-base-dir, $target-version))"/>
+  
+  <p:variable name="regexp-source-version" as="xs:string" select="xtlc:str2regexp($source-version)"/>
 
   <xtlc:create-clear-directory clear="true" p:message="* Clearing target dir {$href-target-dir}">
     <p:with-option name="href-dir" select="$href-target-dir"/>
@@ -75,10 +78,11 @@
     <p:with-input select="/*/c:file"/>
 
     <p:variable name="href-source" as="xs:string" select="xs:string(/*/@href-abs)"/>
-    <p:variable name="href-rel" as="xs:string" select="xs:string(/*/@href-rel)"/>
-    <p:variable name="href-target" as="xs:string" select="xtlc:href-concat(($href-target-dir, $href-rel))"/>
+    <p:variable name="href-source-rel" as="xs:string" select="xs:string(/*/@href-rel)"/>
+    <p:variable name="href-target-rel" as="xs:string" select="replace($href-source-rel, $regexp-source-version, $target-version)"/>
+    <p:variable name="href-target" as="xs:string" select="xtlc:href-concat(($href-target-dir, $href-target-rel))"/>
 
-    <p:xslt message="  * Converting {$href-rel}">
+    <p:xslt message="  * Converting {$href-source-rel}">
       <p:with-input href="{$href-source}"/>
       <p:with-input port="stylesheet" href="xsl-add-new-version/convert-document-for-new-version.xsl"/>
       <p:with-option name="parameters" select="map{'source-version': $source-version, 'target-version': $target-version}"/>

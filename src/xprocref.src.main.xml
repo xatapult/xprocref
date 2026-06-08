@@ -11,40 +11,51 @@
 
     <macrodef name="BASELINK-V30" value="https://spec.xproc.org/3.0/"/>
     <macrodef name="BASELINK-V31" value="https://spec.xproc.org/3.1/"/>
+    <macrodef name="BASELINK-V32" value="https://spec.xproc.org/3.2/"/>
 
     <macrodef name="BASELINK-STANDARD-STEPS-V30" value="{$BASELINK-V30}steps/"/>
     <macrodef name="BASELINK-STANDARD-STEPS-V31" value="{$BASELINK-V31}steps/"/>
+    <macrodef name="BASELINK-STANDARD-STEPS-V32" value="{$BASELINK-V32}steps/"/>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- Base links to the other specs: -->
 
-  <!-- TBD: CHECK THIS! AND EXPLAIN THE WEIRD FIRST TWO DEFS -->
+    <!-- TBD: CHECK THIS! AND EXPLAIN THE WEIRD FIRST TWO DEFS -->
     <macrodef name="BASELINK-NONSTANDARD-STEPS-V31" value="{$BASELINK-V31}"/>
     <macrodef name="BASELINK-NONSTANDARD-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V31}"/>
+    <macrodef name="BASELINK-NONSTANDARD-STEPS-V32" value="{$BASELINK-NONSTANDARD-STEPS-V32}"/>
 
     <macrodef name="BASELINK-FILE-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}file/"/>
     <macrodef name="BASELINK-FILE-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}file/"/>
+    <macrodef name="BASELINK-FILE-STEPS-V32" value="{$BASELINK-NONSTANDARD-STEPS-V32}file/"/>
 
     <macrodef name="BASELINK-OS-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}os/"/>
     <macrodef name="BASELINK-OS-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}os/"/>
+    <macrodef name="BASELINK-OS-STEPS-V32" value="{$BASELINK-NONSTANDARD-STEPS-V32}os/"/>
 
     <macrodef name="BASELINK-MAIL-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}mail/"/>
     <macrodef name="BASELINK-MAIL-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}mail/"/>
+    <macrodef name="BASELINK-MAIL-STEPS-V32" value="{$BASELINK-NONSTANDARD-STEPS-V32}mail/"/>
 
     <macrodef name="BASELINK-PAGED-MEDIA-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}paged-media/"/>
     <macrodef name="BASELINK-PAGED-MEDIA-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}paged-media/"/>
+    <macrodef name="BASELINK-PAGED-MEDIA-STEPS-V32" value="{$BASELINK-NONSTANDARD-STEPS-V32}paged-media/"/>
 
     <macrodef name="BASELINK-TEXT-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}text/"/>
     <macrodef name="BASELINK-TEXT-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}text/"/>
+    <macrodef name="BASELINK-TEXT-STEPS-V32" value="{$BASELINK-NONSTANDARD-STEPS-V32}text/"/>
 
     <macrodef name="BASELINK-VALIDATION-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}validation/"/>
     <macrodef name="BASELINK-VALIDATION-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}validation/"/>
+    <macrodef name="BASELINK-VALIDATION-STEPS-V32" value="{$BASELINK-NONSTANDARD-STEPS-V32}validation/"/>
 
     <macrodef name="BASELINK-IXML-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}ixml/"/>
     <macrodef name="BASELINK-IXML-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}ixml/"/>
+    <macrodef name="BASELINK-IXML-STEPS-V32" value="{$BASELINK-NONSTANDARD-STEPS-V32}ixml/"/>
 
     <macrodef name="BASELINK-DYNAMIC-PIPELINE-EXECUTION-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}run/"/>
     <macrodef name="BASELINK-DYNAMIC-PIPELINE-EXECUTION-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}run/"/>
+    <macrodef name="BASELINK-DYNAMIC-PIPELINE-EXECUTION-STEPS-V32S" value="{$BASELINK-NONSTANDARD-STEPS-V32}run/"/>
 
   </macrodefs>
 
@@ -83,6 +94,13 @@
   <!-- VERSIONS: -->
 
   <versions>
+
+    <version id="v32" name="3.2">
+      <description>
+        <para>This is an update of the 3.1 specification, released TBD, and the current latest version. Its core specification can be found
+          <link xlink:href="{$BASELINK-V32}xproc/" role="newpage">here (TBD CHECK)</link>.</para>
+      </description>
+    </version>
 
     <version id="v31" name="3.1">
       <description>
@@ -137,6 +155,17 @@
     <xi:include href="3.1/validation-steps.3.1.stepgroup.xml"/>
     <xi:include href="3.1/ixml-steps.3.1.stepgroup.xml"/>
     <xi:include href="3.1/dynamic-pipeline-execution-steps.3.1.stepgroup.xml"/>
+
+    <!-- 3.2: -->
+    <xi:include href="3.2/standard-steps.3.2.stepgroup.xml"/>
+    <xi:include href="3.2/file-steps.3.2.stepgroup.xml"/>
+    <xi:include href="3.2/os-steps.3.2.stepgroup.xml"/>
+    <xi:include href="3.2/mail-steps.3.2.stepgroup.xml"/>
+    <xi:include href="3.2/paged-media-steps.3.2.stepgroup.xml"/>
+    <xi:include href="3.2/text-steps.3.2.stepgroup.xml"/>
+    <xi:include href="3.2/validation-steps.3.2.stepgroup.xml"/>
+    <xi:include href="3.2/ixml-steps.3.2.stepgroup.xml"/>
+    <xi:include href="3.2/dynamic-pipeline-execution-steps.3.2.stepgroup.xml"/>
 
   </steps>
 

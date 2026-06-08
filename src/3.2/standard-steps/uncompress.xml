@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<step-identity name="uncompress"
+               xsi:schemaLocation="http://www.xtpxlib.nl/ns/xprocref ../../../xsd/xprocref.xsd"
+               version-idref="v32"
+               base-version-idref="v31"
+               href-specification="{$BASELINK-STANDARD-STEPS-V32}#c.uncompress"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://www.xtpxlib.nl/ns/xprocref"/>
