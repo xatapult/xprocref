@@ -23,7 +23,7 @@
     <!-- TBD: CHECK THIS! AND EXPLAIN THE WEIRD FIRST TWO DEFS -->
     <macrodef name="BASELINK-NONSTANDARD-STEPS-V31" value="{$BASELINK-V31}"/>
     <macrodef name="BASELINK-NONSTANDARD-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V31}"/>
-    <macrodef name="BASELINK-NONSTANDARD-STEPS-V32" value="{$BASELINK-NONSTANDARD-STEPS-V32}"/>
+    <macrodef name="BASELINK-NONSTANDARD-STEPS-V32" value="{$BASELINK-NONSTANDARD-STEPS-V31}"/>
 
     <macrodef name="BASELINK-FILE-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}file/"/>
     <macrodef name="BASELINK-FILE-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}file/"/>
@@ -55,7 +55,7 @@
 
     <macrodef name="BASELINK-DYNAMIC-PIPELINE-EXECUTION-STEPS-V30" value="{$BASELINK-NONSTANDARD-STEPS-V30}run/"/>
     <macrodef name="BASELINK-DYNAMIC-PIPELINE-EXECUTION-STEPS-V31" value="{$BASELINK-NONSTANDARD-STEPS-V31}run/"/>
-    <macrodef name="BASELINK-DYNAMIC-PIPELINE-EXECUTION-STEPS-V32S" value="{$BASELINK-NONSTANDARD-STEPS-V32}run/"/>
+    <macrodef name="BASELINK-DYNAMIC-PIPELINE-EXECUTION-STEPS-V32" value="{$BASELINK-NONSTANDARD-STEPS-V32}run/"/>
 
   </macrodefs>
 
@@ -104,7 +104,7 @@
 
     <version id="v31" name="3.1">
       <description>
-        <para>This is an update of the 3.0 specification, released May&#160;2025, and the current latest version. Its core specification can be found
+        <para>This is an update of the 3.0 specification, released May&#160;2025. Its core specification can be found
             <link xlink:href="{$BASELINK-V31}xproc/" role="newpage">here</link>.</para>
       </description>
     </version>

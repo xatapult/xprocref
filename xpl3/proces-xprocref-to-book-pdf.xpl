@@ -27,7 +27,7 @@
   <!-- ======================================================================= -->
   <!-- OPTIONS: -->
 
-  <p:option name="href-pdf" as="xs:string" required="false" select="resolve-uri('../pdf/xprocref-book.pdf', static-base-uri())">
+  <p:option name="href-pdf" as="xs:string" required="false" select="resolve-uri('../build/pdf/xprocref-book.pdf', static-base-uri())">
     <p:documentation>URI of the resulting PDF.</p:documentation>
   </p:option>
 

@@ -10,8 +10,8 @@
 
   <!-- ======================================================================= -->
 
-  <xpref:prepare-xprocref limit-to-latest-version="true">
-    <p:with-option name="limit-to-steps" as="xs:string*" select="('message', 'identity', 'rename')"/>
+  <xpref:prepare-xprocref limit-to-latest-version="false">
+    <p:with-option name="limit-to-steps" as="xs:string*" select="()"/>
   </xpref:prepare-xprocref>
   
   <p:variable name="empty-map" as="map(*)" select="map{}"/>
